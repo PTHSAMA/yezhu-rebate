@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>免税店返点查询</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f4f6f8;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                "Microsoft YaHei",
+                Arial,
+                sans-serif;
+            color: #222;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        .header {
+            text-align: center;
+            margin: 10px 0 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        input {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #d8dce2;
+            border-radius: 10px;
+            padding: 0 12px;
+            font-size: 16px;
+            outline: none;
+            background: #fff;
+        }
+
+        input:focus {
+            border-color: #333;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            height: 44px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .primary-button {
+            width: 100%;
+            margin-top: 10px;
+            background: #111;
+            color: white;
+            font-weight: 700;
+        }
+
+        .secondary-button {
+            width: 100%;
+            background: #eceff3;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .search-results {
+            margin-top: 10px;
+            display: none;
+            border: 1px solid #e1e4e8;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .search-item {
+            padding: 12px;
+            background: white;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        .search-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-item:active {
+            background: #f1f3f5;
+        }
+
+        .search-brand {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .search-sub {
+            margin-top: 4px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 3px 8px;
+            background: #e8f7ed;
+            color: #16803b;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .brand-info {
+            display: none;
+        }
+
+        .brand-name {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .brand-chinese {
+            margin-top: 3px;
+            color: #666;
+        }
+
+        .brand-category {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .auto-discount {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: #e9f8ee;
+            border-radius: 10px;
+            color: #187a39;
+            font-size: 14px;
+            display: none;
+        }
+
+        .remark {
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #fff8df;
+            border-radius: 10px;
+            color: #775d00;
+            font-size: 13px;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .rebate-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .rebate-card {
+            background: #f6f7f9;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .rebate-store {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .rebate-value {
+            font-size: 22px;
+            font-weight: 800;
+            margin-top: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .result-section {
+            display: none;
+        }
+
+        .result-card {
+            background: white;
+            border: 1px solid #e2e5e9;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-store {
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .result-rebate {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .result-price {
+            margin-top: 10px;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .result-formula {
+            margin-top: 7px;
+            font-size: 12px;
+            color: #777;
+            word-break: break-all;
+            line-height: 1.5;
+        }
+
+        .copy-button {
+            margin-top: 10px;
+            width: 100%;
+            height: 38px;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .copy-all {
+            margin-top: 4px;
+            width: 100%;
+            background: #111;
+            color: white;
+            font-weight: 700;
+        }
+
+        .empty {
+            padding: 14px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 12px;
+            margin-bottom: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.82);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .card {
+                padding: 14px;
+            }
+
+            .rebate-value {
+                font-size: 20px;
+            }
+
+            .result-price {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>免税店返点查询</h1>
+        <p id="dataStatus">正在加载返点数据...</p>
+    </div>
+
+    <!-- 品牌搜索 -->
+    <div class="card">
+
+        <div class="section-title">品牌查询</div>
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="输入英文或中文品牌"
+            autocomplete="off"
+        >
+
+        <button
+            class="primary-button"
+            id="searchButton"
+        >
+            查询
+        </button>
+
+        <div
+            id="searchResults"
+            class="search-results"
+        ></div>
+
+    </div>
+
+
+    <!-- 品牌信息 -->
+    <div
+        class="card brand-info"
+        id="brandInfo"
+    >
+
+        <div
+            class="brand-name"
+            id="brandEnglish"
+        ></div>
+
+        <div
+            class="brand-chinese"
+            id="brandChinese"
+        ></div>
+
+        <div
+            class="brand-category"
+            id="brandCategory"
+        ></div>
+
+        <div
+            class="auto-discount"
+            id="autoDiscount"
+        ></div>
+
+        <div
+            class="remark"
+            id="brandRemark"
+        ></div>
+
+        <div
+            class="rebate-grid"
+            id="rebateGrid"
+        ></div>
+
+    </div>
+
+
+    <!-- 计算 -->
+    <div
+        class="card"
+        id="calculatorCard"
+        style="display:none;"
+    >
+
+        <div class="section-title">
+            价格计算
+        </div>
+
+        <div class="form-group">
+
+            <label class="form-label">
+                原价 USD
+            </label>
+
+            <input
+                id="priceInput"
+                type="number"
+                inputmode="decimal"
+                placeholder="例如 5000"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                美金汇率
+            </label>
+
+            <input
+                id="exchangeInput"
+                type="number"
+                inputmode="decimal"
+                step="0.01"
+                placeholder="例如 7.20"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label class="form-label">
+                折扣
+            </label>
+
+            <input
+                id="discountInput"
+                type="text"
+                inputmode="decimal"
+                value="1"
+                placeholder="1 / 0.95 / 95% / 9.5折"
+            >
+
+            <div class="form-note">
+                有明确会员折扣时会自动填写，也可以手动修改
+            </div>
+
+        </div>
+
+        <button
+            class="primary-button"
+            id="calculateButton"
+        >
+            计算全部店铺
+        </button>
+
+    </div>
+
+
+    <!-- 结果 -->
+    <div
+        class="card result-section"
+        id="resultSection"
+    >
+
+        <div class="section-title">
+            计算结果
+        </div>
+
+        <div id="resultList"></div>
+
+        <button
+            class="copy-all"
+            id="copyAllButton"
+        >
+            复制全部计算结果
+        </button>
+
+    </div>
+
+
+    <div
+        class="status"
+        id="bottomStatus"
+    ></div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast"
+>
+    已复制
+</div>
+
+
+<script>
+
+let database = [];
+let currentBrand = null;
+let currentResults = [];
+
+const DATA_URL = "./web_data/fandian.json";
+
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const searchButton =
+    document.getElementById("searchButton");
+
+const searchResults =
+    document.getElementById("searchResults");
+
+const brandInfo =
+    document.getElementById("brandInfo");
+
+const brandEnglish =
+    document.getElementById("brandEnglish");
+
+const brandChinese =
+    document.getElementById("brandChinese");
+
+const brandCategory =
+    document.getElementById("brandCategory");
+
+const autoDiscount =
+    document.getElementById("autoDiscount");
+
+const brandRemark =
+    document.getElementById("brandRemark");
+
+const rebateGrid =
+    document.getElementById("rebateGrid");
+
+const calculatorCard =
+    document.getElementById("calculatorCard");
+
+const priceInput =
+    document.getElementById("priceInput");
+
+const exchangeInput =
+    document.getElementById("exchangeInput");
+
+const discountInput =
+    document.getElementById("discountInput");
+
+const calculateButton =
+    document.getElementById("calculateButton");
+
+const resultSection =
+    document.getElementById("resultSection");
+
+const resultList =
+    document.getElementById("resultList");
+
+const copyAllButton =
+    document.getElementById("copyAllButton");
+
+const dataStatus =
+    document.getElementById("dataStatus");
+
+const bottomStatus =
+    document.getElementById("bottomStatus");
+
+const toast =
+    document.getElementById("toast");
+
+
+
+/* =========================
+   加载数据库
+========================= */
+
+async function loadDatabase() {
+
+    try {
+
+        const response = await fetch(
+            DATA_URL + "?t=" + Date.now(),
+            {
+                cache: "no-store"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "HTTP " + response.status
+            );
+        }
+
+        const data =
+            await response.json();
+
+        if (
+            !data ||
+            !Array.isArray(data.brands)
+        ) {
+            throw new Error(
+                "返点数据格式错误"
+            );
+        }
+
+        database = data.brands;
+
+        dataStatus.textContent =
+            "返点数据已加载 · " +
+            database.length +
+            " 个品牌";
+
+        bottomStatus.textContent =
+            "数据版本：" +
+            (data.version || "1.0");
+
+        searchInput.disabled = false;
+        searchButton.disabled = false;
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        dataStatus.textContent =
+            "返点数据加载失败";
+
+        bottomStatus.textContent =
+            "请检查 web_data/fandian.json";
+
+        alert(
+            "返点数据加载失败。\n\n" +
+            "请确认 fandian.json 文件位置正确。"
+        );
+    }
+}
+
+
+
+/* =========================
+   文本标准化
+========================= */
+
+function normalizeText(value) {
+
+    return String(value || "")
+        .replace(/\s+/g, "")
+        .toUpperCase();
+}
+
+
+
+/* =========================
+   品牌搜索
+========================= */
+
+function searchBrands() {
+
+    const keyword =
+        normalizeText(
+            searchInput.value
+        );
+
+    if (!keyword) {
+
+        searchResults.style.display =
+            "none";
+
+        return;
+    }
+
+    const results =
+        database
+            .filter(item => {
+
+                const english =
+                    normalizeText(
+                        item.english
+                    );
+
+                const chinese =
+                    normalizeText(
+                        item.chinese
+                    );
+
+                return (
+                    english.includes(keyword) ||
+                    chinese.includes(keyword)
+                );
+
+            })
+            .slice(0, 30);
+
+    renderSearchResults(results);
+}
+
+
+
+function renderSearchResults(results) {
+
+    searchResults.innerHTML = "";
+
+    searchResults.style.display =
+        "block";
+
+    if (results.length === 0) {
+
+        searchResults.innerHTML =
+            '<div class="empty">' +
+            '没有找到品牌' +
+            '</div>';
+
+        return;
+    }
+
+    results.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "search-item";
+
+        const title =
+            item.english ||
+            item.chinese ||
+            "";
+
+        let html =
+            '<div class="search-brand">' +
+            escapeHtml(title) +
+            '</div>';
+
+        if (item.chinese) {
+
+            html +=
+                '<div class="search-sub">' +
+                escapeHtml(item.chinese) +
+                '</div>';
+        }
+
+        if (item.discount) {
+
+            html +=
+                '<div class="discount-badge">' +
+                '会员折扣 ' +
+                formatDiscount(item.discount) +
+                '</div>';
+        }
+
+        div.innerHTML = html;
+
+        div.addEventListener(
+            "click",
+            function () {
+
+                selectBrand(item);
+
+            }
+        );
+
+        searchResults.appendChild(div);
+
+    });
+}
+
+
+
+/* =========================
+   选择品牌
+========================= */
+
+function selectBrand(item) {
+
+    currentBrand = item;
+
+    currentResults = [];
+
+    searchInput.value =
+        item.english ||
+        item.chinese ||
+        "";
+
+    searchResults.style.display =
+        "none";
+
+    brandInfo.style.display =
+        "block";
+
+    calculatorCard.style.display =
+        "block";
+
+    resultSection.style.display =
+        "none";
+
+
+    brandEnglish.textContent =
+        item.english || "";
+
+
+    brandChinese.textContent =
+        item.chinese || "";
+
+
+    brandCategory.textContent =
+        item.category
+            ? "品类：" + item.category
+            : "";
+
+
+    /* 自动折扣 */
+
+    if (item.discount) {
+
+        discountInput.value =
+            item.discount;
+
+        autoDiscount.style.display =
+            "block";
+
+        autoDiscount.textContent =
+            "已自动读取折扣：" +
+            formatDiscount(
+                item.discount
+            );
+
+    }
+    else {
+
+        discountInput.value =
+            "1";
+
+        autoDiscount.style.display =
+            "none";
+
+        autoDiscount.textContent =
+            "";
+    }
+
+
+    /* 备注 */
+
+    const remark =
+        cleanRemark(
+            item.remark
+        );
+
+    if (remark) {
+
+        brandRemark.style.display =
+            "block";
+
+        brandRemark.textContent =
+            "备注：" + remark;
+
+    }
+    else {
+
+        brandRemark.style.display =
+            "none";
+
+        brandRemark.textContent =
+            "";
+    }
+
+
+    /* 返点 */
+
+    rebateGrid.innerHTML = "";
+
+    const rebates =
+        item.rebates || {};
+
+    Object.entries(rebates)
+        .forEach(([store, rebate]) => {
+
+            if (
+                rebate === null ||
+                rebate === undefined
+            ) {
+                return;
+            }
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "rebate-card";
+
+            card.innerHTML =
+                '<div class="rebate-store">' +
+                escapeHtml(store) +
+                '</div>' +
+
+                '<div class="rebate-value">' +
+                formatPercent(rebate) +
+                '</div>';
+
+            rebateGrid.appendChild(card);
+
+        });
+
+
+    /* 自动跳到价格 */
+
+    setTimeout(() => {
+
+        priceInput.focus();
+        priceInput.select();
+
+    }, 100);
+}
+
+
+
+/* =========================
+   清理特殊SKU备注
+========================= */
+
+function cleanRemark(value) {
+
+    let text =
+        String(value || "").trim();
+
+    if (!text) {
+        return "";
+    }
+
+    const normalized =
+        text.replace(/\s+/g, "");
+
+    if (
+        normalized === "有特殊SKU" ||
+        normalized === "特殊SKU"
+    ) {
+        return "";
+    }
+
+    return text;
+}
+
+
+
+/* =========================
+   折扣解析
+========================= */
+
+function parseDiscount(value) {
+
+    let text =
+        String(value || "")
+            .trim()
+            .replace(/\s+/g, "");
+
+    if (!text) {
+        return 1;
+    }
+
+
+    if (text.endsWith("%")) {
+
+        const number =
+            parseFloat(
+                text.slice(0, -1)
+            );
+
+        if (!isNaN(number)) {
+            return number / 100;
+        }
+    }
+
+
+    if (text.endsWith("折")) {
+
+        const number =
+            parseFloat(
+                text.slice(0, -1)
+            );
+
+        if (!isNaN(number)) {
+
+            if (number > 10) {
+                return number / 100;
+            }
+
+            return number / 10;
+        }
+    }
+
+
+    const number =
+        parseFloat(text);
+
+    if (isNaN(number)) {
+        return null;
+    }
+
+
+    if (number > 1) {
+        return number / 100;
+    }
+
+
+    return number;
+}
+
+
+
+/* =========================
+   计算
+========================= */
+
+function calculateAll() {
+
+    if (!currentBrand) {
+
+        alert("请先选择品牌");
+
+        return;
+    }
+
+
+    const price =
+        parseFloat(
+            priceInput.value
+        );
+
+    const exchange =
+        parseFloat(
+            exchangeInput.value
+        );
+
+    const discount =
+        parseDiscount(
+            discountInput.value
+        );
+
+
+    if (
+        isNaN(price) ||
+        price <= 0
+    ) {
+
+        alert("请输入正确的原价 USD");
+
+        priceInput.focus();
+
+        return;
+    }
+
+
+    if (
+        isNaN(exchange) ||
+        exchange <= 0
+    ) {
+
+        alert("请输入正确的美金汇率");
+
+        exchangeInput.focus();
+
+        return;
+    }
+
+
+    if (
+        discount === null ||
+        discount <= 0 ||
+        discount > 1
+    ) {
+
+        alert("请输入正确的折扣");
+
+        discountInput.focus();
+
+        return;
+    }
+
+
+    const rebates =
+        currentBrand.rebates || {};
+
+
+    currentResults = [];
+
+
+    Object.entries(rebates)
+        .forEach(([store, rebate]) => {
+
+            const rebateNumber =
+                Number(rebate);
+
+            if (
+                isNaN(rebateNumber)
+            ) {
+                return;
+            }
+
+
+            const amount =
+                price *
+                (1 - rebateNumber) *
+                discount *
+                exchange;
+
+
+            currentResults.push({
+                store,
+                rebate: rebateNumber,
+                amount,
+                price,
+                exchange,
+                discount
+            });
+
+        });
+
+
+    renderResults();
+}
+
+
+
+/* =========================
+   显示计算结果
+========================= */
+
+function renderResults() {
+
+    resultList.innerHTML = "";
+
+    if (
+        currentResults.length === 0
+    ) {
+
+        resultList.innerHTML =
+            '<div class="empty">' +
+            '当前品牌没有可计算的返点数据' +
+            '</div>';
+
+        resultSection.style.display =
+            "block";
+
+        return;
+    }
+
+
+    currentResults.forEach(result => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "result-card";
+
+
+        const amountText =
+            formatMoney(
+                result.amount
+            );
+
+
+        let formula = "";
+
+        if (result.discount !== 1) {
+
+            formula =
+                result.price +
+                " × (1-" +
+                formatPercent(result.rebate) +
+                ") × " +
+                formatDiscount(result.discount) +
+                " × " +
+                result.exchange;
+
+        }
+        else {
+
+            formula =
+                result.price +
+                " × (1-" +
+                formatPercent(result.rebate) +
+                ") × " +
+                result.exchange;
+        }
+
+
+        card.innerHTML =
+
+            '<div class="result-header">' +
+
+                '<div class="result-store">' +
+                escapeHtml(result.store) +
+                '</div>' +
+
+                '<div class="result-rebate">' +
+                '返点 ' +
+                formatPercent(result.rebate) +
+                '</div>' +
+
+            '</div>' +
+
+            '<div class="result-price">' +
+            amountText +
+            ' 元' +
+            '</div>' +
+
+            '<div class="result-formula">' +
+            escapeHtml(formula) +
+            '</div>';
+
+
+        const copyButton =
+            document.createElement("button");
+
+        copyButton.className =
+            "copy-button";
+
+        copyButton.textContent =
+            "复制此店结果";
+
+
+        copyButton.addEventListener(
+            "click",
+            function () {
+
+                copyText(
+                    buildSingleResultText(
+                        result
+                    )
+                );
+
+            }
+        );
+
+
+        card.appendChild(
+            copyButton
+        );
+
+
+        resultList.appendChild(
+            card
+        );
+
+    });
+
+
+    resultSection.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        resultSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }, 100);
+}
+
+
+
+/* =========================
+   单店复制文本
+========================= */
+
+function buildSingleResultText(result) {
+
+    let text = "";
+
+    text +=
+        result.store +
+        "\n";
+
+    text +=
+        "返点：" +
+        formatPercent(
+            result.rebate
+        ) +
+        "\n";
+
+
+    if (result.discount !== 1) {
+
+        text +=
+            "折扣：" +
+            formatDiscount(
+                result.discount
+            ) +
+            "\n";
+    }
+
+
+    text +=
+        "实际付款：" +
+        formatMoney(
+            result.amount
+        ) +
+        " 元";
+
+    return text;
+}
+
+
+
+/* =========================
+   复制全部
+========================= */
+
+function buildAllResultsText() {
+
+    if (
+        !currentBrand ||
+        currentResults.length === 0
+    ) {
+        return "";
+    }
+
+
+    const lines = [];
+
+
+    const brandName =
+        currentBrand.english ||
+        currentBrand.chinese ||
+        "";
+
+
+    lines.push(brandName);
+
+
+    if (
+        currentBrand.chinese &&
+        currentBrand.chinese !== brandName
+    ) {
+
+        lines.push(
+            currentBrand.chinese
+        );
+    }
+
+
+    lines.push("");
+
+
+    currentResults.forEach(
+        (result, index) => {
+
+            lines.push(
+                result.store +
+                "  " +
+                formatPercent(
+                    result.rebate
+                )
+            );
+
+            lines.push(
+                "实际付款 " +
+                formatMoney(
+                    result.amount
+                ) +
+                " 元"
+            );
+
+
+            if (
+                index <
+                currentResults.length - 1
+            ) {
+                lines.push("");
+            }
+
+        }
+    );
+
+
+    return lines.join("\n");
+}
+
+
+
+/* =========================
+   复制
+========================= */
+
+async function copyText(text) {
+
+    if (!text) {
+        return;
+    }
+
+
+    try {
+
+        await navigator.clipboard
+            .writeText(text);
+
+        showToast("已复制");
+
+    }
+    catch (error) {
+
+        const textarea =
+            document.createElement(
+                "textarea"
+            );
+
+        textarea.value = text;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.select();
+
+        document.execCommand(
+            "copy"
+        );
+
+        textarea.remove();
+
+        showToast("已复制");
+    }
+}
+
+
+
+/* =========================
+   格式化
+========================= */
+
+function formatPercent(value) {
+
+    const number =
+        Number(value) * 100;
+
+    if (
+        Math.abs(
+            number -
+            Math.round(number)
+        ) < 0.000001
+    ) {
+
+        return (
+            Math.round(number) +
+            "%"
+        );
+    }
+
+
+    return (
+        number
+            .toFixed(1)
+            .replace(/\.0$/, "") +
+        "%"
+    );
+}
+
+
+
+function formatDiscount(value) {
+
+    const number =
+        Number(value);
+
+    const zhe =
+        number * 10;
+
+
+    if (
+        Math.abs(
+            zhe -
+            Math.round(zhe)
+        ) < 0.000001
+    ) {
+
+        return (
+            Math.round(zhe) +
+            "折"
+        );
+    }
+
+
+    return (
+        zhe
+            .toFixed(2)
+            .replace(/0+$/, "")
+            .replace(/\.$/, "") +
+        "折"
+    );
+}
+
+
+
+function formatMoney(value) {
+
+    return Math.round(
+        Number(value)
+    ).toLocaleString(
+        "zh-CN"
+    );
+}
+
+
+
+function escapeHtml(value) {
+
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+
+/* =========================
+   Toast
+========================= */
+
+let toastTimer = null;
+
+
+function showToast(message) {
+
+    toast.textContent =
+        message;
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    if (toastTimer) {
+        clearTimeout(
+            toastTimer
+        );
+    }
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 1500);
+}
+
+
+
+/* =========================
+   键盘操作
+========================= */
+
+searchButton.addEventListener(
+    "click",
+    searchBrands
+);
+
+
+searchInput.addEventListener(
+    "input",
+    function () {
+
+        if (
+            searchInput.value
+                .trim()
+                .length >= 1
+        ) {
+
+            searchBrands();
+
+        }
+        else {
+
+            searchResults.style.display =
+                "none";
+        }
+
+    }
+);
+
+
+searchInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            searchBrands();
+
+        }
+
+    }
+);
+
+
+priceInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            exchangeInput.focus();
+            exchangeInput.select();
+
+        }
+
+    }
+);
+
+
+exchangeInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            calculateAll();
+
+        }
+
+    }
+);
+
+
+discountInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            event.preventDefault();
+
+            calculateAll();
+
+        }
+
+    }
+);
+
+
+calculateButton.addEventListener(
+    "click",
+    calculateAll
+);
+
+
+copyAllButton.addEventListener(
+    "click",
+    function () {
+
+        copyText(
+            buildAllResultsText()
+        );
+
+    }
+);
+
+
+
+/* =========================
+   启动
+========================= */
+
+searchInput.disabled = true;
+searchButton.disabled = true;
+
+loadDatabase();
+
+</script>
+
+</body>
+</html>
