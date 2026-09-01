@@ -1385,7 +1385,7 @@ function selectBrand(
             card.innerHTML =
                 '<div class="rebate-store">' +
                 escapeHtml(
-                    store
+                    formatStoreName(store)
                 ) +
                 '</div>' +
 
@@ -1797,7 +1797,7 @@ function renderResults(
 
                     '<div class="result-store">' +
                     escapeHtml(
-                        result.store
+                        formatStoreName(result.store)
                     ) +
                     '</div>' +
 
@@ -1890,7 +1890,7 @@ function buildSingleResultText(
 ) {
 
     let text =
-        result.store +
+        formatStoreName(result.store) +
         "\n";
 
 
@@ -1922,7 +1922,7 @@ function buildSingleResultText(
 
 
     text +=
-        "实际付款：" +
+        "到手价格：" +
         formatMoney(
             result.amount
         ) +
@@ -1991,7 +1991,7 @@ function buildAllResultsText() {
         (result, index) => {
 
             lines.push(
-                result.store +
+                formatStoreName(result.store) +
                 "  " +
                 formatPercent(
                     result.rebate
@@ -2000,7 +2000,7 @@ function buildAllResultsText() {
 
 
             lines.push(
-                "实际付款 " +
+                "到手价格 " +
                 formatMoney(
                     result.amount
                 ) +
@@ -2089,6 +2089,19 @@ async function copyText(
             "已复制"
         );
     }
+}
+
+
+
+function formatStoreName(value) {
+
+    const store = String(value || "").trim();
+
+    if (store === "乐天明洞" || store === "明洞乐天") {
+        return "明洞乐天免税";
+    }
+
+    return store;
 }
 
 
