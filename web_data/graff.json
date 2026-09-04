@@ -1,0 +1,161 @@
+{
+  "version": "20260904123431",
+  "updated_at": "2026-09-04 12:34:31",
+  "count": 13,
+  "warning_count": 4,
+  "customers": [
+    {
+      "id": 1,
+      "customer": "郝郝",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "icon oval 1.2-1.3ct F",
+        "报过1轮 继续匹配库存"
+      ],
+      "raw": "郝郝 \nicon oval 1.2-1.3ct F \n报过1轮 继续匹配库存",
+      "search_text": "郝郝  icon oval 1.2-1.3ct f 报过1轮 继续匹配库存"
+    },
+    {
+      "id": 2,
+      "customer": "X",
+      "wechat": "lovable---so",
+      "warning": false,
+      "details": [
+        "icon oval 0.7ct D-G vs1/vs2",
+        "报过1轮 继续匹配库存"
+      ],
+      "raw": "X（微信号lovable---so）\nicon oval 0.7ct D-G vs1/vs2 \n报过1轮 继续匹配库存",
+      "search_text": "x lovable---so icon oval 0.7ct d-g vs1/vs2 报过1轮 继续匹配库存"
+    },
+    {
+      "id": 3,
+      "customer": "Jamie",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Icon oval 0.7ct 53#",
+        "报过1轮 继续匹配库存"
+      ],
+      "raw": "Jamie\nIcon oval 0.7ct 53# \n报过1轮 继续匹配库存",
+      "search_text": "jamie  icon oval 0.7ct 53# 报过1轮 继续匹配库存"
+    },
+    {
+      "id": 4,
+      "customer": "Chansy",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "graff icon round  0.5/0.7  50/51",
+        "报过1轮 继续匹配库存"
+      ],
+      "raw": "Chansy \ngraff icon round  0.5/0.7  50/51 \n报过1轮 继续匹配库存",
+      "search_text": "chansy  graff icon round  0.5/0.7  50/51 报过1轮 继续匹配库存"
+    },
+    {
+      "id": 5,
+      "customer": "李李呀_",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Icon 0.73ct F vs1 同参数比价日本"
+      ],
+      "raw": "李李呀_\nIcon 0.73ct F vs1 同参数比价日本",
+      "search_text": "李李呀_  icon 0.73ct f vs1 同参数比价日本"
+    },
+    {
+      "id": 6,
+      "customer": "Yenom.",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Icon RD 1ct F+ 报1轮 继续匹配库存"
+      ],
+      "raw": "Yenom.\nIcon RD 1ct F+ 报1轮 继续匹配库存",
+      "search_text": "yenom.  icon rd 1ct f+ 报1轮 继续匹配库存"
+    },
+    {
+      "id": 7,
+      "customer": "Janice🐑",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Icon RD 1ct D色",
+        "报过1轮 继续匹配库存"
+      ],
+      "raw": "Janice🐑\nIcon RD 1ct D色 \n报过1轮 继续匹配库存",
+      "search_text": "janice🐑  icon rd 1ct d色 报过1轮 继续匹配库存"
+    },
+    {
+      "id": 8,
+      "customer": "May",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Promise 0.5ct oval pear D vvs1 50#",
+        "报过1轮 继续匹配库存"
+      ],
+      "raw": "May \nPromise 0.5ct oval pear D vvs1 50#\n报过1轮 继续匹配库存",
+      "search_text": "may  promise 0.5ct oval pear d vvs1 50# 报过1轮 继续匹配库存"
+    },
+    {
+      "id": 9,
+      "customer": "Christine",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "超过3000w折扣报低了 已经重新报"
+      ],
+      "raw": "Christine\n超过3000w折扣报低了 已经重新报",
+      "search_text": "christine  超过3000w折扣报低了 已经重新报"
+    },
+    {
+      "id": 10,
+      "customer": "Ychu",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "问这个人要了接机信息 但是戒指没有付定金",
+        "8.23回复的 后续没人跟进戒指 定金有计划付款但是不放心 可以走咸鱼",
+        "Graff Icon oval 0.7ct 51"
+      ],
+      "raw": "⚠️Ychu \n问这个人要了接机信息 但是戒指没有付定金\n8.23回复的 后续没人跟进戒指 定金有计划付款但是不放心 可以走咸鱼\nGraff Icon oval 0.7ct 51",
+      "search_text": "ychu  问这个人要了接机信息 但是戒指没有付定金 8.23回复的 后续没人跟进戒指 定金有计划付款但是不放心 可以走咸鱼 graff icon oval 0.7ct 51"
+    },
+    {
+      "id": 11,
+      "customer": "Josie🐱",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "要买1ct 8.26之后没人跟进",
+        "已经有职员发了两个参数给她"
+      ],
+      "raw": "⚠️ Josie🐱\n要买1ct 8.26之后没人跟进\n已经有职员发了两个参数给她",
+      "search_text": "josie🐱  要买1ct 8.26之后没人跟进 已经有职员发了两个参数给她"
+    },
+    {
+      "id": 12,
+      "customer": "Amy",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "带回Graff push订单确认还要不要"
+      ],
+      "raw": "⚠️Amy 带回Graff push订单确认还要不要",
+      "search_text": "amy  带回graff push订单确认还要不要"
+    },
+    {
+      "id": 13,
+      "customer": "J-Lii",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "咨询的卡地亚对戒戴的52没确认款式",
+        "咨询的graff icon 50分/70分没确认切割"
+      ],
+      "raw": "⚠️ J-Lii\n咨询的卡地亚对戒戴的52没确认款式\n咨询的graff icon 50分/70分没确认切割",
+      "search_text": "j-lii  咨询的卡地亚对戒戴的52没确认款式 咨询的graff icon 50分/70分没确认切割"
+    }
+  ]
+}
