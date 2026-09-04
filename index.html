@@ -375,6 +375,187 @@ button {
     opacity: 1;
 }
 
+
+
+/* =========================
+   首页 / GRAFF 客户意向
+========================= */
+.page-screen {
+    width: 100%;
+}
+
+.home-menu {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 14px 30px;
+}
+
+.home-title {
+    text-align: center;
+    margin: 14px 0 18px;
+}
+
+.home-title h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.home-title p {
+    margin: 8px 0 0;
+    color: #777;
+    font-size: 13px;
+}
+
+.menu-card {
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #e7e9ed;
+    border-radius: 16px;
+    padding: 18px;
+    height: auto;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.menu-card:active {
+    background: #f7f8fa;
+}
+
+.menu-card-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #111;
+}
+
+.menu-card-desc {
+    margin-top: 6px;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.menu-card-warning {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #b45309;
+    background: #fff7ed;
+    border-radius: 20px;
+    padding: 4px 8px;
+}
+
+.back-button {
+    width: auto;
+    height: 38px;
+    padding: 0 12px;
+    background: #eceff3;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.graff-meta {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.graff-toolbar {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+
+.graff-filters {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-button {
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 18px;
+    background: #eef0f3;
+    color: #444;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.filter-button.active {
+    background: #111;
+    color: #fff;
+}
+
+.graff-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #e7e9ed;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.graff-card.warning {
+    border: 1px solid #f59e0b;
+    background: #fffdf7;
+}
+
+.graff-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.graff-customer {
+    font-size: 18px;
+    font-weight: 900;
+    color: #111;
+    word-break: break-word;
+}
+
+.graff-wechat {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #777;
+}
+
+.warning-badge {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: #fff1d6;
+    color: #a75d00;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.graff-detail {
+    margin-top: 11px;
+    padding-top: 10px;
+    border-top: 1px solid #eef0f2;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.graff-copy {
+    width: 100%;
+    margin-top: 11px;
+    height: 36px;
+    background: #f0f2f5;
+    color: #333;
+}
+
 @media (max-width: 420px) {
 
     .container {
@@ -397,6 +578,26 @@ button {
 
 <body>
 
+<div id="homePage" class="home-menu page-screen">
+
+    <div class="home-title">
+        <h1>员工查询工具</h1>
+        <p>选择需要使用的功能</p>
+    </div>
+
+    <button class="menu-card" id="openRebateButton">
+        <div class="menu-card-title">🔍 返点查询</div>
+        <div class="menu-card-desc">查询品牌返点、自动折扣和到手价格</div>
+    </button>
+
+    <button class="menu-card" id="openGraffButton">
+        <div class="menu-card-title">💎 GRAFF 客户意向</div>
+        <div class="menu-card-desc">查看每天更新的客户需求、参数和跟进备注</div>
+        <div class="menu-card-warning" id="homeGraffSummary">正在加载今日客户...</div>
+    </button>
+
+</div>
+
 <div
     class="update-notice"
     id="updateNotice"
@@ -404,7 +605,9 @@ button {
     数据已自动更新
 </div>
 
-<div class="container">
+<div class="container page-screen" id="rebatePage" style="display:none;">
+
+    <button class="back-button" id="backFromRebate">← 首页</button>
 
     <div class="header">
 
@@ -629,6 +832,36 @@ button {
 </div>
 
 
+<div class="container page-screen" id="graffPage" style="display:none;">
+
+    <button class="back-button" id="backFromGraff">← 首页</button>
+
+    <div class="header">
+        <h1>GRAFF 客户意向</h1>
+        <div class="data-info" id="graffDataStatus">正在加载今日客户意向...</div>
+    </div>
+
+    <div class="graff-toolbar">
+        <input
+            id="graffSearchInput"
+            type="text"
+            placeholder="搜索客户 / 微信号 / ICON / OVAL / 1ct / 51..."
+            autocomplete="off"
+        >
+
+        <div class="graff-filters">
+            <button class="filter-button active" id="graffFilterAll">全部</button>
+            <button class="filter-button" id="graffFilterWarning">⚠️ 重点跟进</button>
+        </div>
+    </div>
+
+    <div id="graffList"></div>
+
+    <div class="footer-status" id="graffBottomStatus"></div>
+
+</div>
+
+
 <div
     class="toast"
     id="toast"
@@ -645,6 +878,9 @@ const DATA_URL =
 const SETTINGS_URL =
     "./settings.json";
 
+const GRAFF_URL =
+    "./web_data/graff.json";
+
 const CHECK_INTERVAL =
     5 * 60 * 1000;
 
@@ -657,6 +893,10 @@ let currentResults = [];
 
 let currentDataVersion = "";
 let currentSettingsVersion = "";
+
+let graffDatabase = [];
+let currentGraffVersion = "";
+let graffWarningOnly = false;
 
 let toastTimer = null;
 
@@ -732,6 +972,48 @@ const toast =
 
 const updateNotice =
     document.getElementById("updateNotice");
+
+const homePage =
+    document.getElementById("homePage");
+
+const rebatePage =
+    document.getElementById("rebatePage");
+
+const graffPage =
+    document.getElementById("graffPage");
+
+const openRebateButton =
+    document.getElementById("openRebateButton");
+
+const openGraffButton =
+    document.getElementById("openGraffButton");
+
+const backFromRebate =
+    document.getElementById("backFromRebate");
+
+const backFromGraff =
+    document.getElementById("backFromGraff");
+
+const homeGraffSummary =
+    document.getElementById("homeGraffSummary");
+
+const graffSearchInput =
+    document.getElementById("graffSearchInput");
+
+const graffFilterAll =
+    document.getElementById("graffFilterAll");
+
+const graffFilterWarning =
+    document.getElementById("graffFilterWarning");
+
+const graffList =
+    document.getElementById("graffList");
+
+const graffDataStatus =
+    document.getElementById("graffDataStatus");
+
+const graffBottomStatus =
+    document.getElementById("graffBottomStatus");
 
 
 
@@ -965,6 +1247,161 @@ async function loadDatabase(
 
 
 
+
+function showHomePage() {
+    homePage.style.display = "block";
+    rebatePage.style.display = "none";
+    graffPage.style.display = "none";
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function showRebatePage() {
+    homePage.style.display = "none";
+    rebatePage.style.display = "block";
+    graffPage.style.display = "none";
+    setTimeout(() => searchInput.focus(), 80);
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function showGraffPage() {
+    homePage.style.display = "none";
+    rebatePage.style.display = "none";
+    graffPage.style.display = "block";
+    renderGraffCustomers();
+    setTimeout(() => graffSearchInput.focus(), 80);
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+function displayStoreName(store) {
+    const map = {
+        "乐天明洞": "明洞乐天免税",
+        "明洞乐天": "明洞乐天免税"
+    };
+
+    return map[store] || store;
+}
+
+async function loadGraffDatabase(silent = false) {
+    const data = await fetchJson(GRAFF_URL);
+
+    if (!data || !Array.isArray(data.customers)) {
+        throw new Error("GRAFF 客户意向数据格式错误");
+    }
+
+    const oldVersion = currentGraffVersion;
+    graffDatabase = data.customers;
+    currentGraffVersion = String(data.version || "");
+
+    const warningCount = Number(data.warning_count || 0);
+
+    graffDataStatus.textContent =
+        "今日客户：" + graffDatabase.length +
+        " 位 · 重点跟进：" + warningCount + " 位";
+
+    graffBottomStatus.textContent =
+        "更新时间：" + (data.updated_at || "-") +
+        " · 每5分钟自动检查更新";
+
+    homeGraffSummary.textContent =
+        "今日 " + graffDatabase.length + " 位客户 · ⚠️ " + warningCount + " 位重点跟进";
+
+    if (graffPage.style.display !== "none") {
+        renderGraffCustomers();
+    }
+
+    if (silent && oldVersion && oldVersion !== currentGraffVersion) {
+        showUpdateNotice();
+    }
+}
+
+function buildGraffCardText(item) {
+    const lines = [];
+
+    lines.push((item.warning ? "⚠️ " : "") + (item.customer || "未命名客户"));
+
+    if (item.wechat) {
+        lines.push("微信号：" + item.wechat);
+    }
+
+    if (Array.isArray(item.details)) {
+        item.details.forEach(detail => lines.push(detail));
+    }
+
+    return lines.join("\n");
+}
+
+function renderGraffCustomers() {
+    if (!graffList) return;
+
+    const keyword = normalizeText(graffSearchInput.value);
+
+    const results = graffDatabase.filter(item => {
+        if (graffWarningOnly && !item.warning) {
+            return false;
+        }
+
+        if (!keyword) {
+            return true;
+        }
+
+        const haystack = normalizeText(
+            item.search_text ||
+            [item.customer, item.wechat, ...(item.details || [])].join(" ")
+        );
+
+        return haystack.includes(keyword);
+    });
+
+    graffList.innerHTML = "";
+
+    if (!results.length) {
+        graffList.innerHTML = '<div class="card empty">没有找到符合条件的客户</div>';
+        return;
+    }
+
+    results.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "graff-card" + (item.warning ? " warning" : "");
+
+        const detailsHtml = (item.details || [])
+            .map(detail => '<div>' + escapeHtml(detail) + '</div>')
+            .join("");
+
+        card.innerHTML =
+            '<div class="graff-card-head">' +
+                '<div>' +
+                    '<div class="graff-customer">' + escapeHtml(item.customer || "未命名客户") + '</div>' +
+                    (item.wechat
+                        ? '<div class="graff-wechat">微信号：' + escapeHtml(item.wechat) + '</div>'
+                        : '') +
+                '</div>' +
+                (item.warning
+                    ? '<div class="warning-badge">⚠️ 重点跟进</div>'
+                    : '') +
+            '</div>' +
+            '<div class="graff-detail">' + detailsHtml + '</div>';
+
+        const copyButton = document.createElement("button");
+        copyButton.className = "graff-copy";
+        copyButton.textContent = "复制客户意向";
+        copyButton.addEventListener("click", () => {
+            copyText(buildGraffCardText(item));
+        });
+
+        card.appendChild(copyButton);
+        graffList.appendChild(card);
+    });
+}
+
+function setGraffFilter(warningOnly) {
+    graffWarningOnly = warningOnly;
+
+    graffFilterAll.classList.toggle("active", !warningOnly);
+    graffFilterWarning.classList.toggle("active", warningOnly);
+
+    renderGraffCustomers();
+}
+
 async function initialLoad() {
 
     searchInput.disabled = true;
@@ -975,7 +1412,8 @@ async function initialLoad() {
 
         await Promise.all([
             loadSettings(false),
-            loadDatabase(false)
+            loadDatabase(false),
+            loadGraffDatabase(false)
         ]);
 
 
@@ -1016,6 +1454,10 @@ async function checkForUpdates() {
         );
 
         await loadDatabase(
+            true
+        );
+
+        await loadGraffDatabase(
             true
         );
 
@@ -1385,7 +1827,7 @@ function selectBrand(
             card.innerHTML =
                 '<div class="rebate-store">' +
                 escapeHtml(
-                    formatStoreName(store)
+                    displayStoreName(store)
                 ) +
                 '</div>' +
 
@@ -1797,7 +2239,7 @@ function renderResults(
 
                     '<div class="result-store">' +
                     escapeHtml(
-                        formatStoreName(result.store)
+                        displayStoreName(result.store)
                     ) +
                     '</div>' +
 
@@ -1890,7 +2332,7 @@ function buildSingleResultText(
 ) {
 
     let text =
-        formatStoreName(result.store) +
+        displayStoreName(result.store) +
         "\n";
 
 
@@ -1991,7 +2433,7 @@ function buildAllResultsText() {
         (result, index) => {
 
             lines.push(
-                formatStoreName(result.store) +
+                displayStoreName(result.store) +
                 "  " +
                 formatPercent(
                     result.rebate
@@ -2089,19 +2531,6 @@ async function copyText(
             "已复制"
         );
     }
-}
-
-
-
-function formatStoreName(value) {
-
-    const store = String(value || "").trim();
-
-    if (store === "乐天明洞" || store === "明洞乐天") {
-        return "明洞乐天免税";
-    }
-
-    return store;
 }
 
 
@@ -2386,6 +2815,46 @@ copyAllButton.addEventListener(
 );
 
 
+
+
+openRebateButton.addEventListener(
+    "click",
+    showRebatePage
+);
+
+openGraffButton.addEventListener(
+    "click",
+    showGraffPage
+);
+
+backFromRebate.addEventListener(
+    "click",
+    showHomePage
+);
+
+backFromGraff.addEventListener(
+    "click",
+    showHomePage
+);
+
+graffSearchInput.addEventListener(
+    "input",
+    renderGraffCustomers
+);
+
+graffFilterAll.addEventListener(
+    "click",
+    function () {
+        setGraffFilter(false);
+    }
+);
+
+graffFilterWarning.addEventListener(
+    "click",
+    function () {
+        setGraffFilter(true);
+    }
+);
 
 initialLoad();
 
