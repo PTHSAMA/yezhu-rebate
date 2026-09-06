@@ -3668,6 +3668,97 @@ backToGraffList.addEventListener(
     showGraffListScreen
 );
 
+
+/* ============================================================
+   GRAFF 客户详情页：左边缘右滑返回客户列表
+   ============================================================ */
+
+let graffTouchStartX = 0;
+let graffTouchStartY = 0;
+let graffTouchEndX = 0;
+let graffTouchEndY = 0;
+
+graffDetailScreen.addEventListener(
+    "touchstart",
+    function (event) {
+
+        if (!event.changedTouches || !event.changedTouches.length) {
+            return;
+        }
+
+        const touch =
+            event.changedTouches[0];
+
+        graffTouchStartX =
+            touch.clientX;
+
+        graffTouchStartY =
+            touch.clientY;
+    },
+    {
+        passive: true
+    }
+);
+
+graffDetailScreen.addEventListener(
+    "touchend",
+    function (event) {
+
+        if (!event.changedTouches || !event.changedTouches.length) {
+            return;
+        }
+
+        const touch =
+            event.changedTouches[0];
+
+        graffTouchEndX =
+            touch.clientX;
+
+        graffTouchEndY =
+            touch.clientY;
+
+
+        const deltaX =
+            graffTouchEndX -
+            graffTouchStartX;
+
+        const deltaY =
+            Math.abs(
+                graffTouchEndY -
+                graffTouchStartY
+            );
+
+
+        /*
+            只允许从屏幕左边缘开始，
+            避免正常横向滑动时误触。
+        */
+
+        const startedFromLeft =
+            graffTouchStartX <= 45;
+
+
+        /*
+            向右至少滑动 80px，
+            且横向移动明显大于纵向移动。
+        */
+
+        const isValidSwipe =
+            startedFromLeft &&
+            deltaX >= 80 &&
+            deltaX > deltaY * 1.3;
+
+
+        if (isValidSwipe) {
+
+            showGraffListScreen();
+        }
+    },
+    {
+        passive: true
+    }
+);
+
 saveGraffDetailButton.addEventListener(
     "click",
     saveSelectedGraffCustomer
