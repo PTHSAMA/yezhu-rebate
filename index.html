@@ -556,6 +556,116 @@ button {
     color: #333;
 }
 
+
+.graff-editor {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #eef0f2;
+}
+
+.graff-editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.graff-editor .form-label {
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #666;
+}
+
+.graff-editor input,
+.graff-editor select,
+.graff-editor textarea {
+    width: 100%;
+    border: 1px solid #d8dce2;
+    border-radius: 9px;
+    padding: 9px 10px;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+    font-family: inherit;
+}
+
+.graff-editor input,
+.graff-editor select {
+    height: 40px;
+}
+
+.graff-editor select {
+    width: 100%;
+    border: 1px solid #d8dce2;
+    border-radius: 9px;
+    padding: 0 10px;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+    font-family: inherit;
+}
+
+.graff-editor textarea {
+    min-height: 78px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.graff-editor input:focus,
+.graff-editor select:focus,
+.graff-editor textarea:focus {
+    border-color: #333;
+}
+
+.graff-save {
+    width: 100%;
+    margin-top: 10px;
+    height: 40px;
+    background: #111;
+    color: #fff;
+    font-weight: 800;
+}
+
+.graff-save:disabled {
+    opacity: .55;
+    cursor: wait;
+}
+
+.graff-last-update {
+    margin-top: 9px;
+    color: #888;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.operator-box {
+    margin-top: 12px;
+    padding: 11px;
+    background: #f7f8fa;
+    border-radius: 10px;
+}
+
+.operator-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.realtime-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #16a34a;
+    margin-right: 5px;
+}
+
+@media (max-width: 520px) {
+    .graff-editor-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 420px) {
 
     .container {
@@ -849,6 +959,16 @@ button {
             autocomplete="off"
         >
 
+        <div class="operator-box">
+            <div class="operator-title">当前操作人（用于记录最后修改人）</div>
+            <input
+                id="employeeNameInput"
+                type="text"
+                placeholder="例如：小李"
+                autocomplete="off"
+            >
+        </div>
+
         <div class="graff-filters">
             <button class="filter-button active" id="graffFilterAll">全部</button>
             <button class="filter-button" id="graffFilterWarning">⚠️ 重点跟进</button>
@@ -870,6 +990,8 @@ button {
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
 const DATA_URL =
@@ -878,8 +1000,20 @@ const DATA_URL =
 const SETTINGS_URL =
     "./settings.json";
 
-const GRAFF_URL =
-    "./web_data/graff.json";
+const SUPABASE_URL =
+    "https://cpdeawieqbnafajbuiej.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_CR_ve6xIBWOVCSnxUpKiuA_OQMe07VU";
+
+const SUPABASE_TABLE =
+    "yezhu-graff";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
 const CHECK_INTERVAL =
     5 * 60 * 1000;
@@ -1014,6 +1148,12 @@ const graffDataStatus =
 
 const graffBottomStatus =
     document.getElementById("graffBottomStatus");
+
+
+const employeeNameInput =
+    document.getElementById("employeeNameInput");
+
+let graffRealtimeChannel = null;
 
 
 
@@ -1281,126 +1421,646 @@ function displayStoreName(store) {
     return map[store] || store;
 }
 
-async function loadGraffDatabase(silent = false) {
-    const data = await fetchJson(GRAFF_URL);
+function graffDetailsArray(item) {
+    const raw = item && item.details;
 
-    if (!data || !Array.isArray(data.customers)) {
-        throw new Error("GRAFF 客户意向数据格式错误");
+    if (Array.isArray(raw)) {
+        return raw.filter(Boolean);
     }
 
-    const oldVersion = currentGraffVersion;
-    graffDatabase = data.customers;
-    currentGraffVersion = String(data.version || "");
+    if (raw === null || raw === undefined || raw === "") {
+        return [];
+    }
 
-    const warningCount = Number(data.warning_count || 0);
+    return String(raw)
+        .split(/\r?\n/)
+        .map(value => value.trim())
+        .filter(Boolean);
+}
 
-    graffDataStatus.textContent =
-        "今日客户：" + graffDatabase.length +
-        " 位 · 重点跟进：" + warningCount + " 位";
 
-    graffBottomStatus.textContent =
-        "更新时间：" + (data.updated_at || "-") +
-        " · 每5分钟自动检查更新";
+function buildGraffSearchText(item) {
+    return [
+        item.customer,
+        item.wechat,
+        ...graffDetailsArray(item),
+        item.status,
+        item.note,
+        item.owner,
+        item.updated_by
+    ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+
+function updateGraffSummary() {
+    const activeCustomers =
+        graffDatabase.filter(
+            item => item.active !== false
+        );
+
+    const warningCount =
+        activeCustomers.filter(
+            item => item.warning
+        ).length;
+
+    graffDataStatus.innerHTML =
+        '<span class="realtime-dot"></span>' +
+        "实时同步 · 今日客户：" +
+        activeCustomers.length +
+        " 位 · 重点跟进：" +
+        warningCount +
+        " 位";
 
     homeGraffSummary.textContent =
-        "今日 " + graffDatabase.length + " 位客户 · ⚠️ " + warningCount + " 位重点跟进";
+        "今日 " +
+        activeCustomers.length +
+        " 位客户 · ⚠️ " +
+        warningCount +
+        " 位重点跟进";
 
-    if (graffPage.style.display !== "none") {
+    let latest = "";
+
+    activeCustomers.forEach(item => {
+        const value = String(
+            item.updated_at ||
+            item.created_at ||
+            ""
+        );
+
+        if (value > latest) {
+            latest = value;
+        }
+    });
+
+    graffBottomStatus.textContent =
+        "Supabase 实时同步" +
+        (latest
+            ? " · 最近更新：" +
+              formatDateTime(latest)
+            : "");
+}
+
+
+async function loadGraffDatabase(silent = false) {
+    const oldSnapshot =
+        JSON.stringify(
+            graffDatabase.map(item => [
+                item.id,
+                item.updated_at,
+                item.active
+            ])
+        );
+
+    const { data, error } =
+        await supabaseClient
+            .from(SUPABASE_TABLE)
+            .select(
+                "id,created_at,customer,wechat,details,status,note,owner,warning,updated_at,updated_by,active,source_key"
+            )
+            .eq("active", true)
+            .order("warning", {
+                ascending: false
+            })
+            .order("id", {
+                ascending: true
+            });
+
+    if (error) {
+        throw error;
+    }
+
+    graffDatabase =
+        Array.isArray(data)
+            ? data
+            : [];
+
+    updateGraffSummary();
+
+    if (
+        graffPage.style.display !== "none"
+    ) {
         renderGraffCustomers();
     }
 
-    if (silent && oldVersion && oldVersion !== currentGraffVersion) {
+    const newSnapshot =
+        JSON.stringify(
+            graffDatabase.map(item => [
+                item.id,
+                item.updated_at,
+                item.active
+            ])
+        );
+
+    if (
+        silent &&
+        oldSnapshot &&
+        oldSnapshot !== newSnapshot
+    ) {
         showUpdateNotice();
     }
 }
 
+
+function subscribeGraffRealtime() {
+    if (graffRealtimeChannel) {
+        supabaseClient.removeChannel(
+            graffRealtimeChannel
+        );
+    }
+
+    graffRealtimeChannel =
+        supabaseClient
+        .channel("yezhu-graff-live")
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: SUPABASE_TABLE
+            },
+            async () => {
+                try {
+                    await loadGraffDatabase(true);
+                }
+                catch (error) {
+                    console.error(
+                        "GRAFF实时刷新失败：",
+                        error
+                    );
+                }
+            }
+        )
+        .subscribe(status => {
+            if (status === "SUBSCRIBED") {
+                graffBottomStatus.textContent =
+                    "Supabase 实时连接已建立";
+            }
+        });
+}
+
+
 function buildGraffCardText(item) {
     const lines = [];
 
-    lines.push((item.warning ? "⚠️ " : "") + (item.customer || "未命名客户"));
+    lines.push(
+        (item.warning ? "⚠️ " : "") +
+        (item.customer || "未命名客户")
+    );
 
     if (item.wechat) {
-        lines.push("微信号：" + item.wechat);
+        lines.push(
+            "微信号：" + item.wechat
+        );
     }
 
-    if (Array.isArray(item.details)) {
-        item.details.forEach(detail => lines.push(detail));
+    graffDetailsArray(item)
+        .forEach(
+            detail => lines.push(detail)
+        );
+
+    if (item.status) {
+        lines.push(
+            "状态：" + item.status
+        );
+    }
+
+    if (item.owner) {
+        lines.push(
+            "负责人：" + item.owner
+        );
+    }
+
+    if (item.note) {
+        lines.push(
+            "备注：" + item.note
+        );
+    }
+
+    if (item.updated_by) {
+        lines.push(
+            "最后修改人：" +
+            item.updated_by
+        );
     }
 
     return lines.join("\n");
 }
 
+
+async function saveGraffCustomer(
+    item,
+    card,
+    button
+) {
+    const operator =
+        employeeNameInput.value.trim();
+
+    if (!operator) {
+        alert(
+            "请先填写“当前操作人”，用于记录是谁修改的。"
+        );
+        employeeNameInput.focus();
+        return;
+    }
+
+    const statusInput =
+        card.querySelector(
+            '[data-field="status"]'
+        );
+
+    const ownerInput =
+        card.querySelector(
+            '[data-field="owner"]'
+        );
+
+    const noteInput =
+        card.querySelector(
+            '[data-field="note"]'
+        );
+
+    button.disabled = true;
+    button.textContent = "保存中...";
+
+    try {
+        const payload = {
+            status:
+                statusInput.value.trim() ||
+                null,
+
+            owner:
+                ownerInput.value.trim() ||
+                null,
+
+            note:
+                noteInput.value.trim() ||
+                null,
+
+            updated_by:
+                operator,
+
+            updated_at:
+                new Date().toISOString()
+        };
+
+        const { error } =
+            await supabaseClient
+                .from(SUPABASE_TABLE)
+                .update(payload)
+                .eq("id", item.id);
+
+        if (error) {
+            throw error;
+        }
+
+        localStorage.setItem(
+            "yezhu_employee_name",
+            operator
+        );
+
+        showToast("已保存并同步");
+
+        await loadGraffDatabase(false);
+    }
+    catch (error) {
+        console.error(error);
+
+        alert(
+            "保存失败：\n" +
+            (
+                error.message ||
+                String(error)
+            )
+        );
+    }
+    finally {
+        button.disabled = false;
+        button.textContent = "保存修改";
+    }
+}
+
+
+function buildStatusOptions(currentStatus) {
+    const commonStatuses = [
+        "",
+        "待跟进",
+        "继续匹配库存",
+        "查库存",
+        "已找到库存",
+        "已报价",
+        "等待客户回复",
+        "待付定金",
+        "已付定金",
+        "已成交",
+        "暂停跟进",
+        "客户不要了"
+    ];
+
+    const value = String(
+        currentStatus || ""
+    ).trim();
+
+    if (
+        value &&
+        !commonStatuses.includes(value)
+    ) {
+        commonStatuses.splice(
+            1,
+            0,
+            value
+        );
+    }
+
+    return commonStatuses
+        .map(status => {
+            const label =
+                status ||
+                "请选择状态";
+
+            const selected =
+                status === value
+                    ? " selected"
+                    : "";
+
+            return (
+                '<option value="' +
+                escapeHtml(status) +
+                '"' +
+                selected +
+                '>' +
+                escapeHtml(label) +
+                '</option>'
+            );
+        })
+        .join("");
+}
+
+
 function renderGraffCustomers() {
     if (!graffList) return;
 
-    const keyword = normalizeText(graffSearchInput.value);
-
-    const results = graffDatabase.filter(item => {
-        if (graffWarningOnly && !item.warning) {
-            return false;
-        }
-
-        if (!keyword) {
-            return true;
-        }
-
-        const haystack = normalizeText(
-            item.search_text ||
-            [item.customer, item.wechat, ...(item.details || [])].join(" ")
+    const keyword =
+        normalizeText(
+            graffSearchInput.value
         );
 
-        return haystack.includes(keyword);
-    });
+    const results =
+        graffDatabase.filter(
+            item => {
+                if (
+                    item.active === false
+                ) {
+                    return false;
+                }
+
+                if (
+                    graffWarningOnly &&
+                    !item.warning
+                ) {
+                    return false;
+                }
+
+                if (!keyword) {
+                    return true;
+                }
+
+                const haystack =
+                    normalizeText(
+                        buildGraffSearchText(
+                            item
+                        )
+                    );
+
+                return haystack.includes(
+                    keyword
+                );
+            }
+        );
 
     graffList.innerHTML = "";
 
     if (!results.length) {
-        graffList.innerHTML = '<div class="card empty">没有找到符合条件的客户</div>';
+        graffList.innerHTML =
+            '<div class="card empty">' +
+            '没有找到符合条件的客户' +
+            '</div>';
+
         return;
     }
 
     results.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "graff-card" + (item.warning ? " warning" : "");
+        const card =
+            document.createElement(
+                "div"
+            );
 
-        const detailsHtml = (item.details || [])
-            .map(detail => '<div>' + escapeHtml(detail) + '</div>')
+        card.className =
+            "graff-card" +
+            (
+                item.warning
+                    ? " warning"
+                    : ""
+            );
+
+        const detailsHtml =
+            graffDetailsArray(item)
+            .map(
+                detail =>
+                    '<div>' +
+                    escapeHtml(detail) +
+                    '</div>'
+            )
             .join("");
 
         card.innerHTML =
             '<div class="graff-card-head">' +
                 '<div>' +
-                    '<div class="graff-customer">' + escapeHtml(item.customer || "未命名客户") + '</div>' +
-                    (item.wechat
-                        ? '<div class="graff-wechat">微信号：' + escapeHtml(item.wechat) + '</div>'
-                        : '') +
+                    '<div class="graff-customer">' +
+                    escapeHtml(
+                        item.customer ||
+                        "未命名客户"
+                    ) +
+                    '</div>' +
+                    (
+                        item.wechat
+                            ? '<div class="graff-wechat">微信号：' +
+                              escapeHtml(
+                                  item.wechat
+                              ) +
+                              '</div>'
+                            : ''
+                    ) +
                 '</div>' +
-                (item.warning
-                    ? '<div class="warning-badge">⚠️ 重点跟进</div>'
-                    : '') +
+                (
+                    item.warning
+                        ? '<div class="warning-badge">⚠️ 重点跟进</div>'
+                        : ''
+                ) +
             '</div>' +
-            '<div class="graff-detail">' + detailsHtml + '</div>';
 
-        const copyButton = document.createElement("button");
-        copyButton.className = "graff-copy";
-        copyButton.textContent = "复制客户意向";
-        copyButton.addEventListener("click", () => {
-            copyText(buildGraffCardText(item));
-        });
+            '<div class="graff-detail">' +
+                (
+                    detailsHtml ||
+                    '<div style="color:#999;">暂无需求详情</div>'
+                ) +
+            '</div>' +
 
-        card.appendChild(copyButton);
-        graffList.appendChild(card);
+            '<div class="graff-editor">' +
+                '<div class="graff-editor-grid">' +
+
+                    '<div>' +
+                        '<div class="form-label">当前状态</div>' +
+                        '<select data-field="status">' +
+                            buildStatusOptions(
+                                item.status || ""
+                            ) +
+                        '</select>' +
+                    '</div>' +
+
+                    '<div>' +
+                        '<div class="form-label">负责人</div>' +
+                        '<input data-field="owner" type="text" ' +
+                        'placeholder="例如：小王" ' +
+                        'value="' +
+                        escapeHtml(
+                            item.owner || ""
+                        ) +
+                        '">' +
+                    '</div>' +
+
+                '</div>' +
+
+                '<div style="margin-top:10px;">' +
+                    '<div class="form-label">跟进备注</div>' +
+                    '<textarea data-field="note" ' +
+                    'placeholder="填写最新跟进情况...">' +
+                    escapeHtml(
+                        item.note || ""
+                    ) +
+                    '</textarea>' +
+                '</div>' +
+
+                '<button class="graff-save">保存修改</button>' +
+
+                '<div class="graff-last-update">' +
+                    (
+                        item.updated_by
+                            ? '最后修改人：' +
+                              escapeHtml(
+                                  item.updated_by
+                              )
+                            : '暂无员工修改记录'
+                    ) +
+                    (
+                        item.updated_at
+                            ? ' · ' +
+                              escapeHtml(
+                                  formatDateTime(
+                                      item.updated_at
+                                  )
+                              )
+                            : ''
+                    ) +
+                '</div>' +
+
+            '</div>';
+
+        const saveButton =
+            card.querySelector(
+                ".graff-save"
+            );
+
+        saveButton.addEventListener(
+            "click",
+            () => {
+                saveGraffCustomer(
+                    item,
+                    card,
+                    saveButton
+                );
+            }
+        );
+
+        const copyButton =
+            document.createElement(
+                "button"
+            );
+
+        copyButton.className =
+            "graff-copy";
+
+        copyButton.textContent =
+            "复制客户意向";
+
+        copyButton.addEventListener(
+            "click",
+            () => {
+                copyText(
+                    buildGraffCardText(
+                        item
+                    )
+                );
+            }
+        );
+
+        card.appendChild(
+            copyButton
+        );
+
+        graffList.appendChild(
+            card
+        );
     });
 }
 
-function setGraffFilter(warningOnly) {
-    graffWarningOnly = warningOnly;
 
-    graffFilterAll.classList.toggle("active", !warningOnly);
-    graffFilterWarning.classList.toggle("active", warningOnly);
+function setGraffFilter(warningOnly) {
+    graffWarningOnly =
+        warningOnly;
+
+    graffFilterAll
+        .classList
+        .toggle(
+            "active",
+            !warningOnly
+        );
+
+    graffFilterWarning
+        .classList
+        .toggle(
+            "active",
+            warningOnly
+        );
 
     renderGraffCustomers();
 }
+
+
+function formatDateTime(value) {
+    if (!value) {
+        return "";
+    }
+
+    const date =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return String(value);
+    }
+
+    return date.toLocaleString(
+        "zh-CN",
+        {
+            hour12: false
+        }
+    );
+}
+
 
 async function initialLoad() {
 
@@ -1420,6 +2080,15 @@ async function initialLoad() {
         searchInput.disabled = false;
         searchButton.disabled = false;
 
+        const savedEmployeeName =
+            localStorage.getItem(
+                "yezhu_employee_name"
+            ) || "";
+
+        employeeNameInput.value =
+            savedEmployeeName;
+
+        subscribeGraffRealtime();
 
         searchInput.focus();
 
@@ -2840,6 +3509,17 @@ backFromGraff.addEventListener(
 graffSearchInput.addEventListener(
     "input",
     renderGraffCustomers
+);
+
+
+employeeNameInput.addEventListener(
+    "change",
+    function () {
+        localStorage.setItem(
+            "yezhu_employee_name",
+            employeeNameInput.value.trim()
+        );
+    }
 );
 
 graffFilterAll.addEventListener(
