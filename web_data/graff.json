@@ -1,7 +1,7 @@
 {
-  "version": "20260906124525",
-  "updated_at": "2026-09-06 12:45:25",
-  "count": 35,
+  "version": "20260906125002",
+  "updated_at": "2026-09-06 12:50:02",
+  "count": 39,
   "warning_count": 12,
   "customers": [
     {
@@ -420,6 +420,51 @@
       ],
       "raw": "⚠️Jolie.L💫\n白绿宝石 1.0ct\n更新库存，客人嫌贵，等库存更新\n要的是1ct以下的项链",
       "search_text": "jolie.l💫  白绿宝石 1.0ct 更新库存，客人嫌贵，等库存更新 要的是1ct以下的项链"
+    },
+    {
+      "id": 36,
+      "customer": "木三三木",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Graff icon oval 1ct d vvs1  52or 53"
+      ],
+      "raw": "木三三木\nGraff icon oval 1ct d vvs1  52or 53",
+      "search_text": "木三三木  graff icon oval 1ct d vvs1  52or 53"
+    },
+    {
+      "id": 37,
+      "customer": "전가이📎",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "1.5ct 看两颗gia 比例",
+        "付定金后最长保管时间是？"
+      ],
+      "raw": "전가이📎\n1.5ct 看两颗gia 比例\n付定金后最长保管时间是？",
+      "search_text": "전가이📎  1.5ct 看两颗gia 比例 付定金后最长保管时间是？"
+    },
+    {
+      "id": 38,
+      "customer": "Watermelon",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Graff Icon round  0.4ct 48# f"
+      ],
+      "raw": "Watermelon \nGraff Icon round  0.4ct 48# f",
+      "search_text": "watermelon  graff icon round  0.4ct 48# f"
+    },
+    {
+      "id": 39,
+      "customer": "小小芝",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Graff icon pear 0.7ct  d 或者e"
+      ],
+      "raw": "小小芝\nGraff icon pear 0.7ct  d 或者e",
+      "search_text": "小小芝  graff icon pear 0.7ct  d 或者e"
     }
   ]
 }
