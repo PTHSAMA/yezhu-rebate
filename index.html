@@ -1081,6 +1081,12 @@ button {
             <div class="form-group">
                 <label class="form-label">订单 / 跟进状态</label>
                 <select id="detailStatus"></select>
+                <input
+                    id="detailCustomStatus"
+                    type="text"
+                    placeholder="请输入其他状态"
+                    style="display:none;margin-top:8px;"
+                >
             </div>
 
             <div class="form-group">
@@ -1303,6 +1309,9 @@ const detailRequirements =
 
 const detailStatus =
     document.getElementById("detailStatus");
+
+const detailCustomStatus =
+    document.getElementById("detailCustomStatus");
 
 const detailOwner =
     document.getElementById("detailOwner");
@@ -1611,6 +1620,31 @@ function openGraffDetail(item) {
     detailStatus.innerHTML =
         buildStatusOptions(item.status || "");
 
+    const standardStatuses = [
+        "",
+        "待跟进",
+        "继续匹配库存",
+        "查库存",
+        "已找到库存",
+        "已报价",
+        "等待客户回复",
+        "待付定金",
+        "已付定金",
+        "已成交",
+        "暂停跟进",
+        "客户不要了"
+    ];
+
+    const existingStatus =
+        String(item.status || "").trim();
+
+    updateCustomStatusInput(
+        existingStatus &&
+        !standardStatuses.includes(existingStatus)
+            ? existingStatus
+            : ""
+    );
+
     detailOwner.value =
         item.owner || "";
 
@@ -1904,6 +1938,15 @@ async function saveSelectedGraffCustomer() {
     const operator =
         employeeNameInput.value.trim();
 
+    if (
+        detailStatus.value === "__OTHER__" &&
+        !detailCustomStatus.value.trim()
+    ) {
+        alert("选择“其他”后，请输入具体状态。");
+        detailCustomStatus.focus();
+        return;
+    }
+
     if (!operator) {
         alert("请先填写“当前操作人”，用于记录是谁修改的。");
         employeeNameInput.focus();
@@ -1915,7 +1958,10 @@ async function saveSelectedGraffCustomer() {
 
     try {
         const payload = {
-            status: detailStatus.value.trim() || null,
+            status:
+                detailStatus.value === "__OTHER__"
+                    ? (detailCustomStatus.value.trim() || null)
+                    : (detailStatus.value.trim() || null),
             owner: detailOwner.value.trim() || null,
             note: detailNote.value.trim() || null,
             updated_by: operator,
@@ -1986,25 +2032,17 @@ function buildStatusOptions(currentStatus) {
         currentStatus || ""
     ).trim();
 
-    if (
+    const isCustom =
         value &&
-        !commonStatuses.includes(value)
-    ) {
-        commonStatuses.splice(
-            1,
-            0,
-            value
-        );
-    }
+        !commonStatuses.includes(value);
 
     return commonStatuses
         .map(status => {
             const label =
-                status ||
-                "请选择状态";
+                status || "请选择状态";
 
             const selected =
-                status === value
+                !isCustom && status === value
                     ? " selected"
                     : "";
 
@@ -2018,7 +2056,34 @@ function buildStatusOptions(currentStatus) {
                 '</option>'
             );
         })
-        .join("");
+        .join("") +
+        '<option value="__OTHER__"' +
+        (isCustom ? ' selected' : '') +
+        '>其他（自己输入）</option>';
+}
+
+
+function updateCustomStatusInput(currentCustomValue = "") {
+    const isOther =
+        detailStatus.value === "__OTHER__";
+
+    detailCustomStatus.style.display =
+        isOther ? "block" : "none";
+
+    if (isOther) {
+        if (currentCustomValue) {
+            detailCustomStatus.value =
+                currentCustomValue;
+        }
+
+        setTimeout(
+            () => detailCustomStatus.focus(),
+            50
+        );
+    }
+    else {
+        detailCustomStatus.value = "";
+    }
 }
 
 
@@ -3606,6 +3671,14 @@ backToGraffList.addEventListener(
 saveGraffDetailButton.addEventListener(
     "click",
     saveSelectedGraffCustomer
+);
+
+
+detailStatus.addEventListener(
+    "change",
+    function () {
+        updateCustomStatusInput();
+    }
 );
 
 employeeNameInput.addEventListener(
