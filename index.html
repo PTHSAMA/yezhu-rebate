@@ -769,6 +769,88 @@ button {
     font-size: 14px;
 }
 
+
+.inventory-reference-box {
+    background: #fffdf7;
+    border-color: #f0dfb5;
+}
+
+.inventory-reference-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.inventory-reference-title strong {
+    font-size: 15px;
+}
+
+.inventory-reference-note {
+    font-size: 12px;
+    color: #8a6d3b;
+    line-height: 1.55;
+    margin-bottom: 10px;
+}
+
+.inventory-reference-empty {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.6;
+}
+
+.inventory-reference-item {
+    border-top: 1px solid #f1e7cc;
+    padding: 10px 0;
+}
+
+.inventory-reference-item:first-child {
+    border-top: none;
+}
+
+.inventory-reference-main {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.55;
+    color: #222;
+}
+
+.inventory-reference-meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.55;
+}
+
+.inventory-reference-reason {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #888;
+    line-height: 1.5;
+}
+
+.inventory-reference-level {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #f0f2f5;
+    font-size: 11px;
+    color: #555;
+    vertical-align: 1px;
+}
+
+.inventory-reference-more {
+    width: 100%;
+    height: 34px;
+    margin-top: 8px;
+    background: #f2f3f5;
+    color: #444;
+    font-size: 13px;
+    font-weight: 700;
+}
+
 .operator-box {
     margin-top: 12px;
     padding: 11px;
@@ -1095,8 +1177,9 @@ button {
 
             <div class="graff-filters">
                 <button class="filter-button active" id="graffFilterAll">全部</button>
-                <button class="filter-button" id="graffFilterWarning">⚠️ 重点跟进</button>
                 <button class="filter-button" id="graffFilterContinue">继续跟进</button>
+                <button class="filter-button" id="graffFilterCarat">0.7ct以上</button>
+                <button class="filter-button" id="graffFilterUnset">未设置状态</button>
             </div>
         </div>
 
@@ -1118,6 +1201,29 @@ button {
 
             <div class="graff-detail-label">客户需求</div>
             <div class="graff-detail-text" id="detailRequirements"></div>
+        </div>
+
+        <div class="graff-detail-box inventory-reference-box" id="inventoryReferenceBox">
+            <div class="inventory-reference-title">
+                <strong>库存参考</strong>
+                <span id="inventoryReferenceCount"></span>
+            </div>
+
+            <div class="inventory-reference-note">
+                仅根据已上传库存自动筛选，用于辅助线下询货；实际库存、调货和改圈情况请以柜台确认结果为准。
+            </div>
+
+            <div id="inventoryReferenceList">
+                <div class="inventory-reference-empty">正在读取参考库存...</div>
+            </div>
+
+            <button
+                class="inventory-reference-more"
+                id="inventoryReferenceMore"
+                style="display:none;"
+            >
+                查看更多参考库存
+            </button>
         </div>
 
         <div class="graff-detail-box">
@@ -1193,6 +1299,12 @@ const SUPABASE_PUBLISHABLE_KEY =
 const SUPABASE_TABLE =
     "yezhu-graff";
 
+const SUPABASE_INVENTORY_TABLE =
+    "graff_inventory";
+
+const SUPABASE_MATCH_TABLE =
+    "graff_matches";
+
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -1214,8 +1326,9 @@ let currentSettingsVersion = "";
 
 let graffDatabase = [];
 let currentGraffVersion = "";
-let graffWarningOnly = false;
 let graffContinueOnly = false;
+let graffCaratOnly = false;
+let graffUnsetOnly = false;
 
 let toastTimer = null;
 
@@ -1322,11 +1435,14 @@ const graffSearchInput =
 const graffFilterAll =
     document.getElementById("graffFilterAll");
 
-const graffFilterWarning =
-    document.getElementById("graffFilterWarning");
-
 const graffFilterContinue =
     document.getElementById("graffFilterContinue");
+
+const graffFilterCarat =
+    document.getElementById("graffFilterCarat");
+
+const graffFilterUnset =
+    document.getElementById("graffFilterUnset");
 
 const graffList =
     document.getElementById("graffList");
@@ -1379,8 +1495,22 @@ const detailLastUpdate =
 const copyGraffDetailButton =
     document.getElementById("copyGraffDetailButton");
 
+const inventoryReferenceBox =
+    document.getElementById("inventoryReferenceBox");
+
+const inventoryReferenceCount =
+    document.getElementById("inventoryReferenceCount");
+
+const inventoryReferenceList =
+    document.getElementById("inventoryReferenceList");
+
+const inventoryReferenceMore =
+    document.getElementById("inventoryReferenceMore");
+
 let graffRealtimeChannel = null;
 let selectedGraffCustomerId = null;
+let selectedInventoryReferences = [];
+let inventoryReferenceExpanded = false;
 
 
 
@@ -1705,6 +1835,17 @@ function openGraffDetail(item) {
     employeeNameInput.value =
         localStorage.getItem("yezhu_employee_name") || "";
 
+    inventoryReferenceExpanded = false;
+    selectedInventoryReferences = [];
+    inventoryReferenceCount.textContent = "";
+    inventoryReferenceList.innerHTML =
+        '<div class="inventory-reference-empty">正在读取参考库存...</div>';
+    inventoryReferenceMore.style.display = "none";
+
+    loadInventoryReferencesForCustomer(
+        item.id
+    );
+
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
@@ -1756,25 +1897,16 @@ function updateGraffSummary() {
             item => item.active !== false
         );
 
-    const warningCount =
-        activeCustomers.filter(
-            item => item.warning
-        ).length;
-
     graffDataStatus.innerHTML =
         '<span class="realtime-dot"></span>' +
         "实时同步 · 今日客户：" +
         activeCustomers.length +
-        " 位 · 重点跟进：" +
-        warningCount +
         " 位";
 
     homeGraffSummary.textContent =
         "今日 " +
         activeCustomers.length +
-        " 位客户 · ⚠️ " +
-        warningCount +
-        " 位重点跟进";
+        " 位客户";
 
     let latest = "";
 
@@ -1914,6 +2046,288 @@ function subscribeGraffRealtime() {
                     "Supabase 实时连接已建立";
             }
         });
+}
+
+
+function inventoryLevelLabel(level) {
+    const map = {
+        exact: "完全匹配",
+        good: "高匹配",
+        near: "接近匹配"
+    };
+
+    return map[level] || "参考";
+}
+
+
+function inventoryDisplayName(item) {
+    const parts = [];
+
+    if (item.collection) {
+        parts.push(
+            String(item.collection).toUpperCase()
+        );
+    }
+
+    if (item.shape) {
+        let shape = String(item.shape).toUpperCase();
+
+        if (item.variant) {
+            shape += "." +
+                String(item.variant).toUpperCase();
+        }
+
+        parts.push(shape);
+    }
+
+    return parts.join(" ");
+}
+
+
+function renderInventoryReferences() {
+    const rows =
+        inventoryReferenceExpanded
+            ? selectedInventoryReferences
+            : selectedInventoryReferences.slice(0, 5);
+
+    inventoryReferenceCount.textContent =
+        selectedInventoryReferences.length
+            ? selectedInventoryReferences.length + " 条参考"
+            : "";
+
+    if (!selectedInventoryReferences.length) {
+        inventoryReferenceList.innerHTML =
+            '<div class="inventory-reference-empty">' +
+            '当前已上传库存中没有自动筛出的参考项。' +
+            '<br>仍建议继续线下询问和确认库存。' +
+            '</div>';
+
+        inventoryReferenceMore.style.display =
+            "none";
+
+        return;
+    }
+
+    inventoryReferenceList.innerHTML =
+        rows.map(row => {
+            const inventory =
+                row.inventory || {};
+
+            const mainParts = [];
+
+            if (inventory.carat !== null &&
+                inventory.carat !== undefined) {
+                mainParts.push(
+                    Number(inventory.carat) + "ct"
+                );
+            }
+
+            if (inventory.color) {
+                mainParts.push(
+                    escapeHtml(inventory.color)
+                );
+            }
+
+            if (inventory.clarity) {
+                mainParts.push(
+                    escapeHtml(inventory.clarity)
+                );
+            }
+
+            if (inventory.size !== null &&
+                inventory.size !== undefined) {
+                mainParts.push(
+                    Number(inventory.size) + "#"
+                );
+            }
+
+            if (inventory.price_w !== null &&
+                inventory.price_w !== undefined) {
+                mainParts.push(
+                    Number(inventory.price_w) + "W"
+                );
+            }
+
+            return (
+                '<div class="inventory-reference-item">' +
+                    '<div class="inventory-reference-main">' +
+                        escapeHtml(
+                            inventoryDisplayName(inventory)
+                        ) +
+                        ' · ' +
+                        mainParts.join(" · ") +
+                        '<span class="inventory-reference-level">' +
+                            escapeHtml(
+                                inventoryLevelLabel(
+                                    row.match_level
+                                )
+                            ) +
+                        '</span>' +
+                    '</div>' +
+                    (
+                        row.size_diff !== null &&
+                        row.size_diff !== undefined
+                            ? '<div class="inventory-reference-meta">' +
+                              '圈口差：' +
+                              escapeHtml(String(row.size_diff)) +
+                              ' 号' +
+                              (
+                                  row.match_score !== null &&
+                                  row.match_score !== undefined
+                                      ? ' · 参考分：' +
+                                        escapeHtml(
+                                            String(row.match_score)
+                                        )
+                                      : ''
+                              ) +
+                              '</div>'
+                            : (
+                                row.match_score !== null &&
+                                row.match_score !== undefined
+                                    ? '<div class="inventory-reference-meta">' +
+                                      '参考分：' +
+                                      escapeHtml(
+                                          String(row.match_score)
+                                      ) +
+                                      '</div>'
+                                    : ''
+                              )
+                    ) +
+                    (
+                        row.reason
+                            ? '<div class="inventory-reference-reason">' +
+                              escapeHtml(row.reason) +
+                              '</div>'
+                            : ''
+                    ) +
+                '</div>'
+            );
+        }).join("");
+
+    if (selectedInventoryReferences.length > 5) {
+        inventoryReferenceMore.style.display =
+            "block";
+
+        inventoryReferenceMore.textContent =
+            inventoryReferenceExpanded
+                ? "收起参考库存"
+                : "查看更多参考库存（" +
+                  selectedInventoryReferences.length +
+                  "）";
+    }
+    else {
+        inventoryReferenceMore.style.display =
+            "none";
+    }
+}
+
+
+async function loadInventoryReferencesForCustomer(customerId) {
+    try {
+        const {
+            data: matchRows,
+            error: matchError
+        } = await supabaseClient
+            .from(SUPABASE_MATCH_TABLE)
+            .select(
+                "inventory_id,match_level,match_score,size_diff,reason"
+            )
+            .eq("customer_id", customerId)
+            .eq("active", true)
+            .order("match_score", {
+                ascending: false
+            });
+
+        if (matchError) {
+            throw matchError;
+        }
+
+        if (
+            !Array.isArray(matchRows) ||
+            !matchRows.length
+        ) {
+            selectedInventoryReferences = [];
+            renderInventoryReferences();
+            return;
+        }
+
+        const inventoryIds = [
+            ...new Set(
+                matchRows
+                    .map(row => row.inventory_id)
+                    .filter(value => value !== null && value !== undefined)
+            )
+        ];
+
+        if (!inventoryIds.length) {
+            selectedInventoryReferences = [];
+            renderInventoryReferences();
+            return;
+        }
+
+        const {
+            data: inventoryRows,
+            error: inventoryError
+        } = await supabaseClient
+            .from(SUPABASE_INVENTORY_TABLE)
+            .select(
+                "id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active"
+            )
+            .in("id", inventoryIds)
+            .eq("active", true);
+
+        if (inventoryError) {
+            throw inventoryError;
+        }
+
+        const inventoryMap = new Map(
+            (inventoryRows || []).map(
+                item => [
+                    String(item.id),
+                    item
+                ]
+            )
+        );
+
+        selectedInventoryReferences =
+            matchRows
+                .map(row => ({
+                    ...row,
+                    inventory:
+                        inventoryMap.get(
+                            String(row.inventory_id)
+                        ) || null
+                }))
+                .filter(
+                    row => row.inventory
+                )
+                .sort(
+                    (a, b) =>
+                        Number(b.match_score || 0) -
+                        Number(a.match_score || 0)
+                );
+
+        renderInventoryReferences();
+    }
+    catch (error) {
+        console.error(
+            "库存参考读取失败：",
+            error
+        );
+
+        selectedInventoryReferences = [];
+
+        inventoryReferenceCount.textContent = "";
+
+        inventoryReferenceList.innerHTML =
+            '<div class="inventory-reference-empty">' +
+            '库存参考读取失败，不影响客户跟进。' +
+            '<br>请继续以线下询货结果为准。' +
+            '</div>';
+
+        inventoryReferenceMore.style.display =
+            "none";
+    }
 }
 
 
@@ -2141,17 +2555,37 @@ function renderGraffCustomers() {
                 }
 
                 if (
-                    graffWarningOnly &&
-                    !item.warning
+                    graffContinueOnly &&
+                    String(item.status || "").trim() !== "继续匹配库存"
                 ) {
                     return false;
                 }
 
                 if (
-                    graffContinueOnly &&
-                    String(item.status || "").trim() !== "继续匹配库存"
+                    graffUnsetOnly &&
+                    String(item.status || "").trim() !== ""
                 ) {
                     return false;
+                }
+
+                if (graffCaratOnly) {
+                    const requirementText =
+                        graffDetailsArray(item).join(" ").toLowerCase();
+
+                    const caratMatches = [
+                        ...requirementText.matchAll(
+                            /(\d+(?:\.\d+)?)\s*(?:ct|克拉)/gi
+                        )
+                    ];
+
+                    const has07OrAbove =
+                        caratMatches.some(
+                            match => Number(match[1]) >= 0.7
+                        );
+
+                    if (!has07OrAbove) {
+                        return false;
+                    }
                 }
 
                 if (!keyword) {
@@ -2226,12 +2660,14 @@ function renderGraffCustomers() {
 
 
 function setGraffFilter(mode) {
-    graffWarningOnly = mode === "warning";
     graffContinueOnly = mode === "continue";
+    graffCaratOnly = mode === "carat";
+    graffUnsetOnly = mode === "unset";
 
     graffFilterAll.classList.toggle("active", mode === "all");
-    graffFilterWarning.classList.toggle("active", mode === "warning");
     graffFilterContinue.classList.toggle("active", mode === "continue");
+    graffFilterCarat.classList.toggle("active", mode === "carat");
+    graffFilterUnset.classList.toggle("active", mode === "unset");
 
     renderGraffCustomers();
 }
@@ -3974,6 +4410,17 @@ employeeNameInput.addEventListener(
     }
 );
 
+inventoryReferenceMore.addEventListener(
+    "click",
+    function () {
+        inventoryReferenceExpanded =
+            !inventoryReferenceExpanded;
+
+        renderInventoryReferences();
+    }
+);
+
+
 copyGraffDetailButton.addEventListener(
     "click",
     function () {
@@ -4007,17 +4454,24 @@ graffFilterAll.addEventListener(
     }
 );
 
-graffFilterWarning.addEventListener(
-    "click",
-    function () {
-        setGraffFilter("warning");
-    }
-);
-
 graffFilterContinue.addEventListener(
     "click",
     function () {
         setGraffFilter("continue");
+    }
+);
+
+graffFilterCarat.addEventListener(
+    "click",
+    function () {
+        setGraffFilter("carat");
+    }
+);
+
+graffFilterUnset.addEventListener(
+    "click",
+    function () {
+        setGraffFilter("unset");
     }
 );
 
