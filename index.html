@@ -1096,6 +1096,7 @@ button {
             <div class="graff-filters">
                 <button class="filter-button active" id="graffFilterAll">全部</button>
                 <button class="filter-button" id="graffFilterWarning">⚠️ 重点跟进</button>
+                <button class="filter-button" id="graffFilterContinue">继续跟进</button>
             </div>
         </div>
 
@@ -1214,6 +1215,7 @@ let currentSettingsVersion = "";
 let graffDatabase = [];
 let currentGraffVersion = "";
 let graffWarningOnly = false;
+let graffContinueOnly = false;
 
 let toastTimer = null;
 
@@ -1322,6 +1324,9 @@ const graffFilterAll =
 
 const graffFilterWarning =
     document.getElementById("graffFilterWarning");
+
+const graffFilterContinue =
+    document.getElementById("graffFilterContinue");
 
 const graffList =
     document.getElementById("graffList");
@@ -2152,6 +2157,13 @@ function renderGraffCustomers() {
                     return false;
                 }
 
+                if (
+                    graffContinueOnly &&
+                    String(item.status || "").trim() !== "继续匹配库存"
+                ) {
+                    return false;
+                }
+
                 if (!keyword) {
                     return true;
                 }
@@ -2223,27 +2235,16 @@ function renderGraffCustomers() {
 }
 
 
-function setGraffFilter(warningOnly) {
-    graffWarningOnly =
-        warningOnly;
+function setGraffFilter(mode) {
+    graffWarningOnly = mode === "warning";
+    graffContinueOnly = mode === "continue";
 
-    graffFilterAll
-        .classList
-        .toggle(
-            "active",
-            !warningOnly
-        );
-
-    graffFilterWarning
-        .classList
-        .toggle(
-            "active",
-            warningOnly
-        );
+    graffFilterAll.classList.toggle("active", mode === "all");
+    graffFilterWarning.classList.toggle("active", mode === "warning");
+    graffFilterContinue.classList.toggle("active", mode === "continue");
 
     renderGraffCustomers();
 }
-
 
 function formatDateTime(value) {
     if (!value) {
@@ -4012,14 +4013,21 @@ graffSearchInput.addEventListener(
 graffFilterAll.addEventListener(
     "click",
     function () {
-        setGraffFilter(false);
+        setGraffFilter("all");
     }
 );
 
 graffFilterWarning.addEventListener(
     "click",
     function () {
-        setGraffFilter(true);
+        setGraffFilter("warning");
+    }
+);
+
+graffFilterContinue.addEventListener(
+    "click",
+    function () {
+        setGraffFilter("continue");
     }
 );
 
