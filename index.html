@@ -3810,17 +3810,15 @@ graffDetailScreen.addEventListener(
             graffTouchStartY;
 
         /*
-            左边缘 65px 内都允许触发，
-            比之前 45px 更容易滑到。
+            不限制起始位置：
+            客户详情页任意位置都可以向右滑返回。
+            后续仍会判断滑动方向，避免上下滚动误触。
         */
-        graffSwipeActive =
-            graffTouchStartX <= 65;
+        graffSwipeActive = true;
 
-        if (graffSwipeActive) {
-            graffDetailScreen.classList.add(
-                "swipe-dragging"
-            );
-        }
+        graffDetailScreen.classList.add(
+            "swipe-dragging"
+        );
     },
     {
         passive: true
