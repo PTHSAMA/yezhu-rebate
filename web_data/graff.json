@@ -1,161 +1,425 @@
 {
-  "version": "20260905121706",
-  "updated_at": "2026-09-05 12:17:06",
-  "count": 13,
-  "warning_count": 4,
+  "version": "20260906124525",
+  "updated_at": "2026-09-06 12:45:25",
+  "count": 35,
+  "warning_count": 12,
   "customers": [
     {
       "id": 1,
-      "customer": "郝郝",
-      "wechat": "",
-      "warning": false,
-      "details": [
-        "icon oval 1.2-1.3ct F",
-        "报过1轮 继续匹配库存"
-      ],
-      "raw": "郝郝 \nicon oval 1.2-1.3ct F \n报过1轮 继续匹配库存",
-      "search_text": "郝郝  icon oval 1.2-1.3ct f 报过1轮 继续匹配库存"
-    },
-    {
-      "id": 2,
-      "customer": "X",
-      "wechat": "lovable---so",
-      "warning": false,
-      "details": [
-        "icon oval 0.7ct D-G vs1/vs2",
-        "报过1轮 继续匹配库存"
-      ],
-      "raw": "X（微信号lovable---so）\nicon oval 0.7ct D-G vs1/vs2 \n报过1轮 继续匹配库存",
-      "search_text": "x lovable---so icon oval 0.7ct d-g vs1/vs2 报过1轮 继续匹配库存"
-    },
-    {
-      "id": 3,
-      "customer": "Jamie",
-      "wechat": "",
-      "warning": false,
-      "details": [
-        "Icon oval 0.7ct 53#",
-        "报过1轮 继续匹配库存"
-      ],
-      "raw": "Jamie\nIcon oval 0.7ct 53# \n报过1轮 继续匹配库存",
-      "search_text": "jamie  icon oval 0.7ct 53# 报过1轮 继续匹配库存"
-    },
-    {
-      "id": 4,
-      "customer": "Chansy",
-      "wechat": "",
-      "warning": false,
-      "details": [
-        "graff icon round  0.5/0.7  50/51",
-        "报过1轮 继续匹配库存"
-      ],
-      "raw": "Chansy \ngraff icon round  0.5/0.7  50/51 \n报过1轮 继续匹配库存",
-      "search_text": "chansy  graff icon round  0.5/0.7  50/51 报过1轮 继续匹配库存"
-    },
-    {
-      "id": 5,
       "customer": "李李呀_",
       "wechat": "",
       "warning": false,
       "details": [
-        "Icon 0.73ct F vs1 同参数比价日本"
+        "Promise .P 0.7ct 52#"
       ],
-      "raw": "李李呀_\nIcon 0.73ct F vs1 同参数比价日本",
-      "search_text": "李李呀_  icon 0.73ct f vs1 同参数比价日本"
+      "raw": "李李呀_\nPromise .P 0.7ct 52#",
+      "search_text": "李李呀_  promise .p 0.7ct 52#"
+    },
+    {
+      "id": 2,
+      "customer": "YN-Xu🌸",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON ROUND 0.4-0.5ct VVS2 F 50#"
+      ],
+      "raw": "YN-Xu🌸\nICON ROUND 0.4-0.5ct VVS2 F 50#",
+      "search_text": "yn-xu🌸  icon round 0.4-0.5ct vvs2 f 50#"
+    },
+    {
+      "id": 3,
+      "customer": "iriswannasay🌟",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "PEAR 项链 0.5ct"
+      ],
+      "raw": "iriswannasay🌟\nPEAR 项链 0.5ct",
+      "search_text": "iriswannasay🌟  pear 项链 0.5ct"
+    },
+    {
+      "id": 4,
+      "customer": "饮果",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "Promise 0.5ct ROUND/OVAL .P 53#"
+      ],
+      "raw": "饮果\nPromise 0.5ct ROUND/OVAL .P 53#",
+      "search_text": "饮果  promise 0.5ct round/oval .p 53#"
+    },
+    {
+      "id": 5,
+      "customer": "陈SH",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "PROMISE EMERALD .T D/E 1.0-1.6ct 50#"
+      ],
+      "raw": "陈SH\nPROMISE EMERALD .T D/E 1.0-1.6ct 50#",
+      "search_text": "陈sh  promise emerald .t d/e 1.0-1.6ct 50#"
     },
     {
       "id": 6,
-      "customer": "Yenom.",
+      "customer": "THEE",
       "wechat": "",
       "warning": false,
       "details": [
-        "Icon RD 1ct F+ 报1轮 继续匹配库存"
+        "ICON PEAR 1.0ct 54#"
       ],
-      "raw": "Yenom.\nIcon RD 1ct F+ 报1轮 继续匹配库存",
-      "search_text": "yenom.  icon rd 1ct f+ 报1轮 继续匹配库存"
+      "raw": "THEE\nICON PEAR 1.0ct 54#",
+      "search_text": "thee  icon pear 1.0ct 54#"
     },
     {
       "id": 7,
-      "customer": "Janice🐑",
+      "customer": "HH",
       "wechat": "",
       "warning": false,
       "details": [
-        "Icon RD 1ct D色",
-        "报过1轮 继续匹配库存"
+        "PROMISE OVAL .P 0.6-0.7ct 51#"
       ],
-      "raw": "Janice🐑\nIcon RD 1ct D色 \n报过1轮 继续匹配库存",
-      "search_text": "janice🐑  icon rd 1ct d色 报过1轮 继续匹配库存"
+      "raw": "HH\nPROMISE OVAL .P 0.6-0.7ct 51#",
+      "search_text": "hh  promise oval .p 0.6-0.7ct 51#"
     },
     {
       "id": 8,
-      "customer": "May",
+      "customer": "y",
       "wechat": "",
       "warning": false,
       "details": [
-        "Promise 0.5ct oval pear D vvs1 50#",
-        "报过1轮 继续匹配库存"
+        "ICON OVAL 49#",
+        "最大 F色+，G保底，6.5W内"
       ],
-      "raw": "May \nPromise 0.5ct oval pear D vvs1 50#\n报过1轮 继续匹配库存",
-      "search_text": "may  promise 0.5ct oval pear d vvs1 50# 报过1轮 继续匹配库存"
+      "raw": "y\nICON OVAL 49#\n最大 F色+，G保底，6.5W内",
+      "search_text": "y  icon oval 49# 最大 f色+，g保底，6.5w内"
     },
     {
       "id": 9,
-      "customer": "Christine",
+      "customer": "元",
       "wechat": "",
       "warning": false,
       "details": [
-        "超过3000w折扣报低了 已经重新报"
+        "GRAFF 蝴蝶项链"
       ],
-      "raw": "Christine\n超过3000w折扣报低了 已经重新报",
-      "search_text": "christine  超过3000w折扣报低了 已经重新报"
+      "raw": "元\nGRAFF 蝴蝶项链",
+      "search_text": "元  graff 蝴蝶项链"
     },
     {
       "id": 10,
-      "customer": "Ychu",
+      "customer": "Hush",
       "wechat": "",
-      "warning": true,
+      "warning": false,
       "details": [
-        "问这个人要了接机信息 但是戒指没有付定金",
-        "8.23回复的 后续没人跟进戒指 定金有计划付款但是不放心 可以走咸鱼",
-        "Graff Icon oval 0.7ct 51"
+        "ICON ROUND 0.7ct 46#",
+        "邮寄"
       ],
-      "raw": "⚠️Ychu \n问这个人要了接机信息 但是戒指没有付定金\n8.23回复的 后续没人跟进戒指 定金有计划付款但是不放心 可以走咸鱼\nGraff Icon oval 0.7ct 51",
-      "search_text": "ychu  问这个人要了接机信息 但是戒指没有付定金 8.23回复的 后续没人跟进戒指 定金有计划付款但是不放心 可以走咸鱼 graff icon oval 0.7ct 51"
+      "raw": "Hush\nICON ROUND 0.7ct 46#\n邮寄",
+      "search_text": "hush  icon round 0.7ct 46# 邮寄"
     },
     {
       "id": 11,
-      "customer": "Josie🐱",
+      "customer": "七転八起",
       "wechat": "",
-      "warning": true,
+      "warning": false,
       "details": [
-        "要买1ct 8.26之后没人跟进",
-        "已经有职员发了两个参数给她"
+        "ICON OVAL 0.7-0.9ct 52#"
       ],
-      "raw": "⚠️ Josie🐱\n要买1ct 8.26之后没人跟进\n已经有职员发了两个参数给她",
-      "search_text": "josie🐱  要买1ct 8.26之后没人跟进 已经有职员发了两个参数给她"
+      "raw": "七転八起\nICON OVAL 0.7-0.9ct 52#",
+      "search_text": "七転八起  icon oval 0.7-0.9ct 52#"
     },
     {
       "id": 12,
-      "customer": "Amy",
+      "customer": "MAY🥕",
       "wechat": "",
-      "warning": true,
+      "warning": false,
       "details": [
-        "带回Graff push订单确认还要不要"
+        "PROMISE OVAL .P D VVS1 50#"
       ],
-      "raw": "⚠️Amy 带回Graff push订单确认还要不要",
-      "search_text": "amy  带回graff push订单确认还要不要"
+      "raw": "MAY🥕\nPROMISE OVAL .P D VVS1 50#",
+      "search_text": "may🥕  promise oval .p d vvs1 50#"
     },
     {
       "id": 13,
-      "customer": "J-Lii",
+      "customer": "BB",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON OVAL 1.0ct E/F VS1/VVS2 50#"
+      ],
+      "raw": "BB\nICON OVAL 1.0ct E/F VS1/VVS2 50#",
+      "search_text": "bb  icon oval 1.0ct e/f vs1/vvs2 50#"
+    },
+    {
+      "id": 14,
+      "customer": "杨潇",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON OVAL/PEAR 0.5ct 49#"
+      ],
+      "raw": "杨潇\nICON OVAL/PEAR 0.5ct 49#",
+      "search_text": "杨潇  icon oval/pear 0.5ct 49#"
+    },
+    {
+      "id": 15,
+      "customer": "rinon🥨",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "GRAFF ICON 0.6-0.7ct 51#"
+      ],
+      "raw": "rinon🥨\nGRAFF ICON 0.6-0.7ct 51#",
+      "search_text": "rinon🥨  graff icon 0.6-0.7ct 51#"
+    },
+    {
+      "id": 16,
+      "customer": "👩🏻（快乐版）",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON OVAL 1.5ct 52#左右"
+      ],
+      "raw": "👩🏻（快乐版）\nICON OVAL 1.5ct 52#左右",
+      "search_text": "👩🏻（快乐版）  icon oval 1.5ct 52#左右"
+    },
+    {
+      "id": 17,
+      "customer": "小红书",
       "wechat": "",
       "warning": true,
       "details": [
-        "咨询的卡地亚对戒戴的52没确认款式",
-        "咨询的graff icon 50分/70分没确认切割"
+        "PROMISE 主石椭圆 / 辅石梯形 1.2-2.0ct",
+        "进度看不到，加微信"
       ],
-      "raw": "⚠️ J-Lii\n咨询的卡地亚对戒戴的52没确认款式\n咨询的graff icon 50分/70分没确认切割",
-      "search_text": "j-lii  咨询的卡地亚对戒戴的52没确认款式 咨询的graff icon 50分/70分没确认切割"
+      "raw": "⚠️小红书\nPROMISE 主石椭圆 / 辅石梯形 1.2-2.0ct\n进度看不到，加微信",
+      "search_text": "小红书  promise 主石椭圆 / 辅石梯形 1.2-2.0ct 进度看不到，加微信"
+    },
+    {
+      "id": 18,
+      "customer": "就一口.",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.5ct G/H",
+        "查最新库存",
+        "客人找5W冒泡预算，E/F色"
+      ],
+      "raw": "⚠️就一口.\nICON OVAL 0.5ct G/H\n查最新库存\n客人找5W冒泡预算，E/F色",
+      "search_text": "就一口.  icon oval 0.5ct g/h 查最新库存 客人找5w冒泡预算，e/f色"
+    },
+    {
+      "id": 19,
+      "customer": "Y.",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "GRAFF PEAR 项链 0.5ct / 0.75ct左右",
+        "已在韩找"
+      ],
+      "raw": "⚠️Y.\nGRAFF PEAR 项链 0.5ct / 0.75ct左右\n已在韩找",
+      "search_text": "y.  graff pear 项链 0.5ct / 0.75ct左右 已在韩找"
+    },
+    {
+      "id": 20,
+      "customer": "🧸",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "小蝴蝶 ROUND 0.7-1.0ct 48#",
+        "查库存"
+      ],
+      "raw": "🧸\n小蝴蝶 ROUND 0.7-1.0ct 48#\n查库存",
+      "search_text": "🧸  小蝴蝶 round 0.7-1.0ct 48# 查库存"
+    },
+    {
+      "id": 21,
+      "customer": "枝枝宁宁荔🎀",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "拍戒指编码"
+      ],
+      "raw": "枝枝宁宁荔🎀\n拍戒指编码",
+      "search_text": "枝枝宁宁荔🎀  拍戒指编码"
+    },
+    {
+      "id": 22,
+      "customer": "TT",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.6ct左右 51#",
+        "查库存"
+      ],
+      "raw": "⚠️TT\nICON OVAL 0.6ct左右 51#\n查库存",
+      "search_text": "tt  icon oval 0.6ct左右 51# 查库存"
+    },
+    {
+      "id": 23,
+      "customer": "yy",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 48#",
+        "具体克拉没写，查库存",
+        "客服参数没发全，醒来跟进"
+      ],
+      "raw": "⚠️yy\nICON OVAL 48#\n具体克拉没写，查库存\n客服参数没发全，醒来跟进",
+      "search_text": "yy  icon oval 48# 具体克拉没写，查库存 客服参数没发全，醒来跟进"
+    },
+    {
+      "id": 24,
+      "customer": "L",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.6ct左右",
+        "查库存",
+        "明天就要来了"
+      ],
+      "raw": "⚠️L\nICON OVAL 0.6ct左右\n查库存\n明天就要来了",
+      "search_text": "l  icon oval 0.6ct左右 查库存 明天就要来了"
+    },
+    {
+      "id": 25,
+      "customer": "小仙女",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "GRAFF PEAR 项链 0.5ct",
+        "查库存"
+      ],
+      "raw": "小仙女\nGRAFF PEAR 项链 0.5ct\n查库存",
+      "search_text": "小仙女  graff pear 项链 0.5ct 查库存"
+    },
+    {
+      "id": 26,
+      "customer": "小文",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON OVAL 1.0ct 47#",
+        "更新库存"
+      ],
+      "raw": "小文\nICON OVAL 1.0ct 47#\n更新库存",
+      "search_text": "小文  icon oval 1.0ct 47# 更新库存"
+    },
+    {
+      "id": 27,
+      "customer": "bubble",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON OVAL",
+        "找能改到44#的"
+      ],
+      "raw": "bubble\nICON OVAL\n找能改到44#的",
+      "search_text": "bubble  icon oval 找能改到44#的"
+    },
+    {
+      "id": 28,
+      "customer": "乌冬猎手",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.5ct / 0.7ct",
+        "周一更新库存",
+        "看尚美白鹭 G色"
+      ],
+      "raw": "⚠️乌冬猎手\nICON OVAL 0.5ct / 0.7ct\n周一更新库存\n看尚美白鹭 G色",
+      "search_text": "乌冬猎手  icon oval 0.5ct / 0.7ct 周一更新库存 看尚美白鹭 g色"
+    },
+    {
+      "id": 29,
+      "customer": "子牛",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "PROMISE OVAL/ROUND 梯形辅钻 0.7ct 49#",
+        "更新库存"
+      ],
+      "raw": "子牛\nPROMISE OVAL/ROUND 梯形辅钻 0.7ct 49#\n更新库存",
+      "search_text": "子牛  promise oval/round 梯形辅钻 0.7ct 49# 更新库存"
+    },
+    {
+      "id": 30,
+      "customer": "y",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.7ct 46#",
+        "更新库存",
+        "9.5来"
+      ],
+      "raw": "⚠️y\nICON OVAL 0.7ct 46#\n更新库存\n9.5来",
+      "search_text": "y  icon oval 0.7ct 46# 更新库存 9.5来"
+    },
+    {
+      "id": 31,
+      "customer": "农村拓哉",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.5ct",
+        "已更新库存",
+        "和“就一口.”是同一个人"
+      ],
+      "raw": "⚠️农村拓哉\nICON OVAL 0.5ct\n已更新库存\n和“就一口.”是同一个人",
+      "search_text": "农村拓哉  icon oval 0.5ct 已更新库存 和“就一口.”是同一个人"
+    },
+    {
+      "id": 32,
+      "customer": "学而时习芝士蛋糕",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "PROMISE / ICON OVAL 0.5ct",
+        "找可以改到58#的戒指",
+        "周一更新库存",
+        "客人从8.20后没回复"
+      ],
+      "raw": "⚠️学而时习芝士蛋糕\nPROMISE / ICON OVAL 0.5ct\n找可以改到58#的戒指\n周一更新库存\n客人从8.20后没回复",
+      "search_text": "学而时习芝士蛋糕  promise / icon oval 0.5ct 找可以改到58#的戒指 周一更新库存 客人从8.20后没回复"
+    },
+    {
+      "id": 33,
+      "customer": "LioJin",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "ICON OVAL 0.7ct",
+        "已发GIA，等客人决定",
+        "更新库存",
+        "客人已经不要了"
+      ],
+      "raw": "⚠️LioJin\nICON OVAL 0.7ct\n已发GIA，等客人决定\n更新库存\n客人已经不要了",
+      "search_text": "liojin  icon oval 0.7ct 已发gia，等客人决定 更新库存 客人已经不要了"
+    },
+    {
+      "id": 34,
+      "customer": "D",
+      "wechat": "",
+      "warning": false,
+      "details": [
+        "ICON OVAL 0.5ct",
+        "今天更新了库存",
+        "客人未回复，再次更新库存"
+      ],
+      "raw": "D\nICON OVAL 0.5ct\n今天更新了库存\n客人未回复，再次更新库存",
+      "search_text": "d  icon oval 0.5ct 今天更新了库存 客人未回复，再次更新库存"
+    },
+    {
+      "id": 35,
+      "customer": "Jolie.L💫",
+      "wechat": "",
+      "warning": true,
+      "details": [
+        "白绿宝石 1.0ct",
+        "更新库存，客人嫌贵，等库存更新",
+        "要的是1ct以下的项链"
+      ],
+      "raw": "⚠️Jolie.L💫\n白绿宝石 1.0ct\n更新库存，客人嫌贵，等库存更新\n要的是1ct以下的项链",
+      "search_text": "jolie.l💫  白绿宝石 1.0ct 更新库存，客人嫌贵，等库存更新 要的是1ct以下的项链"
     }
   ]
 }
