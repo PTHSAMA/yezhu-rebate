@@ -3501,122 +3501,73 @@ async function buildLiveInventoryReferencesForCustomer(item){
 
 async function loadInventoryReferencesForCustomer(customerId) {
     try {
-        const {
-            data: matchRows,
-            error: matchError
-        } = await supabaseClient
-            .from(SUPABASE_MATCH_TABLE)
-            .select(
-                "inventory_id,match_level,match_score,size_diff,reason"
-            )
-            .eq("customer_id", customerId)
-            .eq("active", true)
-            .order("match_score", {
-                ascending: false
-            });
-
-        if (matchError) {
-            throw matchError;
-        }
-
-        if (
-            !Array.isArray(matchRows) ||
-            !matchRows.length
-        ) {
-            const customer = graffDatabase.find(
-                item => String(item.id) === String(customerId)
-            );
-
-            selectedInventoryReferences =
-                customer
-                    ? await buildLiveInventoryReferencesForCustomer(customer)
-                    : [];
-
-            const ignores = await loadIgnoreRows(customerId);
-            const ignoreMap = new Map(ignores.map(x=>[String(x.inventory_id),x]));
-            selectedIgnoredInventoryReferences = selectedInventoryReferences
-                .filter(x=>x.inventory&&ignoreMap.has(String(x.inventory.id)))
-                .map(x=>({...x,...ignoreMap.get(String(x.inventory.id))}));
-            selectedInventoryReferences = selectedInventoryReferences
-                .filter(x=>x.inventory&&!ignoreMap.has(String(x.inventory.id)));
-
-            renderInventoryReferences();
-            return;
-        }
-
-        const inventoryIds = [
-            ...new Set(
-                matchRows
-                    .map(row => row.inventory_id)
-                    .filter(value => value !== null && value !== undefined)
-            )
-        ];
-
-        if (!inventoryIds.length) {
-            selectedInventoryReferences = [];
-            renderInventoryReferences();
-            return;
-        }
-
-        const {
-            data: inventoryRows,
-            error: inventoryError
-        } = await supabaseClient
-            .from(SUPABASE_INVENTORY_TABLE)
-            .select(
-                "id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active"
-            )
-            .in("id", inventoryIds)
-            .eq("active", true);
-
-        if (inventoryError) {
-            throw inventoryError;
-        }
-
-        const inventoryMap = new Map(
-            (inventoryRows || []).map(
-                item => [
-                    String(item.id),
-                    item
-                ]
-            )
+        const customer = graffDatabase.find(
+            item => String(item.id) === String(customerId)
         );
 
+        if (!customer) {
+            selectedInventoryReferences = [];
+            selectedIgnoredInventoryReferences = [];
+            renderInventoryReferences();
+            return;
+        }
+
+        // 关键：网页端始终按“当前客户资料 + 当前有效库存”即时重算，
+        // 不再优先读取 graff_matches 的旧缓存结果。
+        // 这样修改跟进备注后，保存即立即触发新的筛选。
         selectedInventoryReferences =
-            matchRows
-                .map(row => ({
-                    ...row,
-                    inventory:
-                        inventoryMap.get(
-                            String(row.inventory_id)
-                        ) || null
-                }))
-                .filter(
-                    row => row.inventory
+            await buildLiveInventoryReferencesForCustomer(customer);
+
+        const ignores =
+            await loadIgnoreRows(customerId);
+
+        const ignoreMap =
+            new Map(
+                ignores.map(
+                    item => [
+                        String(item.inventory_id),
+                        item
+                    ]
                 )
-                .sort(
-                    (a, b) =>
-                        Number(b.match_score || 0) -
-                        Number(a.match_score || 0)
+            );
+
+        selectedIgnoredInventoryReferences =
+            selectedInventoryReferences
+                .filter(
+                    item =>
+                        item.inventory &&
+                        ignoreMap.has(
+                            String(item.inventory.id)
+                        )
+                )
+                .map(
+                    item => ({
+                        ...item,
+                        ...ignoreMap.get(
+                            String(item.inventory.id)
+                        )
+                    })
                 );
 
-        const ignores = await loadIgnoreRows(customerId);
-        const ignoreMap = new Map(ignores.map(x=>[String(x.inventory_id),x]));
-        selectedIgnoredInventoryReferences = selectedInventoryReferences
-            .filter(x=>x.inventory&&ignoreMap.has(String(x.inventory.id)))
-            .map(x=>({...x,...ignoreMap.get(String(x.inventory.id))}));
-        selectedInventoryReferences = selectedInventoryReferences
-            .filter(x=>x.inventory&&!ignoreMap.has(String(x.inventory.id)));
+        selectedInventoryReferences =
+            selectedInventoryReferences.filter(
+                item =>
+                    item.inventory &&
+                    !ignoreMap.has(
+                        String(item.inventory.id)
+                    )
+            );
 
         renderInventoryReferences();
     }
     catch (error) {
         console.error(
-            "库存参考读取失败：",
+            "库存参考即时匹配失败：",
             error
         );
 
         selectedInventoryReferences = [];
+        selectedIgnoredInventoryReferences = [];
 
         inventoryReferenceCount.textContent = "";
 
