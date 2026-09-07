@@ -925,6 +925,22 @@ button {
     color: #fff;
 }
 
+.graff-add-button{width:100%;height:42px;margin:0 0 10px;background:#111;color:#fff;font-weight:800;font-size:14px}
+.customer-admin-actions{display:flex;gap:8px;margin-top:12px}
+.customer-admin-actions button{flex:1;height:38px;font-size:13px;font-weight:800}
+.customer-edit-button{background:#f0f2f5;color:#222}
+.customer-delete-button{background:#fff1f1;color:#b42318}
+.customer-modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:9998;display:none;align-items:center;justify-content:center;padding:16px}
+.customer-modal{width:min(520px,100%);max-height:90vh;overflow-y:auto;background:#fff;border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.22)}
+.customer-modal h3{margin:0 0 14px;font-size:19px}
+.customer-form-label{display:block;margin:10px 0 5px;font-size:12px;color:#666;font-weight:700}
+.customer-form-input,.customer-form-textarea,.customer-form-select{width:100%;box-sizing:border-box;border:1px solid #dfe3e8;border-radius:9px;padding:10px;font-size:14px;background:#fff}
+.customer-form-textarea{min-height:105px;resize:vertical}
+.customer-modal-actions{display:flex;gap:8px;margin-top:16px}
+.customer-modal-actions button{flex:1;height:40px;font-weight:800}
+.customer-modal-save{background:#111;color:#fff}
+.customer-modal-cancel{background:#f0f2f5;color:#333}
+
 .operator-box {
     margin-top: 12px;
     padding: 11px;
@@ -1247,6 +1263,8 @@ button {
             <div class="data-info" id="graffDataStatus">正在加载今日客户意向...</div>
         </div>
 
+        <button class="graff-add-button" id="addGraffCustomerButton">＋ 新增客户</button>
+
         <div class="graff-toolbar">
             <input
                 id="graffSearchInput"
@@ -1281,6 +1299,10 @@ button {
 
             <div class="graff-detail-label">客户需求</div>
             <div class="graff-detail-text" id="detailRequirements"></div>
+            <div class="customer-admin-actions">
+                <button class="customer-edit-button" id="editGraffCustomerButton">编辑客户</button>
+                <button class="customer-delete-button" id="deleteGraffCustomerButton">删除客户</button>
+            </div>
         </div>
 
         <div class="graff-detail-box inventory-reference-box" id="inventoryReferenceBox">
@@ -1361,6 +1383,37 @@ button {
     <div id="ordersList"></div>
 </div>
 
+
+<div class="customer-modal-mask" id="customerModalMask">
+    <div class="customer-modal">
+        <h3 id="customerModalTitle">新增客户</h3>
+        <label class="customer-form-label">客户名 *</label>
+        <input class="customer-form-input" id="customerFormName">
+        <label class="customer-form-label">微信号 / 联系方式</label>
+        <input class="customer-form-input" id="customerFormWechat">
+        <label class="customer-form-label">客户需求 *</label>
+        <textarea class="customer-form-textarea" id="customerFormDetails" placeholder="例如：ICON OVAL 0.7ct F+ VS1/VS2 51#"></textarea>
+        <label class="customer-form-label">负责人</label>
+        <input class="customer-form-input" id="customerFormOwner">
+        <label class="customer-form-label">状态</label>
+        <select class="customer-form-select" id="customerFormStatus">
+            <option value="">未设置状态</option>
+            <option value="继续匹配库存">继续匹配库存</option>
+            <option value="等待客户回复">等待客户回复</option>
+            <option value="待客户确认">待客户确认</option>
+            <option value="客户不要了">客户不要了</option>
+            <option value="已成交">已成交</option>
+            <option value="暂停跟进">暂停跟进</option>
+            <option value="其他">其他</option>
+        </select>
+        <label class="customer-form-label">备注</label>
+        <textarea class="customer-form-textarea" id="customerFormNote"></textarea>
+        <div class="customer-modal-actions">
+            <button class="customer-modal-cancel" id="customerModalCancel">取消</button>
+            <button class="customer-modal-save" id="customerModalSave">保存</button>
+        </div>
+    </div>
+</div>
 
 <div
     class="toast"
@@ -1509,6 +1562,21 @@ const graffPage =
 
 const openRebateButton =
     document.getElementById("openRebateButton");
+
+const addGraffCustomerButton=document.getElementById("addGraffCustomerButton");
+const editGraffCustomerButton=document.getElementById("editGraffCustomerButton");
+const deleteGraffCustomerButton=document.getElementById("deleteGraffCustomerButton");
+const customerModalMask=document.getElementById("customerModalMask");
+const customerModalTitle=document.getElementById("customerModalTitle");
+const customerFormName=document.getElementById("customerFormName");
+const customerFormWechat=document.getElementById("customerFormWechat");
+const customerFormDetails=document.getElementById("customerFormDetails");
+const customerFormOwner=document.getElementById("customerFormOwner");
+const customerFormStatus=document.getElementById("customerFormStatus");
+const customerFormNote=document.getElementById("customerFormNote");
+const customerModalCancel=document.getElementById("customerModalCancel");
+const customerModalSave=document.getElementById("customerModalSave");
+let customerModalMode="add";
 
 const openGraffButton =
     document.getElementById("openGraffButton");
@@ -2213,6 +2281,69 @@ function inventoryDisplayName(item) {
 }
 
 
+
+
+function currentGraffCustomer(){
+    return graffDatabase.find(x=>String(x.id)===String(selectedGraffCustomerId))||null;
+}
+function openCustomerModal(mode){
+    customerModalMode=mode;
+    const item=currentGraffCustomer();
+    if(mode==="edit"&&!item){alert("找不到当前客户。");return;}
+    customerModalTitle.textContent=mode==="edit"?"编辑客户":"新增客户";
+    customerFormName.value=mode==="edit"?(item.customer||""):"";
+    customerFormWechat.value=mode==="edit"?(item.wechat||""):"";
+    customerFormDetails.value=mode==="edit"?graffDetailsArray(item).join("\n"):"";
+    customerFormOwner.value=mode==="edit"?(item.owner||""):(localStorage.getItem("yezhu_employee_name")||"");
+    customerFormStatus.value=mode==="edit"?(item.status||""):"";
+    customerFormNote.value=mode==="edit"?(item.note||""):"";
+    customerModalMask.style.display="flex";
+}
+function closeCustomerModal(){customerModalMask.style.display="none";}
+async function saveCustomerFromModal(){
+    const name=customerFormName.value.trim(), details=customerFormDetails.value.trim();
+    if(!name){alert("请填写客户名。");return;}
+    if(!details){alert("请填写客户需求。");return;}
+    const payload={
+        customer:name,wechat:customerFormWechat.value.trim(),details,
+        owner:customerFormOwner.value.trim(),status:customerFormStatus.value,
+        note:customerFormNote.value.trim(),active:true,updated_at:new Date().toISOString()
+    };
+    customerModalSave.disabled=true; customerModalSave.textContent="保存中...";
+    try{
+        if(customerModalMode==="edit"){
+            const item=currentGraffCustomer();
+            const {error}=await supabaseClient.from(SUPABASE_TABLE).update(payload).eq("id",item.id);
+            if(error)throw error;
+            closeCustomerModal(); await loadGraffDatabase(false);
+            const updated=graffDatabase.find(x=>String(x.id)===String(item.id));
+            if(updated)openGraffDetail(updated);
+            showToast("客户资料已更新");
+        }else{
+            const {data,error}=await supabaseClient.from(SUPABASE_TABLE).insert(payload).select("id").single();
+            if(error)throw error;
+            closeCustomerModal(); await loadGraffDatabase(false); renderGraffCustomers();
+            showToast("客户已新增");
+            if(data&&data.id){
+                const created=graffDatabase.find(x=>String(x.id)===String(data.id));
+                if(created)openGraffDetail(created);
+            }
+        }
+    }catch(error){alert("保存客户失败：\n"+(error.message||String(error)));}
+    finally{customerModalSave.disabled=false;customerModalSave.textContent="保存";}
+}
+async function deleteCurrentGraffCustomer(){
+    const item=currentGraffCustomer();
+    if(!item)return;
+    if(!confirm("确认从当前客户列表移除「"+(item.customer||"未命名客户")+"」？\n\n历史数据不会物理删除。"))return;
+    try{
+        const {error}=await supabaseClient.from(SUPABASE_TABLE)
+            .update({active:false,updated_at:new Date().toISOString()}).eq("id",item.id);
+        if(error)throw error;
+        await loadGraffDatabase(false); showGraffListScreen(); renderGraffCustomers();
+        showToast("客户已从当前列表移除");
+    }catch(error){alert("删除客户失败：\n"+(error.message||String(error)));}
+}
 
 async function loadSelectedOrdersForCustomer(customerId) {
     const { data, error } = await supabaseClient
@@ -4504,6 +4635,13 @@ openRebateButton.addEventListener(
     "click",
     showRebatePage
 );
+
+addGraffCustomerButton.addEventListener("click",()=>openCustomerModal("add"));
+editGraffCustomerButton.addEventListener("click",()=>openCustomerModal("edit"));
+deleteGraffCustomerButton.addEventListener("click",deleteCurrentGraffCustomer);
+customerModalCancel.addEventListener("click",closeCustomerModal);
+customerModalSave.addEventListener("click",saveCustomerFromModal);
+customerModalMask.addEventListener("click",e=>{if(e.target===customerModalMask)closeCustomerModal();});
 
 openGraffButton.addEventListener(
     "click",
