@@ -1312,7 +1312,7 @@ button {
             </div>
 
             <div class="inventory-reference-note">
-                仅根据已上传库存自动筛选，用于辅助线下询货；实际库存、调货和改圈情况请以柜台确认结果为准。
+                根据当前有效库存自动筛选；网页新增客户也会立即计算参考。仅用于辅助线下询货，实际库存、调货和改圈情况请以柜台确认结果为准。
             </div>
 
             <div id="inventoryReferenceList">
@@ -2740,6 +2740,157 @@ function renderInventoryReferences() {
 }
 
 
+
+function normalizeMatchText(value){
+    return String(value||"").toUpperCase()
+        .replace(/[，,]/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+}
+
+function parseCustomerRequirementForWeb(item){
+    const text=normalizeMatchText(
+        [item.details,item.note].filter(Boolean).join(" ")
+    );
+
+    let collection="";
+    if(/\bICON\b/.test(text)) collection="ICON";
+    else if(/\bPROMISE\b/.test(text)) collection="PROMISE";
+    else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
+
+    let shape="";
+    if(/\bOVAL\b/.test(text)) shape="OVAL";
+    else if(/\bROUND\b|\bRD\b/.test(text)) shape="ROUND";
+    else if(/\bPEAR\b/.test(text)) shape="PEAR";
+    else if(/\bEMRALD\b|\bEMERALD\b/.test(text)) shape="EMRALD";
+
+    let variant="";
+    const variantMatch=text.match(/\b([PT])\b/);
+    if(variantMatch) variant=variantMatch[1];
+
+    // 克拉：支持 0.7ct / 0.7-0.9ct / 0.5/0.7ct
+    let caratLow=null,caratHigh=null,caratTarget=null;
+    let m=text.match(/(\d+(?:\.\d+)?)\s*[-~～至到]\s*(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
+    if(m){
+        const a=Number(m[1]),b=Number(m[2]);
+        const low=Math.min(a,b),high=Math.max(a,b);
+        caratLow=Math.max(0,low-0.20);
+        caratHigh=high+0.20;
+        caratTarget=(low+high)/2;
+    }else{
+        m=text.match(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
+        if(m){
+            const a=Number(m[1]),b=Number(m[2]);
+            const low=Math.min(a,b),high=Math.max(a,b);
+            caratLow=Math.max(0,low-0.20);
+            caratHigh=high+0.20;
+            caratTarget=(low+high)/2;
+        }else{
+            m=text.match(/(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
+            if(m){
+                caratTarget=Number(m[1]);
+                caratLow=Math.max(0,caratTarget-0.20);
+                caratHigh=caratTarget+0.20;
+            }
+        }
+    }
+
+    // 圈口：优先识别 # 前数字；也兼容“51号/尺寸51/size 51”
+    let size=null;
+    m=text.match(/(\d+(?:\.\d+)?)\s*#/);
+    if(!m) m=text.match(/(?:尺寸|圈口|SIZE)\s*[:：]?\s*(\d+(?:\.\d+)?)/);
+    if(!m) m=text.match(/(\d+(?:\.\d+)?)\s*号/);
+    if(m) size=Number(m[1]);
+
+    // 默认 ±3；文字中明确 ±4/±5 时使用特殊值
+    let sizeTolerance=3;
+    m=text.match(/(?:圈口|尺寸)?\s*[±+\-]\s*([45])\b/);
+    if(m) sizeTolerance=Number(m[1]);
+
+    // 简单颜色/净度要求；用于辅助过滤，不替代线下确认
+    const colors=["D","E","F","G","H"];
+    const clarities=["IF","VVS1","VVS2","VS1","VS2"];
+    const wantedColors=colors.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
+    const wantedClarities=clarities.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
+
+    return {text,collection,shape,variant,caratLow,caratHigh,caratTarget,size,sizeTolerance,wantedColors,wantedClarities};
+}
+
+function webInventoryMatch(requirement, inv){
+    const invCollection=normalizeMatchText(inv.collection);
+    const invShape=normalizeMatchText(inv.shape);
+    const invVariant=normalizeMatchText(inv.variant);
+
+    if(requirement.collection && invCollection!==requirement.collection) return null;
+    if(requirement.shape && invShape!==requirement.shape) return null;
+    if(requirement.variant && invVariant && invVariant!==requirement.variant) return null;
+
+    const carat=Number(inv.carat);
+    if(requirement.caratLow!=null && (
+        !Number.isFinite(carat) ||
+        carat<requirement.caratLow-1e-9 ||
+        carat>requirement.caratHigh+1e-9
+    )) return null;
+
+    const invSize=Number(inv.size);
+    let sizeDiff=null;
+    if(requirement.size!=null){
+        if(!Number.isFinite(invSize)) return null;
+        sizeDiff=Math.abs(invSize-requirement.size);
+        if(sizeDiff>requirement.sizeTolerance+1e-9) return null;
+    }
+
+    // 颜色/净度：只有客户明确写了具体等级列表时才过滤。
+    if(requirement.wantedColors.length && inv.color &&
+       !requirement.wantedColors.includes(normalizeMatchText(inv.color))) return null;
+    if(requirement.wantedClarities.length && inv.clarity &&
+       !requirement.wantedClarities.includes(normalizeMatchText(inv.clarity))) return null;
+
+    let score=100;
+    const reasons=[];
+
+    if(requirement.collection) reasons.push(requirement.collection+"√");
+    if(requirement.shape) reasons.push(requirement.shape+"√");
+
+    if(sizeDiff!=null){
+        score-=Math.round(sizeDiff*4);
+        reasons.push(sizeDiff===0?"圈口完全一致":"圈口差 "+sizeDiff+" 号");
+    }
+
+    if(requirement.caratTarget!=null && Number.isFinite(carat)){
+        const cd=Math.abs(carat-requirement.caratTarget);
+        score-=Math.round(cd*20);
+    }
+
+    score=Math.max(1,Math.min(100,score));
+    const level=score>=99?"exact":score>=90?"high":"reference";
+
+    return {
+        inventory_id:inv.id,
+        match_level:level,
+        match_score:score,
+        size_diff:sizeDiff,
+        reason:reasons.join("；"),
+        inventory:inv
+    };
+}
+
+async function buildLiveInventoryReferencesForCustomer(item){
+    const requirement=parseCustomerRequirementForWeb(item);
+
+    const {data,error}=await supabaseClient
+        .from(SUPABASE_INVENTORY_TABLE)
+        .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active")
+        .eq("active",true);
+
+    if(error) throw error;
+
+    return (data||[])
+        .map(inv=>webInventoryMatch(requirement,inv))
+        .filter(Boolean)
+        .sort((a,b)=>Number(b.match_score||0)-Number(a.match_score||0));
+}
+
 async function loadInventoryReferencesForCustomer(customerId) {
     try {
         const {
@@ -2764,7 +2915,15 @@ async function loadInventoryReferencesForCustomer(customerId) {
             !Array.isArray(matchRows) ||
             !matchRows.length
         ) {
-            selectedInventoryReferences = [];
+            const customer = graffDatabase.find(
+                item => String(item.id) === String(customerId)
+            );
+
+            selectedInventoryReferences =
+                customer
+                    ? await buildLiveInventoryReferencesForCustomer(customer)
+                    : [];
+
             renderInventoryReferences();
             return;
         }
