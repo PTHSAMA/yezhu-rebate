@@ -2653,13 +2653,106 @@ function parseClerkFromCustomerText(item){
     return value;
 }
 
-function orderNoteWithClerk(clerk){
-    return clerk ? ("负责柜员："+clerk) : "";
+function buildOrderMetaNote(clerk, originalStatus){
+    const lines = [];
+
+    if (clerk) {
+        lines.push("负责柜员：" + clerk);
+    }
+
+    lines.push(
+        "原客户状态：" +
+        (
+            originalStatus && String(originalStatus).trim()
+                ? String(originalStatus).trim()
+                : "__EMPTY__"
+        )
+    );
+
+    return lines.join("\n");
 }
 
 function clerkFromOrderNote(note){
     const match=String(note||"").match(/负责柜员[:：]\s*([^\n]+)/);
     return match ? match[1].trim() : "";
+}
+
+function originalStatusFromOrderNote(note){
+    const match=String(note||"").match(/原客户状态[:：]\s*([^\n]+)/);
+
+    if (!match) {
+        return "";
+    }
+
+    const value = match[1].trim();
+
+    return value === "__EMPTY__"
+        ? ""
+        : value;
+}
+
+async function markCustomerAsInOrder(customerId){
+    const { error } = await supabaseClient
+        .from(SUPABASE_TABLE)
+        .update({
+            status: "已加入订单",
+            updated_at: new Date().toISOString()
+        })
+        .eq("id", customerId);
+
+    if (error) throw error;
+}
+
+async function returnOrderToCustomer(order){
+    const originalStatus =
+        originalStatusFromOrderNote(order.note);
+
+    if (!confirm(
+        "确认把这个订单打回“客户意向”？\n\n" +
+        "客户会重新出现在客户意向列表，订单会标记为“已打回客户意向”。"
+    )) {
+        return;
+    }
+
+    try {
+        const customerResult = await supabaseClient
+            .from(SUPABASE_TABLE)
+            .update({
+                status: originalStatus || null,
+                active: true,
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", order.customer_id);
+
+        if (customerResult.error) {
+            throw customerResult.error;
+        }
+
+        const orderResult = await supabaseClient
+            .from(SUPABASE_ORDER_TABLE)
+            .update({
+                order_status: "已打回客户意向",
+                active: false,
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", order.id);
+
+        if (orderResult.error) {
+            throw orderResult.error;
+        }
+
+        await loadGraffDatabase(false);
+        await refreshGraffInventoryBadges();
+        await loadOrders(true);
+
+        showToast("已打回客户意向");
+    }
+    catch (error) {
+        alert(
+            "打回客户意向失败：\n" +
+            (error.message || String(error))
+        );
+    }
 }
 
 async function addCurrentCustomerDirectOrder(){
@@ -2695,15 +2788,23 @@ async function addCurrentCustomerDirectOrder(){
                 selected_by:operator||null,
                 selected_at:new Date().toISOString(),
                 order_status:"待柜台下单",
-                note:orderNoteWithClerk(clerk),
+                note:buildOrderMetaNote(
+                    clerk,
+                    item.status || ""
+                ),
                 active:true,
                 updated_at:new Date().toISOString()
             });
 
         if(error)throw error;
 
+        await markCustomerAsInOrder(item.id);
+        await loadGraffDatabase(false);
+        await refreshGraffInventoryBadges();
         await loadOrders(false);
-        showToast("已加入订单");
+
+        showGraffListScreen();
+        showToast("已加入订单，客户已从意向列表移出");
     }catch(error){
         alert("加入订单失败：\n"+(error.message||String(error)));
     }
@@ -2764,12 +2865,25 @@ async function selectInventoryForOrder(row, button) {
     try {
         const { data: existing, error: existingError } = await supabaseClient
             .from(SUPABASE_ORDER_TABLE)
-            .select("id,order_status,active")
+            .select("id,order_status,active,note")
             .eq("customer_id", item.id)
             .eq("inventory_id", inventory.id)
             .limit(1);
 
         if (existingError) throw existingError;
+
+        const previousStatus =
+            (
+                Array.isArray(existing) &&
+                existing.length &&
+                existing[0].note
+            )
+                ? originalStatusFromOrderNote(existing[0].note)
+                : (
+                    String(item.status || "").trim() === "已加入订单"
+                        ? ""
+                        : (item.status || "")
+                  );
 
         const payload = {
             customer_id: item.id,
@@ -2777,6 +2891,10 @@ async function selectInventoryForOrder(row, button) {
             selected_by: operator,
             selected_at: new Date().toISOString(),
             order_status: "待柜台下单",
+            note: buildOrderMetaNote(
+                parseClerkFromCustomerText(item),
+                previousStatus
+            ),
             active: true,
             updated_at: new Date().toISOString()
         };
@@ -2794,11 +2912,17 @@ async function selectInventoryForOrder(row, button) {
             if (error) throw error;
         }
 
+        await markCustomerAsInOrder(item.id);
+
         localStorage.setItem("yezhu_employee_name", operator);
         selectedOrderInventoryIds.add(String(inventory.id));
-        renderInventoryReferences();
+
+        await loadGraffDatabase(false);
+        await refreshGraffInventoryBadges();
         await loadOrders(false);
-        showToast("已加入次日待下单");
+
+        showGraffListScreen();
+        showToast("已加入订单，客户已从意向列表移出");
     } catch (error) {
         console.error(error);
         alert("加入待下单失败：\n" + (error.message || String(error)));
@@ -2978,6 +3102,12 @@ async function loadOrders(renderPage = false) {
                     '<option value="已完成">已完成</option>' +
                     '<option value="无货/失败">无货/失败</option>' +
                     '<option value="已取消">已取消</option>' +
+                    '<option value="__RETURN__">↩ 打回客户意向</option>' +
+                    (
+                        order.order_status === "已打回客户意向"
+                            ? '<option value="已打回客户意向">已打回客户意向</option>'
+                            : ''
+                    ) +
                 '</select>';
 
             const select = card.querySelector(".order-status-select");
@@ -2985,6 +3115,12 @@ async function loadOrders(renderPage = false) {
 
             select.addEventListener("change", async () => {
                 const newStatus = select.value;
+
+                if (newStatus === "__RETURN__") {
+                    select.value = order.order_status || "待柜台下单";
+                    await returnOrderToCustomer(order);
+                    return;
+                }
 
                 if (!confirm(
                     "确认把订单状态改为「" + newStatus + "」？"
@@ -3013,6 +3149,83 @@ async function loadOrders(renderPage = false) {
                 '<div class="card empty">订单读取失败</div>';
         }
     }
+}
+
+async function loadIgnoreRows(customerId){
+    const {data,error}=await supabaseClient
+        .from(SUPABASE_IGNORE_TABLE)
+        .select("inventory_id,ignored_by,ignored_at,active")
+        .eq("customer_id",customerId)
+        .eq("active",true);
+    if(error) throw error;
+    return Array.isArray(data)?data:[];
+}
+
+async function ignoreInventoryForCustomer(inventoryId){
+    const customerId=selectedGraffCustomerId;
+    if(!customerId)return;
+    const operator=employeeNameInput.value.trim()||
+        localStorage.getItem("yezhu_employee_name")||"未填写";
+    const row=selectedInventoryReferences.find(x=>x.inventory&&String(x.inventory.id)===String(inventoryId));
+    if(!row)return;
+    if(!confirm("确认只对当前客户忽略这条库存？\\n\\n不会影响其他客户，也可以随时恢复。"))return;
+    try{
+        const {data:existing,error:e1}=await supabaseClient
+            .from(SUPABASE_IGNORE_TABLE).select("id")
+            .eq("customer_id",customerId).eq("inventory_id",inventoryId).limit(1);
+        if(e1)throw e1;
+        const payload={active:true,ignored_by:operator,ignored_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+        let error;
+        if(existing&&existing.length){
+            ({error}=await supabaseClient.from(SUPABASE_IGNORE_TABLE).update(payload).eq("id",existing[0].id));
+        }else{
+            ({error}=await supabaseClient.from(SUPABASE_IGNORE_TABLE).insert({...payload,customer_id:customerId,inventory_id:inventoryId}));
+        }
+        if(error)throw error;
+        localStorage.setItem("yezhu_employee_name",operator);
+        await loadInventoryReferencesForCustomer(customerId);
+        await refreshGraffInventoryBadges();
+        showToast("已忽略此库存，可在下方恢复");
+    }catch(error){alert("忽略库存失败：\\n"+(error.message||String(error)));}
+}
+
+async function restoreIgnoredInventory(inventoryId){
+    try{
+        const {error}=await supabaseClient.from(SUPABASE_IGNORE_TABLE)
+            .update({active:false,updated_at:new Date().toISOString()})
+            .eq("customer_id",selectedGraffCustomerId).eq("inventory_id",inventoryId);
+        if(error)throw error;
+        await loadInventoryReferencesForCustomer(selectedGraffCustomerId);
+        await refreshGraffInventoryBadges();
+        showToast("库存参考已恢复");
+    }catch(error){alert("恢复库存失败：\\n"+(error.message||String(error)));}
+}
+
+async function refreshGraffInventoryBadges(){
+    try{
+        const activeCustomers=graffDatabase.filter(x=>x.active!==false);
+        if(!activeCustomers.length){graffInventoryCountMap=new Map();renderGraffCustomers();return;}
+        const [{data:inventoryRows,error:ie},{data:ignoreRows,error:ge}]=await Promise.all([
+            supabaseClient.from(SUPABASE_INVENTORY_TABLE)
+                .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active").eq("active",true),
+            supabaseClient.from(SUPABASE_IGNORE_TABLE)
+                .select("customer_id,inventory_id,active").eq("active",true)
+        ]);
+        if(ie)throw ie;if(ge)throw ge;
+        const ignored=new Set((ignoreRows||[]).map(x=>String(x.customer_id)+"|"+String(x.inventory_id)));
+        const map=new Map();
+        for(const customer of activeCustomers){
+            const req=parseCustomerRequirementForWeb(customer);
+            let count=0;
+            for(const inv of (inventoryRows||[])){
+                if(ignored.has(String(customer.id)+"|"+String(inv.id)))continue;
+                if(webInventoryMatch(req,inv))count++;
+            }
+            map.set(String(customer.id),count);
+        }
+        graffInventoryCountMap=map;
+        renderGraffCustomers();
+    }catch(error){console.error("列表库存标注读取失败：",error);}
 }
 
 function renderInventoryReferences() {
@@ -3598,6 +3811,11 @@ function renderGraffCustomers() {
         graffDatabase.filter(
             item => {
                 if (item.active === false) {
+                    return false;
+                }
+
+                // 已经进入订单流程的客户不再显示在“客户意向”列表。
+                if (String(item.status || "").trim() === "已加入订单") {
                     return false;
                 }
 
