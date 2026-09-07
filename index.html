@@ -851,6 +851,80 @@ button {
     font-weight: 700;
 }
 
+.inventory-select-button {
+    width: 100%;
+    height: 34px;
+    margin-top: 8px;
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.inventory-select-button.selected {
+    background: #e8f7ed;
+    color: #16803b;
+}
+
+.order-count-badge {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #1f5f99;
+    background: #edf6ff;
+    border-radius: 20px;
+    padding: 4px 8px;
+}
+
+.order-card {
+    background: #fff;
+    border: 1px solid #e7e9ed;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.order-customer {
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.order-inventory {
+    margin-top: 7px;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.55;
+}
+
+.order-meta {
+    margin-top: 6px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.order-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.order-status-button {
+    flex: 1 1 120px;
+    height: 34px;
+    background: #f0f2f5;
+    color: #333;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.order-status-button.primary {
+    background: #111;
+    color: #fff;
+}
+
 .operator-box {
     margin-top: 12px;
     padding: 11px;
@@ -918,6 +992,12 @@ button {
         <div class="menu-card-title">💎 GRAFF 客户意向</div>
         <div class="menu-card-desc">查看每天更新的客户需求、参数和跟进备注</div>
         <div class="menu-card-warning" id="homeGraffSummary">正在加载今日客户...</div>
+    </button>
+
+    <button class="menu-card" id="openOrdersButton">
+        <div class="menu-card-title">📋 次日待下单</div>
+        <div class="menu-card-desc">查看客人已经选定、需要去柜台确认和下单的订单</div>
+        <div class="order-count-badge" id="homeOrderSummary">正在读取待下单任务...</div>
     </button>
 
 </div>
@@ -1272,6 +1352,16 @@ button {
 </div>
 
 
+<div class="container page-screen" id="ordersPage" style="display:none;">
+    <button class="back-button" id="backFromOrders">← 首页</button>
+    <div class="header">
+        <h1>次日待下单</h1>
+        <div class="data-info" id="ordersDataStatus">正在读取待下单任务...</div>
+    </div>
+    <div id="ordersList"></div>
+</div>
+
+
 <div
     class="toast"
     id="toast"
@@ -1304,6 +1394,9 @@ const SUPABASE_INVENTORY_TABLE =
 
 const SUPABASE_MATCH_TABLE =
     "graff_matches";
+
+const SUPABASE_ORDER_TABLE =
+    "graff_orders";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -1420,6 +1513,24 @@ const openRebateButton =
 const openGraffButton =
     document.getElementById("openGraffButton");
 
+const openOrdersButton =
+    document.getElementById("openOrdersButton");
+
+const ordersPage =
+    document.getElementById("ordersPage");
+
+const backFromOrders =
+    document.getElementById("backFromOrders");
+
+const ordersList =
+    document.getElementById("ordersList");
+
+const ordersDataStatus =
+    document.getElementById("ordersDataStatus");
+
+const homeOrderSummary =
+    document.getElementById("homeOrderSummary");
+
 const backFromRebate =
     document.getElementById("backFromRebate");
 
@@ -1511,6 +1622,8 @@ let graffRealtimeChannel = null;
 let selectedGraffCustomerId = null;
 let selectedInventoryReferences = [];
 let inventoryReferenceExpanded = false;
+let selectedOrderInventoryIds = new Set();
+let orderDatabase = [];
 
 
 
@@ -1749,6 +1862,7 @@ function showHomePage() {
     homePage.style.display = "block";
     rebatePage.style.display = "none";
     graffPage.style.display = "none";
+    ordersPage.style.display = "none";
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
@@ -1756,6 +1870,7 @@ function showRebatePage() {
     homePage.style.display = "none";
     rebatePage.style.display = "block";
     graffPage.style.display = "none";
+    ordersPage.style.display = "none";
     setTimeout(() => searchInput.focus(), 80);
     window.scrollTo({top: 0, behavior: "smooth"});
 }
@@ -1764,7 +1879,17 @@ function showGraffPage() {
     homePage.style.display = "none";
     rebatePage.style.display = "none";
     graffPage.style.display = "block";
+    ordersPage.style.display = "none";
     showGraffListScreen();
+}
+
+function showOrdersPage() {
+    homePage.style.display = "none";
+    rebatePage.style.display = "none";
+    graffPage.style.display = "none";
+    ordersPage.style.display = "block";
+    loadOrders(true);
+    window.scrollTo({top: 0, behavior: "smooth"});
 }
 
 function showGraffListScreen() {
@@ -1842,9 +1967,13 @@ function openGraffDetail(item) {
         '<div class="inventory-reference-empty">正在读取参考库存...</div>';
     inventoryReferenceMore.style.display = "none";
 
-    loadInventoryReferencesForCustomer(
-        item.id
-    );
+    Promise.resolve()
+        .then(() => loadSelectedOrdersForCustomer(item.id))
+        .then(() => loadInventoryReferencesForCustomer(item.id))
+        .catch(error => {
+            console.error("客户库存/订单读取失败：", error);
+            loadInventoryReferencesForCustomer(item.id);
+        });
 
     window.scrollTo({top: 0, behavior: "smooth"});
 }
@@ -2084,6 +2213,240 @@ function inventoryDisplayName(item) {
 }
 
 
+
+async function loadSelectedOrdersForCustomer(customerId) {
+    const { data, error } = await supabaseClient
+        .from(SUPABASE_ORDER_TABLE)
+        .select("id,inventory_id,order_status,active")
+        .eq("customer_id", customerId)
+        .eq("active", true);
+
+    if (error) throw error;
+
+    selectedOrderInventoryIds = new Set(
+        (data || [])
+            .filter(row => row.order_status !== "已取消")
+            .map(row => String(row.inventory_id))
+    );
+}
+
+async function selectInventoryForOrder(row, button) {
+    const item = graffDatabase.find(
+        value => String(value.id) === String(selectedGraffCustomerId)
+    );
+
+    if (!item) {
+        alert("找不到当前客户，请返回后重新打开。");
+        return;
+    }
+
+    const operator = employeeNameInput.value.trim();
+
+    if (!operator) {
+        alert("请先填写当前操作人，再确认客人选定库存。");
+        employeeNameInput.focus();
+        return;
+    }
+
+    const inventory = row.inventory || {};
+    const summary = [
+        item.customer || "未命名客户",
+        inventoryDisplayName(inventory),
+        inventory.carat != null ? inventory.carat + "ct" : "",
+        inventory.color || "",
+        inventory.clarity || "",
+        inventory.size != null ? inventory.size + "#" : "",
+        inventory.price_w != null ? inventory.price_w + "W" : ""
+    ].filter(Boolean).join(" · ");
+
+    if (!confirm(
+        "确认客人已经选定这条库存，并加入“次日待下单”？\n\n" + summary
+    )) return;
+
+    button.disabled = true;
+    button.textContent = "正在加入...";
+
+    try {
+        const { data: existing, error: existingError } = await supabaseClient
+            .from(SUPABASE_ORDER_TABLE)
+            .select("id,order_status,active")
+            .eq("customer_id", item.id)
+            .eq("inventory_id", inventory.id)
+            .limit(1);
+
+        if (existingError) throw existingError;
+
+        const payload = {
+            customer_id: item.id,
+            inventory_id: inventory.id,
+            selected_by: operator,
+            selected_at: new Date().toISOString(),
+            order_status: "待柜台下单",
+            active: true,
+            updated_at: new Date().toISOString()
+        };
+
+        if (Array.isArray(existing) && existing.length) {
+            const { error } = await supabaseClient
+                .from(SUPABASE_ORDER_TABLE)
+                .update(payload)
+                .eq("id", existing[0].id);
+            if (error) throw error;
+        } else {
+            const { error } = await supabaseClient
+                .from(SUPABASE_ORDER_TABLE)
+                .insert(payload);
+            if (error) throw error;
+        }
+
+        localStorage.setItem("yezhu_employee_name", operator);
+        selectedOrderInventoryIds.add(String(inventory.id));
+        renderInventoryReferences();
+        await loadOrders(false);
+        showToast("已加入次日待下单");
+    } catch (error) {
+        console.error(error);
+        alert("加入待下单失败：\n" + (error.message || String(error)));
+    } finally {
+        button.disabled = false;
+    }
+}
+
+async function updateOrderStatus(orderId, status) {
+    try {
+        const payload = {
+            order_status: status,
+            updated_at: new Date().toISOString()
+        };
+
+        if (["已取消", "已下单", "无货/失败"].includes(status)) {
+            payload.active = false;
+        }
+
+        const { error } = await supabaseClient
+            .from(SUPABASE_ORDER_TABLE)
+            .update(payload)
+            .eq("id", orderId);
+
+        if (error) throw error;
+
+        showToast("订单状态已更新");
+        await loadOrders(true);
+    } catch (error) {
+        alert("更新订单失败：\n" + (error.message || String(error)));
+    }
+}
+
+async function loadOrders(renderPage = false) {
+    try {
+        const { data: orderRows, error: orderError } = await supabaseClient
+            .from(SUPABASE_ORDER_TABLE)
+            .select("id,customer_id,inventory_id,selected_by,selected_at,order_status,note,active,updated_at")
+            .eq("active", true)
+            .eq("order_status", "待柜台下单")
+            .order("selected_at", { ascending: true });
+
+        if (orderError) throw orderError;
+
+        orderDatabase = Array.isArray(orderRows) ? orderRows : [];
+
+        homeOrderSummary.textContent = orderDatabase.length
+            ? orderDatabase.length + " 单待柜台下单"
+            : "暂无待下单任务";
+
+        if (!renderPage) return;
+
+        ordersDataStatus.textContent =
+            "当前共 " + orderDatabase.length + " 单待柜台确认";
+
+        if (!orderDatabase.length) {
+            ordersList.innerHTML =
+                '<div class="card empty">暂无次日待下单任务</div>';
+            return;
+        }
+
+        const customerIds = [...new Set(orderDatabase.map(row => row.customer_id))];
+        const inventoryIds = [...new Set(orderDatabase.map(row => row.inventory_id))];
+
+        const [customerResult, inventoryResult] = await Promise.all([
+            supabaseClient
+                .from(SUPABASE_TABLE)
+                .select("id,customer,owner")
+                .in("id", customerIds),
+            supabaseClient
+                .from(SUPABASE_INVENTORY_TABLE)
+                .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text")
+                .in("id", inventoryIds)
+        ]);
+
+        if (customerResult.error) throw customerResult.error;
+        if (inventoryResult.error) throw inventoryResult.error;
+
+        const customerMap = new Map(
+            (customerResult.data || []).map(row => [String(row.id), row])
+        );
+        const inventoryMap = new Map(
+            (inventoryResult.data || []).map(row => [String(row.id), row])
+        );
+
+        ordersList.innerHTML = "";
+
+        orderDatabase.forEach(order => {
+            const customer = customerMap.get(String(order.customer_id)) || {};
+            const inventory = inventoryMap.get(String(order.inventory_id)) || {};
+
+            const parts = [
+                inventoryDisplayName(inventory),
+                inventory.carat != null ? inventory.carat + "ct" : "",
+                inventory.color || "",
+                inventory.clarity || "",
+                inventory.size != null ? inventory.size + "#" : "",
+                inventory.price_w != null ? inventory.price_w + "W" : ""
+            ].filter(Boolean);
+
+            const card = document.createElement("div");
+            card.className = "order-card";
+
+            card.innerHTML =
+                '<div class="order-customer">' +
+                    escapeHtml(customer.customer || "未命名客户") +
+                '</div>' +
+                '<div class="order-inventory">' +
+                    escapeHtml(parts.join(" · ")) +
+                '</div>' +
+                '<div class="order-meta">' +
+                    '负责人：' + escapeHtml(customer.owner || "未设置") +
+                    '<br>选定人：' + escapeHtml(order.selected_by || "未记录") +
+                    (order.selected_at
+                        ? '<br>选定时间：' +
+                          escapeHtml(formatDateTime(order.selected_at))
+                        : '') +
+                '</div>' +
+                '<div class="order-actions">' +
+                    '<button class="order-status-button primary" data-status="已下单">已下单</button>' +
+                    '<button class="order-status-button" data-status="无货/失败">无货/失败</button>' +
+                    '<button class="order-status-button" data-status="已取消">取消</button>' +
+                '</div>';
+
+            card.querySelectorAll(".order-status-button").forEach(button => {
+                button.addEventListener("click", () => {
+                    updateOrderStatus(order.id, button.dataset.status);
+                });
+            });
+
+            ordersList.appendChild(card);
+        });
+    } catch (error) {
+        console.error("待下单读取失败：", error);
+        homeOrderSummary.textContent = "待下单读取失败";
+
+        if (renderPage) {
+            ordersList.innerHTML =
+                '<div class="card empty">待下单任务读取失败</div>';
+        }
+    }
+}
+
 function renderInventoryReferences() {
     const rows =
         inventoryReferenceExpanded
@@ -2200,9 +2563,33 @@ function renderInventoryReferences() {
                               '</div>'
                             : ''
                     ) +
+                    (
+                        selectedOrderInventoryIds.has(String(inventory.id))
+                            ? '<button class="inventory-select-button selected" disabled>✓ 已加入次日待下单</button>'
+                            : '<button class="inventory-select-button" data-inventory-id="' +
+                              escapeHtml(String(inventory.id)) +
+                              '">客人已选定</button>'
+                    ) +
                 '</div>'
             );
         }).join("");
+
+    inventoryReferenceList
+        .querySelectorAll(".inventory-select-button:not(.selected)")
+        .forEach(button => {
+            button.addEventListener("click", function () {
+                const row = selectedInventoryReferences.find(
+                    item =>
+                        item.inventory &&
+                        String(item.inventory.id) ===
+                        String(button.dataset.inventoryId)
+                );
+
+                if (row) {
+                    selectInventoryForOrder(row, button);
+                }
+            });
+        });
 
     if (selectedInventoryReferences.length > 5) {
         inventoryReferenceMore.style.display =
@@ -2708,7 +3095,8 @@ async function initialLoad() {
         await Promise.all([
             loadSettings(false),
             loadDatabase(false),
-            loadGraffDatabase(false)
+            loadGraffDatabase(false),
+            loadOrders(false)
         ]);
 
 
@@ -4120,6 +4508,16 @@ openRebateButton.addEventListener(
 openGraffButton.addEventListener(
     "click",
     showGraffPage
+);
+
+openOrdersButton.addEventListener(
+    "click",
+    showOrdersPage
+);
+
+backFromOrders.addEventListener(
+    "click",
+    showHomePage
 );
 
 backFromRebate.addEventListener(
