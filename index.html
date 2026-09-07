@@ -939,6 +939,17 @@ button {
 }
 
 .graff-add-button{width:100%;height:42px;margin:0 0 10px;background:#111;color:#fff;font-weight:800;font-size:14px}
+
+.graff-add-button.secondary{background:#f0f2f5;color:#222;margin-top:0}
+.smart-paste-box{margin-top:10px;padding:12px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px}
+.smart-paste-textarea{width:100%;min-height:150px;box-sizing:border-box;border:1px solid #d9dee5;border-radius:10px;padding:11px;font-size:14px;line-height:1.6;resize:vertical}
+.smart-paste-actions{display:flex;gap:8px;margin-top:10px}
+.smart-paste-actions button{flex:1;height:40px;font-weight:800}
+.smart-paste-preview{margin-top:10px}
+.smart-paste-item{padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;margin-bottom:8px}
+.smart-paste-name{font-size:15px;font-weight:900}
+.smart-paste-detail{font-size:13px;color:#555;line-height:1.55;margin-top:4px;white-space:pre-wrap}
+.smart-paste-warning{font-size:12px;color:#b42318;margin-top:4px}
 .customer-admin-actions{display:flex;gap:8px;margin-top:12px}
 .customer-admin-actions button{flex:1;height:38px;font-size:13px;font-weight:800}
 .customer-edit-button{background:#f0f2f5;color:#222}
@@ -1277,6 +1288,7 @@ button {
         </div>
 
         <button class="graff-add-button" id="addGraffCustomerButton">＋ 新增客户</button>
+<button class="graff-add-button secondary" id="smartPasteCustomerButton">⚡ 粘贴识别新增</button>
 
         <div class="graff-toolbar">
             <input
@@ -1396,6 +1408,40 @@ button {
     <div id="ordersList"></div>
 </div>
 
+
+
+<div class="customer-modal-mask" id="smartPasteModalMask">
+    <div class="customer-modal">
+        <h3>粘贴识别新增客户</h3>
+
+        <div class="smart-paste-box">
+            <textarea
+                class="smart-paste-textarea"
+                id="smartPasteTextarea"
+                placeholder="支持一条或多条，例如：
+
+🤍 Graff icon oval 0.7ct 54# 邮寄
+Amy icon round 0.5ct F 51# 预算4w
+小王 promise oval.P 0.7ct 52# 明天到韩"
+            ></textarea>
+
+            <div class="smart-paste-actions">
+                <button class="customer-modal-cancel" id="smartPasteCancel">取消</button>
+                <button class="customer-modal-save" id="smartPastePreviewButton">解析预览</button>
+            </div>
+        </div>
+
+        <div class="smart-paste-preview" id="smartPastePreview"></div>
+
+        <button
+            class="customer-modal-save"
+            id="smartPasteConfirmButton"
+            style="width:100%;height:42px;display:none;margin-top:10px;"
+        >
+            确认新增
+        </button>
+    </div>
+</div>
 
 <div class="customer-modal-mask" id="customerModalMask">
     <div class="customer-modal">
@@ -1580,6 +1626,14 @@ const openRebateButton =
     document.getElementById("openRebateButton");
 
 const addGraffCustomerButton=document.getElementById("addGraffCustomerButton");
+const smartPasteCustomerButton=document.getElementById("smartPasteCustomerButton");
+const smartPasteModalMask=document.getElementById("smartPasteModalMask");
+const smartPasteTextarea=document.getElementById("smartPasteTextarea");
+const smartPasteCancel=document.getElementById("smartPasteCancel");
+const smartPastePreviewButton=document.getElementById("smartPastePreviewButton");
+const smartPastePreview=document.getElementById("smartPastePreview");
+const smartPasteConfirmButton=document.getElementById("smartPasteConfirmButton");
+let smartPasteParsedCustomers=[];
 const editGraffCustomerButton=document.getElementById("editGraffCustomerButton");
 const deleteGraffCustomerButton=document.getElementById("deleteGraffCustomerButton");
 const customerModalMask=document.getElementById("customerModalMask");
@@ -2303,6 +2357,200 @@ function inventoryDisplayName(item) {
 
 
 
+
+
+function normalizeSmartLine(line){
+    return String(line||"")
+        .replace(/\u3000/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+}
+
+function looksLikeRequirementStart(token){
+    const t=String(token||"").toUpperCase();
+    return /^(GRAFF|ICON|PROMISE|PARAGON|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|项链|戒指)/.test(t);
+}
+
+function parseSmartCustomerLine(line){
+    const cleanLine=normalizeSmartLine(line);
+    if(!cleanLine)return null;
+
+    const tokens=cleanLine.split(" ");
+    let splitIndex=-1;
+
+    for(let i=0;i<tokens.length;i++){
+        if(looksLikeRequirementStart(tokens[i])){
+            splitIndex=i;
+            break;
+        }
+    }
+
+    let customer="";
+    let details="";
+
+    if(splitIndex>0){
+        customer=tokens.slice(0,splitIndex).join(" ").trim();
+        details=tokens.slice(splitIndex).join(" ").trim();
+    }else if(splitIndex===0){
+        customer="待确认";
+        details=cleanLine;
+    }else{
+        // 没找到明显款式关键词：默认第一个片段为客户名，其余为需求
+        customer=tokens[0]||"待确认";
+        details=tokens.slice(1).join(" ").trim();
+    }
+
+    if(!details){
+        return {
+            customer,
+            details:"",
+            warning:"未识别到客户需求，请手动确认"
+        };
+    }
+
+    return {
+        customer:customer||"待确认",
+        details,
+        warning:customer==="待确认"?"未识别到明确客户名，请手动确认":""
+    };
+}
+
+function parseSmartPasteText(raw){
+    const normalized=String(raw||"")
+        .replace(/\r\n/g,"\n")
+        .replace(/\r/g,"\n")
+        .trim();
+
+    if(!normalized)return [];
+
+    // 支持：
+    // 1) 每行一位客户
+    // 2) 空行分隔的多段客户
+    const blocks=normalized
+        .split(/\n\s*\n+/)
+        .flatMap(block=>{
+            const lines=block.split("\n").map(normalizeSmartLine).filter(Boolean);
+            if(lines.length<=1)return lines;
+
+            // 多行块如果第一行像客户名，后续作为详情拼接
+            const first=lines[0];
+            const firstParsed=parseSmartCustomerLine(first);
+            if(firstParsed && firstParsed.details){
+                return lines.map(x=>x);
+            }
+
+            return [first+" "+lines.slice(1).join(" ")];
+        });
+
+    return blocks
+        .map(parseSmartCustomerLine)
+        .filter(Boolean);
+}
+
+function openSmartPasteModal(){
+    smartPasteTextarea.value="";
+    smartPastePreview.innerHTML="";
+    smartPasteConfirmButton.style.display="none";
+    smartPasteParsedCustomers=[];
+    smartPasteModalMask.style.display="flex";
+    setTimeout(()=>smartPasteTextarea.focus(),50);
+}
+
+function closeSmartPasteModal(){
+    smartPasteModalMask.style.display="none";
+}
+
+function renderSmartPastePreview(){
+    if(!smartPasteParsedCustomers.length){
+        smartPastePreview.innerHTML=
+            '<div class="inventory-reference-empty">没有识别到有效客户。</div>';
+        smartPasteConfirmButton.style.display="none";
+        return;
+    }
+
+    smartPastePreview.innerHTML=
+        '<div style="font-weight:800;margin:8px 0;">识别到 '+
+        smartPasteParsedCustomers.length+' 位客户</div>'+
+        smartPasteParsedCustomers.map((item,index)=>
+            '<div class="smart-paste-item">'+
+                '<div class="smart-paste-name">'+
+                    (index+1)+'. '+escapeHtml(item.customer)+
+                '</div>'+
+                '<div class="smart-paste-detail">'+escapeHtml(item.details||"暂无需求")+'</div>'+
+                (item.warning
+                    ? '<div class="smart-paste-warning">'+escapeHtml(item.warning)+'</div>'
+                    : '')+
+            '</div>'
+        ).join("");
+
+    smartPasteConfirmButton.style.display="block";
+}
+
+async function confirmSmartPasteCustomers(){
+    if(!smartPasteParsedCustomers.length)return;
+
+    const operator=
+        localStorage.getItem("yezhu_employee_name")||
+        employeeNameInput.value.trim()||
+        "";
+
+    const valid=smartPasteParsedCustomers.filter(
+        item=>item.customer && item.details
+    );
+
+    if(!valid.length){
+        alert("没有可新增的有效客户。");
+        return;
+    }
+
+    if(!confirm("确认新增 "+valid.length+" 位客户？"))return;
+
+    smartPasteConfirmButton.disabled=true;
+    smartPasteConfirmButton.textContent="正在新增...";
+
+    try{
+        const now=new Date().toISOString();
+        const payload=valid.map(item=>({
+            customer:item.customer,
+            wechat:null,
+            details:item.details,
+            owner:operator||null,
+            status:null,
+            note:null,
+            active:true,
+            updated_at:now
+        }));
+
+        const {error}=await supabaseClient
+            .from(SUPABASE_TABLE)
+            .insert(payload);
+
+        if(error)throw error;
+
+        closeSmartPasteModal();
+        await loadGraffDatabase(false);
+        await refreshGraffInventoryBadges();
+        renderGraffCustomers();
+
+        showToast("已新增 "+valid.length+" 位客户");
+
+        // 若只有一位客户，直接打开详情并立即计算库存参考
+        if(valid.length===1){
+            const candidates=graffDatabase
+                .filter(x=>x.active!==false && x.customer===valid[0].customer)
+                .sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+
+            if(candidates.length){
+                openGraffDetail(candidates[0]);
+            }
+        }
+    }catch(error){
+        alert("批量新增失败：\n"+(error.message||String(error)));
+    }finally{
+        smartPasteConfirmButton.disabled=false;
+        smartPasteConfirmButton.textContent="确认新增";
+    }
+}
 
 function currentGraffCustomer(){
     return graffDatabase.find(x=>String(x.id)===String(selectedGraffCustomerId))||null;
@@ -4842,6 +5090,16 @@ openRebateButton.addEventListener(
 );
 
 addGraffCustomerButton.addEventListener("click",()=>openCustomerModal("add"));
+smartPasteCustomerButton.addEventListener("click",openSmartPasteModal);
+smartPasteCancel.addEventListener("click",closeSmartPasteModal);
+smartPastePreviewButton.addEventListener("click",()=>{
+    smartPasteParsedCustomers=parseSmartPasteText(smartPasteTextarea.value);
+    renderSmartPastePreview();
+});
+smartPasteConfirmButton.addEventListener("click",confirmSmartPasteCustomers);
+smartPasteModalMask.addEventListener("click",e=>{
+    if(e.target===smartPasteModalMask)closeSmartPasteModal();
+});
 editGraffCustomerButton.addEventListener("click",()=>openCustomerModal("edit"));
 deleteGraffCustomerButton.addEventListener("click",deleteCurrentGraffCustomer);
 customerModalCancel.addEventListener("click",closeCustomerModal);
