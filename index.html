@@ -3315,10 +3315,8 @@ function normalizeMatchText(value){
         .trim();
 }
 
-function parseCustomerRequirementForWeb(item){
-    const text=normalizeMatchText(
-        [item.details,item.note].filter(Boolean).join(" ")
-    );
+function parseCustomerRequirementTextForWeb(rawText){
+    const text=normalizeMatchText(rawText);
 
     let collection="";
     if(/\bICON\b/.test(text)) collection="ICON";
@@ -3326,16 +3324,21 @@ function parseCustomerRequirementForWeb(item){
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
 
     let shape="";
-    if(/\bOVAL\b/.test(text)) shape="OVAL";
+    if(/\bEMRALD\b|\bEMERALD\b/.test(text)) shape="EMERALD";
+    else if(/\bOVAL\b/.test(text)) shape="OVAL";
     else if(/\bROUND\b|\bRD\b/.test(text)) shape="ROUND";
     else if(/\bPEAR\b/.test(text)) shape="PEAR";
-    else if(/\bEMRALD\b|\bEMERALD\b/.test(text)) shape="EMRALD";
+    else if(/\bCUSHION\b/.test(text)) shape="CUSHION";
+    else if(/\bRADIANT\b/.test(text)) shape="RADIANT";
+    else if(/\bMARQUISE\b/.test(text)) shape="MARQUISE";
+    else if(/\bPRINCESS\b/.test(text)) shape="PRINCESS";
+    else if(/\bHEART\b/.test(text)) shape="HEART";
+    else if(/\bASSCHER\b/.test(text)) shape="ASSCHER";
 
     let variant="";
-    const variantMatch=text.match(/\b([PT])\b/);
+    const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
     if(variantMatch) variant=variantMatch[1];
 
-    // 克拉：支持 0.7ct / 0.7-0.9ct / 0.5/0.7ct
     let caratLow=null,caratHigh=null,caratTarget=null;
     let m=text.match(/(\d+(?:\.\d+)?)\s*[-~～至到]\s*(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
     if(m){
@@ -3362,25 +3365,63 @@ function parseCustomerRequirementForWeb(item){
         }
     }
 
-    // 圈口：优先识别 # 前数字；也兼容“51号/尺寸51/size 51”
     let size=null;
     m=text.match(/(\d+(?:\.\d+)?)\s*#/);
     if(!m) m=text.match(/(?:尺寸|圈口|SIZE)\s*[:：]?\s*(\d+(?:\.\d+)?)/);
     if(!m) m=text.match(/(\d+(?:\.\d+)?)\s*号/);
     if(m) size=Number(m[1]);
 
-    // 默认 ±3；文字中明确 ±4/±5 时使用特殊值
-    let sizeTolerance=3;
-    m=text.match(/(?:圈口|尺寸)?\s*[±+\-]\s*([45])\b/);
+    let sizeTolerance=null;
+    m=text.match(/(?:圈口|尺寸)?\s*[±+\-]\s*([345])\b/);
     if(m) sizeTolerance=Number(m[1]);
 
-    // 简单颜色/净度要求；用于辅助过滤，不替代线下确认
     const colors=["D","E","F","G","H"];
     const clarities=["IF","VVS1","VVS2","VS1","VS2"];
     const wantedColors=colors.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
     const wantedClarities=clarities.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
 
-    return {text,collection,shape,variant,caratLow,caratHigh,caratTarget,size,sizeTolerance,wantedColors,wantedClarities};
+    return {
+        text,collection,shape,variant,
+        caratLow,caratHigh,caratTarget,
+        size,sizeTolerance,
+        wantedColors,wantedClarities
+    };
+}
+
+function parseCustomerRequirementForWeb(item){
+    const base=parseCustomerRequirementTextForWeb(
+        [item.customer,item.details].filter(Boolean).join(" ")
+    );
+
+    const note=parseCustomerRequirementTextForWeb(
+        item.note || ""
+    );
+
+    // 跟进备注是“增量覆盖”：
+    // 备注里写到的参数覆盖旧需求；没写到的参数继续沿用旧需求。
+    const merged={
+        text: normalizeMatchText(
+            [item.note,item.customer,item.details].filter(Boolean).join(" ")
+        ),
+        collection: note.collection || base.collection,
+        shape: note.shape || base.shape,
+        variant: note.variant || base.variant,
+        caratLow: note.caratLow != null ? note.caratLow : base.caratLow,
+        caratHigh: note.caratHigh != null ? note.caratHigh : base.caratHigh,
+        caratTarget: note.caratTarget != null ? note.caratTarget : base.caratTarget,
+        size: note.size != null ? note.size : base.size,
+        sizeTolerance: note.sizeTolerance != null
+            ? note.sizeTolerance
+            : (base.sizeTolerance != null ? base.sizeTolerance : 3),
+        wantedColors: note.wantedColors.length
+            ? note.wantedColors
+            : base.wantedColors,
+        wantedClarities: note.wantedClarities.length
+            ? note.wantedClarities
+            : base.wantedClarities
+    };
+
+    return merged;
 }
 
 function webInventoryMatch(requirement, inv){
