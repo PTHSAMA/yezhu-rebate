@@ -3560,6 +3560,13 @@ function renderInventoryReferences() {
     }
 }
 
+function normalizeMatchText(value){
+    return String(value||"").toUpperCase()
+        .replace(/[，,]/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+}
+
 function parseCustomerRequirementTextForWeb(rawText){
     const text=normalizeMatchText(rawText);
 
