@@ -867,6 +867,11 @@ button {
 }
 
 .inventory-reference-actions{display:flex;gap:8px;margin-top:8px}
+.inventory-copy-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px;padding:9px;background:#f5f7f9;border-radius:10px}
+.inventory-copy-toolbar button{height:32px;padding:0 11px;font-size:12px;font-weight:800;background:#fff;border:1px solid #dfe3e8;color:#333}
+.inventory-copy-toolbar .primary{background:#111;color:#fff;border-color:#111}
+.inventory-copy-select{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:12px;font-weight:700;color:#444;cursor:pointer}
+.inventory-copy-select input{width:16px;height:16px;margin:0}
 .inventory-reference-actions button{flex:1;margin-top:0}
 .inventory-ignore-button{height:34px;background:#fff;color:#b42318;border:1px solid #efb4b4;font-size:13px;font-weight:800}
 .inventory-ignored-section{margin-top:12px;border-top:1px solid #eadfca;padding-top:10px}
@@ -1776,6 +1781,7 @@ const inventoryReferenceMore =
 let graffRealtimeChannel = null;
 let selectedGraffCustomerId = null;
 let selectedInventoryReferences = [];
+let selectedQuoteInventoryIds = new Set();
 let selectedIgnoredInventoryReferences = [];
 let inventoryReferenceExpanded = false;
 let inventoryIgnoredExpanded = false;
@@ -2121,6 +2127,7 @@ function openGraffDetail(item) {
 
     inventoryReferenceExpanded = false;
     inventoryIgnoredExpanded = false;
+    selectedQuoteInventoryIds = new Set();
     selectedInventoryReferences = [];
     selectedIgnoredInventoryReferences = [];
     inventoryReferenceCount.textContent = "";
@@ -3228,14 +3235,80 @@ async function refreshGraffInventoryBadges(){
     }catch(error){console.error("列表库存标注读取失败：",error);}
 }
 
+function inventoryQuoteLine(inventory){
+    const parts=[
+        inventoryDisplayName(inventory),
+        inventory.carat!=null ? Number(inventory.carat).toFixed(2)+"ct" : "",
+        inventory.color || "",
+        inventory.clarity || "",
+        inventory.size!=null ? Number(inventory.size)+"#" : "",
+        inventory.price_w!=null ? Number(inventory.price_w)+"W" : ""
+    ].filter(Boolean);
+
+    return parts.join(" · ");
+}
+
+async function copySelectedInventoryQuotes(){
+    const rows=selectedInventoryReferences.filter(
+        row =>
+            row.inventory &&
+            selectedQuoteInventoryIds.has(
+                String(row.inventory.id)
+            )
+    );
+
+    if(!rows.length){
+        alert("请先选择需要报给客人的库存参数。");
+        return;
+    }
+
+    const text=rows
+        .map(row=>inventoryQuoteLine(row.inventory||{}))
+        .join("\n");
+
+    try{
+        if(navigator.clipboard && window.isSecureContext){
+            await navigator.clipboard.writeText(text);
+        }else{
+            const textarea=document.createElement("textarea");
+            textarea.value=text;
+            textarea.style.position="fixed";
+            textarea.style.opacity="0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+        }
+
+        showToast("已复制 "+rows.length+" 条库存参数");
+    }catch(error){
+        alert("复制失败：\n"+(error.message||String(error)));
+    }
+}
+
 function renderInventoryReferences() {
-    const rows=inventoryReferenceExpanded?selectedInventoryReferences:selectedInventoryReferences.slice(0,5);
+    const rows=inventoryReferenceExpanded
+        ? selectedInventoryReferences
+        : selectedInventoryReferences.slice(0,5);
 
     inventoryReferenceCount.textContent=
         (selectedInventoryReferences.length+selectedIgnoredInventoryReferences.length)
             ? selectedInventoryReferences.length+" 条可用" +
-              (selectedIgnoredInventoryReferences.length?" · "+selectedIgnoredInventoryReferences.length+" 条已忽略":"")
+              (selectedIgnoredInventoryReferences.length
+                ? " · "+selectedIgnoredInventoryReferences.length+" 条已忽略"
+                : "")
             : "";
+
+    const toolbar=
+        selectedInventoryReferences.length
+            ? '<div class="inventory-copy-toolbar">'+
+                '<button id="inventorySelectAllQuote">全选可用</button>'+
+                '<button id="inventoryClearQuote">清空选择</button>'+
+                '<button class="primary" id="inventoryCopyQuote">复制已选参数（'+
+                    selectedQuoteInventoryIds.size+
+                '）</button>'+
+              '</div>'
+            : '';
 
     if(!selectedInventoryReferences.length){
         inventoryReferenceList.innerHTML=
@@ -3245,74 +3318,246 @@ function renderInventoryReferences() {
                 : '当前已上传库存中没有自动筛出的参考项。<br>仍建议继续线下询问和确认库存。')+
             '</div>';
     }else{
-        inventoryReferenceList.innerHTML=rows.map(row=>{
-            const inventory=row.inventory||{};
-            const mainParts=[];
-            if(inventory.carat!=null)mainParts.push(Number(inventory.carat)+"ct");
-            if(inventory.color)mainParts.push(escapeHtml(inventory.color));
-            if(inventory.clarity)mainParts.push(escapeHtml(inventory.clarity));
-            if(inventory.size!=null)mainParts.push(Number(inventory.size)+"#");
-            if(inventory.price_w!=null)mainParts.push(Number(inventory.price_w)+"W");
-            const selected=selectedOrderInventoryIds.has(String(inventory.id));
-            return '<div class="inventory-reference-item">'+
-                '<div class="inventory-reference-main">'+escapeHtml(inventoryDisplayName(inventory))+' · '+mainParts.join(" · ")+
-                '<span class="inventory-reference-level">'+escapeHtml(inventoryLevelLabel(row.match_level))+'</span></div>'+
-                (row.size_diff!=null?'<div class="inventory-reference-meta">圈口差：'+escapeHtml(String(row.size_diff))+' 号'+
-                    (row.match_score!=null?' · 参考分：'+escapeHtml(String(row.match_score)):'')+'</div>':
-                    (row.match_score!=null?'<div class="inventory-reference-meta">参考分：'+escapeHtml(String(row.match_score))+'</div>':''))+
-                (row.reason?'<div class="inventory-reference-reason">'+escapeHtml(row.reason)+'</div>':'')+
-                '<div class="inventory-reference-actions">'+
-                    (selected?'<button class="inventory-select-button selected" disabled>✓ 已加入次日待下单</button>':
-                    '<button class="inventory-select-button" data-inventory-id="'+escapeHtml(String(inventory.id))+'">客人已选定</button>')+
-                    '<button class="inventory-ignore-button" data-inventory-id="'+escapeHtml(String(inventory.id))+'">忽略此库存</button>'+
-                '</div></div>';
-        }).join("");
+        inventoryReferenceList.innerHTML=
+            toolbar+
+            rows.map(row=>{
+                const inventory=row.inventory||{};
+                const mainParts=[];
+
+                if(inventory.carat!=null){
+                    mainParts.push(Number(inventory.carat).toFixed(2)+"ct");
+                }
+                if(inventory.color)mainParts.push(escapeHtml(inventory.color));
+                if(inventory.clarity)mainParts.push(escapeHtml(inventory.clarity));
+                if(inventory.size!=null)mainParts.push(Number(inventory.size)+"#");
+                if(inventory.price_w!=null)mainParts.push(Number(inventory.price_w)+"W");
+
+                const selectedOrder=
+                    selectedOrderInventoryIds.has(String(inventory.id));
+
+                const selectedQuote=
+                    selectedQuoteInventoryIds.has(String(inventory.id));
+
+                return '<div class="inventory-reference-item">'+
+                    '<div class="inventory-reference-main">'+
+                        escapeHtml(inventoryDisplayName(inventory))+
+                        ' · '+mainParts.join(" · ")+
+                        '<span class="inventory-reference-level">'+
+                            escapeHtml(inventoryLevelLabel(row.match_level))+
+                        '</span>'+
+                    '</div>'+
+                    (row.size_diff!=null
+                        ? '<div class="inventory-reference-meta">圈口差：'+
+                            escapeHtml(String(row.size_diff))+
+                            ' 号'+
+                            (row.match_score!=null
+                                ? ' · 参考分：'+escapeHtml(String(row.match_score))
+                                : '')+
+                          '</div>'
+                        : (row.match_score!=null
+                            ? '<div class="inventory-reference-meta">参考分：'+
+                                escapeHtml(String(row.match_score))+
+                              '</div>'
+                            : ''))+
+                    (row.reason
+                        ? '<div class="inventory-reference-reason">'+
+                            escapeHtml(row.reason)+
+                          '</div>'
+                        : '')+
+                    '<label class="inventory-copy-select">'+
+                        '<input type="checkbox" class="inventory-quote-checkbox" '+
+                            'data-inventory-id="'+escapeHtml(String(inventory.id))+'" '+
+                            (selectedQuote?'checked':'')+
+                        '> 选择此参数用于复制报价'+
+                    '</label>'+
+                    '<div class="inventory-reference-actions">'+
+                        (selectedOrder
+                            ? '<button class="inventory-select-button selected" disabled>✓ 已加入次日待下单</button>'
+                            : '<button class="inventory-select-button" data-inventory-id="'+
+                                escapeHtml(String(inventory.id))+
+                              '">客人已选定</button>')+
+                        '<button class="inventory-ignore-button" data-inventory-id="'+
+                            escapeHtml(String(inventory.id))+
+                        '">忽略此库存</button>'+
+                    '</div>'+
+                '</div>';
+            }).join("");
     }
 
-    inventoryReferenceList.querySelectorAll(".inventory-select-button:not(.selected)").forEach(button=>{
-        button.addEventListener("click",()=>{
-            const row=selectedInventoryReferences.find(x=>x.inventory&&String(x.inventory.id)===String(button.dataset.inventoryId));
-            if(row)selectInventoryForOrder(row,button);
-        });
-    });
-    inventoryReferenceList.querySelectorAll(".inventory-ignore-button").forEach(button=>{
-        button.addEventListener("click",()=>ignoreInventoryForCustomer(button.dataset.inventoryId));
-    });
+    const selectAllButton=
+        document.getElementById("inventorySelectAllQuote");
 
-    let ignored=document.getElementById("inventoryIgnoredSection");
+    if(selectAllButton){
+        selectAllButton.addEventListener("click",()=>{
+            selectedInventoryReferences.forEach(row=>{
+                if(row.inventory){
+                    selectedQuoteInventoryIds.add(
+                        String(row.inventory.id)
+                    );
+                }
+            });
+            renderInventoryReferences();
+        });
+    }
+
+    const clearButton=
+        document.getElementById("inventoryClearQuote");
+
+    if(clearButton){
+        clearButton.addEventListener("click",()=>{
+            selectedQuoteInventoryIds.clear();
+            renderInventoryReferences();
+        });
+    }
+
+    const copyButton=
+        document.getElementById("inventoryCopyQuote");
+
+    if(copyButton){
+        copyButton.addEventListener(
+            "click",
+            copySelectedInventoryQuotes
+        );
+    }
+
+    inventoryReferenceList
+        .querySelectorAll(".inventory-quote-checkbox")
+        .forEach(checkbox=>{
+            checkbox.addEventListener("change",()=>{
+                const id=String(
+                    checkbox.dataset.inventoryId
+                );
+
+                if(checkbox.checked){
+                    selectedQuoteInventoryIds.add(id);
+                }else{
+                    selectedQuoteInventoryIds.delete(id);
+                }
+
+                const copyBtn=
+                    document.getElementById("inventoryCopyQuote");
+
+                if(copyBtn){
+                    copyBtn.textContent=
+                        "复制已选参数（"+
+                        selectedQuoteInventoryIds.size+
+                        "）";
+                }
+            });
+        });
+
+    inventoryReferenceList
+        .querySelectorAll(".inventory-select-button:not(.selected)")
+        .forEach(button=>{
+            button.addEventListener("click",()=>{
+                const row=selectedInventoryReferences.find(
+                    item =>
+                        item.inventory &&
+                        String(item.inventory.id)===
+                        String(button.dataset.inventoryId)
+                );
+
+                if(row){
+                    selectInventoryForOrder(row,button);
+                }
+            });
+        });
+
+    inventoryReferenceList
+        .querySelectorAll(".inventory-ignore-button")
+        .forEach(button=>{
+            button.addEventListener(
+                "click",
+                ()=>ignoreInventoryForCustomer(
+                    button.dataset.inventoryId
+                )
+            );
+        });
+
+    let ignored=
+        document.getElementById("inventoryIgnoredSection");
+
     if(ignored)ignored.remove();
+
     if(selectedIgnoredInventoryReferences.length){
         ignored=document.createElement("div");
         ignored.id="inventoryIgnoredSection";
         ignored.className="inventory-ignored-section";
-        ignored.innerHTML='<button class="inventory-ignored-toggle">已忽略库存（'+selectedIgnoredInventoryReferences.length+'） '+(inventoryIgnoredExpanded?'⌃':'⌄')+'</button>'+
-            '<div class="inventory-ignored-list" style="display:'+(inventoryIgnoredExpanded?'block':'none')+'">'+
+
+        ignored.innerHTML=
+            '<button class="inventory-ignored-toggle">已忽略库存（'+
+            selectedIgnoredInventoryReferences.length+
+            '） '+(inventoryIgnoredExpanded?'⌃':'⌄')+
+            '</button>'+
+            '<div class="inventory-ignored-list" style="display:'+
+            (inventoryIgnoredExpanded?'block':'none')+
+            '">'+
             selectedIgnoredInventoryReferences.map(row=>{
                 const inv=row.inventory||{};
-                const parts=[inventoryDisplayName(inv),inv.carat!=null?Number(inv.carat)+"ct":"",inv.color||"",inv.clarity||"",inv.size!=null?Number(inv.size)+"#":"",inv.price_w!=null?Number(inv.price_w)+"W":""].filter(Boolean);
-                return '<div class="inventory-ignored-item"><div class="inventory-ignored-main">'+escapeHtml(parts.join(" · "))+'</div>'+
-                    '<div class="inventory-ignored-meta">'+(row.ignored_by?'忽略人：'+escapeHtml(row.ignored_by):'')+
-                    (row.ignored_at?' · '+escapeHtml(formatDateTime(row.ignored_at)):'')+'</div>'+
-                    '<button class="inventory-restore-button" data-inventory-id="'+escapeHtml(String(inv.id))+'">恢复此库存</button></div>';
-            }).join("")+'</div>';
-        inventoryReferenceList.parentNode.insertBefore(ignored,inventoryReferenceMore);
-        ignored.querySelector(".inventory-ignored-toggle").addEventListener("click",()=>{inventoryIgnoredExpanded=!inventoryIgnoredExpanded;renderInventoryReferences();});
-        ignored.querySelectorAll(".inventory-restore-button").forEach(b=>b.addEventListener("click",()=>restoreIgnoredInventory(b.dataset.inventoryId)));
+                const parts=[
+                    inventoryDisplayName(inv),
+                    inv.carat!=null?Number(inv.carat).toFixed(2)+"ct":"",
+                    inv.color||"",
+                    inv.clarity||"",
+                    inv.size!=null?Number(inv.size)+"#":"",
+                    inv.price_w!=null?Number(inv.price_w)+"W":""
+                ].filter(Boolean);
+
+                return '<div class="inventory-ignored-item">'+
+                    '<div class="inventory-ignored-main">'+
+                        escapeHtml(parts.join(" · "))+
+                    '</div>'+
+                    '<div class="inventory-ignored-meta">'+
+                        (row.ignored_by
+                            ? '忽略人：'+escapeHtml(row.ignored_by)
+                            : '')+
+                        (row.ignored_at
+                            ? ' · '+escapeHtml(formatDateTime(row.ignored_at))
+                            : '')+
+                    '</div>'+
+                    '<button class="inventory-restore-button" data-inventory-id="'+
+                        escapeHtml(String(inv.id))+
+                    '">恢复此库存</button>'+
+                '</div>';
+            }).join("")+
+            '</div>';
+
+        inventoryReferenceList.parentNode.insertBefore(
+            ignored,
+            inventoryReferenceMore
+        );
+
+        ignored
+            .querySelector(".inventory-ignored-toggle")
+            .addEventListener("click",()=>{
+                inventoryIgnoredExpanded=
+                    !inventoryIgnoredExpanded;
+                renderInventoryReferences();
+            });
+
+        ignored
+            .querySelectorAll(".inventory-restore-button")
+            .forEach(button=>
+                button.addEventListener(
+                    "click",
+                    ()=>restoreIgnoredInventory(
+                        button.dataset.inventoryId
+                    )
+                )
+            );
     }
 
     if(selectedInventoryReferences.length>5){
         inventoryReferenceMore.style.display="block";
-        inventoryReferenceMore.textContent=inventoryReferenceExpanded?"收起参考库存":"查看更多参考库存（"+selectedInventoryReferences.length+"）";
-    }else inventoryReferenceMore.style.display="none";
-}
-
-
-
-function normalizeMatchText(value){
-    return String(value||"").toUpperCase()
-        .replace(/[，,]/g," ")
-        .replace(/\s+/g," ")
-        .trim();
+        inventoryReferenceMore.textContent=
+            inventoryReferenceExpanded
+                ? "收起参考库存"
+                : "查看更多参考库存（"+
+                    selectedInventoryReferences.length+
+                  "）";
+    }else{
+        inventoryReferenceMore.style.display="none";
+    }
 }
 
 function parseCustomerRequirementTextForWeb(rawText){
@@ -3323,17 +3568,25 @@ function parseCustomerRequirementTextForWeb(rawText){
     else if(/\bPROMISE\b/.test(text)) collection="PROMISE";
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
 
-    let shape="";
-    if(/\bEMRALD\b|\bEMERALD\b/.test(text)) shape="EMERALD";
-    else if(/\bOVAL\b/.test(text)) shape="OVAL";
-    else if(/\bROUND\b|\bRD\b/.test(text)) shape="ROUND";
-    else if(/\bPEAR\b/.test(text)) shape="PEAR";
-    else if(/\bCUSHION\b/.test(text)) shape="CUSHION";
-    else if(/\bRADIANT\b/.test(text)) shape="RADIANT";
-    else if(/\bMARQUISE\b/.test(text)) shape="MARQUISE";
-    else if(/\bPRINCESS\b/.test(text)) shape="PRINCESS";
-    else if(/\bHEART\b/.test(text)) shape="HEART";
-    else if(/\bASSCHER\b/.test(text)) shape="ASSCHER";
+    const shapeRules=[
+        ["EMERALD", /\bEMRALD\b|\bEMERALD\b|祖母绿/],
+        ["OVAL", /\bOVAL\b|椭圆/],
+        ["ROUND", /\bROUND\b|\bRD\b|圆形/],
+        ["PEAR", /\bPEAR\b|水滴/],
+        ["CUSHION", /\bCUSHION\b/],
+        ["RADIANT", /\bRADIANT\b/],
+        ["MARQUISE", /\bMARQUISE\b/],
+        ["PRINCESS", /\bPRINCESS\b/],
+        ["HEART", /\bHEART\b/],
+        ["ASSCHER", /\bASSCHER\b/]
+    ];
+
+    const shapes=[];
+    shapeRules.forEach(([name,pattern])=>{
+        if(pattern.test(text) && !shapes.includes(name)){
+            shapes.push(name);
+        }
+    });
 
     let variant="";
     const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
@@ -3341,50 +3594,60 @@ function parseCustomerRequirementTextForWeb(rawText){
 
     let caratLow=null,caratHigh=null,caratTarget=null;
     let m=text.match(/(\d+(?:\.\d+)?)\s*[-~～至到]\s*(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
+
     if(m){
         const a=Number(m[1]),b=Number(m[2]);
-        const low=Math.min(a,b),high=Math.max(a,b);
-        caratLow=Math.max(0,low-0.20);
-        caratHigh=high+0.20;
-        caratTarget=(low+high)/2;
+        caratLow=Math.min(a,b);
+        caratHigh=Math.max(a,b);
+        caratTarget=(caratLow+caratHigh)/2;
     }else{
-        m=text.match(/(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
+        m=text.match(/(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
+
         if(m){
-            const a=Number(m[1]),b=Number(m[2]);
-            const low=Math.min(a,b),high=Math.max(a,b);
-            caratLow=Math.max(0,low-0.20);
-            caratHigh=high+0.20;
-            caratTarget=(low+high)/2;
-        }else{
-            m=text.match(/(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
-            if(m){
-                caratTarget=Number(m[1]);
-                caratLow=Math.max(0,caratTarget-0.20);
-                caratHigh=caratTarget+0.20;
-            }
+            caratTarget=Number(m[1]);
+
+            // 新规则：目标克拉向上放宽 0.10ct。
+            // 例如 0.50ct -> 0.50-0.60ct。
+            caratLow=caratTarget;
+            caratHigh=caratTarget+0.10;
         }
     }
 
     let size=null;
     m=text.match(/(\d+(?:\.\d+)?)\s*#/);
-    if(!m) m=text.match(/(?:尺寸|圈口|SIZE)\s*[:：]?\s*(\d+(?:\.\d+)?)/);
-    if(!m) m=text.match(/(\d+(?:\.\d+)?)\s*号/);
-    if(m) size=Number(m[1]);
+    if(!m)m=text.match(/(?:尺寸|圈口|SIZE)\s*[:：]?\s*(\d+(?:\.\d+)?)/);
+    if(!m)m=text.match(/(\d+(?:\.\d+)?)\s*号/);
+    if(m)size=Number(m[1]);
 
     let sizeTolerance=null;
     m=text.match(/(?:圈口|尺寸)?\s*[±+\-]\s*([345])\b/);
-    if(m) sizeTolerance=Number(m[1]);
+    if(m)sizeTolerance=Number(m[1]);
 
     const colors=["D","E","F","G","H"];
     const clarities=["IF","VVS1","VVS2","VS1","VS2"];
-    const wantedColors=colors.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
-    const wantedClarities=clarities.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
+
+    const wantedColors=
+        colors.filter(
+            x=>new RegExp("\\b"+x+"\\b").test(text)
+        );
+
+    const wantedClarities=
+        clarities.filter(
+            x=>new RegExp("\\b"+x+"\\b").test(text)
+        );
 
     return {
-        text,collection,shape,variant,
-        caratLow,caratHigh,caratTarget,
-        size,sizeTolerance,
-        wantedColors,wantedClarities
+        text,
+        collection,
+        shapes,
+        variant,
+        caratLow,
+        caratHigh,
+        caratTarget,
+        size,
+        sizeTolerance,
+        wantedColors,
+        wantedClarities
     };
 }
 
@@ -3404,7 +3667,7 @@ function parseCustomerRequirementForWeb(item){
             [item.note,item.customer,item.details].filter(Boolean).join(" ")
         ),
         collection: note.collection || base.collection,
-        shape: note.shape || base.shape,
+        shapes: note.shapes.length ? note.shapes : base.shapes,
         variant: note.variant || base.variant,
         caratLow: note.caratLow != null ? note.caratLow : base.caratLow,
         caratHigh: note.caratHigh != null ? note.caratHigh : base.caratHigh,
@@ -3429,49 +3692,151 @@ function webInventoryMatch(requirement, inv){
     const invShape=normalizeMatchText(inv.shape);
     const invVariant=normalizeMatchText(inv.variant);
 
-    if(requirement.collection && invCollection!==requirement.collection) return null;
-    if(requirement.shape && invShape!==requirement.shape) return null;
-    if(requirement.variant && invVariant && invVariant!==requirement.variant) return null;
+    if(
+        requirement.collection &&
+        invCollection!==requirement.collection
+    ){
+        return null;
+    }
+
+    if(
+        requirement.shapes &&
+        requirement.shapes.length &&
+        !requirement.shapes.includes(invShape)
+    ){
+        return null;
+    }
+
+    if(
+        requirement.variant &&
+        invVariant &&
+        invVariant!==requirement.variant
+    ){
+        return null;
+    }
 
     const carat=Number(inv.carat);
-    if(requirement.caratLow!=null && (
-        !Number.isFinite(carat) ||
-        carat<requirement.caratLow-1e-9 ||
-        carat>requirement.caratHigh+1e-9
-    )) return null;
+
+    if(
+        requirement.caratLow!=null &&
+        (
+            !Number.isFinite(carat) ||
+            carat<requirement.caratLow-1e-9 ||
+            carat>requirement.caratHigh+1e-9
+        )
+    ){
+        return null;
+    }
 
     const invSize=Number(inv.size);
     let sizeDiff=null;
+
     if(requirement.size!=null){
-        if(!Number.isFinite(invSize)) return null;
-        sizeDiff=Math.abs(invSize-requirement.size);
-        if(sizeDiff>requirement.sizeTolerance+1e-9) return null;
+        if(!Number.isFinite(invSize)){
+            return null;
+        }
+
+        sizeDiff=Math.abs(
+            invSize-requirement.size
+        );
+
+        if(
+            sizeDiff>
+            requirement.sizeTolerance+1e-9
+        ){
+            return null;
+        }
     }
 
-    // 颜色/净度：只有客户明确写了具体等级列表时才过滤。
-    if(requirement.wantedColors.length && inv.color &&
-       !requirement.wantedColors.includes(normalizeMatchText(inv.color))) return null;
-    if(requirement.wantedClarities.length && inv.clarity &&
-       !requirement.wantedClarities.includes(normalizeMatchText(inv.clarity))) return null;
+    if(
+        requirement.wantedColors.length &&
+        inv.color &&
+        !requirement.wantedColors.includes(
+            normalizeMatchText(inv.color)
+        )
+    ){
+        return null;
+    }
+
+    if(
+        requirement.wantedClarities.length &&
+        inv.clarity &&
+        !requirement.wantedClarities.includes(
+            normalizeMatchText(inv.clarity)
+        )
+    ){
+        return null;
+    }
 
     let score=100;
     const reasons=[];
 
-    if(requirement.collection) reasons.push(requirement.collection+"√");
-    if(requirement.shape) reasons.push(requirement.shape+"√");
+    if(requirement.collection){
+        reasons.push(requirement.collection+"√");
+    }
+
+    if(
+        requirement.shapes &&
+        requirement.shapes.length
+    ){
+        reasons.push(
+            "切割 "+invShape+"√"+
+            (
+                requirement.shapes.length>1
+                    ? "（可选："+requirement.shapes.join("/")+"）"
+                    : ""
+            )
+        );
+    }
+
+    if(
+        requirement.caratLow!=null &&
+        requirement.caratHigh!=null
+    ){
+        reasons.push(
+            "克拉范围 "+
+            requirement.caratLow.toFixed(2)+
+            "-"+
+            requirement.caratHigh.toFixed(2)+
+            "ct"
+        );
+    }
 
     if(sizeDiff!=null){
         score-=Math.round(sizeDiff*4);
-        reasons.push(sizeDiff===0?"圈口完全一致":"圈口差 "+sizeDiff+" 号");
+
+        reasons.push(
+            sizeDiff===0
+                ? "圈口完全一致"
+                : "圈口差 "+sizeDiff+" 号"
+        );
     }
 
-    if(requirement.caratTarget!=null && Number.isFinite(carat)){
-        const cd=Math.abs(carat-requirement.caratTarget);
-        score-=Math.round(cd*20);
+    if(
+        requirement.caratTarget!=null &&
+        Number.isFinite(carat)
+    ){
+        const caratDiff=
+            Math.abs(
+                carat-requirement.caratTarget
+            );
+
+        score-=Math.round(
+            caratDiff*20
+        );
     }
 
-    score=Math.max(1,Math.min(100,score));
-    const level=score>=99?"exact":score>=90?"high":"reference";
+    score=Math.max(
+        1,
+        Math.min(100,score)
+    );
+
+    const level=
+        score>=99
+            ? "exact"
+            : score>=90
+                ? "high"
+                : "reference";
 
     return {
         inventory_id:inv.id,
