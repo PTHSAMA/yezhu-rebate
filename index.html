@@ -1546,6 +1546,7 @@ const CHECK_INTERVAL =
 
 let database = [];
 let settings = {};
+let chunziCashRate = null;
 
 let currentBrand = null;
 let currentResults = [];
@@ -1860,6 +1861,11 @@ async function loadSettings(
 
     settings =
         newSettings;
+
+    chunziCashRate =
+        Number(settings.chunzi_cash_rate) > 0
+            ? Number(settings.chunzi_cash_rate)
+            : null;
 
 
     currentSettingsVersion =
@@ -3242,7 +3248,10 @@ function inventoryQuoteLine(inventory){
         inventory.color || "",
         inventory.clarity || "",
         inventory.size!=null ? Number(inventory.size)+"#" : "",
-        inventory.price_w!=null ? Number(inventory.price_w)+"W" : ""
+        inventory.price_w!=null ? Number(inventory.price_w)+"W" : "",
+        inventoryLandedRmb(inventory)!=null
+            ? "预计到手¥"+Math.round(inventoryLandedRmb(inventory)).toLocaleString()
+            : ""
     ].filter(Boolean);
 
     return parts.join(" · ");
@@ -3331,6 +3340,16 @@ function renderInventoryReferences() {
                 if(inventory.clarity)mainParts.push(escapeHtml(inventory.clarity));
                 if(inventory.size!=null)mainParts.push(Number(inventory.size)+"#");
                 if(inventory.price_w!=null)mainParts.push(Number(inventory.price_w)+"W");
+
+                const landedCost=
+                    inventoryLandedRmb(inventory);
+
+                if(landedCost!=null){
+                    mainParts.push(
+                        "预计到手¥"+
+                        Math.round(landedCost).toLocaleString()
+                    );
+                }
 
                 const selectedOrder=
                     selectedOrderInventoryIds.has(String(inventory.id));
@@ -3658,14 +3677,117 @@ function parseCustomerRequirementTextForWeb(rawText){
     };
 }
 
-function parseCustomerRequirementForWeb(item){
-    const base=parseCustomerRequirementTextForWeb(
-        [item.customer,item.details].filter(Boolean).join(" ")
+function parseCustomerBudgetRmb(rawText){
+    const text=normalizeMatchText(rawText);
+
+    const tenThousand=text.match(
+        /(\d+(?:\.\d+)?)\s*(?:W|万)(?:\s*(?:预算|内|以内))?/i
     );
 
-    const note=parseCustomerRequirementTextForWeb(
-        item.note || ""
+    if(tenThousand){
+        const value=
+            Number(tenThousand[1])*
+            10000;
+
+        if(value>=1000){
+            return Math.round(value);
+        }
+    }
+
+    const plain=text.match(
+        /(?:预算|预算内|以内|不超|不超过)\s*[:：]?\s*(\d{4,6})\b/
     );
+
+    if(plain){
+        return Number(plain[1]);
+    }
+
+    return null;
+}
+
+function inventoryRebateRate(priceW){
+    const price=Number(priceW);
+
+    if(price<=1000)return 0.095;
+    if(price<=2000)return 0.125;
+    if(price<=2500)return 0.135;
+    return 0.155;
+}
+
+function inventoryCashRateForBudget(inventory){
+    if(!(Number(chunziCashRate)>0)){
+        return null;
+    }
+
+    const price=Number(inventory.price_w||0);
+    const raw=String(inventory.raw_text||"");
+
+    if(
+        price<=1000 &&
+        raw.includes("仁川")
+    ){
+        return Number(chunziCashRate)+3;
+    }
+
+    return Number(chunziCashRate);
+}
+
+function inventoryLandedRmb(inventory){
+    const price=Number(inventory.price_w);
+
+    if(
+        !Number.isFinite(price) ||
+        !(Number(chunziCashRate)>0)
+    ){
+        return null;
+    }
+
+    const rebate=
+        inventoryRebateRate(price);
+
+    const fx=
+        inventoryCashRateForBudget(
+            inventory
+        );
+
+    if(!(fx>0)){
+        return null;
+    }
+
+    return (
+        price*(1-rebate) -
+        price*0.0818
+    )/fx;
+}
+
+function parseCustomerRequirementForWeb(item){
+    const baseText=
+        [item.customer,item.details]
+            .filter(Boolean)
+            .join(" ");
+
+    const noteText=
+        item.note || "";
+
+    const base=
+        parseCustomerRequirementTextForWeb(
+            baseText
+        );
+
+    const note=
+        parseCustomerRequirementTextForWeb(
+            noteText
+        );
+
+    const baseBudgetRmb=
+        parseCustomerBudgetRmb(
+            baseText
+        );
+
+    const noteBudgetRmb=
+        parseCustomerBudgetRmb(
+            noteText
+        );
 
     // 跟进备注是“增量覆盖”：
     // 备注里写到的参数覆盖旧需求；没写到的参数继续沿用旧需求。
@@ -3688,7 +3810,10 @@ function parseCustomerRequirementForWeb(item){
             : base.wantedColors,
         wantedClarities: note.wantedClarities.length
             ? note.wantedClarities
-            : base.wantedClarities
+            : base.wantedClarities,
+        budgetRmb: noteBudgetRmb != null
+            ? noteBudgetRmb
+            : baseBudgetRmb
     };
 
     return merged;
@@ -3775,6 +3900,17 @@ function webInventoryMatch(requirement, inv){
         return null;
     }
 
+    const landedRmb=
+        inventoryLandedRmb(inv);
+
+    if(
+        requirement.budgetRmb!=null &&
+        landedRmb!=null &&
+        landedRmb>Number(requirement.budgetRmb)
+    ){
+        return null;
+    }
+
     let score=100;
     const reasons=[];
 
@@ -3806,6 +3942,18 @@ function webInventoryMatch(requirement, inv){
             "-"+
             requirement.caratHigh.toFixed(2)+
             "ct"
+        );
+    }
+
+    if(
+        requirement.budgetRmb!=null &&
+        landedRmb!=null
+    ){
+        reasons.push(
+            "预算内 ¥"+
+            Math.round(landedRmb).toLocaleString()+
+            "/¥"+
+            Math.round(requirement.budgetRmb).toLocaleString()
         );
     }
 
