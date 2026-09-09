@@ -3248,10 +3248,7 @@ function inventoryQuoteLine(inventory){
         inventory.color || "",
         inventory.clarity || "",
         inventory.size!=null ? Number(inventory.size)+"#" : "",
-        inventory.price_w!=null ? Number(inventory.price_w)+"W" : "",
-        inventoryLandedRmb(inventory)!=null
-            ? "预计到手¥"+Math.round(inventoryLandedRmb(inventory)).toLocaleString()
-            : ""
+        inventory.price_w!=null ? Number(inventory.price_w)+"W" : ""
     ].filter(Boolean);
 
     return parts.join(" · ");
