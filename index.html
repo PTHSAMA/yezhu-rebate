@@ -3629,11 +3629,18 @@ function parseCustomerRequirementTextForWeb(rawText){
     }else{
         m=text.match(/(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
 
+        // 客户经常省略 ct，例如：
+        // "promise 0.5 round/oval P 53#"
+        // 这种情况下把独立的小数识别为克拉数。
+        if(!m){
+            m=text.match(/(?:^|\s)(0\.\d{1,2}|1\.\d{1,2}|2\.\d{1,2}|3\.\d{1,2})(?=\s|$|\/)/);
+        }
+
         if(m){
             caratTarget=Number(m[1]);
 
-            // 新规则：目标克拉向上放宽 0.10ct。
-            // 例如 0.50ct -> 0.50-0.60ct。
+            // 单点克拉：只向上放宽 0.10ct
+            // 0.50 -> 0.50-0.60
             caratLow=caratTarget;
             caratHigh=caratTarget+0.10;
         }
