@@ -1048,7 +1048,7 @@ button {
 
     <button class="menu-card" id="openOrdersButton">
         <div class="menu-card-title">📋 订单管理</div>
-        <div class="menu-card-desc">管理待柜台下单、已付款待取货和已完成订单</div>
+        <div class="menu-card-desc">管理待柜台下单、已付款待取货、已提货待重新结账和已完成订单</div>
         <div class="order-count-badge" id="homeOrderSummary">正在读取待下单任务...</div>
     </button>
 
@@ -1422,6 +1422,7 @@ button {
     <div class="order-filter-row">
         <button class="order-filter-button active" data-order-filter="待柜台下单">待柜台下单</button>
         <button class="order-filter-button" data-order-filter="已付款待取货">已付款待取货</button>
+        <button class="order-filter-button" data-order-filter="已提货待重新结账">已提货待重新结账</button>
         <button class="order-filter-button" data-order-filter="已完成">已完成</button>
         <button class="order-filter-button" data-order-filter="all">全部</button>
     </div>
@@ -3112,6 +3113,7 @@ async function loadOrders(renderPage = false) {
                 '">' +
                     '<option value="待柜台下单">待柜台下单</option>' +
                     '<option value="已付款待取货">已付款待取货</option>' +
+                    '<option value="已提货待重新结账">已提货待重新结账</option>' +
                     '<option value="已完成">已完成</option>' +
                     '<option value="无货/失败">无货/失败</option>' +
                     '<option value="已取消">已取消</option>' +
