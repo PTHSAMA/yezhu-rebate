@@ -1315,6 +1315,7 @@ button {
                 <button class="filter-button" id="graffFilterContinue">继续跟进</button>
                 <button class="filter-button" id="graffFilterCarat">0.7ct以上</button>
                 <button class="filter-button" id="graffFilterUnset">未设置状态</button>
+                <button class="filter-button" id="graffFilterNoMatch">暂无匹配</button>
             </div>
         </div>
 
@@ -1560,6 +1561,7 @@ let currentGraffVersion = "";
 let graffContinueOnly = false;
 let graffCaratOnly = false;
 let graffUnsetOnly = false;
+let graffNoMatchOnly = false;
 
 let toastTimer = null;
 
@@ -1716,6 +1718,9 @@ const graffFilterCarat =
 
 const graffFilterUnset =
     document.getElementById("graffFilterUnset");
+
+const graffFilterNoMatch =
+    document.getElementById("graffFilterNoMatch");
 
 const graffList =
     document.getElementById("graffList");
@@ -4351,6 +4356,19 @@ function renderGraffCustomers() {
                     return false;
                 }
 
+                if (graffNoMatchOnly) {
+                    const inventoryCount =
+                        graffInventoryCountMap.get(
+                            String(item.id)
+                        );
+
+                    // 只有库存匹配已经计算完成且结果为 0 的客户，
+                    // 才属于“暂无匹配”。
+                    if (inventoryCount !== 0) {
+                        return false;
+                    }
+                }
+
                 if (graffCaratOnly) {
                     const requirementText =
                         graffDetailsArray(item).join(" ").toLowerCase();
@@ -4457,11 +4475,13 @@ function setGraffFilter(mode) {
     graffContinueOnly = mode === "continue";
     graffCaratOnly = mode === "carat";
     graffUnsetOnly = mode === "unset";
+    graffNoMatchOnly = mode === "nomatch";
 
     graffFilterAll.classList.toggle("active", mode === "all");
     graffFilterContinue.classList.toggle("active", mode === "continue");
     graffFilterCarat.classList.toggle("active", mode === "carat");
     graffFilterUnset.classList.toggle("active", mode === "unset");
+    graffFilterNoMatch.classList.toggle("active", mode === "nomatch");
 
     renderGraffCustomers();
 }
@@ -6309,6 +6329,13 @@ graffFilterUnset.addEventListener(
     "click",
     function () {
         setGraffFilter("unset");
+    }
+);
+
+graffFilterNoMatch.addEventListener(
+    "click",
+    function () {
+        setGraffFilter("nomatch");
     }
 );
 
