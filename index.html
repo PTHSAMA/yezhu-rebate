@@ -2668,8 +2668,7 @@ async function confirmSmartPasteCustomers(){
 
         if(existing.length){
             duplicateMessages.push(
-                "「"+item.customer+"」疑似已存在：
-"+
+                "「"+item.customer+"」疑似已存在：\n"+
                 duplicateWarningText(existing)
             );
         }
@@ -2690,15 +2689,9 @@ async function confirmSmartPasteCustomers(){
 
     if(duplicateMessages.length){
         const continueAdd=confirm(
-            "发现疑似重复客户：
-
-"+
-            duplicateMessages.join("
-
-")+
-            "
-
-仍然要继续新增吗？"
+            "发现疑似重复客户：\n\n"+
+            duplicateMessages.join("\n\n")+
+            "\n\n仍然要继续新增吗？"
         );
 
         if(!continueAdd)return;
@@ -2799,13 +2792,9 @@ async function saveCustomerFromModal(){
 
             if(duplicates.length){
                 const continueAdd=confirm(
-                    "发现疑似重复客户：
-
-"+
+                    "发现疑似重复客户：\n\n"+
                     duplicateWarningText(duplicates)+
-                    "
-
-仍然要继续新增「"+name+"」吗？"
+                    "\n\n仍然要继续新增「"+name+"」吗？"
                 );
 
                 if(!continueAdd){
