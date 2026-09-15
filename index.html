@@ -841,6 +841,18 @@ button {
     vertical-align: 1px;
 }
 
+.inventory-reference-new {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #fff3cd;
+    color: #8a5a00;
+    font-size: 11px;
+    font-weight: 800;
+    vertical-align: 1px;
+}
+
 .inventory-reference-more {
     width: 100%;
     height: 34px;
@@ -3547,9 +3559,10 @@ function renderInventoryReferences() {
                 if(inventory.size!=null)mainParts.push(Number(inventory.size)+"#");
                 if(inventory.price_w!=null)mainParts.push(Number(inventory.price_w)+"W");
 
-                if(isInventoryNewToday(inventory.updated_at)){
-                    mainParts.push("🆕 今日新库存");
-                }
+                const newInventoryBadge =
+                    isInventoryNewToday(inventory.updated_at)
+                        ? '<span class="inventory-reference-new">🆕 新库存</span>'
+                        : '';
 
                 const landedCost=
                     inventoryLandedRmb(inventory);
@@ -3571,6 +3584,7 @@ function renderInventoryReferences() {
                     '<div class="inventory-reference-main">'+
                         escapeHtml(inventoryDisplayName(inventory))+
                         ' · '+mainParts.join(" · ")+
+                        newInventoryBadge+
                         '<span class="inventory-reference-level">'+
                             escapeHtml(inventoryLevelLabel(row.match_level))+
                         '</span>'+
