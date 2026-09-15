@@ -1707,7 +1707,7 @@ if(inventoryAppendButton)inventoryAppendButton.addEventListener("click",()=>inve
 if(inventoryFullSyncButton)inventoryFullSyncButton.addEventListener("click",()=>inventoryAdminUpload("full"));
 if(inventoryClearButton)inventoryClearButton.addEventListener("click",()=>{inventoryAdminText.value="";inventoryAdminParsed=[];inventoryAdminPreview.innerHTML="";inventoryAdminMessage.innerHTML="";});
 if(inventoryCurrentSearch)inventoryCurrentSearch.addEventListener("input",renderInventoryAdminCurrent);
-loadInventoryAdminCurrent().catch(e=>console.error("首页库存数量读取失败",e));
+// 首页库存数量将在 Supabase Client 初始化完成后读取。
 
 </script>
 
@@ -1745,6 +1745,9 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
     );
+
+// Supabase Client 已初始化，现在再读取首页库存数量。
+loadInventoryAdminCurrent().catch(e=>console.error("首页库存数量读取失败",e));
 
 // ============================================================
 // 管理员认证：只有 authenticated 会话显示库存管理入口
@@ -4118,11 +4121,38 @@ function parseCustomerRequirementTextForWeb(rawText){
         }
     }
 
-    let size=null;
-    m=text.match(/(\d+(?:\.\d+)?)\s*#/);
-    if(!m)m=text.match(/(?:尺寸|圈口|SIZE)\s*[:：]?\s*(\d+(?:\.\d+)?)/);
-    if(!m)m=text.match(/(\d+(?:\.\d+)?)\s*号/);
-    if(m)size=Number(m[1]);
+    // 戒圈解析：支持 52/53、50/51/52、52# / 53#、52-53、52号。
+    // 不再把“8号未匹配”“10/11月”“9.3进度”等日期/进度数字误当戒圈。
+    const sizes=[];
+    const addSize=(v)=>{
+        const n=Number(v);
+        if(Number.isFinite(n) && n>=35 && n<=75 && !sizes.includes(n)) sizes.push(n);
+    };
+
+    // 52/53 或 50/51/52；要求是常见戒圈区间，避免 10/11月。
+    const slashSizeRe=/(?:^|\s)(\d{2}(?:\.\d+)?(?:\s*\/\s*\d{2}(?:\.\d+)?)+)(?=\s|#|号|$)/g;
+    let sm;
+    while((sm=slashSizeRe.exec(text))!==null){
+        sm[1].split(/\s*\/\s*/).forEach(addSize);
+    }
+
+    // 52# / 53#，允许多个。
+    const hashSizeRe=/(\d+(?:\.\d+)?)\s*#/g;
+    while((sm=hashSizeRe.exec(text))!==null) addSize(sm[1]);
+
+    // 明确写“尺寸/圈口/SIZE”。
+    const explicitSizeRe=/(?:尺寸|圈口|SIZE)\s*[:：]?\s*(\d+(?:\.\d+)?)/g;
+    while((sm=explicitSizeRe.exec(text))!==null) addSize(sm[1]);
+
+    // 52-53 / 52~53：作为可接受区间端点。
+    const rangeSizeRe=/(?:^|\s)(\d{2}(?:\.\d+)?)\s*[-~～至到]\s*(\d{2}(?:\.\d+)?)(?=\s|#|号|$)/g;
+    while((sm=rangeSizeRe.exec(text))!==null){ addSize(sm[1]); addSize(sm[2]); }
+
+    // “52号”仍支持，但仅接受合理戒圈区间；“8号”会被排除。
+    const haoSizeRe=/(\d+(?:\.\d+)?)\s*号/g;
+    while((sm=haoSizeRe.exec(text))!==null) addSize(sm[1]);
+
+    const size=sizes.length ? sizes[0] : null;
 
     let sizeTolerance=null;
     m=text.match(/(?:圈口|尺寸)?\s*[±+\-]\s*([345])\b/);
@@ -4150,6 +4180,7 @@ function parseCustomerRequirementTextForWeb(rawText){
         caratHigh,
         caratTarget,
         size,
+        sizes,
         sizeTolerance,
         wantedColors,
         wantedClarities
@@ -4280,7 +4311,8 @@ function parseCustomerRequirementForWeb(item){
         caratLow: note.caratLow != null ? note.caratLow : base.caratLow,
         caratHigh: note.caratHigh != null ? note.caratHigh : base.caratHigh,
         caratTarget: note.caratTarget != null ? note.caratTarget : base.caratTarget,
-        size: note.size != null ? note.size : base.size,
+        size: note.sizes && note.sizes.length ? note.sizes[0] : base.size,
+        sizes: note.sizes && note.sizes.length ? note.sizes : (base.sizes || (base.size!=null ? [base.size] : [])),
         sizeTolerance: note.sizeTolerance != null
             ? note.sizeTolerance
             : (base.sizeTolerance != null ? base.sizeTolerance : 3),
@@ -4342,19 +4374,19 @@ function webInventoryMatch(requirement, inv){
     const invSize=Number(inv.size);
     let sizeDiff=null;
 
-    if(requirement.size!=null){
+    const requestedSizes=(requirement.sizes && requirement.sizes.length)
+        ? requirement.sizes
+        : (requirement.size!=null ? [requirement.size] : []);
+
+    if(requestedSizes.length){
         if(!Number.isFinite(invSize)){
             return null;
         }
 
-        sizeDiff=Math.abs(
-            invSize-requirement.size
-        );
+        // 多圈口时，库存只要接近任意一个客户可接受圈口即可。
+        sizeDiff=Math.min(...requestedSizes.map(s=>Math.abs(invSize-Number(s))));
 
-        if(
-            sizeDiff>
-            requirement.sizeTolerance+1e-9
-        ){
+        if(sizeDiff>requirement.sizeTolerance+1e-9){
             return null;
         }
     }
