@@ -1064,7 +1064,13 @@ button {
         <div class="menu-card-warning" id="homeGraffSummary">正在加载今日客户...</div>
     </button>
 
-    <button class="menu-card" id="openInventoryAdminButton">
+    <button class="menu-card" id="openAdminLoginButton">
+        <div class="menu-card-title">🔐 管理员登录</div>
+        <div class="menu-card-desc">登录后开放库存上传、完整同步和下架权限</div>
+        <div class="order-count-badge" id="adminLoginSummary">当前：未登录</div>
+    </button>
+
+    <button class="menu-card" id="openInventoryAdminButton" style="display:none;">
         <div class="menu-card-title">📦 库存管理</div>
         <div class="menu-card-desc">手机粘贴柜台库存，预览后完整同步或临时追加</div>
         <div class="order-count-badge" id="homeInventorySummary">正在读取当前库存...</div>
@@ -1078,8 +1084,22 @@ button {
 
 </div>
 
+<div id="adminLoginMask" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:9999;align-items:center;justify-content:center;padding:18px;">
+  <div class="card" style="width:min(420px,100%);margin:0;">
+    <div class="section-title">管理员登录</div>
+    <div class="form-note">使用 Supabase Auth 管理员账号。登录成功后本机浏览器会保持会话。</div>
+    <input id="adminEmailInput" class="customer-form-input" type="email" autocomplete="username" placeholder="管理员邮箱">
+    <input id="adminPasswordInput" class="customer-form-input" type="password" autocomplete="current-password" placeholder="密码" style="margin-top:10px;">
+    <div id="adminLoginMessage" class="form-note" style="margin-top:10px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
+      <button class="back-button" id="adminLoginCancel" style="margin:0;">取消</button>
+      <button class="primary-button" id="adminLoginSubmit" style="margin:0;">登录</button>
+    </div>
+  </div>
+</div>
+
 <div class="container page-screen" id="inventoryAdminPage" style="display:none;">
-    <button class="back-button" id="backFromInventoryAdmin">← 首页</button>
+    <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;"><button class="back-button" id="backFromInventoryAdmin">← 首页</button><button class="back-button" id="adminLogoutButton" style="width:auto;margin:0;">退出管理员</button></div>
     <div class="header"><h1>GRAFF 库存管理</h1><div class="data-info" id="inventoryAdminStatus">直接连接当前 Supabase 库存</div></div>
     <div class="card">
         <div class="section-title">粘贴柜台库存</div>
@@ -1559,7 +1579,8 @@ Amy icon round 0.5ct F 51# 预算4w
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
 
 // ============================================================
 // 网页库存管理
@@ -1603,7 +1624,7 @@ function invDetectSection(line){
 }
 
 function invParsePrice(line){
-    let m=line.match(/([\d,.]+)\s*[wW₩]\b?/);
+    let m=line.match(/([\d,.]+)\s*[wW₩](?:\s|$)/);
     if(m){let n=Number(m[1].replace(/,/g,""));if(!Number.isFinite(n))return null; if(n>=100000)return n/10000; return n;}
     m=line.match(/(?:₩\s*)?([\d,]{7,})\s*$/);
     if(m){const n=Number(m[1].replace(/,/g,""));return Number.isFinite(n)?n/10000:null;}
@@ -1679,7 +1700,7 @@ async function inventoryAdminUpload(mode){
     finally{inventoryAppendButton.disabled=false;inventoryFullSyncButton.disabled=false;}
 }
 
-if(openInventoryAdminButton)openInventoryAdminButton.addEventListener("click",async()=>{homePage.style.display="none";inventoryAdminPage.style.display="block";window.scrollTo(0,0);try{await loadInventoryAdminCurrent();}catch(e){inventoryCurrentList.innerHTML='<div class="inventory-admin-warning">读取失败：'+escapeHtml(e.message||String(e))+'</div>';}});
+if(openInventoryAdminButton)openInventoryAdminButton.addEventListener("click",async()=>{if(!adminSession){openAdminLogin();return;} homePage.style.display="none";inventoryAdminPage.style.display="block";window.scrollTo(0,0);try{await loadInventoryAdminCurrent();}catch(e){inventoryCurrentList.innerHTML='<div class="inventory-admin-warning">读取失败：'+escapeHtml(e.message||String(e))+'</div>';}});
 if(backFromInventoryAdmin)backFromInventoryAdmin.addEventListener("click",()=>{inventoryAdminPage.style.display="none";homePage.style.display="block";window.scrollTo(0,0);});
 if(inventoryPreviewButton)inventoryPreviewButton.addEventListener("click",()=>inventoryAdminPreviewNow());
 if(inventoryAppendButton)inventoryAppendButton.addEventListener("click",()=>inventoryAdminUpload("append"));
@@ -1724,6 +1745,64 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
     );
+
+// ============================================================
+// 管理员认证：只有 authenticated 会话显示库存管理入口
+// 真正写权限仍由 Supabase RLS 控制，不能只依赖隐藏按钮。
+// ============================================================
+const openAdminLoginButton = document.getElementById("openAdminLoginButton");
+const adminLoginSummary = document.getElementById("adminLoginSummary");
+const adminLoginMask = document.getElementById("adminLoginMask");
+const adminEmailInput = document.getElementById("adminEmailInput");
+const adminPasswordInput = document.getElementById("adminPasswordInput");
+const adminLoginMessage = document.getElementById("adminLoginMessage");
+const adminLoginCancel = document.getElementById("adminLoginCancel");
+const adminLoginSubmit = document.getElementById("adminLoginSubmit");
+const adminLogoutButton = document.getElementById("adminLogoutButton");
+let adminSession = null;
+
+function renderAdminAuth(session){
+    adminSession = session || null;
+    const loggedIn = !!(session && session.user);
+    if(openInventoryAdminButton) openInventoryAdminButton.style.display = loggedIn ? "block" : "none";
+    if(openAdminLoginButton) openAdminLoginButton.style.display = loggedIn ? "none" : "block";
+    if(adminLoginSummary) adminLoginSummary.textContent = loggedIn ? ("已登录：" + (session.user.email || "管理员")) : "当前：未登录";
+    if(!loggedIn && inventoryAdminPage && inventoryAdminPage.style.display !== "none") {
+        inventoryAdminPage.style.display = "none";
+        homePage.style.display = "block";
+    }
+}
+
+function openAdminLogin(){
+    if(adminLoginMessage) adminLoginMessage.textContent = "";
+    if(adminPasswordInput) adminPasswordInput.value = "";
+    if(adminLoginMask) adminLoginMask.style.display = "flex";
+    setTimeout(()=>adminEmailInput && adminEmailInput.focus(), 50);
+}
+function closeAdminLogin(){ if(adminLoginMask) adminLoginMask.style.display = "none"; }
+
+if(openAdminLoginButton) openAdminLoginButton.addEventListener("click", openAdminLogin);
+if(adminLoginCancel) adminLoginCancel.addEventListener("click", closeAdminLogin);
+if(adminLoginSubmit) adminLoginSubmit.addEventListener("click", async()=>{
+    const email=(adminEmailInput?.value||"").trim();
+    const password=adminPasswordInput?.value||"";
+    if(!email || !password){ adminLoginMessage.textContent="请输入邮箱和密码"; return; }
+    adminLoginSubmit.disabled=true; adminLoginMessage.textContent="正在登录...";
+    const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+    adminLoginSubmit.disabled=false;
+    if(error){ adminLoginMessage.textContent="登录失败："+error.message; return; }
+    renderAdminAuth(data.session); closeAdminLogin(); showToast("管理员登录成功");
+});
+if(adminPasswordInput) adminPasswordInput.addEventListener("keydown",e=>{if(e.key==="Enter")adminLoginSubmit?.click();});
+if(adminLogoutButton) adminLogoutButton.addEventListener("click", async()=>{
+    await supabaseClient.auth.signOut();
+    renderAdminAuth(null);
+    showToast("已退出管理员");
+});
+
+supabaseClient.auth.getSession().then(({data})=>renderAdminAuth(data.session));
+supabaseClient.auth.onAuthStateChange((_event,session)=>renderAdminAuth(session));
+
 
 const CHECK_INTERVAL =
     5 * 60 * 1000;
