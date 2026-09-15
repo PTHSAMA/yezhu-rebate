@@ -2338,12 +2338,15 @@ function showRebatePage() {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
+let graffListScrollPosition = 0;
+
 function showGraffPage() {
     homePage.style.display = "none";
     rebatePage.style.display = "none";
     graffPage.style.display = "block";
     ordersPage.style.display = "none";
-    showGraffListScreen();
+    graffListScrollPosition = 0;
+    showGraffListScreen(false);
 }
 
 function showOrdersPage() {
@@ -2355,16 +2358,27 @@ function showOrdersPage() {
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
-function showGraffListScreen() {
+function showGraffListScreen(restorePosition = false) {
     graffListScreen.style.display = "block";
     graffDetailScreen.style.display = "none";
     selectedGraffCustomerId = null;
     renderGraffCustomers();
-    setTimeout(() => graffSearchInput.focus(), 80);
-    window.scrollTo({top: 0, behavior: "smooth"});
+
+    if (restorePosition) {
+        const targetY = graffListScrollPosition || 0;
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                window.scrollTo({top: targetY, behavior: "auto"});
+            });
+        });
+    } else {
+        setTimeout(() => graffSearchInput.focus(), 80);
+        window.scrollTo({top: 0, behavior: "smooth"});
+    }
 }
 
 function openGraffDetail(item) {
+    graffListScrollPosition = window.scrollY || window.pageYOffset || 0;
     selectedGraffCustomerId = item.id;
 
     graffListScreen.style.display = "none";
@@ -6540,7 +6554,7 @@ backFromGraff.addEventListener(
 
 backToGraffList.addEventListener(
     "click",
-    showGraffListScreen
+    () => showGraffListScreen(true)
 );
 
 
@@ -6608,7 +6622,7 @@ function animateGraffSwipeDismiss() {
 
     setTimeout(
         () => {
-            showGraffListScreen();
+            showGraffListScreen(true);
             resetGraffSwipeVisual();
         },
         160
