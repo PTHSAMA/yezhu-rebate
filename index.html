@@ -1656,6 +1656,15 @@ async function parseInventoryAdminText(text){
         const detected=invDetectSection(line);
         const looksData=/\b\d+(?:\.\d+)?\s*(?:ct)?\b/i.test(line) && (/[wW₩]/.test(line)||/[\d,]{7,}\s*$/.test(line));
         if(detected && !looksData){section=detected;continue;}
+        // 单行完整库存，例如：ICON OVAL 1.5ct D VS1 50# 6142W
+        // 这一行既包含系列/形状，也包含具体参数时，直接用本行识别出的 section 解析。
+        // 同时把它保存为当前 section，后续若继续粘贴同系列的数据行也可以继承。
+        if(detected && looksData){
+            section=detected;
+            const row=invParseRow(line,detected);
+            if(row){row.source_key=await invSourceKey(row);rows.push(row);}
+            continue;
+        }
         const row=invParseRow(line,section);if(row){row.source_key=await invSourceKey(row);rows.push(row);}
     }
     const map=new Map();for(const row of rows)if(!map.has(row.source_key))map.set(row.source_key,row);
