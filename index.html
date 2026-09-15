@@ -1611,15 +1611,18 @@ async function invSourceKey(item){return invSha1([item.collection,item.shape,ite
 function invDetectSection(line){
     const u=line.toUpperCase().replace(/\bOVER\b/g,"OVAL");
     let collection=null,shape=null,variant=null;
+    const isNecklace=/项链|\bNECKLACE\b|\bNECKLESS\b/.test(u);
     if(/\bPROMIS(?:E)?\b/.test(u))collection="PROMISE";
     else if(/\bICON\b/.test(u))collection="ICON";
-    else return null;
-    if(/\bOVAL\b/.test(u))shape="OVAL";
+    else if(!isNecklace)return null;
+    if(isNecklace)shape="NECKLACE";
+    else if(/\bOVAL\b/.test(u))shape="OVAL";
     else if(/\bROUND\b/.test(u))shape="ROUND";
     else if(/\bPEAR\b/.test(u) && collection==="ICON")shape="PEAR";
     else if(/\bEM(?:E|A)?RALD\b|\bEMERALD\b/.test(u))shape="EMERALD";
     if(/\.P\b/.test(u))variant="P";
     else if(/\.T\b/.test(u))variant="T";
+    else if(shape==="NECKLACE" && /(?:^|\s)EM(?:\s|$)/.test(u))variant="EM";
     return {collection,shape,variant};
 }
 
@@ -1632,7 +1635,7 @@ function invParsePrice(line){
 }
 
 function invParseRow(line,section){
-    if(!section || !section.collection || !section.shape)return null;
+    if(!section || !section.shape)return null;
     if(/없습니다|없음/.test(line))return null;
     let variant=section.variant;
     let body=line.trim();
@@ -2771,7 +2774,7 @@ function normalizeSmartLine(line){
 
 function looksLikeRequirementStart(token){
     const t=String(token||"").toUpperCase();
-    return /^(GRAFF|ICON|PROMISE|PARAGON|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|项链|戒指)/.test(t);
+    return /^(GRAFF|ICON|PROMISE|PARAGON|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|NECKLACE|NECKLESS|项链|戒指)/.test(t);
 }
 
 function parseSmartCustomerLine(line){
@@ -4079,6 +4082,7 @@ function parseCustomerRequirementTextForWeb(rawText){
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
 
     const shapeRules=[
+        ["NECKLACE", /项链|\bNECKLACE\b|\bNECKLESS\b/],
         ["EMERALD", /\bEMRALD\b|\bEMERALD\b|祖母绿/],
         ["OVAL", /\bOVAL\b|椭圆/],
         ["ROUND", /\bROUND\b|\bRD\b|圆形/],
@@ -4097,6 +4101,10 @@ function parseCustomerRequirementTextForWeb(rawText){
             shapes.push(name);
         }
     });
+
+    // 项链是独立品类：客户只要写“项链 / necklace / neckless”即可，
+    // 即使文字里同时出现 ICON，也不强制按系列过滤。
+    if(shapes.includes("NECKLACE")) collection="";
 
     let variant="";
     const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
@@ -4920,7 +4928,13 @@ function renderGraffCustomers() {
                     buildGraffSearchText(item)
                 ).includes(keyword);
             }
-        );
+        )
+        .sort((a, b) => {
+            // “暂停跟进”客户统一沉底；其余客户保持原有顺序。
+            const aPaused = String(a.status || "").trim() === "暂停跟进" ? 1 : 0;
+            const bPaused = String(b.status || "").trim() === "暂停跟进" ? 1 : 0;
+            return aPaused - bPaused;
+        });
 
     graffList.innerHTML = "";
 
