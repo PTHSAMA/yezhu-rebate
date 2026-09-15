@@ -2339,6 +2339,41 @@ function showRebatePage() {
 }
 
 let graffListScrollPosition = 0;
+let graffListReturnAnchorId = null;
+let graffListReturnAnchorTop = 0;
+
+function currentGraffListStateKey(){
+    let mode = "all";
+    if(graffContinueOnly) mode = "continue";
+    else if(graffCaratOnly) mode = "carat";
+    else if(graffUnsetOnly) mode = "unset";
+    else if(graffNoMatchOnly) mode = "nomatch";
+    else if(graffTodayOnly) mode = "today";
+    else if(graffNewInventoryOnly) mode = "newinventory";
+    return mode + "|" + String(graffSearchInput?.value || "");
+}
+
+function restoreGraffListPosition(){
+    const targetY = graffListScrollPosition || 0;
+    const anchorId = graffListReturnAnchorId;
+    const anchorTop = graffListReturnAnchorTop || 0;
+    const restore = () => {
+        if(anchorId){
+            const card = graffList.querySelector('[data-graff-id="' + CSS.escape(String(anchorId)) + '"]');
+            if(card){
+                const delta = card.getBoundingClientRect().top - anchorTop;
+                window.scrollTo({top: Math.max(0, (window.scrollY || 0) + delta), behavior:"auto"});
+                return;
+            }
+        }
+        window.scrollTo({top: targetY, behavior:"auto"});
+    };
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        restore();
+        setTimeout(restore, 80);
+        setTimeout(restore, 220);
+    }));
+}
 
 function showGraffPage() {
     homePage.style.display = "none";
@@ -2346,6 +2381,8 @@ function showGraffPage() {
     graffPage.style.display = "block";
     ordersPage.style.display = "none";
     graffListScrollPosition = 0;
+    graffListReturnAnchorId = null;
+    graffListReturnAnchorTop = 0;
     showGraffListScreen(false);
 }
 
@@ -2365,12 +2402,7 @@ function showGraffListScreen(restorePosition = false) {
     renderGraffCustomers();
 
     if (restorePosition) {
-        const targetY = graffListScrollPosition || 0;
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                window.scrollTo({top: targetY, behavior: "auto"});
-            });
-        });
+        restoreGraffListPosition();
     } else {
         setTimeout(() => graffSearchInput.focus(), 80);
         window.scrollTo({top: 0, behavior: "smooth"});
@@ -2379,6 +2411,9 @@ function showGraffListScreen(restorePosition = false) {
 
 function openGraffDetail(item) {
     graffListScrollPosition = window.scrollY || window.pageYOffset || 0;
+    graffListReturnAnchorId = item.id;
+    const clickedCard = graffList.querySelector('[data-graff-id="' + CSS.escape(String(item.id)) + '"]');
+    graffListReturnAnchorTop = clickedCard ? clickedCard.getBoundingClientRect().top : 0;
     selectedGraffCustomerId = item.id;
 
     graffListScreen.style.display = "none";
@@ -4965,6 +5000,7 @@ function renderGraffCustomers() {
         card.className =
             "graff-list-card" +
             (item.warning ? " warning" : "");
+        card.dataset.graffId = String(item.id);
 
         const details =
             graffDetailsArray(item);
