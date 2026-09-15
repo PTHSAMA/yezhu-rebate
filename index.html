@@ -1317,6 +1317,7 @@ button {
                 <button class="filter-button" id="graffFilterUnset">未设置状态</button>
                 <button class="filter-button" id="graffFilterNoMatch">暂无匹配</button>
                 <button class="filter-button" id="graffFilterToday">今日添加</button>
+                <button class="filter-button" id="graffFilterNewInventory">有新库存</button>
             </div>
         </div>
 
@@ -1564,6 +1565,7 @@ let graffCaratOnly = false;
 let graffUnsetOnly = false;
 let graffNoMatchOnly = false;
 let graffTodayOnly = false;
+let graffNewInventoryOnly = false;
 
 let toastTimer = null;
 
@@ -1727,6 +1729,9 @@ const graffFilterNoMatch =
 const graffFilterToday =
     document.getElementById("graffFilterToday");
 
+const graffFilterNewInventory =
+    document.getElementById("graffFilterNewInventory");
+
 const graffList =
     document.getElementById("graffList");
 
@@ -1798,6 +1803,7 @@ let selectedIgnoredInventoryReferences = [];
 let inventoryReferenceExpanded = false;
 let inventoryIgnoredExpanded = false;
 let graffInventoryCountMap = new Map();
+let graffNewInventoryCountMap = new Map();
 let selectedOrderInventoryIds = new Set();
 let orderDatabase = [];
 let currentOrderFilter = "待柜台下单";
@@ -2412,6 +2418,20 @@ function isCreatedToday(value){
 
     const now=new Date();
 
+    return (
+        date.getFullYear()===now.getFullYear() &&
+        date.getMonth()===now.getMonth() &&
+        date.getDate()===now.getDate()
+    );
+}
+
+function isInventoryNewToday(value){
+    if(!value)return false;
+
+    const date=new Date(value);
+    if(Number.isNaN(date.getTime()))return false;
+
+    const now=new Date();
     return (
         date.getFullYear()===now.getFullYear() &&
         date.getMonth()===now.getMonth() &&
@@ -3399,26 +3419,33 @@ async function restoreIgnoredInventory(inventoryId){
 async function refreshGraffInventoryBadges(){
     try{
         const activeCustomers=graffDatabase.filter(x=>x.active!==false);
-        if(!activeCustomers.length){graffInventoryCountMap=new Map();renderGraffCustomers();return;}
+        if(!activeCustomers.length){graffInventoryCountMap=new Map();graffNewInventoryCountMap=new Map();renderGraffCustomers();return;}
         const [{data:inventoryRows,error:ie},{data:ignoreRows,error:ge}]=await Promise.all([
             supabaseClient.from(SUPABASE_INVENTORY_TABLE)
-                .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active").eq("active",true),
+                .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active,updated_at").eq("active",true),
             supabaseClient.from(SUPABASE_IGNORE_TABLE)
                 .select("customer_id,inventory_id,active").eq("active",true)
         ]);
         if(ie)throw ie;if(ge)throw ge;
         const ignored=new Set((ignoreRows||[]).map(x=>String(x.customer_id)+"|"+String(x.inventory_id)));
         const map=new Map();
+        const newMap=new Map();
         for(const customer of activeCustomers){
             const req=parseCustomerRequirementForWeb(customer);
             let count=0;
+            let newCount=0;
             for(const inv of (inventoryRows||[])){
                 if(ignored.has(String(customer.id)+"|"+String(inv.id)))continue;
-                if(webInventoryMatch(req,inv))count++;
+                if(webInventoryMatch(req,inv)){
+                    count++;
+                    if(isInventoryNewToday(inv.updated_at))newCount++;
+                }
             }
             map.set(String(customer.id),count);
+            newMap.set(String(customer.id),newCount);
         }
         graffInventoryCountMap=map;
+        graffNewInventoryCountMap=newMap;
         renderGraffCustomers();
     }catch(error){console.error("列表库存标注读取失败：",error);}
 }
@@ -3519,6 +3546,10 @@ function renderInventoryReferences() {
                 if(inventory.clarity)mainParts.push(escapeHtml(inventory.clarity));
                 if(inventory.size!=null)mainParts.push(Number(inventory.size)+"#");
                 if(inventory.price_w!=null)mainParts.push(Number(inventory.price_w)+"W");
+
+                if(isInventoryNewToday(inventory.updated_at)){
+                    mainParts.push("🆕 今日新库存");
+                }
 
                 const landedCost=
                     inventoryLandedRmb(inventory);
@@ -4194,7 +4225,7 @@ async function buildLiveInventoryReferencesForCustomer(item){
 
     const {data,error}=await supabaseClient
         .from(SUPABASE_INVENTORY_TABLE)
-        .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active")
+        .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active,updated_at")
         .eq("active",true);
 
     if(error) throw error;
@@ -4551,6 +4582,13 @@ function renderGraffCustomers() {
                     return false;
                 }
 
+                if (
+                    graffNewInventoryOnly &&
+                    (graffNewInventoryCountMap.get(String(item.id)) || 0) <= 0
+                ) {
+                    return false;
+                }
+
                 if (graffCaratOnly) {
                     const requirementText =
                         graffDetailsArray(item).join(" ").toLowerCase();
@@ -4616,6 +4654,13 @@ function renderGraffCustomers() {
                             (item.warning ? "⚠️ " : "") +
                             (item.customer || "未命名客户")
                         ) +
+                        (
+                            (graffNewInventoryCountMap.get(String(item.id)) || 0) > 0
+                                ? '<span class="inventory-list-badge">🆕 新库存 ' +
+                                  escapeHtml(String(graffNewInventoryCountMap.get(String(item.id)))) +
+                                  '</span>'
+                                : ''
+                        ) +
                     '</div>' +
                     '<div class="graff-list-detail">' +
                         escapeHtml(shortDetail) +
@@ -4659,6 +4704,7 @@ function setGraffFilter(mode) {
     graffUnsetOnly = mode === "unset";
     graffNoMatchOnly = mode === "nomatch";
     graffTodayOnly = mode === "today";
+    graffNewInventoryOnly = mode === "newinventory";
 
     graffFilterAll.classList.toggle("active", mode === "all");
     graffFilterContinue.classList.toggle("active", mode === "continue");
@@ -4666,6 +4712,7 @@ function setGraffFilter(mode) {
     graffFilterUnset.classList.toggle("active", mode === "unset");
     graffFilterNoMatch.classList.toggle("active", mode === "nomatch");
     graffFilterToday.classList.toggle("active", mode === "today");
+    graffFilterNewInventory.classList.toggle("active", mode === "newinventory");
 
     renderGraffCustomers();
 }
@@ -6527,6 +6574,13 @@ graffFilterToday.addEventListener(
     "click",
     function () {
         setGraffFilter("today");
+    }
+);
+
+graffFilterNewInventory.addEventListener(
+    "click",
+    function () {
+        setGraffFilter("newinventory");
     }
 );
 
