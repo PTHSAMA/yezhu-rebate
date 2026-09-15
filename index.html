@@ -1034,6 +1034,12 @@ button {
 
 }
 
+
+/* ===== 网页库存管理 ===== */
+.inventory-admin-textarea{width:100%;min-height:220px;border:1px solid #d8dce2;border-radius:12px;padding:12px;font:14px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;resize:vertical;background:#fff}
+.inventory-admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.inventory-admin-actions button{margin:0}.inventory-admin-preview{margin-top:14px}.inventory-admin-row{padding:10px 0;border-bottom:1px solid #eee;font-size:13px}.inventory-admin-row:last-child{border-bottom:0}.inventory-admin-meta{color:#666;margin-top:3px}.inventory-admin-warning{padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;margin-top:10px;font-size:13px}.inventory-admin-success{padding:10px;border-radius:10px;background:#f0fdf4;color:#166534;margin-top:10px;font-size:13px}.inventory-admin-current{max-height:420px;overflow:auto}.inventory-admin-current-row{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #eee}.inventory-admin-current-main{flex:1;min-width:0}.inventory-admin-current-row button{width:auto;padding:7px 9px;margin:0;background:#fff;border:1px solid #ddd;color:#333;border-radius:8px}.danger-button{background:#fff!important;color:#b91c1c!important;border:1px solid #fecaca!important}
+@media(max-width:520px){.inventory-admin-actions{grid-template-columns:1fr}}
+
 </style>
 
 </head>
@@ -1058,12 +1064,46 @@ button {
         <div class="menu-card-warning" id="homeGraffSummary">正在加载今日客户...</div>
     </button>
 
+    <button class="menu-card" id="openInventoryAdminButton">
+        <div class="menu-card-title">📦 库存管理</div>
+        <div class="menu-card-desc">手机粘贴柜台库存，预览后完整同步或临时追加</div>
+        <div class="order-count-badge" id="homeInventorySummary">正在读取当前库存...</div>
+    </button>
+
     <button class="menu-card" id="openOrdersButton">
         <div class="menu-card-title">📋 订单管理</div>
         <div class="menu-card-desc">管理待柜台下单、已付款待取货、已提货待重新结账和已完成订单</div>
         <div class="order-count-badge" id="homeOrderSummary">正在读取待下单任务...</div>
     </button>
 
+</div>
+
+<div class="container page-screen" id="inventoryAdminPage" style="display:none;">
+    <button class="back-button" id="backFromInventoryAdmin">← 首页</button>
+    <div class="header"><h1>GRAFF 库存管理</h1><div class="data-info" id="inventoryAdminStatus">直接连接当前 Supabase 库存</div></div>
+    <div class="card">
+        <div class="section-title">粘贴柜台库存</div>
+        <div class="form-note">支持标准格式，也支持 ICON Over/OVAL、Promise Round + Ps/Bg、₩/W 价格。先预览，确认后再同步。</div>
+        <textarea id="inventoryAdminText" class="inventory-admin-textarea" placeholder="例如：
+ICON Over 1.5ct 52#
+1.51 G VS2 #52 4713₩
+
+Promise Round Pear 1ct F,G #52
+Bg 1.06 F VVS1 #50 3625₩"></textarea>
+        <div class="inventory-admin-actions">
+            <button class="primary-button" id="inventoryPreviewButton">解析预览库存</button>
+            <button class="primary-button" id="inventoryAppendButton">追加临时库存</button>
+            <button class="primary-button" id="inventoryFullSyncButton">同步今日完整库存</button>
+            <button class="back-button" id="inventoryClearButton" style="margin:0">清空输入</button>
+        </div>
+        <div id="inventoryAdminMessage"></div>
+        <div id="inventoryAdminPreview" class="inventory-admin-preview"></div>
+    </div>
+    <div class="card">
+        <div class="section-title">当前有效库存 <span id="inventoryCurrentCount"></span></div>
+        <input id="inventoryCurrentSearch" type="text" placeholder="搜索 ICON / OVAL / 0.7 / 52# / F / VS1">
+        <div id="inventoryCurrentList" class="inventory-admin-current"><div class="card empty">正在读取库存...</div></div>
+    </div>
 </div>
 
 <div
@@ -1519,7 +1559,136 @@ Amy icon round 0.5ct F 51# 预算4w
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+
+// ============================================================
+// 网页库存管理
+// ============================================================
+const openInventoryAdminButton=document.getElementById("openInventoryAdminButton");
+const inventoryAdminPage=document.getElementById("inventoryAdminPage");
+const backFromInventoryAdmin=document.getElementById("backFromInventoryAdmin");
+const inventoryAdminText=document.getElementById("inventoryAdminText");
+const inventoryPreviewButton=document.getElementById("inventoryPreviewButton");
+const inventoryAppendButton=document.getElementById("inventoryAppendButton");
+const inventoryFullSyncButton=document.getElementById("inventoryFullSyncButton");
+const inventoryClearButton=document.getElementById("inventoryClearButton");
+const inventoryAdminPreview=document.getElementById("inventoryAdminPreview");
+const inventoryAdminMessage=document.getElementById("inventoryAdminMessage");
+const inventoryCurrentList=document.getElementById("inventoryCurrentList");
+const inventoryCurrentCount=document.getElementById("inventoryCurrentCount");
+const inventoryCurrentSearch=document.getElementById("inventoryCurrentSearch");
+const homeInventorySummary=document.getElementById("homeInventorySummary");
+let inventoryAdminParsed=[];
+let inventoryAdminCurrent=[];
+
+function invClean(v){return String(v==null?"":v).trim();}
+function invNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
+function invNormalizeNumber(n){return n==null?"":String(Number(n));}
+async function invSha1(text){const data=new TextEncoder().encode(text);const hash=await crypto.subtle.digest("SHA-1",data);return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");}
+async function invSourceKey(item){return invSha1([item.collection,item.shape,item.variant,invNormalizeNumber(item.carat),item.color,item.clarity,invNormalizeNumber(item.size),invNormalizeNumber(item.price_w)].map(x=>invClean(x).toUpperCase()).join("|"));}
+
+function invDetectSection(line){
+    const u=line.toUpperCase().replace(/\bOVER\b/g,"OVAL");
+    let collection=null,shape=null,variant=null;
+    if(/\bPROMIS(?:E)?\b/.test(u))collection="PROMISE";
+    else if(/\bICON\b/.test(u))collection="ICON";
+    else return null;
+    if(/\bOVAL\b/.test(u))shape="OVAL";
+    else if(/\bROUND\b/.test(u))shape="ROUND";
+    else if(/\bPEAR\b/.test(u) && collection==="ICON")shape="PEAR";
+    else if(/\bEM(?:E|A)?RALD\b|\bEMERALD\b/.test(u))shape="EMERALD";
+    if(/\.P\b/.test(u))variant="P";
+    else if(/\.T\b/.test(u))variant="T";
+    return {collection,shape,variant};
+}
+
+function invParsePrice(line){
+    let m=line.match(/([\d,.]+)\s*[wW₩]\b?/);
+    if(m){let n=Number(m[1].replace(/,/g,""));if(!Number.isFinite(n))return null; if(n>=100000)return n/10000; return n;}
+    m=line.match(/(?:₩\s*)?([\d,]{7,})\s*$/);
+    if(m){const n=Number(m[1].replace(/,/g,""));return Number.isFinite(n)?n/10000:null;}
+    return null;
+}
+
+function invParseRow(line,section){
+    if(!section || !section.collection || !section.shape)return null;
+    if(/없습니다|없음/.test(line))return null;
+    let variant=section.variant;
+    let body=line.trim();
+    if(section.collection==="PROMISE"){
+        if(/^Ps\b/i.test(body)){variant="P";body=body.replace(/^Ps\b\s*/i,"");}
+        else if(/^Bg\b/i.test(body)){variant="T";body=body.replace(/^Bg\b\s*/i,"");}
+    }
+    const caratM=body.match(/\b(\d+(?:\.\d+)?)\s*(?:ct)?\b/i);
+    const colorM=body.match(/\b([DEFGH])\b/i);
+    const clarityM=body.match(/\b(IF|FI|VVS1|VVS2|VS1|VS2)\b/i);
+    const sizeM=body.match(/\b(\d+(?:\.\d+)?)\s*#/);
+    const price=invParsePrice(body);
+    if(!caratM || price==null)return null;
+    return {collection:section.collection,shape:section.shape,variant:variant||null,carat:Number(caratM[1]),color:colorM?colorM[1].toUpperCase():null,clarity:clarityM?(clarityM[1].toUpperCase()==="FI"?"IF":clarityM[1].toUpperCase()):null,size:sizeM?Number(sizeM[1]):null,price_w:Number(Number(price).toFixed(4)),in_stock:true,raw_text:line.trim(),active:true};
+}
+
+async function parseInventoryAdminText(text){
+    const lines=String(text||"").replace(/\r/g,"").split("\n");
+    let section=null;const rows=[];
+    for(const raw of lines){const line=raw.trim();if(!line)continue;
+        const detected=invDetectSection(line);
+        const looksData=/\b\d+(?:\.\d+)?\s*(?:ct)?\b/i.test(line) && (/[wW₩]/.test(line)||/[\d,]{7,}\s*$/.test(line));
+        if(detected && !looksData){section=detected;continue;}
+        const row=invParseRow(line,section);if(row){row.source_key=await invSourceKey(row);rows.push(row);}
+    }
+    const map=new Map();for(const row of rows)if(!map.has(row.source_key))map.set(row.source_key,row);
+    return Array.from(map.values());
+}
+
+function invName(row){return [row.collection,row.shape,row.variant?"."+row.variant:""] .join(" ").replace(" .",".").trim();}
+function invLine(row){return [invName(row),Number(row.carat).toFixed(2)+"ct",row.color||"",row.clarity||"",row.size!=null?Number(row.size)+"#":"",row.price_w!=null?Number(row.price_w)+"W":""].filter(Boolean).join(" · ");}
+function renderInventoryAdminPreview(){
+    if(!inventoryAdminParsed.length){inventoryAdminPreview.innerHTML='<div class="inventory-admin-warning">没有识别到可上传的具体库存。缺少形状或价格的说明行不会入库。</div>';return;}
+    inventoryAdminPreview.innerHTML='<strong>识别到 '+inventoryAdminParsed.length+' 条库存</strong>'+inventoryAdminParsed.map((r,i)=>'<div class="inventory-admin-row"><strong>'+(i+1)+'. '+escapeHtml(invLine(r))+'</strong><div class="inventory-admin-meta">'+escapeHtml(r.raw_text||"")+'</div></div>').join("");
+}
+async function inventoryAdminPreviewNow(){inventoryAdminMessage.innerHTML="";inventoryAdminParsed=await parseInventoryAdminText(inventoryAdminText.value);renderInventoryAdminPreview();return inventoryAdminParsed;}
+
+async function loadInventoryAdminCurrent(){
+    const {data,error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active,updated_at,source_key").eq("active",true).order("id",{ascending:false});
+    if(error)throw error;inventoryAdminCurrent=data||[];inventoryCurrentCount.textContent="（"+inventoryAdminCurrent.length+"）";homeInventorySummary.textContent="当前有效库存 "+inventoryAdminCurrent.length+" 条";renderInventoryAdminCurrent();
+}
+function renderInventoryAdminCurrent(){
+    const q=normalizeText(inventoryCurrentSearch.value||"");const rows=inventoryAdminCurrent.filter(r=>!q||normalizeText(invLine(r)+" "+(r.raw_text||"")).includes(q));
+    inventoryCurrentList.innerHTML=rows.length?rows.map(r=>'<div class="inventory-admin-current-row"><div class="inventory-admin-current-main"><strong>'+escapeHtml(invLine(r))+'</strong><div class="inventory-admin-meta">'+(isInventoryNewToday(r.updated_at)?'🆕 新库存 · ':'')+escapeHtml(r.raw_text||"")+'</div></div><button class="danger-button" data-inventory-deactivate="'+escapeHtml(String(r.id))+'">下架</button></div>').join(""):'<div class="card empty">没有符合条件的当前库存</div>';
+    inventoryCurrentList.querySelectorAll('[data-inventory-deactivate]').forEach(btn=>btn.addEventListener('click',()=>deactivateInventoryAdmin(btn.dataset.inventoryDeactivate)));
+}
+async function deactivateInventoryAdmin(id){if(!confirm("确认下架这条库存？不会删除历史记录。"))return;const {error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).update({active:false,updated_at:new Date().toISOString()}).eq("id",id);if(error){alert("下架失败："+error.message);return;}await loadInventoryAdminCurrent();await refreshGraffInventoryBadges();showToast("库存已下架");}
+
+async function inventoryAdminUpload(mode){
+    const rows=await inventoryAdminPreviewNow();if(!rows.length)return;
+    const full=mode==="full";
+    if(!confirm(full?"确认同步今日完整库存？\n\n本次未出现的当前库存会被转为历史库存。":"确认追加这批临时库存？\n\n不会下架其他库存。"))return;
+    inventoryAppendButton.disabled=true;inventoryFullSyncButton.disabled=true;
+    try{
+        const {data:existing,error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).select("id,source_key,active,updated_at");if(error)throw error;
+        const byKey=new Map((existing||[]).filter(x=>x.source_key).map(x=>[String(x.source_key),x]));const currentKeys=new Set();let inserted=0,updated=0,deactivated=0;const now=new Date().toISOString();
+        for(const row0 of rows){const row={...row0};const old=byKey.get(row.source_key);currentKeys.add(row.source_key);
+            if(old){row.active=true;row.updated_at=(old.active===false)?now:(old.updated_at||now);const {error:e}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).update(row).eq("id",old.id);if(e)throw e;updated++;}
+            else{row.updated_at=now;const {error:e}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).insert(row);if(e)throw e;inserted++;}
+        }
+        if(full){for(const old of (existing||[])){if(old.active!==false && old.source_key && !currentKeys.has(String(old.source_key))){const {error:e}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).update({active:false,updated_at:now}).eq("id",old.id);if(e)throw e;deactivated++;}}}
+        inventoryAdminMessage.innerHTML='<div class="inventory-admin-success">完成：新增 '+inserted+' · 更新/保留 '+updated+(full?' · 转历史 '+deactivated:'')+'</div>';
+        await loadInventoryAdminCurrent();await refreshGraffInventoryBadges();showToast(full?"完整库存同步完成":"临时库存追加完成");
+    }catch(error){console.error(error);inventoryAdminMessage.innerHTML='<div class="inventory-admin-warning">上传失败：'+escapeHtml(error.message||String(error))+'</div>';}
+    finally{inventoryAppendButton.disabled=false;inventoryFullSyncButton.disabled=false;}
+}
+
+if(openInventoryAdminButton)openInventoryAdminButton.addEventListener("click",async()=>{homePage.style.display="none";inventoryAdminPage.style.display="block";window.scrollTo(0,0);try{await loadInventoryAdminCurrent();}catch(e){inventoryCurrentList.innerHTML='<div class="inventory-admin-warning">读取失败：'+escapeHtml(e.message||String(e))+'</div>';}});
+if(backFromInventoryAdmin)backFromInventoryAdmin.addEventListener("click",()=>{inventoryAdminPage.style.display="none";homePage.style.display="block";window.scrollTo(0,0);});
+if(inventoryPreviewButton)inventoryPreviewButton.addEventListener("click",()=>inventoryAdminPreviewNow());
+if(inventoryAppendButton)inventoryAppendButton.addEventListener("click",()=>inventoryAdminUpload("append"));
+if(inventoryFullSyncButton)inventoryFullSyncButton.addEventListener("click",()=>inventoryAdminUpload("full"));
+if(inventoryClearButton)inventoryClearButton.addEventListener("click",()=>{inventoryAdminText.value="";inventoryAdminParsed=[];inventoryAdminPreview.innerHTML="";inventoryAdminMessage.innerHTML="";});
+if(inventoryCurrentSearch)inventoryCurrentSearch.addEventListener("input",renderInventoryAdminCurrent);
+loadInventoryAdminCurrent().catch(e=>console.error("首页库存数量读取失败",e));
+
+</script>
 
 <script>
 
