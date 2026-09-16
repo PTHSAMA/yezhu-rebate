@@ -1612,13 +1612,15 @@ function invDetectSection(line){
     const u=line.toUpperCase().replace(/\bOVER\b/g,"OVAL");
     let collection=null,shape=null,variant=null;
     const isNecklace=/项链|\bNECKLACE\b|\bNECKLESS\b/.test(u);
-    if(/\bPROMIS(?:E)?\b/.test(u))collection="PROMISE";
+    if(/蝴蝶|\bBUTTERFLY\b/.test(u))collection="BUTTERFLY";
+    else if(/\bPROMIS(?:E)?\b/.test(u))collection="PROMISE";
+    else if(/\bPARAGON\b/.test(u))collection="PARAGON";
     else if(/\bICON\b/.test(u))collection="ICON";
     else if(!isNecklace)return null;
     if(isNecklace)shape="NECKLACE";
     else if(/\bOVAL\b/.test(u))shape="OVAL";
     else if(/\bROUND\b/.test(u))shape="ROUND";
-    else if(/\bPEAR\b/.test(u) && collection==="ICON")shape="PEAR";
+    else if(/\bPEAR\b/.test(u))shape="PEAR";
     else if(/\bEM(?:E|A)?RALD\b|\bEMERALD\b/.test(u))shape="EMERALD";
     if(/\.P\b/.test(u))variant="P";
     else if(/\.T\b/.test(u))variant="T";
@@ -1635,7 +1637,7 @@ function invParsePrice(line){
 }
 
 function invParseRow(line,section){
-    if(!section || !section.shape)return null;
+    if(!section || (!section.collection && !section.shape))return null;
     if(/없습니다|없음/.test(line))return null;
     let variant=section.variant;
     let body=line.trim();
@@ -4126,9 +4128,10 @@ function parseCustomerRequirementTextForWeb(rawText){
     const text=normalizeMatchText(rawText);
 
     let collection="";
-    if(/\bICON\b/.test(text)) collection="ICON";
-    else if(/\bPROMISE\b/.test(text)) collection="PROMISE";
+    if(/蝴蝶|\bBUTTERFLY\b/.test(text)) collection="BUTTERFLY";
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
+    else if(/\bICON\b/.test(text)) collection="ICON";
+    else if(/\bPROMIS(?:E)?\b/.test(text)) collection="PROMISE";
 
     const shapeRules=[
         ["NECKLACE", /项链|\bNECKLACE\b|\bNECKLESS\b/],
