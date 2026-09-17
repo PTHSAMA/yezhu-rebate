@@ -1045,6 +1045,16 @@ button {
 .graff-back-to-top.show{display:flex}
 @media(max-width:520px){.graff-back-to-top{right:16px;bottom:18px;width:44px;height:44px}}
 
+
+/* ===== 客户意向：非微信客户快速查库存 ===== */
+.quick-inventory-search{margin:14px 0 16px;padding:14px;border:1px solid #e4e4e4;border-radius:14px;background:#fff}
+.quick-inventory-search-title{font-weight:700;margin-bottom:8px}.quick-inventory-search-hint{font-size:12px;color:#777;line-height:1.55;margin-bottom:8px}
+.quick-inventory-search-row{display:flex;gap:8px;align-items:stretch}.quick-inventory-search-row input{flex:1;min-width:0;padding:11px 12px;border:1px solid #d7d7d7;border-radius:10px;font-size:14px}
+.quick-inventory-search-row button{border:0;border-radius:10px;padding:0 14px;font-weight:700;cursor:pointer}.quick-inventory-search-row .primary{background:#111;color:#fff}.quick-inventory-search-row .secondary{background:#eee;color:#222}
+.quick-inventory-result{margin-top:10px}.quick-inventory-summary{font-size:13px;color:#666;margin:6px 0 8px}.quick-inventory-item{padding:11px 0;border-top:1px solid #eee}.quick-inventory-item:first-child{border-top:0}
+.quick-inventory-main{font-weight:700;line-height:1.55}.quick-inventory-reason{font-size:12px;color:#777;margin-top:3px;line-height:1.5}.quick-inventory-actions{display:flex;gap:8px;margin-top:7px;flex-wrap:wrap}.quick-inventory-actions button{border:1px solid #ddd;background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer}
+@media(max-width:640px){.quick-inventory-search-row{flex-wrap:wrap}.quick-inventory-search-row input{flex-basis:100%}.quick-inventory-search-row button{min-height:40px;flex:1}}
+
 </style>
 
 </head>
@@ -1381,6 +1391,17 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
 
         <button class="graff-add-button" id="addGraffCustomerButton">＋ 新增客户</button>
 <button class="graff-add-button secondary" id="smartPasteCustomerButton">⚡ 粘贴识别新增</button>
+        <div class="quick-inventory-search" id="quickInventorySearchBox">
+            <div class="quick-inventory-search-title">🔍 快速查库存（非微信客户）</div>
+            <div class="quick-inventory-search-hint">直接输入需求，不会创建客户。未填写的条件不限制，例如：ICON OVAL 0.7ct F VS1 / NECKLACE ICON PEAR 0.7ct F VVS2 / 1ct G VVS2。</div>
+            <div class="quick-inventory-search-row">
+                <input id="quickInventorySearchInput" type="text" placeholder="输入系列 / 类型 / 形状 / 克拉 / 颜色 / 净度 / 尺寸 / 预算..." autocomplete="off">
+                <button class="primary" id="quickInventorySearchButton" type="button">查库存</button>
+                <button class="secondary" id="quickInventoryClearButton" type="button">清空</button>
+            </div>
+            <div class="quick-inventory-result" id="quickInventorySearchResult"></div>
+        </div>
+
 
         <div class="graff-toolbar">
             <input
@@ -4742,6 +4763,29 @@ async function buildLiveInventoryReferencesForCustomer(item){
         .filter(Boolean)
         .sort((a,b)=>Number(b.match_score||0)-Number(a.match_score||0));
 }
+
+// ===== 客户意向：快速查库存（不创建客户） =====
+const quickInventorySearchInput=document.getElementById("quickInventorySearchInput");
+const quickInventorySearchButton=document.getElementById("quickInventorySearchButton");
+const quickInventoryClearButton=document.getElementById("quickInventoryClearButton");
+const quickInventorySearchResult=document.getElementById("quickInventorySearchResult");
+let quickInventoryRows=[];
+function quickRequirementFromText(text){const req=parseCustomerRequirementTextForWeb(text||"");req.budgetRmb=parseCustomerBudgetRmb(text||"");if(req.sizeTolerance==null)req.sizeTolerance=3;return req;}
+function renderQuickInventoryRows(rows){
+ quickInventoryRows=rows||[];if(!quickInventorySearchResult)return;
+ if(!quickInventoryRows.length){quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">没有找到符合当前条件的有效库存。</div>';return;}
+ quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">找到 '+quickInventoryRows.length+' 条有效库存</div>'+quickInventoryRows.map((row,index)=>{const inv=row.inventory||{};const parts=[inventoryDisplayName(inv),inv.carat!=null?Number(inv.carat).toFixed(2)+'ct':'',inv.color||'',inv.clarity||'',inv.size!=null?Number(inv.size)+'#':'',inv.price_w!=null?Number(inv.price_w)+'W':''].filter(Boolean);return '<div class="quick-inventory-item"><div class="quick-inventory-main">'+escapeHtml(parts.join(' · '))+'</div>'+(row.reason?'<div class="quick-inventory-reason">'+escapeHtml(row.reason)+'</div>':'')+'<div class="quick-inventory-actions"><button type="button" data-quick-copy="'+index+'">复制此条报价</button></div></div>';}).join('')+'<div class="quick-inventory-actions"><button type="button" id="quickInventoryCopyAll">复制全部结果</button></div>';
+ quickInventorySearchResult.querySelectorAll('[data-quick-copy]').forEach(btn=>btn.addEventListener('click',()=>{const row=quickInventoryRows[Number(btn.dataset.quickCopy)];if(row&&row.inventory)copyText(inventoryQuoteLine(row.inventory));}));
+ const copyAll=document.getElementById('quickInventoryCopyAll');if(copyAll)copyAll.addEventListener('click',()=>copyText(quickInventoryRows.map(row=>inventoryQuoteLine(row.inventory||{})).join('\n')));
+}
+async function runQuickInventorySearch(){
+ const text=String(quickInventorySearchInput?.value||'').trim();if(!text){alert('请输入要查询的库存条件。');quickInventorySearchInput?.focus();return;}
+ if(quickInventorySearchButton){quickInventorySearchButton.disabled=true;quickInventorySearchButton.textContent='查询中...';}if(quickInventorySearchResult)quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">正在查询当前有效库存...</div>';
+ try{const requirement=quickRequirementFromText(text);const {data,error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).select('id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active,updated_at').eq('active',true);if(error)throw error;const rows=(data||[]).map(inv=>webInventoryMatch(requirement,inv)).filter(Boolean).sort((a,b)=>Number(b.match_score||0)-Number(a.match_score||0));renderQuickInventoryRows(rows);}catch(error){console.error('快速查库存失败：',error);if(quickInventorySearchResult)quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">查询失败：'+escapeHtml(error.message||String(error))+'</div>';}finally{if(quickInventorySearchButton){quickInventorySearchButton.disabled=false;quickInventorySearchButton.textContent='查库存';}}
+}
+if(quickInventorySearchButton)quickInventorySearchButton.addEventListener('click',runQuickInventorySearch);
+if(quickInventorySearchInput)quickInventorySearchInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();runQuickInventorySearch();}});
+if(quickInventoryClearButton)quickInventoryClearButton.addEventListener('click',()=>{if(quickInventorySearchInput)quickInventorySearchInput.value='';quickInventoryRows=[];if(quickInventorySearchResult)quickInventorySearchResult.innerHTML='';quickInventorySearchInput?.focus();});
 
 async function loadInventoryReferencesForCustomer(customerId) {
     try {
