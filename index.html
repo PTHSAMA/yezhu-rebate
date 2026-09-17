@@ -1040,6 +1040,11 @@ button {
 .inventory-admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.inventory-admin-actions button{margin:0}.inventory-admin-preview{margin-top:14px}.inventory-admin-row{padding:10px 0;border-bottom:1px solid #eee;font-size:13px}.inventory-admin-row:last-child{border-bottom:0}.inventory-admin-meta{color:#666;margin-top:3px}.inventory-admin-warning{padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;margin-top:10px;font-size:13px}.inventory-admin-success{padding:10px;border-radius:10px;background:#f0fdf4;color:#166534;margin-top:10px;font-size:13px}.inventory-admin-current{max-height:420px;overflow:auto}.inventory-admin-current-row{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #eee}.inventory-admin-checkbox{width:18px;height:18px;flex:0 0 auto;margin:0}.inventory-admin-bulkbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.inventory-admin-bulkbar button{width:auto;margin:0;padding:8px 12px}.inventory-duplicate-box{margin:10px 0;padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:13px}.inventory-admin-current-main{flex:1;min-width:0}.inventory-admin-current-row button{width:auto;padding:7px 9px;margin:0;background:#fff;border:1px solid #ddd;color:#333;border-radius:8px}.danger-button{background:#fff!important;color:#b91c1c!important;border:1px solid #fecaca!important}
 @media(max-width:520px){.inventory-admin-actions{grid-template-columns:1fr}}
 
+/* ===== 客户意向：返回顶部 ===== */
+.graff-back-to-top{position:fixed;right:max(18px,calc((100vw - 720px)/2 + 18px));bottom:24px;z-index:1200;width:46px;height:46px;border:0;border-radius:50%;background:#111;color:#fff;font-size:20px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.18);display:none;align-items:center;justify-content:center;cursor:pointer;padding:0;margin:0}
+.graff-back-to-top.show{display:flex}
+@media(max-width:520px){.graff-back-to-top{right:16px;bottom:18px;width:44px;height:44px}}
+
 </style>
 
 </head>
@@ -1114,6 +1119,7 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
             <button class="primary-button" id="inventoryPreviewButton">解析预览库存</button>
             <button class="primary-button" id="inventoryAppendButton">追加临时库存</button>
             <button class="primary-button" id="inventoryFullSyncButton">同步今日完整库存</button>
+            <button class="danger-button" id="inventoryReplaceAllButton">🔄 一键覆盖全库存</button>
             <button class="back-button" id="inventoryClearButton" style="margin:0">清空输入</button>
         </div>
         <div id="inventoryAdminMessage"></div>
@@ -1399,6 +1405,8 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
 
         <div class="footer-status" id="graffBottomStatus"></div>
 
+        <button class="graff-back-to-top" id="graffBackToTop" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
+
     </div>
 
     <div id="graffDetailScreen" class="graff-detail-screen">
@@ -1594,6 +1602,7 @@ const inventoryAdminText=document.getElementById("inventoryAdminText");
 const inventoryPreviewButton=document.getElementById("inventoryPreviewButton");
 const inventoryAppendButton=document.getElementById("inventoryAppendButton");
 const inventoryFullSyncButton=document.getElementById("inventoryFullSyncButton");
+const inventoryReplaceAllButton=document.getElementById("inventoryReplaceAllButton");
 const inventoryClearButton=document.getElementById("inventoryClearButton");
 const inventoryAdminPreview=document.getElementById("inventoryAdminPreview");
 const inventoryAdminMessage=document.getElementById("inventoryAdminMessage");
@@ -1741,10 +1750,22 @@ async function bulkDeactivateInventoryAdmin(){
 }
 
 async function inventoryAdminUpload(mode){
-    const rows=await inventoryAdminPreviewNow();if(!rows.length)return;
-    const full=mode==="full";
-    if(!confirm(full?"确认同步今日完整库存？\n\n本次未出现的当前库存会被转为历史库存。":"确认追加这批临时库存？\n\n不会下架其他库存。"))return;
-    inventoryAppendButton.disabled=true;inventoryFullSyncButton.disabled=true;
+    const rows=await inventoryAdminPreviewNow();if(!rows.length){
+        inventoryAdminMessage.innerHTML='<div class="inventory-admin-warning">没有识别到库存，已阻止覆盖/同步操作。</div>';
+        return;
+    }
+    const full=mode==="full" || mode==="replace";
+    const replacing=mode==="replace";
+    let confirmText;
+    if(replacing){
+        confirmText="⚠️ 确认一键覆盖全库存？\n\n本次已识别 "+rows.length+" 条库存。\n当前有效库存中，本次清单没有出现的库存将全部下架并保留为历史记录。\n\n此操作不会物理删除历史数据。";
+    }else if(full){
+        confirmText="确认同步今日完整库存？\n\n本次未出现的当前库存会被转为历史库存。";
+    }else{
+        confirmText="确认追加这批临时库存？\n\n不会下架其他库存。";
+    }
+    if(!confirm(confirmText))return;
+    inventoryAppendButton.disabled=true;inventoryFullSyncButton.disabled=true;if(inventoryReplaceAllButton)inventoryReplaceAllButton.disabled=true;
     try{
         const {data:existing,error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).select("id,source_key,active,updated_at");if(error)throw error;
         const byKey=new Map((existing||[]).filter(x=>x.source_key).map(x=>[String(x.source_key),x]));const currentKeys=new Set();let inserted=0,updated=0,deactivated=0;const now=new Date().toISOString();
@@ -1754,9 +1775,9 @@ async function inventoryAdminUpload(mode){
         }
         if(full){for(const old of (existing||[])){if(old.active!==false && old.source_key && !currentKeys.has(String(old.source_key))){const {error:e}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).update({active:false,updated_at:now}).eq("id",old.id);if(e)throw e;deactivated++;}}}
         inventoryAdminMessage.innerHTML='<div class="inventory-admin-success">完成：新增 '+inserted+' · 更新/保留 '+updated+(full?' · 转历史 '+deactivated:'')+'</div>';
-        await loadInventoryAdminCurrent();await refreshGraffInventoryBadges();showToast(full?"完整库存同步完成":"临时库存追加完成");
+        await loadInventoryAdminCurrent();await refreshGraffInventoryBadges();showToast(replacing?"全库存覆盖完成":(full?"完整库存同步完成":"临时库存追加完成"));
     }catch(error){console.error(error);inventoryAdminMessage.innerHTML='<div class="inventory-admin-warning">上传失败：'+escapeHtml(error.message||String(error))+'</div>';}
-    finally{inventoryAppendButton.disabled=false;inventoryFullSyncButton.disabled=false;}
+    finally{inventoryAppendButton.disabled=false;inventoryFullSyncButton.disabled=false;if(inventoryReplaceAllButton)inventoryReplaceAllButton.disabled=false;}
 }
 
 if(openInventoryAdminButton)openInventoryAdminButton.addEventListener("click",async()=>{if(!adminSession){openAdminLogin();return;} homePage.style.display="none";inventoryAdminPage.style.display="block";window.scrollTo(0,0);try{await loadInventoryAdminCurrent();}catch(e){inventoryCurrentList.innerHTML='<div class="inventory-admin-warning">读取失败：'+escapeHtml(e.message||String(e))+'</div>';}});
@@ -1764,6 +1785,7 @@ if(backFromInventoryAdmin)backFromInventoryAdmin.addEventListener("click",()=>{i
 if(inventoryPreviewButton)inventoryPreviewButton.addEventListener("click",()=>inventoryAdminPreviewNow());
 if(inventoryAppendButton)inventoryAppendButton.addEventListener("click",()=>inventoryAdminUpload("append"));
 if(inventoryFullSyncButton)inventoryFullSyncButton.addEventListener("click",()=>inventoryAdminUpload("full"));
+if(inventoryReplaceAllButton)inventoryReplaceAllButton.addEventListener("click",()=>inventoryAdminUpload("replace"));
 if(inventoryClearButton)inventoryClearButton.addEventListener("click",()=>{inventoryAdminText.value="";inventoryAdminParsed=[];inventoryAdminPreview.innerHTML="";inventoryAdminMessage.innerHTML="";});
 if(inventoryCurrentSearch)inventoryCurrentSearch.addEventListener("input",renderInventoryAdminCurrent);
 if(inventorySelectVisibleButton)inventorySelectVisibleButton.addEventListener("click",()=>{for(const r of inventoryVisibleRows())inventoryAdminSelected.add(String(r.id));renderInventoryAdminCurrent();});
@@ -7002,6 +7024,22 @@ graffFilterNewInventory.addEventListener(
         setGraffFilter("newinventory");
     }
 );
+
+
+// ===== 客户意向：返回顶部 =====
+const graffBackToTop = document.getElementById("graffBackToTop");
+function updateGraffBackToTop(){
+    if(!graffBackToTop) return;
+    const onCustomerList = graffPage && graffPage.style.display !== "none" &&
+        graffListScreen && graffListScreen.style.display !== "none";
+    graffBackToTop.classList.toggle("show", onCustomerList && window.scrollY > 360);
+}
+window.addEventListener("scroll", updateGraffBackToTop, {passive:true});
+if(graffBackToTop){
+    graffBackToTop.addEventListener("click", function(){
+        window.scrollTo({top:0, behavior:"smooth"});
+    });
+}
 
 initialLoad();
 
