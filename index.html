@@ -1128,7 +1128,7 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
     <div class="card">
         <div class="section-title">当前有效库存 <span id="inventoryCurrentCount"></span></div>
         <input id="inventoryCurrentSearch" type="text" placeholder="搜索 ICON / OVAL / 0.7 / 52# / F / VS1">
-        <div class="inventory-admin-bulkbar"><button class="back-button" id="inventorySelectVisibleButton">全选当前结果</button><button class="back-button" id="inventoryClearSelectionButton">取消选择</button><button class="back-button" id="inventoryDuplicateCheckButton">库存查重</button><button class="danger-button" id="inventoryBulkDeactivateButton">批量下架（0）</button></div>
+        <div class="inventory-admin-bulkbar"><button class="back-button" id="inventorySelectVisibleButton">全选当前结果</button><button class="back-button" id="inventoryClearSelectionButton">取消选择</button><button class="back-button" id="inventoryDuplicateCheckButton">库存查重</button><button class="back-button" id="inventorySuspectCheckButton">疑似同库存</button><button class="danger-button" id="inventoryBulkDeactivateButton">批量下架（0）</button></div>
         <div id="inventoryDuplicateResult"></div>
         <div id="inventoryCurrentList" class="inventory-admin-current"><div class="card empty">正在读取库存...</div></div>
     </div>
@@ -1612,6 +1612,7 @@ const inventoryCurrentSearch=document.getElementById("inventoryCurrentSearch");
 const inventorySelectVisibleButton=document.getElementById("inventorySelectVisibleButton");
 const inventoryClearSelectionButton=document.getElementById("inventoryClearSelectionButton");
 const inventoryDuplicateCheckButton=document.getElementById("inventoryDuplicateCheckButton");
+const inventorySuspectCheckButton=document.getElementById("inventorySuspectCheckButton");
 const inventoryBulkDeactivateButton=document.getElementById("inventoryBulkDeactivateButton");
 const inventoryDuplicateResult=document.getElementById("inventoryDuplicateResult");
 const homeInventorySummary=document.getElementById("homeInventorySummary");
@@ -1626,23 +1627,50 @@ async function invSha1(text){const data=new TextEncoder().encode(text);const has
 async function invSourceKey(item){return invSha1([item.collection,item.shape,item.variant,invNormalizeNumber(item.carat),item.color,item.clarity,invNormalizeNumber(item.size),invNormalizeNumber(item.price_w)].map(x=>invClean(x).toUpperCase()).join("|"));}
 
 function invDetectSection(line){
-    const u=line.toUpperCase().replace(/\bOVER\b/g,"OVAL");
+    const original=String(line||"").trim();
+    const u=original.toUpperCase().replace(/\bOVER\b/g,"OVAL");
     let collection=null,shape=null,variant=null;
     const isNecklace=/项链|\bNECKLACE\b|\bNECKLESS\b/.test(u);
+
+    // 项链使用三层结构：collection=NECKLACE，variant=类型，shape=形状。
+    // 例如 ICON PEAR 项链 => NECKLACE / ICON / PEAR。
+    // 类型、形状不做固定枚举：显式写“项链/NECKLACE”时，剩余词自动作为类型/形状保存。
+    if(isNecklace){
+        collection="NECKLACE";
+        let cleaned=u
+            .replace(/项链|\bNECKLACE\b|\bNECKLESS\b/g," ")
+            .replace(/[._/]+/g," ")
+            .replace(/\s+/g," ").trim();
+        const tokens=cleaned.split(" ").filter(Boolean);
+        if(tokens.length>=1) variant=tokens[0];
+        if(tokens.length>=2) shape=tokens.slice(1).join(" ");
+        return {collection,shape,variant};
+    }
+
     if(/蝴蝶|\bBUTTERFLY\b/.test(u))collection="BUTTERFLY";
     else if(/\bPROMIS(?:E)?\b/.test(u))collection="PROMISE";
     else if(/\bPARAGON\b/.test(u))collection="PARAGON";
     else if(/\bICON\b/.test(u))collection="ICON";
-    else if(!isNecklace)return null;
-    if(isNecklace)shape="NECKLACE";
-    else if(/\bOVAL\b/.test(u))shape="OVAL";
-    else if(/\bROUND\b/.test(u))shape="ROUND";
-    else if(/\bPEAR\b/.test(u))shape="PEAR";
-    else if(/\bEM(?:E|A)?RALD\b|\bEMERALD\b/.test(u))shape="EMERALD";
-    if(/\.P\b/.test(u))variant="P";
-    else if(/\.T\b/.test(u))variant="T";
-    else if(shape==="NECKLACE" && /(?:^|\s)EM(?:\s|$)/.test(u))variant="EM";
-    return {collection,shape,variant};
+
+    if(collection){
+        if(/\bOVAL\b/.test(u))shape="OVAL";
+        else if(/\bROUND\b/.test(u))shape="ROUND";
+        else if(/\bPEAR\b/.test(u))shape="PEAR";
+        else if(/\bEM(?:E|A)?RALD\b|\bEMERALD\b/.test(u))shape="EMERALD";
+        if(/\.P\b/.test(u))variant="P";
+        else if(/\.T\b/.test(u))variant="T";
+        return {collection,shape,variant};
+    }
+
+    // 柜台项链标题有时不写“项链”，例如 CONSTE EM。
+    // 对“两个及以上纯标题词、且不是具体库存数据”的未知 section，按项链 类型+形状 保存。
+    if(!/\d/.test(u)){
+        const tokens=u.replace(/[._/]+/g," ").replace(/\s+/g," ").trim().split(" ").filter(Boolean);
+        if(tokens.length>=2){
+            return {collection:"NECKLACE",variant:tokens[0],shape:tokens.slice(1).join(" ")};
+        }
+    }
+    return null;
 }
 
 function invParsePrice(line){
@@ -1702,7 +1730,11 @@ async function parseInventoryAdminText(text){
     return Array.from(map.values());
 }
 
-function invName(row){return [row.collection,row.shape,row.variant?"."+row.variant:""] .join(" ").replace(" .",".").trim();}
+function invName(row){
+    const c=String(row.collection||"").toUpperCase(), sh=String(row.shape||"").toUpperCase(), v=String(row.variant||"").toUpperCase();
+    if(c==="NECKLACE") return ["NECKLACE",v,sh].filter(Boolean).join(" · ");
+    return [c,sh,v?"."+v:""].join(" ").replace(" .",".").trim();
+}
 function invLine(row){return [invName(row),Number(row.carat).toFixed(2)+"ct",row.color||"",row.clarity||"",row.size!=null?Number(row.size)+"#":"",row.price_w!=null?Number(row.price_w)+"W":""].filter(Boolean).join(" · ");}
 function renderInventoryAdminPreview(){
     if(!inventoryAdminParsed.length){inventoryAdminPreview.innerHTML='<div class="inventory-admin-warning">没有识别到可上传的具体库存。缺少形状或价格的说明行不会入库。</div>';return;}
@@ -1730,6 +1762,38 @@ function renderInventoryAdminCurrent(){
     updateInventoryBulkButton();
 }
 function inventoryDuplicateKey(r){return [r.collection,r.shape,r.variant,invNormalizeNumber(r.carat),r.color,r.clarity,invNormalizeNumber(r.size),invNormalizeNumber(r.price_w)].map(x=>invClean(x).toUpperCase()).join("|");}
+function inventorySuspectKey(r){
+    // 疑似同库存：大类 + 克拉 + 颜色 + 净度 + 尺寸 + 价格一致，
+    // 但类型/系列或形状存在差异。大类参与分组，避免戒指与项链误报。
+    return [r.collection,invNormalizeNumber(r.carat),r.color,r.clarity,invNormalizeNumber(r.size),invNormalizeNumber(r.price_w)].map(x=>invClean(x).toUpperCase()).join("|");
+}
+function inventoryTypeShapeKey(r){
+    return [r.variant,r.shape].map(x=>invClean(x).toUpperCase()).join("|");
+}
+function checkInventorySuspects(){
+    const groups=new Map();
+    for(const r of inventoryAdminCurrent){
+        const k=inventorySuspectKey(r);
+        if(!groups.has(k))groups.set(k,[]);
+        groups.get(k).push(r);
+    }
+    const suspect=[...groups.values()].filter(g=>{
+        if(g.length<2)return false;
+        return new Set(g.map(inventoryTypeShapeKey)).size>1;
+    });
+    inventoryAdminSelected.clear();
+    if(!suspect.length){
+        inventoryDuplicateResult.innerHTML='<div class="inventory-admin-success">筛选完成：没有发现“克拉 + 颜色 + 净度 + 尺寸 + 价格相同，但类型/形状不同”的疑似同库存。</div>';
+        renderInventoryAdminCurrent();
+        return;
+    }
+    const total=suspect.reduce((n,g)=>n+g.length,0);
+    inventoryDuplicateResult.innerHTML='<div class="inventory-duplicate-box"><strong>发现 '+suspect.length+' 组疑似同库存，共 '+total+' 条。</strong><br>判断条件：同大类、同克拉、同颜色、同净度、同尺寸、同价格，但类型/形状不同。以下结果仅用于人工核对，不会自动下架。</div>'+suspect.map((g,i)=>'<div class="inventory-admin-row"><strong>疑似 '+(i+1)+'</strong>'+g.map(x=>'<div class="inventory-admin-meta">'+escapeHtml(invLine(x))+' · ID '+escapeHtml(String(x.id))+'</div>').join('')+'</div>').join('');
+    // 把疑似组全部勾选，方便用户人工取消要保留的条目后批量下架。
+    for(const g of suspect)for(const r of g)inventoryAdminSelected.add(String(r.id));
+    renderInventoryAdminCurrent();
+}
+
 function checkInventoryDuplicates(){
     const groups=new Map();
     for(const r of inventoryAdminCurrent){const k=inventoryDuplicateKey(r);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r);}
@@ -1791,6 +1855,7 @@ if(inventoryCurrentSearch)inventoryCurrentSearch.addEventListener("input",render
 if(inventorySelectVisibleButton)inventorySelectVisibleButton.addEventListener("click",()=>{for(const r of inventoryVisibleRows())inventoryAdminSelected.add(String(r.id));renderInventoryAdminCurrent();});
 if(inventoryClearSelectionButton)inventoryClearSelectionButton.addEventListener("click",()=>{inventoryAdminSelected.clear();renderInventoryAdminCurrent();});
 if(inventoryDuplicateCheckButton)inventoryDuplicateCheckButton.addEventListener("click",checkInventoryDuplicates);
+if(inventorySuspectCheckButton)inventorySuspectCheckButton.addEventListener("click",checkInventorySuspects);
 if(inventoryBulkDeactivateButton)inventoryBulkDeactivateButton.addEventListener("click",bulkDeactivateInventoryAdmin);
 // 首页库存数量将在 Supabase Client 初始化完成后读取。
 
@@ -2778,25 +2843,22 @@ function inventoryLevelLabel(level) {
 
 
 function inventoryDisplayName(item) {
-    const parts = [];
+    const collection=String(item.collection||"").toUpperCase();
+    const shape=String(item.shape||"").toUpperCase();
+    const variant=String(item.variant||"").toUpperCase();
 
-    if (item.collection) {
-        parts.push(
-            String(item.collection).toUpperCase()
-        );
+    // 项链显示：NECKLACE · 类型 · 形状
+    if(collection==="NECKLACE"){
+        return ["NECKLACE",variant,shape].filter(Boolean).join(" · ");
     }
 
-    if (item.shape) {
-        let shape = String(item.shape).toUpperCase();
-
-        if (item.variant) {
-            shape += "." +
-                String(item.variant).toUpperCase();
-        }
-
-        parts.push(shape);
+    const parts=[];
+    if(collection) parts.push(collection);
+    if(shape){
+        let label=shape;
+        if(variant) label += "."+variant;
+        parts.push(label);
     }
-
     return parts.join(" ");
 }
 
@@ -4199,13 +4261,27 @@ function parseCustomerRequirementTextForWeb(rawText){
     const text=normalizeMatchText(rawText);
 
     let collection="";
-    if(/蝴蝶|\bBUTTERFLY\b/.test(text)) collection="BUTTERFLY";
+    let necklaceType="";
+    let necklaceShape="";
+    const explicitNecklace=/项链|\bNECKLACE\b|\bNECKLESS\b/.test(text);
+
+    if(explicitNecklace){
+        collection="NECKLACE";
+        let header=text
+            .replace(/项链|\bNECKLACE\b|\bNECKLESS\b/g," ")
+            .replace(/\b\d+(?:\.\d+)?\s*(?:CT|克拉)?\b/g," ")
+            .replace(/\b(?:IF|FI|VVS1|VVS2|VS1|VS2|[DEFGH])\b/g," ")
+            .replace(/\b\d+(?:\.\d+)?\s*#/g," ")
+            .replace(/[._/]+/g," ").replace(/\s+/g," ").trim();
+        const toks=header.split(" ").filter(Boolean);
+        if(toks.length>=1) necklaceType=toks[0];
+        if(toks.length>=2) necklaceShape=toks[1];
+    }else if(/蝴蝶|\bBUTTERFLY\b/.test(text)) collection="BUTTERFLY";
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
     else if(/\bICON\b/.test(text)) collection="ICON";
     else if(/\bPROMIS(?:E)?\b/.test(text)) collection="PROMISE";
 
     const shapeRules=[
-        ["NECKLACE", /项链|\bNECKLACE\b|\bNECKLESS\b/],
         ["EMERALD", /\bEMRALD\b|\bEMERALD\b|祖母绿/],
         ["OVAL", /\bOVAL\b|椭圆/],
         ["ROUND", /\bROUND\b|\bRD\b|圆形/],
@@ -4217,21 +4293,18 @@ function parseCustomerRequirementTextForWeb(rawText){
         ["HEART", /\bHEART\b/],
         ["ASSCHER", /\bASSCHER\b/]
     ];
-
     const shapes=[];
-    shapeRules.forEach(([name,pattern])=>{
-        if(pattern.test(text) && !shapes.includes(name)){
-            shapes.push(name);
-        }
-    });
+    if(collection==="NECKLACE"){
+        if(necklaceShape) shapes.push(necklaceShape);
+    }else{
+        shapeRules.forEach(([name,pattern])=>{if(pattern.test(text)&&!shapes.includes(name))shapes.push(name);});
+    }
 
-    // 项链是独立品类：客户只要写“项链 / necklace / neckless”即可，
-    // 即使文字里同时出现 ICON，也不强制按系列过滤。
-    if(shapes.includes("NECKLACE")) collection="";
-
-    let variant="";
-    const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
-    if(variantMatch) variant=variantMatch[1];
+    let variant=necklaceType;
+    if(collection!=="NECKLACE"){
+        const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
+        if(variantMatch) variant=variantMatch[1];
+    }
 
     let caratLow=null,caratHigh=null,caratTarget=null;
     let m=text.match(/(\d+(?:\.\d+)?)\s*[-~～至到]\s*(\d+(?:\.\d+)?)\s*(?:CT|克拉)/);
