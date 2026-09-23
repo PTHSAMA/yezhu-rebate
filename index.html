@@ -4291,7 +4291,7 @@ function parseCustomerRequirementTextForWeb(rawText){
         let header=text
             .replace(/项链|\bNECKLACE\b|\bNECKLESS\b/g," ")
             .replace(/\b\d+(?:\.\d+)?\s*(?:CT|克拉)?\b/g," ")
-            .replace(/\b(?:IF|FI|VVS1|VVS2|VS1|VS2|[DEFGH])\b/g," ")
+            .replace(/\b(?:FL|IF|FI|VVS1|VVS2|VS1|VS2|SI1|SI2|[DEFGHIJ])\s*\+?\b/g," ")
             .replace(/\b\d+(?:\.\d+)?\s*#/g," ")
             .replace(/[._/]+/g," ").replace(/\s+/g," ").trim();
         const toks=header.split(" ").filter(Boolean);
@@ -4392,18 +4392,37 @@ function parseCustomerRequirementTextForWeb(rawText){
     m=text.match(/(?:圈口|尺寸)?\s*[±+\-]\s*([345])\b/);
     if(m)sizeTolerance=Number(m[1]);
 
-    const colors=["D","E","F","G","H"];
-    const clarities=["IF","VVS1","VVS2","VS1","VS2"];
+    // 颜色/净度支持“+ = 该等级及以上”。
+    // 例：F+ => D/E/F；G+ => D/E/F/G；VS1+ => FL/IF/VVS1/VVS2/VS1。
+    const colorOrder=["D","E","F","G","H","I","J"];
+    const clarityOrder=["FL","IF","VVS1","VVS2","VS1","VS2","SI1","SI2"];
 
-    const wantedColors=
-        colors.filter(
-            x=>new RegExp("\\b"+x+"\\b").test(text)
-        );
+    let wantedColors=[];
+    const colorPlus=text.match(/\b([DEFGHIJ])\s*\+/);
+    if(colorPlus){
+        const idx=colorOrder.indexOf(colorPlus[1]);
+        if(idx>=0) wantedColors=colorOrder.slice(0,idx+1);
+    }else{
+        // 兼容 DEF / DEFG 以及原来的 F、G、F-G 等写法。
+        const compactColor=text.match(/(?:^|\s)(D?E?F?G?H?I?J?)(?=\s|$|\/)/);
+        if(compactColor && compactColor[1] && compactColor[1].length>=2){
+            wantedColors=[...compactColor[1]].filter(x=>colorOrder.includes(x));
+        }else{
+            wantedColors=colorOrder.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
+        }
+    }
 
-    const wantedClarities=
-        clarities.filter(
-            x=>new RegExp("\\b"+x+"\\b").test(text)
-        );
+    let wantedClarities=[];
+    const clarityPlus=text.match(/\b(FL|IF|FI|VVS1|VVS2|VS1|VS2|SI1|SI2)\s*\+/);
+    if(clarityPlus){
+        const threshold=clarityPlus[1]==="FI" ? "IF" : clarityPlus[1];
+        const idx=clarityOrder.indexOf(threshold);
+        if(idx>=0) wantedClarities=clarityOrder.slice(0,idx+1);
+    }else{
+        wantedClarities=clarityOrder.filter(x=>new RegExp("\\b"+x+"\\b").test(text));
+        if(/\bFI\b/.test(text) && !wantedClarities.includes("IF")) wantedClarities.push("IF");
+    }
+
 
     return {
         text,
