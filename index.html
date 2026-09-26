@@ -1419,6 +1419,7 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
                 <button class="filter-button" id="graffFilterNoMatch">暂无匹配</button>
                 <button class="filter-button" id="graffFilterToday">今日添加</button>
                 <button class="filter-button" id="graffFilterNewInventory">有新库存</button>
+                <button class="filter-button" id="graffSortAddedTime">添加时间 ↕</button>
             </div>
         </div>
 
@@ -2000,6 +2001,7 @@ let graffUnsetOnly = false;
 let graffNoMatchOnly = false;
 let graffTodayOnly = false;
 let graffNewInventoryOnly = false;
+let graffAddedTimeSort = "default"; // default | desc | asc
 
 let toastTimer = null;
 
@@ -2165,6 +2167,9 @@ const graffFilterToday =
 
 const graffFilterNewInventory =
     document.getElementById("graffFilterNewInventory");
+
+const graffSortAddedTime =
+    document.getElementById("graffSortAddedTime");
 
 const graffList =
     document.getElementById("graffList");
@@ -5189,10 +5194,24 @@ function renderGraffCustomers() {
             }
         )
         .sort((a, b) => {
-            // “暂停跟进”客户统一沉底；其余客户保持原有顺序。
+            // “暂停跟进”始终沉底，不受添加时间排序影响。
             const aPaused = String(a.status || "").trim() === "暂停跟进" ? 1 : 0;
             const bPaused = String(b.status || "").trim() === "暂停跟进" ? 1 : 0;
-            return aPaused - bPaused;
+            if (aPaused !== bPaused) return aPaused - bPaused;
+
+            // 添加时间排序只改变同一跟进分组内的顺序。
+            if (graffAddedTimeSort === "desc" || graffAddedTimeSort === "asc") {
+                const aTime = new Date(a.created_at || 0).getTime();
+                const bTime = new Date(b.created_at || 0).getTime();
+                const safeATime = Number.isFinite(aTime) ? aTime : 0;
+                const safeBTime = Number.isFinite(bTime) ? bTime : 0;
+                return graffAddedTimeSort === "desc"
+                    ? safeBTime - safeATime
+                    : safeATime - safeBTime;
+            }
+
+            // 默认模式保持数据库原有顺序。
+            return 0;
         });
 
     graffList.innerHTML = "";
@@ -7160,6 +7179,32 @@ graffFilterNewInventory.addEventListener(
         setGraffFilter("newinventory");
     }
 );
+
+if (graffSortAddedTime) {
+    graffSortAddedTime.addEventListener(
+        "click",
+        function () {
+            if (graffAddedTimeSort === "default") {
+                graffAddedTimeSort = "desc";
+                graffSortAddedTime.textContent = "添加时间 ↓";
+                graffSortAddedTime.classList.add("active");
+                graffSortAddedTime.title = "当前：最新添加优先";
+            } else if (graffAddedTimeSort === "desc") {
+                graffAddedTimeSort = "asc";
+                graffSortAddedTime.textContent = "添加时间 ↑";
+                graffSortAddedTime.classList.add("active");
+                graffSortAddedTime.title = "当前：最早添加优先";
+            } else {
+                graffAddedTimeSort = "default";
+                graffSortAddedTime.textContent = "添加时间 ↕";
+                graffSortAddedTime.classList.remove("active");
+                graffSortAddedTime.title = "点击按添加时间排序";
+            }
+
+            renderGraffCustomers();
+        }
+    );
+}
 
 
 // ===== 客户意向：返回顶部 =====
