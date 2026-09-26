@@ -1040,6 +1040,12 @@ button {
 .inventory-admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.inventory-admin-actions button{margin:0}.inventory-admin-preview{margin-top:14px}.inventory-admin-row{padding:10px 0;border-bottom:1px solid #eee;font-size:13px}.inventory-admin-row:last-child{border-bottom:0}.inventory-admin-meta{color:#666;margin-top:3px}.inventory-admin-warning{padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;margin-top:10px;font-size:13px}.inventory-admin-success{padding:10px;border-radius:10px;background:#f0fdf4;color:#166534;margin-top:10px;font-size:13px}.inventory-admin-current{max-height:420px;overflow:auto}.inventory-admin-current-row{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #eee}.inventory-admin-checkbox{width:18px;height:18px;flex:0 0 auto;margin:0}.inventory-admin-bulkbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.inventory-admin-bulkbar button{width:auto;margin:0;padding:8px 12px}.inventory-duplicate-box{margin:10px 0;padding:10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:13px}.inventory-admin-current-main{flex:1;min-width:0}.inventory-admin-current-row button{width:auto;padding:7px 9px;margin:0;background:#fff;border:1px solid #ddd;color:#333;border-radius:8px}.danger-button{background:#fff!important;color:#b91c1c!important;border:1px solid #fecaca!important}
 @media(max-width:520px){.inventory-admin-actions{grid-template-columns:1fr}}
 
+/* ===== 库存统计 / 缺失库存 ===== */
+.inventory-stats-box{margin:0 0 12px;padding:12px;border:1px solid #e5e7eb;border-radius:12px;background:#f8fafc}
+.inventory-stats-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.inventory-stats-tab{height:34px;padding:0 12px;border-radius:999px;background:#eef0f3;color:#333;font-size:12px;font-weight:800}.inventory-stats-tab.active{background:#111;color:#fff}
+.inventory-stats-section{margin-top:10px}.inventory-stats-title{font-size:12px;font-weight:900;color:#555;margin-bottom:7px}.inventory-stat-chips{display:flex;gap:7px;flex-wrap:wrap}.inventory-stat-chip{height:auto;min-height:31px;padding:6px 10px;border:1px solid #dfe3e8;border-radius:999px;background:#fff;color:#222;font-size:12px;font-weight:800}.inventory-stat-chip.active{background:#111;color:#fff;border-color:#111}.inventory-stat-chip small{font-weight:600;color:#777}.inventory-stat-chip.active small{color:#ddd}
+.inventory-stats-summary{font-size:12px;color:#666;line-height:1.6}.inventory-gap-item{padding:9px 0;border-top:1px solid #e5e7eb;font-size:12px;line-height:1.55}.inventory-gap-item:first-child{border-top:0}.inventory-gap-danger{color:#b42318;font-weight:900}.inventory-gap-ok{padding:10px;border-radius:10px;background:#f0fdf4;color:#166534;font-size:12px;font-weight:800}.inventory-stats-clear{margin-top:10px;height:32px;padding:0 11px;background:#fff;border:1px solid #ddd;color:#444;font-size:12px;font-weight:800}
+
 /* ===== 客户意向：返回顶部 ===== */
 .graff-back-to-top{position:fixed;right:max(18px,calc((100vw - 720px)/2 + 18px));bottom:24px;z-index:1200;width:46px;height:46px;border:0;border-radius:50%;background:#111;color:#fff;font-size:20px;font-weight:800;box-shadow:0 8px 24px rgba(0,0,0,.18);display:none;align-items:center;justify-content:center;cursor:pointer;padding:0;margin:0}
 .graff-back-to-top.show{display:flex}
@@ -1137,6 +1143,14 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
     </div>
     <div class="card">
         <div class="section-title">当前有效库存 <span id="inventoryCurrentCount"></span></div>
+        <div class="inventory-stats-box" id="inventoryStatsBox">
+            <div class="inventory-stats-tabs">
+                <button class="inventory-stats-tab active" id="inventoryStatsOverviewTab" type="button">📊 库存统计</button>
+                <button class="inventory-stats-tab" id="inventoryStatsGapTab" type="button">⚠️ 缺失库存</button>
+            </div>
+            <div id="inventoryStatsContent"><div class="inventory-stats-summary">正在统计当前有效库存...</div></div>
+            <button class="inventory-stats-clear" id="inventoryStatsClearFilter" type="button" style="display:none;">清除统计筛选</button>
+        </div>
         <input id="inventoryCurrentSearch" type="text" placeholder="搜索 ICON / OVAL / 0.7 / 52# / F / VS1">
         <div class="inventory-admin-bulkbar"><button class="back-button" id="inventorySelectVisibleButton">全选当前结果</button><button class="back-button" id="inventoryClearSelectionButton">取消选择</button><button class="back-button" id="inventoryDuplicateCheckButton">库存查重</button><button class="back-button" id="inventorySuspectCheckButton">疑似同库存</button><button class="danger-button" id="inventoryBulkDeactivateButton">批量下架（0）</button></div>
         <div id="inventoryDuplicateResult"></div>
@@ -1638,6 +1652,12 @@ const inventorySuspectCheckButton=document.getElementById("inventorySuspectCheck
 const inventoryBulkDeactivateButton=document.getElementById("inventoryBulkDeactivateButton");
 const inventoryDuplicateResult=document.getElementById("inventoryDuplicateResult");
 const homeInventorySummary=document.getElementById("homeInventorySummary");
+const inventoryStatsContent=document.getElementById("inventoryStatsContent");
+const inventoryStatsOverviewTab=document.getElementById("inventoryStatsOverviewTab");
+const inventoryStatsGapTab=document.getElementById("inventoryStatsGapTab");
+const inventoryStatsClearFilter=document.getElementById("inventoryStatsClearFilter");
+let inventoryStatsMode="overview";
+let inventoryStatsFilter=null;
 let inventoryAdminParsed=[];
 let inventoryAdminCurrent=[];
 let inventoryAdminSelected=new Set();
@@ -1766,12 +1786,61 @@ async function inventoryAdminPreviewNow(){inventoryAdminMessage.innerHTML="";inv
 
 async function loadInventoryAdminCurrent(){
     const {data,error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active,updated_at,source_key").eq("active",true).order("id",{ascending:false});
-    if(error)throw error;inventoryAdminCurrent=data||[];inventoryCurrentCount.textContent="（"+inventoryAdminCurrent.length+"）";homeInventorySummary.textContent="当前有效库存 "+inventoryAdminCurrent.length+" 条";renderInventoryAdminCurrent();
+    if(error)throw error;inventoryAdminCurrent=data||[];inventoryCurrentCount.textContent="（"+inventoryAdminCurrent.length+"）";homeInventorySummary.textContent="当前有效库存 "+inventoryAdminCurrent.length+" 条";renderInventoryStats();renderInventoryAdminCurrent();
 }
 function inventoryVisibleRows(){
     const q=normalizeText(inventoryCurrentSearch.value||"");
-    return inventoryAdminCurrent.filter(r=>!q||normalizeText(invLine(r)+" "+(r.raw_text||"")).includes(q));
+    return inventoryAdminCurrent.filter(r=>{
+        if(q && !normalizeText(invLine(r)+" "+(r.raw_text||"")).includes(q))return false;
+        const f=inventoryStatsFilter;if(!f)return true;
+        if(f.collection && String(r.collection||"").toUpperCase()!==f.collection)return false;
+        if(f.shape && String(r.shape||"").toUpperCase()!==f.shape)return false;
+        const ct=Number(r.carat);
+        if(f.minCarat!=null && !(ct>=f.minCarat))return false;
+        if(f.maxCarat!=null && !(ct<f.maxCarat))return false;
+        if(f.color && String(r.color||"").toUpperCase()!==f.color)return false;
+        if(f.clarity && String(r.clarity||"").toUpperCase()!==f.clarity)return false;
+        if(f.size!=null && Number(r.size)!==Number(f.size))return false;
+        return true;
+    });
 }
+function invCountWhere(fn){let n=0;for(const r of inventoryAdminCurrent)if(fn(r))n++;return n;}
+function invStatChip(label,count,filter){const active=inventoryStatsFilter&&JSON.stringify(inventoryStatsFilter)===JSON.stringify(filter);return '<button class="inventory-stat-chip '+(active?'active':'')+'" data-inv-stat-filter="'+escapeHtml(encodeURIComponent(JSON.stringify(filter)))+'">'+escapeHtml(label)+' <small>'+count+'</small></button>';}
+function invCaratBucket(ct){ct=Number(ct);if(ct<0.5)return '<0.5ct';if(ct<0.7)return '0.5–0.69ct';if(ct<1)return '0.7–0.99ct';if(ct<1.5)return '1.0–1.49ct';return '≥1.5ct';}
+function renderInventoryStats(){
+    if(!inventoryStatsContent)return;
+    inventoryStatsOverviewTab.classList.toggle('active',inventoryStatsMode==='overview');
+    inventoryStatsGapTab.classList.toggle('active',inventoryStatsMode==='gap');
+    inventoryStatsClearFilter.style.display=inventoryStatsFilter?'inline-block':'none';
+    if(inventoryStatsMode==='gap'){renderInventoryGaps();return;}
+    const rows=inventoryAdminCurrent;
+    const collections=[...new Set(rows.map(r=>String(r.collection||'').toUpperCase()).filter(Boolean))].sort();
+    const colors=['D','E','F','G','H'].filter(x=>rows.some(r=>String(r.color||'').toUpperCase()===x));
+    const clarities=['IF','VVS1','VVS2','VS1','VS2'].filter(x=>rows.some(r=>String(r.clarity||'').toUpperCase()===x));
+    const sizes=[...new Set(rows.map(r=>r.size==null?null:Number(r.size)).filter(x=>x!=null&&Number.isFinite(x)))].sort((a,b)=>a-b);
+    const carats=[['<0.5ct',null,0.5],['0.5–0.69ct',0.5,0.7],['0.7–0.99ct',0.7,1],['1.0–1.49ct',1,1.5],['≥1.5ct',1.5,null]];
+    let html='<div class="inventory-stats-summary">当前有效库存 <strong>'+rows.length+'</strong> 条。点击数字可直接筛选下面库存。</div>';
+    html+='<div class="inventory-stats-section"><div class="inventory-stats-title">大类</div><div class="inventory-stat-chips">'+collections.map(c=>invStatChip(c,invCountWhere(r=>String(r.collection||'').toUpperCase()===c),{collection:c})).join('')+'</div></div>';
+    html+='<div class="inventory-stats-section"><div class="inventory-stats-title">常用门槛</div><div class="inventory-stat-chips">';
+    for(const c of collections){for(const m of [0.5,0.7,1]){const n=invCountWhere(r=>String(r.collection||'').toUpperCase()===c&&Number(r.carat)>=m);html+=invStatChip(c+' ≥'+m+'ct',n,{collection:c,minCarat:m});}}
+    html+='</div></div>';
+    html+='<div class="inventory-stats-section"><div class="inventory-stats-title">克拉段</div><div class="inventory-stat-chips">'+carats.map(([label,min,max])=>invStatChip(label,invCountWhere(r=>(min==null||Number(r.carat)>=min)&&(max==null||Number(r.carat)<max)),{minCarat:min,maxCarat:max})).join('')+'</div></div>';
+    if(colors.length)html+='<div class="inventory-stats-section"><div class="inventory-stats-title">颜色</div><div class="inventory-stat-chips">'+colors.map(x=>invStatChip(x,invCountWhere(r=>String(r.color||'').toUpperCase()===x),{color:x})).join('')+'</div></div>';
+    if(clarities.length)html+='<div class="inventory-stats-section"><div class="inventory-stats-title">净度</div><div class="inventory-stat-chips">'+clarities.map(x=>invStatChip(x,invCountWhere(r=>String(r.clarity||'').toUpperCase()===x),{clarity:x})).join('')+'</div></div>';
+    if(sizes.length)html+='<div class="inventory-stats-section"><div class="inventory-stats-title">尺寸</div><div class="inventory-stat-chips">'+sizes.map(x=>invStatChip(x+'#',invCountWhere(r=>Number(r.size)===x),{size:x})).join('')+'</div></div>';
+    inventoryStatsContent.innerHTML=html;bindInventoryStatChips();
+}
+function renderInventoryGaps(){
+    const combos=new Map();
+    for(const r of inventoryAdminCurrent){const c=String(r.collection||'').toUpperCase(),sh=String(r.shape||'').toUpperCase();if(!c||!sh)continue;const k=c+'|'+sh;if(!combos.has(k))combos.set(k,{collection:c,shape:sh,rows:[]});combos.get(k).rows.push(r);}
+    const buckets=[['0.5–0.69ct',0.5,0.7],['0.7–0.99ct',0.7,1],['1.0–1.49ct',1,1.5],['≥1.5ct',1.5,null]];
+    const gaps=[];
+    for(const g of combos.values()){for(const [label,min,max] of buckets){const n=g.rows.filter(r=>Number(r.carat)>=min&&(max==null||Number(r.carat)<max)).length;if(n===0)gaps.push({...g,label,min,max});}}
+    if(!gaps.length){inventoryStatsContent.innerHTML='<div class="inventory-gap-ok">当前已出现的系列/形状，在 0.5ct 以上主要克拉段中没有结构性空档。</div>';return;}
+    inventoryStatsContent.innerHTML='<div class="inventory-stats-summary">按当前已经存在的「大类 + 形状」检查 0.5ct 以上主要克拉段。这里显示的是结构缺口，不代表柜台绝对无货。</div>'+gaps.map(g=>'<div class="inventory-gap-item"><span class="inventory-gap-danger">缺失</span> · <strong>'+escapeHtml(g.collection+' '+g.shape)+'</strong> · '+escapeHtml(g.label)+' <button class="inventory-stat-chip" style="margin-left:6px" data-inv-stat-filter="'+escapeHtml(encodeURIComponent(JSON.stringify({collection:g.collection,shape:g.shape,minCarat:g.min,maxCarat:g.max})))+'">查看 0 条</button></div>').join('');
+    bindInventoryStatChips();
+}
+function bindInventoryStatChips(){document.querySelectorAll('[data-inv-stat-filter]').forEach(btn=>btn.addEventListener('click',()=>{try{inventoryStatsFilter=JSON.parse(decodeURIComponent(btn.dataset.invStatFilter));}catch(e){inventoryStatsFilter=null;}renderInventoryStats();renderInventoryAdminCurrent();}));}
 function updateInventoryBulkButton(){
     inventoryBulkDeactivateButton.textContent="批量下架（"+inventoryAdminSelected.size+"）";
     inventoryBulkDeactivateButton.disabled=inventoryAdminSelected.size===0;
@@ -1874,6 +1943,9 @@ if(inventoryFullSyncButton)inventoryFullSyncButton.addEventListener("click",()=>
 if(inventoryReplaceAllButton)inventoryReplaceAllButton.addEventListener("click",()=>inventoryAdminUpload("replace"));
 if(inventoryClearButton)inventoryClearButton.addEventListener("click",()=>{inventoryAdminText.value="";inventoryAdminParsed=[];inventoryAdminPreview.innerHTML="";inventoryAdminMessage.innerHTML="";});
 if(inventoryCurrentSearch)inventoryCurrentSearch.addEventListener("input",renderInventoryAdminCurrent);
+if(inventoryStatsOverviewTab)inventoryStatsOverviewTab.addEventListener("click",()=>{inventoryStatsMode="overview";renderInventoryStats();});
+if(inventoryStatsGapTab)inventoryStatsGapTab.addEventListener("click",()=>{inventoryStatsMode="gap";renderInventoryStats();});
+if(inventoryStatsClearFilter)inventoryStatsClearFilter.addEventListener("click",()=>{inventoryStatsFilter=null;renderInventoryStats();renderInventoryAdminCurrent();});
 if(inventorySelectVisibleButton)inventorySelectVisibleButton.addEventListener("click",()=>{for(const r of inventoryVisibleRows())inventoryAdminSelected.add(String(r.id));renderInventoryAdminCurrent();});
 if(inventoryClearSelectionButton)inventoryClearSelectionButton.addEventListener("click",()=>{inventoryAdminSelected.clear();renderInventoryAdminCurrent();});
 if(inventoryDuplicateCheckButton)inventoryDuplicateCheckButton.addEventListener("click",checkInventoryDuplicates);
