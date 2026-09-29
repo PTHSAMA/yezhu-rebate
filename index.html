@@ -493,6 +493,10 @@ button {
     color: #fff;
 }
 
+.graff-star-button{border:0;background:transparent;width:32px;height:32px;padding:0;margin:-5px 3px -5px -5px;font-size:23px;line-height:32px;color:#a3a3a3;cursor:pointer;vertical-align:middle}
+.graff-star-button.starred{color:#f5b301}
+.graff-star-button:active{transform:scale(.92)}
+
 .graff-card {
     background: #fff;
     border-radius: 14px;
@@ -1433,6 +1437,7 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
                 <button class="filter-button" id="graffFilterNoMatch">暂无匹配</button>
                 <button class="filter-button" id="graffFilterToday">今日添加</button>
                 <button class="filter-button" id="graffFilterNewInventory">有新库存</button>
+                <button class="filter-button" id="graffFilterStarred">⭐ 星标</button>
                 <button class="filter-button" id="graffSortAddedTime">添加时间 ↕</button>
             </div>
         </div>
@@ -2073,6 +2078,7 @@ let graffUnsetOnly = false;
 let graffNoMatchOnly = false;
 let graffTodayOnly = false;
 let graffNewInventoryOnly = false;
+let graffStarredOnly = false;
 let graffAddedTimeSort = "default"; // default | desc | asc
 
 let toastTimer = null;
@@ -2239,6 +2245,9 @@ const graffFilterToday =
 
 const graffFilterNewInventory =
     document.getElementById("graffFilterNewInventory");
+
+const graffFilterStarred =
+    document.getElementById("graffFilterStarred");
 
 const graffSortAddedTime =
     document.getElementById("graffSortAddedTime");
@@ -2825,7 +2834,7 @@ async function loadGraffDatabase(silent = false) {
         await supabaseClient
             .from(SUPABASE_TABLE)
             .select(
-                "id,created_at,customer,wechat,details,status,note,owner,warning,updated_at,updated_by,active,source_key"
+                "id,created_at,customer,wechat,details,status,note,owner,warning,updated_at,updated_by,active,source_key,starred"
             )
             .eq("active", true)
             .order("warning", {
@@ -5236,6 +5245,10 @@ function renderGraffCustomers() {
                     return false;
                 }
 
+                if (graffStarredOnly && item.starred !== true) {
+                    return false;
+                }
+
                 if (graffCaratOnly) {
                     const requirementText =
                         graffDetailsArray(item).join(" ").toLowerCase();
@@ -5318,6 +5331,7 @@ function renderGraffCustomers() {
             '<div class="graff-list-top">' +
                 '<div style="min-width:0;flex:1;">' +
                     '<div class="graff-list-name">' +
+                        '<button type="button" class="graff-star-button' + (item.starred === true ? ' starred' : '') + '" data-star-id="' + escapeHtml(String(item.id)) + '" title="' + (item.starred === true ? '取消星标' : '设为星标') + '">' + (item.starred === true ? '★' : '☆') + '</button>' +
                         escapeHtml(
                             (item.warning ? "⚠️ " : "") +
                             (item.customer || "未命名客户")
@@ -5356,6 +5370,30 @@ function renderGraffCustomers() {
                 '<div class="graff-list-arrow">›</div>' +
             '</div>';
 
+        const starButton = card.querySelector(".graff-star-button");
+        if (starButton) {
+            starButton.addEventListener("click", async function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                const nextValue = item.starred !== true;
+                starButton.disabled = true;
+                try {
+                    const { error } = await supabaseClient
+                        .from(SUPABASE_TABLE)
+                        .update({ starred: nextValue, updated_at: new Date().toISOString() })
+                        .eq("id", item.id);
+                    if (error) throw error;
+                    item.starred = nextValue;
+                    showToast(nextValue ? "已设为星标客户" : "已取消星标");
+                    renderGraffCustomers();
+                } catch (error) {
+                    console.error("更新星标失败：", error);
+                    alert("更新星标失败：\n" + (error.message || String(error)));
+                    starButton.disabled = false;
+                }
+            });
+        }
+
         card.addEventListener(
             "click",
             () => openGraffDetail(item)
@@ -5373,6 +5411,7 @@ function setGraffFilter(mode) {
     graffNoMatchOnly = mode === "nomatch";
     graffTodayOnly = mode === "today";
     graffNewInventoryOnly = mode === "newinventory";
+    graffStarredOnly = mode === "starred";
 
     graffFilterAll.classList.toggle("active", mode === "all");
     graffFilterContinue.classList.toggle("active", mode === "continue");
@@ -5381,6 +5420,7 @@ function setGraffFilter(mode) {
     graffFilterNoMatch.classList.toggle("active", mode === "nomatch");
     graffFilterToday.classList.toggle("active", mode === "today");
     graffFilterNewInventory.classList.toggle("active", mode === "newinventory");
+    if (graffFilterStarred) graffFilterStarred.classList.toggle("active", mode === "starred");
 
     renderGraffCustomers();
 }
@@ -7251,6 +7291,15 @@ graffFilterNewInventory.addEventListener(
         setGraffFilter("newinventory");
     }
 );
+
+if (graffFilterStarred) {
+    graffFilterStarred.addEventListener(
+        "click",
+        function () {
+            setGraffFilter("starred");
+        }
+    );
+}
 
 if (graffSortAddedTime) {
     graffSortAddedTime.addEventListener(
