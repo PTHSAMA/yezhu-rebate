@@ -1146,6 +1146,24 @@ Bg 1.06 F VVS1 #50 3625₩"></textarea>
         <div id="inventoryAdminPreview" class="inventory-admin-preview"></div>
     </div>
     <div class="card">
+        <div class="section-title">🧹 按错误源数据清洗</div>
+        <div class="form-note">把以前录错的柜台源数据原样粘贴到这里。系统会按“大类 / 类型 / 形状 / 克拉 / 颜色 / 净度 / 尺寸 / 价格”反查整个库存库（包含已下架历史库存），先预览，再永久删除匹配记录。</div>
+        <textarea id="inventoryCleanupText" class="inventory-admin-textarea" placeholder="例如：
+ICON OVAL
+1ct G VVS2/52#/2718
+1.01ct G VVS2/52#/2570
+
+PARAGON OVAL
+0.72ct F VVS1 53# 1855w"></textarea>
+        <div class="inventory-admin-actions">
+            <button class="primary-button" id="inventoryCleanupFindButton">查找错误库存</button>
+            <button class="danger-button" id="inventoryCleanupDeleteButton" disabled>🗑️ 一键永久删除匹配库存（0）</button>
+            <button class="back-button" id="inventoryCleanupClearButton" style="margin:0">清空清洗区</button>
+        </div>
+        <div id="inventoryCleanupMessage"></div>
+        <div id="inventoryCleanupResult" class="inventory-admin-preview"></div>
+    </div>
+    <div class="card">
         <div class="section-title">当前有效库存 <span id="inventoryCurrentCount"></span></div>
         <div class="inventory-stats-box" id="inventoryStatsBox">
             <div class="inventory-stats-tabs">
@@ -1656,6 +1674,12 @@ const inventoryDuplicateCheckButton=document.getElementById("inventoryDuplicateC
 const inventorySuspectCheckButton=document.getElementById("inventorySuspectCheckButton");
 const inventoryBulkDeactivateButton=document.getElementById("inventoryBulkDeactivateButton");
 const inventoryDuplicateResult=document.getElementById("inventoryDuplicateResult");
+const inventoryCleanupText=document.getElementById("inventoryCleanupText");
+const inventoryCleanupFindButton=document.getElementById("inventoryCleanupFindButton");
+const inventoryCleanupDeleteButton=document.getElementById("inventoryCleanupDeleteButton");
+const inventoryCleanupClearButton=document.getElementById("inventoryCleanupClearButton");
+const inventoryCleanupMessage=document.getElementById("inventoryCleanupMessage");
+const inventoryCleanupResult=document.getElementById("inventoryCleanupResult");
 const homeInventorySummary=document.getElementById("homeInventorySummary");
 const inventoryStatsContent=document.getElementById("inventoryStatsContent");
 const inventoryStatsOverviewTab=document.getElementById("inventoryStatsOverviewTab");
@@ -1664,6 +1688,8 @@ const inventoryStatsClearFilter=document.getElementById("inventoryStatsClearFilt
 let inventoryStatsMode="overview";
 let inventoryStatsFilter=null;
 let inventoryAdminParsed=[];
+let inventoryCleanupMatches=[];
+let inventoryCleanupParsed=[];
 let inventoryAdminCurrent=[];
 let inventoryAdminSelected=new Set();
 
@@ -1909,6 +1935,141 @@ async function bulkDeactivateInventoryAdmin(){
     inventoryAdminSelected.clear();inventoryDuplicateResult.innerHTML="";await loadInventoryAdminCurrent();await refreshGraffInventoryBadges();showToast("已批量下架 "+ids.length+" 条库存");
 }
 
+function inventoryCleanupCanonicalKey(row){
+    return [
+        row.collection,row.shape,row.variant,
+        invNormalizeNumber(row.carat),row.color,row.clarity,
+        invNormalizeNumber(row.size),invNormalizeNumber(row.price_w)
+    ].map(x=>invClean(x).toUpperCase()).join("|");
+}
+
+async function findInventoryCleanupMatches(){
+    inventoryCleanupMessage.innerHTML="";
+    inventoryCleanupResult.innerHTML="";
+    inventoryCleanupMatches=[];
+    inventoryCleanupDeleteButton.disabled=true;
+    inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（0）";
+
+    inventoryCleanupParsed=await parseInventoryAdminText(inventoryCleanupText.value);
+    if(!inventoryCleanupParsed.length){
+        inventoryCleanupMessage.innerHTML='<div class="inventory-admin-warning">没有识别到可用于清洗的源数据，未查询数据库。</div>';
+        return;
+    }
+
+    inventoryCleanupFindButton.disabled=true;
+    inventoryCleanupFindButton.textContent="正在反查数据库...";
+    try{
+        // 用源数据中的价格缩小数据库查询范围，再在浏览器内按全部参数精确比对。
+        // 不限制 active，因此已下架的历史错误库存也会被找到。
+        const prices=[...new Set(inventoryCleanupParsed.map(r=>Number(r.price_w)).filter(Number.isFinite))];
+        let candidates=[];
+        const chunkSize=80;
+        for(let i=0;i<prices.length;i+=chunkSize){
+            const chunk=prices.slice(i,i+chunkSize);
+            const {data,error}=await supabaseClient
+                .from(SUPABASE_INVENTORY_TABLE)
+                .select("id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text,active,created_at,updated_at,source_key")
+                .in("price_w",chunk)
+                .order("id",{ascending:true});
+            if(error)throw error;
+            candidates.push(...(data||[]));
+        }
+
+        const wanted=new Set(inventoryCleanupParsed.map(inventoryCleanupCanonicalKey));
+        const byId=new Map();
+        for(const row of candidates){
+            if(wanted.has(inventoryCleanupCanonicalKey(row))) byId.set(String(row.id),row);
+        }
+        inventoryCleanupMatches=[...byId.values()];
+
+        const matchedKeys=new Set(inventoryCleanupMatches.map(inventoryCleanupCanonicalKey));
+        const missing=inventoryCleanupParsed.filter(r=>!matchedKeys.has(inventoryCleanupCanonicalKey(r)));
+        const activeCount=inventoryCleanupMatches.filter(r=>r.active!==false).length;
+        const inactiveCount=inventoryCleanupMatches.length-activeCount;
+
+        inventoryCleanupMessage.innerHTML=
+            '<div class="'+(inventoryCleanupMatches.length?'inventory-admin-success':'inventory-admin-warning')+'">'+
+            '源数据识别 <strong>'+inventoryCleanupParsed.length+'</strong> 条 · 数据库匹配 <strong>'+inventoryCleanupMatches.length+'</strong> 条'+
+            '（有效 '+activeCount+' / 已下架 '+inactiveCount+'） · 未找到 <strong>'+missing.length+'</strong> 条。'+
+            (inventoryCleanupMatches.length?' 删除会永久移除这些数据库记录。':'')+
+            '</div>';
+
+        let html="";
+        if(inventoryCleanupMatches.length){
+            html+='<strong>准备永久删除：</strong>';
+            html+=inventoryCleanupMatches.map((r,i)=>
+                '<div class="inventory-admin-row"><strong>'+(i+1)+'. '+escapeHtml(invLine(r))+'</strong>'+ 
+                '<div class="inventory-admin-meta">ID：'+escapeHtml(String(r.id))+' · '+(r.active===false?'历史/已下架':'当前有效')+' · 源：'+escapeHtml(r.raw_text||'')+'</div></div>'
+            ).join('');
+        }
+        if(missing.length){
+            html+='<div class="inventory-duplicate-box"><strong>未找到 '+missing.length+' 条：</strong>'+missing.map(r=>'<div class="inventory-admin-meta">'+escapeHtml(invLine(r))+'</div>').join('')+'</div>';
+        }
+        inventoryCleanupResult.innerHTML=html;
+        inventoryCleanupDeleteButton.disabled=!inventoryCleanupMatches.length;
+        inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（"+inventoryCleanupMatches.length+"）";
+    }catch(error){
+        console.error("错误库存反查失败：",error);
+        inventoryCleanupMessage.innerHTML='<div class="inventory-admin-warning">查找失败：'+escapeHtml(error.message||String(error))+'</div>';
+    }finally{
+        inventoryCleanupFindButton.disabled=false;
+        inventoryCleanupFindButton.textContent="查找错误库存";
+    }
+}
+
+async function deleteInventoryCleanupMatches(){
+    const ids=[...new Set(inventoryCleanupMatches.map(r=>r.id))];
+    if(!ids.length)return;
+    const activeCount=inventoryCleanupMatches.filter(r=>r.active!==false).length;
+    const inactiveCount=ids.length-activeCount;
+    const ok=confirm(
+        "这是永久删除，不是下架。\n\n"+
+        "即将从 graff_inventory 永久删除 "+ids.length+" 条记录：\n"+
+        "当前有效："+activeCount+" 条\n"+
+        "历史/已下架："+inactiveCount+" 条\n\n"+
+        "删除后无法在网页中恢复。确认继续？"
+    );
+    if(!ok)return;
+    const typed=prompt('为防止误删，请输入“永久删除”四个字确认：');
+    if(typed!=="永久删除"){
+        if(typed!==null)alert("确认文字不正确，已取消删除。");
+        return;
+    }
+    inventoryCleanupDeleteButton.disabled=true;
+    inventoryCleanupDeleteButton.textContent="正在永久删除...";
+    try{
+        const chunkSize=100;
+        for(let i=0;i<ids.length;i+=chunkSize){
+            const {error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE).delete().in("id",ids.slice(i,i+chunkSize));
+            if(error)throw error;
+        }
+        const deleted=ids.length;
+        inventoryCleanupMatches=[];
+        inventoryCleanupParsed=[];
+        inventoryCleanupResult.innerHTML="";
+        inventoryCleanupMessage.innerHTML='<div class="inventory-admin-success">已永久删除 '+deleted+' 条错误库存记录。</div>';
+        inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（0）";
+        await loadInventoryAdminCurrent();
+        await refreshGraffInventoryBadges();
+        showToast("已清洗 "+deleted+" 条错误库存");
+    }catch(error){
+        console.error("永久删除错误库存失败：",error);
+        inventoryCleanupMessage.innerHTML='<div class="inventory-admin-warning">删除失败：'+escapeHtml(error.message||String(error))+'</div>';
+        inventoryCleanupDeleteButton.disabled=false;
+        inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（"+ids.length+"）";
+    }
+}
+
+function clearInventoryCleanup(){
+    inventoryCleanupText.value="";
+    inventoryCleanupParsed=[];
+    inventoryCleanupMatches=[];
+    inventoryCleanupMessage.innerHTML="";
+    inventoryCleanupResult.innerHTML="";
+    inventoryCleanupDeleteButton.disabled=true;
+    inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（0）";
+}
+
 async function inventoryAdminUpload(mode){
     const rows=await inventoryAdminPreviewNow();if(!rows.length){
         inventoryAdminMessage.innerHTML='<div class="inventory-admin-warning">没有识别到库存，已阻止覆盖/同步操作。</div>';
@@ -1956,6 +2117,12 @@ if(inventoryClearSelectionButton)inventoryClearSelectionButton.addEventListener(
 if(inventoryDuplicateCheckButton)inventoryDuplicateCheckButton.addEventListener("click",checkInventoryDuplicates);
 if(inventorySuspectCheckButton)inventorySuspectCheckButton.addEventListener("click",checkInventorySuspects);
 if(inventoryBulkDeactivateButton)inventoryBulkDeactivateButton.addEventListener("click",bulkDeactivateInventoryAdmin);
+if(inventoryCleanupFindButton)inventoryCleanupFindButton.addEventListener("click",findInventoryCleanupMatches);
+if(inventoryCleanupDeleteButton)inventoryCleanupDeleteButton.addEventListener("click",deleteInventoryCleanupMatches);
+if(inventoryCleanupClearButton)inventoryCleanupClearButton.addEventListener("click",clearInventoryCleanup);
+if(inventoryCleanupText)inventoryCleanupText.addEventListener("input",()=>{
+    if(inventoryCleanupMatches.length){inventoryCleanupMatches=[];inventoryCleanupDeleteButton.disabled=true;inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（0）";inventoryCleanupMessage.innerHTML='<div class="inventory-admin-warning">源数据已修改，请重新点击“查找错误库存”。</div>';inventoryCleanupResult.innerHTML="";}
+});
 // 首页库存数量将在 Supabase Client 初始化完成后读取。
 
 </script>
