@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#111111">
+<title>韩国免税店返点查询</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6f8;color:#222;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif}
+.container{width:100%;max-width:720px;margin:0 auto;padding:14px}
+.header{text-align:center;padding:14px 0 12px}
+.header h1{margin:0;font-size:24px}.sub{margin-top:7px;color:#777;font-size:13px}
+.rate{background:#111;color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rate small{opacity:.72}.rate strong{display:block;font-size:24px;margin-top:2px}
+.card{background:#fff;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 2px 10px rgba(0,0,0,.055)}
+.title{font-size:17px;font-weight:800;margin-bottom:11px}
+input{width:100%;height:46px;border:1px solid #d8dce2;border-radius:10px;padding:0 12px;font-size:16px;outline:none;background:#fff}
+input:focus{border-color:#333}
+button{border:0;border-radius:10px;height:44px;font-size:15px;cursor:pointer}
+.primary{width:100%;margin-top:10px;background:#111;color:#fff;font-weight:800}
+.search-results{display:none;margin-top:10px;border:1px solid #e1e4e8;border-radius:10px;overflow:hidden}
+.search-item{padding:12px;background:#fff;border-bottom:1px solid #eee;cursor:pointer}.search-item:last-child{border-bottom:0}
+.search-brand{font-size:16px;font-weight:850}.search-sub{margin-top:3px;color:#777;font-size:13px}
+.badge{display:inline-block;margin-top:6px;padding:3px 7px;border-radius:999px;background:#eef7f0;color:#16803b;font-size:11px;font-weight:800}
+.brand-info{display:none}.brand-name{font-size:22px;font-weight:900}.brand-cn{margin-top:3px;color:#666}.meta{margin-top:8px;font-size:12px;color:#777;line-height:1.6}
+.rebates{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
+.rebate{border:1px solid #e5e7eb;border-radius:12px;padding:12px}.store{font-size:13px;color:#666}.value{margin-top:4px;font-size:22px;font-weight:900}
+.calc{display:none}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;margin:0 0 6px;font-size:13px;font-weight:700}
+.note{margin-top:5px;font-size:11px;color:#888;line-height:1.5}.auto{color:#16803b;font-weight:700}
+.results{display:none}.result{border:1px solid #e2e5e9;border-radius:12px;padding:14px;margin-bottom:10px}
+.result-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.result-store{font-size:17px;font-weight:900}.result-rebate{font-size:13px;color:#666}
+.result-price{margin-top:9px;font-size:25px;font-weight:900}.formula{margin-top:6px;color:#777;font-size:12px;line-height:1.5}
+.copy{width:100%;margin-top:9px;background:#f0f2f5;color:#333;font-weight:700}.copyall{width:100%;background:#111;color:#fff;font-weight:800}
+.status{text-align:center;color:#999;font-size:11px;line-height:1.7;margin:16px 0 24px}.empty{padding:14px;text-align:center;color:#888}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:rgba(0,0,0,.84);color:#fff;padding:10px 18px;border-radius:30px;opacity:0;pointer-events:none;transition:.2s;z-index:9}.toast.show{opacity:1}
+.notice{display:none;position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#16803b;color:#fff;padding:9px 16px;border-radius:30px;z-index:10;font-size:13px}
+@media(max-width:520px){.container{padding:11px}.rebates,.grid{grid-template-columns:1fr}.header h1{font-size:22px}.result-price{font-size:23px}}
+</style>
+</head>
+<body>
+<div id="notice" class="notice">返点或汇率已更新</div>
+<div class="container">
+  <div class="header"><h1>韩国免税店返点查询</h1><div class="sub">输入品牌即可查询当前返点及预计到手价格</div></div>
+
+  <div class="rate">
+    <div><small>当前统一美元汇率</small><strong id="topExchangeRate">--</strong></div>
+    <small id="rateUpdateTime"></small>
+  </div>
+
+  <div class="card">
+    <div class="title">品牌查询</div>
+    <input id="searchInput" placeholder="输入英文或中文品牌，例如 VCA / 梵克雅宝" autocomplete="off">
+    <button id="searchButton" class="primary">查询</button>
+    <div id="searchResults" class="search-results"></div>
+  </div>
+
+  <div id="brandInfo" class="card brand-info">
+    <div id="brandEnglish" class="brand-name"></div>
+    <div id="brandChinese" class="brand-cn"></div>
+    <div id="brandCategory" class="meta"></div>
+    <div id="brandRemark" class="meta"></div>
+    <div id="rebateGrid" class="rebates"></div>
+  </div>
+
+  <div id="calculatorCard" class="card calc">
+    <div class="title">到手价格计算</div>
+    <div class="grid">
+      <div class="field"><label>商品原价（USD）</label><input id="priceInput" inputmode="decimal" placeholder="例如 3500"></div>
+      <div class="field"><label>美元汇率</label><input id="exchangeInput" inputmode="decimal"><div class="note auto">自动读取当前统一汇率</div></div>
+    </div>
+    <div class="field" style="margin-top:10px"><label>品牌折扣</label><input id="discountInput" inputmode="decimal" value="1"><div id="autoDiscount" class="note auto" style="display:none"></div></div>
+    <button id="calculateButton" class="primary">计算各店到手价格</button>
+  </div>
+
+  <div id="resultSection" class="card results">
+    <div class="title">计算结果</div>
+    <div id="resultList"></div>
+    <button id="copyAllButton" class="copyall">复制全部结果</button>
+  </div>
+
+  <div id="dataStatus" class="status">正在加载最新返点数据...</div>
+  <div id="bottomStatus" class="status"></div>
+</div>
+<div id="toast" class="toast">已复制</div>
+
+<script>
+const DATA_URL="./web_data/fandian.json";
+const SETTINGS_URL="./settings.json";
+const CHECK_INTERVAL=5*60*1000;
+let database=[],settings={},currentBrand=null,currentResults=[],currentDataVersion="",currentSettingsVersion="",toastTimer=null;
+
+const $=id=>document.getElementById(id);
+const searchInput=$("searchInput"),searchButton=$("searchButton"),searchResults=$("searchResults");
+const brandInfo=$("brandInfo"),brandEnglish=$("brandEnglish"),brandChinese=$("brandChinese"),brandCategory=$("brandCategory"),brandRemark=$("brandRemark"),rebateGrid=$("rebateGrid");
+const calculatorCard=$("calculatorCard"),priceInput=$("priceInput"),exchangeInput=$("exchangeInput"),discountInput=$("discountInput"),autoDiscount=$("autoDiscount"),calculateButton=$("calculateButton");
+const resultSection=$("resultSection"),resultList=$("resultList"),copyAllButton=$("copyAllButton"),dataStatus=$("dataStatus"),bottomStatus=$("bottomStatus"),topExchangeRate=$("topExchangeRate"),rateUpdateTime=$("rateUpdateTime"),toast=$("toast"),notice=$("notice");
+
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function norm(v){return String(v||"").replace(/\s+/g,"").toUpperCase()}
+function noCache(url){return url+(url.includes("?")?"&":"?")+"t="+Date.now()}
+async function fetchJson(url){const r=await fetch(noCache(url),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}
+function formatPercent(v){const n=Number(v)*100;return (Math.abs(n-Math.round(n))<1e-6?Math.round(n):n.toFixed(2).replace(/0+$/,"").replace(/\.$/,""))+"%"}
+function formatDiscount(v){const n=Number(v)*10;return n.toFixed(2).replace(/0+$/,"").replace(/\.$/,"")+"折"}
+function formatMoney(v){return Math.round(Number(v)).toLocaleString("zh-CN")}
+function displayStoreName(s){return {"乐天明洞":"明洞乐天免税","明洞乐天":"明洞乐天免税"}[s]||s}
+function cleanRemark(v){return String(v||"").trim()}
+function parseDiscount(v){let t=String(v??"").trim().replace(/折/g,"");if(!t)return null;let n=parseFloat(t);if(Number.isNaN(n))return null;if(n>1)return n/10;return n}
+function showToast(m){toast.textContent=m;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),1500)}
+function showNotice(){notice.style.display="block";setTimeout(()=>notice.style.display="none",2200)}
+
+async function loadSettings(silent=false){
+ const d=await fetchJson(SETTINGS_URL); if(d.exchange_rate==null)throw new Error("settings.json 缺少 exchange_rate");
+ const old=currentSettingsVersion; settings=d; currentSettingsVersion=String(d.version||d.updated_at||d.exchange_rate||"");
+ topExchangeRate.textContent=d.exchange_rate; exchangeInput.value=d.exchange_rate; rateUpdateTime.textContent=d.updated_at||"";
+ if(silent&&old&&old!==currentSettingsVersion){showNotice();if(currentBrand&&priceInput.value)calculateAll(false)}
+}
+async function loadDatabase(silent=false){
+ const d=await fetchJson(DATA_URL);if(!d||!Array.isArray(d.brands))throw new Error("返点数据库格式错误");
+ const old=currentDataVersion;database=d.brands;currentDataVersion=String(d.version||"");
+ dataStatus.textContent="返点数据已加载 · "+database.length+" 个品牌";
+ bottomStatus.innerHTML="返点更新时间："+esc(d.updated_at||"-")+"<br>系统每5分钟自动检查最新返点与汇率";
+ if(silent&&old&&old!==currentDataVersion){showNotice();if(currentBrand){const fresh=findSameBrand(currentBrand);if(fresh)selectBrand(fresh,false)}}
+}
+function findSameBrand(b){if(!b)return null;if(b.id){const x=database.find(i=>String(i.id)===String(b.id));if(x)return x}return database.find(i=>norm(i.english)===norm(b.english)&&norm(i.chinese)===norm(b.chinese))||null}
+function searchBrands(){
+ const k=norm(searchInput.value);if(!k){searchResults.style.display="none";return}
+ const rs=database.filter(i=>norm(i.english).includes(k)||norm(i.chinese).includes(k)).slice(0,30);
+ searchResults.innerHTML="";searchResults.style.display="block";
+ if(!rs.length){searchResults.innerHTML='<div class="empty">没有找到品牌</div>';return}
+ rs.forEach(item=>{const d=document.createElement("div");d.className="search-item";
+ d.innerHTML='<div class="search-brand">'+esc(item.english||item.chinese||"")+'</div>'+(item.chinese?'<div class="search-sub">'+esc(item.chinese)+'</div>':"")+(item.discount?'<div class="badge">会员折扣 '+formatDiscount(item.discount)+'</div>':"");
+ d.onclick=()=>selectBrand(item,true);searchResults.appendChild(d)})
+}
+function selectBrand(item,focusPrice=true){
+ currentBrand=item;currentResults=[];searchInput.value=item.english||item.chinese||"";searchResults.style.display="none";
+ brandInfo.style.display="block";calculatorCard.style.display="block";resultSection.style.display="none";
+ brandEnglish.textContent=item.english||"";brandChinese.textContent=item.chinese||"";
+ brandCategory.textContent=item.category?"品类："+item.category:"";
+ const remark=cleanRemark(item.remark);brandRemark.textContent=remark?"备注："+remark:"";brandRemark.style.display=remark?"block":"none";
+ if(item.discount){discountInput.value=item.discount;autoDiscount.textContent="已自动读取折扣："+formatDiscount(item.discount);autoDiscount.style.display="block"}else{discountInput.value="1";autoDiscount.style.display="none"}
+ rebateGrid.innerHTML="";
+ Object.entries(item.rebates||{}).forEach(([store,rebate])=>{if(rebate==null||Number.isNaN(Number(rebate)))return;const d=document.createElement("div");d.className="rebate";d.innerHTML='<div class="store">'+esc(displayStoreName(store))+'</div><div class="value">'+formatPercent(rebate)+'</div>';rebateGrid.appendChild(d)});
+ if(focusPrice)setTimeout(()=>priceInput.focus(),80)
+}
+function calculateAll(scroll=true){
+ if(!currentBrand){alert("请先选择品牌");return}
+ const price=parseFloat(priceInput.value),exchange=parseFloat(exchangeInput.value),discount=parseDiscount(discountInput.value);
+ if(!(price>0)){alert("请输入正确的原价 USD");priceInput.focus();return}
+ if(!(exchange>0)){alert("汇率错误");return}
+ if(discount===null||discount<=0||discount>1){alert("请输入正确的折扣");return}
+ currentResults=[];
+ Object.entries(currentBrand.rebates||{}).forEach(([store,rebate])=>{const r=Number(rebate);if(Number.isNaN(r))return;currentResults.push({store,rebate:r,discount,exchange,amount:price*(1-r)*discount*exchange,price})});
+ renderResults(scroll)
+}
+function renderResults(scroll=true){
+ resultList.innerHTML="";
+ currentResults.forEach(r=>{const formula=r.price+" × (1 - "+formatPercent(r.rebate)+") × "+formatDiscount(r.discount)+" × "+r.exchange;
+ const d=document.createElement("div");d.className="result";d.innerHTML='<div class="result-head"><div class="result-store">'+esc(displayStoreName(r.store))+'</div><div class="result-rebate">返点 '+formatPercent(r.rebate)+'</div></div><div class="result-price">'+formatMoney(r.amount)+' 元</div><div class="formula">'+esc(formula)+'</div>';
+ const b=document.createElement("button");b.className="copy";b.textContent="复制此店结果";b.onclick=()=>copyText(singleText(r));d.appendChild(b);resultList.appendChild(d)});
+ resultSection.style.display="block";if(scroll)setTimeout(()=>resultSection.scrollIntoView({behavior:"smooth",block:"start"}),80)
+}
+function singleText(r){return displayStoreName(r.store)+"\n返点："+formatPercent(r.rebate)+(r.discount!==1?"\n折扣："+formatDiscount(r.discount):"")+"\n汇率："+r.exchange+"\n到手价格："+formatMoney(r.amount)+" 元"}
+function allText(){if(!currentBrand||!currentResults.length)return"";const a=[currentBrand.english||currentBrand.chinese||""];if(currentBrand.chinese&&currentBrand.chinese!==a[0])a.push(currentBrand.chinese);a.push("汇率："+currentResults[0].exchange,"");currentResults.forEach((r,i)=>{a.push(displayStoreName(r.store)+"  "+formatPercent(r.rebate),"到手价格 "+formatMoney(r.amount)+" 元");if(i<currentResults.length-1)a.push("")});return a.join("\n")}
+async function copyText(t){if(!t)return;try{await navigator.clipboard.writeText(t)}catch(e){const x=document.createElement("textarea");x.value=t;x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();document.execCommand("copy");x.remove()}showToast("已复制")}
+async function initialLoad(){searchInput.disabled=searchButton.disabled=true;try{await Promise.all([loadSettings(),loadDatabase()]);searchInput.disabled=searchButton.disabled=false;searchInput.focus()}catch(e){console.error(e);dataStatus.textContent="数据加载失败";alert("最新返点或汇率加载失败，请稍后刷新网页。")}}
+searchButton.onclick=searchBrands;
+searchInput.oninput=()=>searchInput.value.trim()?searchBrands():searchResults.style.display="none";
+searchInput.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();searchBrands()}};
+[priceInput,exchangeInput,discountInput].forEach(x=>x.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();calculateAll()}});
+calculateButton.onclick=()=>calculateAll();copyAllButton.onclick=()=>copyText(allText());
+initialLoad();setInterval(()=>Promise.all([loadSettings(true),loadDatabase(true)]).catch(console.error),CHECK_INTERVAL);
+</script>
+</body>
+</html>
