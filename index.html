@@ -966,6 +966,17 @@ button {
 .direct-order-button{width:100%;height:40px;margin-top:10px;background:#0f766e;color:#fff;font-size:13px;font-weight:800}
 .order-clerk{margin-top:5px;font-size:12px;color:#7a5b00;font-weight:700}
 
+.order-gia-box{margin-top:10px;padding:11px;background:#f8fafc;border:1px solid #dfe5eb;border-radius:10px}
+.order-gia-title{font-size:13px;font-weight:900;margin-bottom:7px}
+.order-gia-address{width:100%;min-height:72px;border:1px solid #d8dce2;border-radius:9px;padding:9px 10px;font-size:13px;line-height:1.5;font-family:inherit;resize:vertical;background:#fff}
+.order-gia-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.order-gia-button{height:36px;border-radius:9px;background:#eef1f4;color:#333;font-size:12px;font-weight:800}
+.order-gia-button.delivered{background:#16803b;color:#fff}
+.order-gia-button.pending{background:#fff1f1;color:#b42318}
+.order-gia-status{margin-top:7px;font-size:12px;font-weight:800}
+.order-gia-status.ok{color:#16803b}
+.order-gia-status.wait{color:#b42318}
+
 .graff-add-button{width:100%;height:42px;margin:0 0 10px;background:#111;color:#fff;font-weight:800;font-size:14px}
 
 .graff-add-button.secondary{background:#f0f2f5;color:#222;margin-top:0}
@@ -3900,11 +3911,62 @@ async function updateOrderStatus(orderId, status) {
     }
 }
 
+
+async function saveOrderGiaAddress(orderId, textarea, button) {
+    const address = textarea.value.trim();
+    button.disabled = true;
+    const oldText = button.textContent;
+    button.textContent = "保存中...";
+
+    try {
+        const { error } = await supabaseClient
+            .from(SUPABASE_ORDER_TABLE)
+            .update({
+                gia_address: address || null,
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", orderId);
+
+        if (error) throw error;
+
+        const row = orderDatabase.find(
+            value => String(value.id) === String(orderId)
+        );
+        if (row) row.gia_address = address || null;
+
+        showToast("GIA收货地址已保存");
+    } catch (error) {
+        alert("保存GIA收货地址失败：\n" + (error.message || String(error)));
+    } finally {
+        button.disabled = false;
+        button.textContent = oldText;
+    }
+}
+
+async function updateOrderGiaDelivered(orderId, delivered) {
+    try {
+        const { error } = await supabaseClient
+            .from(SUPABASE_ORDER_TABLE)
+            .update({
+                gia_delivered: !!delivered,
+                updated_at: new Date().toISOString()
+            })
+            .eq("id", orderId);
+
+        if (error) throw error;
+
+        showToast(delivered ? "已标记送达" : "已恢复为未送达");
+        await loadOrders(true);
+    } catch (error) {
+        alert("更新送达状态失败：\n" + (error.message || String(error)));
+    }
+}
+
 async function loadOrders(renderPage = false) {
     try {
         let query = supabaseClient
             .from(SUPABASE_ORDER_TABLE)
-            .select("id,customer_id,inventory_id,selected_by,selected_at,order_status,note,active,updated_at")
+            .select("id,customer_id,inventory_id,selected_by,selected_at,order_status,note,active,updated_at,gia_address,gia_delivered")
             .order("selected_at", { ascending: false });
 
         if (currentOrderFilter !== "all") {
@@ -4060,6 +4122,68 @@ async function loadOrders(renderPage = false) {
 
             const select = card.querySelector(".order-status-select");
             select.value = order.order_status || "待柜台下单";
+
+            if (order.order_status === "已完成") {
+                const giaBox = document.createElement("div");
+                giaBox.className = "order-gia-box";
+
+                giaBox.innerHTML =
+                    '<div class="order-gia-title">📍 GIA收货地址</div>' +
+                    '<textarea class="order-gia-address" placeholder="填写GIA实体收货地址、收件人、联系电话等">' +
+                        escapeHtml(order.gia_address || "") +
+                    '</textarea>' +
+                    '<div class="order-gia-actions">' +
+                        '<button class="order-gia-button gia-save-address">保存地址</button>' +
+                        '<button class="order-gia-button ' +
+                            (order.gia_delivered ? 'pending' : 'delivered') +
+                            ' gia-toggle-delivered">' +
+                            (order.gia_delivered ? '恢复未送达' : '✓ 标记已送达') +
+                        '</button>' +
+                    '</div>' +
+                    '<div class="order-gia-status ' +
+                        (order.gia_delivered ? 'ok' : 'wait') +
+                    '">' +
+                        (order.gia_delivered ? '✓ 当前状态：已送达' : '● 当前状态：未送达') +
+                    '</div>';
+
+                const addressInput =
+                    giaBox.querySelector(".order-gia-address");
+                const saveAddressButton =
+                    giaBox.querySelector(".gia-save-address");
+                const toggleDeliveredButton =
+                    giaBox.querySelector(".gia-toggle-delivered");
+
+                saveAddressButton.addEventListener("click", async () => {
+                    await saveOrderGiaAddress(
+                        order.id,
+                        addressInput,
+                        saveAddressButton
+                    );
+                });
+
+                toggleDeliveredButton.addEventListener("click", async () => {
+                    const nextDelivered = !Boolean(order.gia_delivered);
+
+                    if (nextDelivered && !addressInput.value.trim()) {
+                        alert("请先填写并保存GIA收货地址。");
+                        addressInput.focus();
+                        return;
+                    }
+
+                    if (!confirm(
+                        nextDelivered
+                            ? "确认这笔订单已经送达到GIA收货地址？"
+                            : "确认把这笔订单恢复为未送达？"
+                    )) return;
+
+                    await updateOrderGiaDelivered(
+                        order.id,
+                        nextDelivered
+                    );
+                });
+
+                card.appendChild(giaBox);
+            }
 
             select.addEventListener("change", async () => {
                 const newStatus = select.value;
