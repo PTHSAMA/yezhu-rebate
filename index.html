@@ -1085,6 +1085,13 @@ button {
 .points-toolbar button,.points-box button{border:0;border-radius:8px;background:#e4dafa;color:#372654;padding:9px;font-weight:700;cursor:pointer}
 .points-toolbar input,.points-box input{border:1px solid #d5cce1;border-radius:8px;padding:9px;min-width:0;max-width:100%;font-size:14px}
 .points-group{padding:9px;border:1px solid #d9d0f7;border-radius:9px;margin-top:8px;background:#fff;font-size:13px;line-height:1.6}
+.points-group-members{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}
+.points-group-members button{background:#f0eaff;border:1px solid #c6b5ff;color:#503092;border-radius:8px;padding:7px 10px;cursor:pointer;font-weight:700}
+.points-group-members button:hover{background:#ded0ff}
+.points-group-title{font-weight:800;color:#4b2c9a;font-size:14px}
+.points-group-tag{display:inline-flex;align-items:center;gap:5px;background:#5d36c9;color:white;border-radius:7px;padding:5px 9px;font-weight:800;font-size:13px}
+.points-grouped-card{border:2px solid #a78bfa!important;box-shadow:0 2px 12px rgba(102,65,185,.13)}
+.points-card-flash{outline:4px solid #ffb703!important;outline-offset:3px;transition:outline-color .4s}
 .points-box{margin-top:10px;border:1px solid #d9d0f7;border-radius:10px;padding:11px;background:#faf8ff;font-size:13px}
 .points-box label{display:flex;align-items:center;gap:7px;margin:7px 0}
 .points-box input[type=checkbox]{width:18px;height:18px}
@@ -3999,6 +4006,17 @@ let pointsGroups = [];
 let selectedPointsOrderIds = new Set();
 function pointNum(x){const n=Number(x);return Number.isFinite(n)?n:0;}
 function pointFmt(x){return Number(pointNum(x).toFixed(4)).toLocaleString("zh-CN",{maximumFractionDigits:4})+"万";}
+function pointGroupLabel(groupId){
+ const idx=pointsGroups.findIndex(g=>String(g.id)===String(groupId));
+ return idx>=0?"积分组 #"+(pointsGroups.length-idx):"积分组";
+}
+function jumpToPointsOrder(orderId){
+ const card=document.getElementById("points-order-"+String(orderId));
+ if(!card){alert("这笔订单不在当前列表中，请切换到已完成或全部订单后重试");return;}
+ card.scrollIntoView({behavior:"smooth",block:"center"});
+ card.classList.add("points-card-flash");
+ window.setTimeout(()=>card.classList.remove("points-card-flash"),2400);
+}
 function pointSelectUpdate(){
  const el=document.getElementById("pointsSelectedCount");
  if(el)el.textContent="已选"+selectedPointsOrderIds.size+"笔";
@@ -4020,7 +4038,18 @@ async function loadPointsSummary(){
  for(const g of pointsGroups){
   const members=allPointsOrders.filter(o=>String(o.points_group_id)===String(g.id));
   const box=document.createElement("div");box.className="points-group";
-  const label=document.createElement("div");label.textContent="积分组 · "+members.length+"笔订单 · 获得 "+pointFmt(g.points_earned);box.appendChild(label);
+  const label=document.createElement("div");label.className="points-group-title";
+  label.textContent="🔗 "+pointGroupLabel(g.id)+" · 合并 "+members.length+" 笔订单 · 共获得 "+pointFmt(g.points_earned);box.appendChild(label);
+  const memberLinks=document.createElement("div");memberLinks.className="points-group-members";
+  members.forEach((member,i)=>{
+   const link=document.createElement("button");link.type="button";
+   link.textContent="↗ 第"+(i+1)+"笔 · 订单 #"+member.id;
+   link.title="跳转到订单 #"+member.id+" 详情";
+   link.onclick=()=>jumpToPointsOrder(member.id);
+   memberLinks.appendChild(link);
+  });
+  if(!members.length){const empty=document.createElement("span");empty.textContent="暂无关联订单";memberLinks.appendChild(empty);}
+  box.appendChild(memberLinks);
   const actions=document.createElement("div");actions.className="points-toolbar";
   const edit=document.createElement("button");edit.textContent="修改积分";
   edit.onclick=async()=>{
@@ -4300,7 +4329,14 @@ async function loadOrders(renderPage = false) {
                 checkLabel.append(check,document.createTextNode("勾选加入积分组"));
                 card.insertBefore(checkLabel,card.firstChild);
                 const pointsBox=document.createElement("div");pointsBox.className="points-box";
-                const grp=document.createElement("div");grp.textContent=order.points_group_id?"所属积分组："+String(order.points_group_id).slice(0,8):"尚未加入积分组";
+                const grp=document.createElement("div");
+                if(order.points_group_id){
+                    card.classList.add("points-grouped-card");
+                    const group=pointsGroups.find(g=>String(g.id)===String(order.points_group_id));
+                    const tag=document.createElement("span");tag.className="points-group-tag";
+                    tag.textContent="🔗 "+pointGroupLabel(order.points_group_id)+" · 已合并 "+(group?allPointsOrders.filter(o=>String(o.points_group_id)===String(group.id)).length:0)+"笔 · 共获 "+(group?pointFmt(group.points_earned):"—");
+                    grp.appendChild(tag);
+                }else{grp.textContent="尚未加入积分组";}
                 pointsBox.appendChild(grp);
                 const useLabel=document.createElement("label");
                 const usedCheck=document.createElement("input");usedCheck.type="checkbox";usedCheck.checked=!!order.points_used;
@@ -4336,6 +4372,7 @@ async function loadOrders(renderPage = false) {
                 );
             });
 
+            card.id="points-order-"+String(order.id);
             ordersList.appendChild(card);
         });
     }
