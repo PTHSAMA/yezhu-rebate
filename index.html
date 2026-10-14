@@ -4126,7 +4126,15 @@ async function loadOrders(renderPage = false) {
         if (!renderPage) return;
         const pointsDashboard=document.getElementById("pointsDashboard");
         pointsDashboard.style.display=(currentOrderFilter==="已完成"||currentOrderFilter==="all")?"block":"none";
-        if(pointsDashboard.style.display!=="none")await loadPointsSummary();
+        if(pointsDashboard.style.display!=="none"){
+            try {
+                await loadPointsSummary();
+            } catch (pointsError) {
+                console.error("积分统计读取失败（不影响订单显示）：", pointsError);
+                const pointsList = document.getElementById("pointsGroupsList");
+                if(pointsList)pointsList.textContent="积分统计读取失败，请检查控制台错误和 Supabase 权限";
+            }
+        }
         selectedPointsOrderIds.clear();pointSelectUpdate();
 
         ordersDataStatus.textContent =
@@ -4383,8 +4391,12 @@ async function loadOrders(renderPage = false) {
             "订单读取失败";
 
         if (renderPage) {
-            ordersList.innerHTML =
-                '<div class="card empty">订单读取失败</div>';
+            const detail = (error && (error.message || error.details || error.hint || error.code)) || "未知错误";
+            ordersList.innerHTML = "";
+            const box = document.createElement("div");
+            box.className = "card empty";
+            box.textContent = "订单读取失败：" + detail;
+            ordersList.appendChild(box);
         }
     }
 }
