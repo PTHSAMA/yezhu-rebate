@@ -3926,25 +3926,33 @@ async function selectInventoryForOrder(row, button) {
     }
 }
 
-async function updateOrderStatus(orderId, status) {
+async function updateOrderStatus(orderId, status, select) {
+    const original = select ? select.dataset.savedStatus : null;
+    if (select) select.disabled = true;
     try {
         const payload = {
             order_status: status,
             active: status !== "已取消",
             updated_at: new Date().toISOString()
         };
-
-        const { error } = await supabaseClient
+        const { data, error } = await supabaseClient
             .from(SUPABASE_ORDER_TABLE)
             .update(payload)
-            .eq("id", orderId);
-
+            .eq("id", orderId)
+            .select("id,order_status");
         if (error) throw error;
-
-        showToast("订单状态已更新");
+        if (!Array.isArray(data) || data.length !== 1 || data[0].order_status !== status) {
+            throw new Error("数据库未确认保存成功，请检查订单更新权限或网络连接");
+        }
+        if (select) select.dataset.savedStatus = status;
+        showToast("订单状态已更新：" + status);
         await loadOrders(true);
     } catch (error) {
+        console.error("订单状态保存失败", error);
+        if (select && original) select.value = original;
         alert("更新订单失败：\n" + (error.message || String(error)));
+    } finally {
+        if (select && select.isConnected) select.disabled = false;
     }
 }
 
@@ -4358,26 +4366,17 @@ async function loadOrders(renderPage = false) {
                 pointsBox.appendChild(entry);card.appendChild(pointsBox);
             }
 
+            select.dataset.savedStatus = order.order_status || "待柜台下单";
             select.addEventListener("change", async () => {
                 const newStatus = select.value;
-
                 if (newStatus === "__RETURN__") {
-                    select.value = order.order_status || "待柜台下单";
+                    select.value = select.dataset.savedStatus;
                     await returnOrderToCustomer(order);
                     return;
                 }
-
-                if (!confirm(
-                    "确认把订单状态改为「" + newStatus + "」？"
-                )) {
-                    select.value = order.order_status || "待柜台下单";
-                    return;
-                }
-
-                await updateOrderStatus(
-                    order.id,
-                    newStatus
-                );
+                if (newStatus === select.dataset.savedStatus) return;
+                // Avoid window.confirm: some embedded/mobile browsers silently suppress it.
+                await updateOrderStatus(order.id, newStatus, select);
             });
 
             card.id="points-order-"+String(order.id);
