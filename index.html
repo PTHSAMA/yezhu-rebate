@@ -1787,6 +1787,7 @@ function invDetectSection(line){
     else if(/\bPARAGON\b/.test(u))collection="PARAGON";
     else if(/\bCONSTELLATION\b|\bCONSTE\b/.test(u))collection="CONSTELLATION";
     else if(/\bICON\b/.test(u))collection="ICON";
+    else if(/\bLEGACY\b/.test(u))collection="LEGACY";
 
     if(collection){
         if(/\bOVAL\b/.test(u))shape="OVAL";
@@ -1799,7 +1800,20 @@ function invDetectSection(line){
         return {collection,shape,variant};
     }
 
-    // 未带 NECKLACE / EARING 前缀的标题不自动识别为项链。
+    // 无类别前缀的任何系列标题均按戒指处理，系列名不使用固定白名单。
+    // 数据行（克拉、价格、戒围）及纯说明行不能误判为新标题。
+    const cleaned=u.replace(/\b(?:KR|KOREA|全库存|现货|库存|戒指|RING)\b/gi," ")
+        .replace(/KR全库存|韩国全库存|全库存|现货|库存|戒指/g," ")
+        .replace(/[._/]+/g," ").replace(/\s+/g," ").trim();
+    const tokens=cleaned.split(" ").filter(Boolean);
+    if(tokens.length && /[A-Z\u4e00-\u9fff]/.test(tokens[0]) &&
+       !/^\d/.test(tokens[0]) && !/\b\d+(?:\.\d+)?\s*(?:CT|#|W)\b/i.test(u) &&
+       !/^(KR|KOREA|全库存|库存|现货)$/.test(tokens[0])){
+        const shapes={OVAL:"OVAL",ROUND:"ROUND",PEAR:"PEAR",CUSHION:"CUSHION",EMERALD:"EMERALD",EMRALD:"EMERALD",RADIANT:"RADIANT",MARQUISE:"MARQUISE",PRINCESS:"PRINCESS",HEART:"HEART",ASSCHER:"ASSCHER",RD:"ROUND",枕形:"CUSHION",圆形:"ROUND",椭圆:"OVAL"};
+        collection=tokens[0];
+        shape=tokens.slice(1).map(x=>shapes[x]).find(Boolean)||null;
+        return {collection,shape,variant:null};
+    }
     return null;
 }
 
@@ -3328,7 +3342,7 @@ function normalizeSmartLine(line){
 
 function looksLikeRequirementStart(token){
     const t=String(token||"").toUpperCase();
-    return /^(GRAFF|ICON|PROMISE|PARAGON|CONSTELLATION|CONSTE|EARRING|EARRINGS|EARING|耳环|耳钉|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|NECKLACE|NECKLESS|项链|戒指)/.test(t);
+    return /^(GRAFF|ICON|LEGACY|PROMISE|PARAGON|CONSTELLATION|CONSTE|EARRING|EARRINGS|EARING|耳环|耳钉|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|NECKLACE|NECKLESS|项链|戒指)/.test(t);
 }
 
 function parseSmartCustomerLine(line){
@@ -4943,7 +4957,13 @@ function parseCustomerRequirementTextForWeb(rawText){
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
     else if(/\bCONSTELLATION\b|\bCONSTE\b/.test(text)) collection="CONSTELLATION";
     else if(/\bICON\b/.test(text)) collection="ICON";
+    else if(/\bLEGACY\b/.test(text)) collection="LEGACY";
     else if(/\bPROMIS(?:E)?\b/.test(text)) collection="PROMISE";
+    // 没有 NECKLACE/EARING 前缀时，第一项系列名称默认视为戒指。
+    if(!collection){
+        const first=text.match(/^([A-Z][A-Z0-9-]*)\b/);
+        if(first && !/^(?:GRAFF|RING|CT|KR|KOREA|ROUND|OVAL|PEAR|CUSHION|EMERALD|RADIANT|MARQUISE|PRINCESS|HEART|ASSCHER)$/.test(first[1])) collection=first[1];
+    }
 
     const shapeRules=[
         ["EMERALD", /\bEMRALD\b|\bEMERALD\b|祖母绿/],
