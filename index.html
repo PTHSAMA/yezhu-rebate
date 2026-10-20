@@ -1792,6 +1792,7 @@ function invDetectSection(line){
         if(/\bOVAL\b/.test(u))shape="OVAL";
         else if(/\bROUND\b/.test(u))shape="ROUND";
         else if(/\bPEAR\b/.test(u))shape="PEAR";
+        else if(/\bCUSHION\b|枕形/.test(u))shape="CUSHION";
         else if(/\bEM(?:E|A)?RALD\b|\bEMERALD\b/.test(u))shape="EMERALD";
         if(/\.P\b/.test(u))variant="P";
         else if(/\.T\b/.test(u))variant="T";
