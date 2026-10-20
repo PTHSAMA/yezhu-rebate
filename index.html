@@ -1762,7 +1762,7 @@ function invDetectSection(line){
     // 项链使用三层结构：collection=NECKLACE，variant=类型，shape=形状。
     // 例如 ICON PEAR 项链 => NECKLACE / ICON / PEAR。
     // 类型、形状不做固定枚举：显式写“项链/NECKLACE”时，剩余词自动作为类型/形状保存。
-    const isEarring=/^(?:EARING|EARRING|EARRINGS|耳环|耳钉|耳饰)(?:\s|[._/]|$)/.test(u);
+    const isEarring=/^(?:EARING|EARRING|EARRINGS|耳环|耳钉|耳饰)(?:\s|[._/]|$)/.test(u) || /(?:^|\s)(?:耳钉|耳环|耳饰)\s*$/.test(u);
     if(isEarring){
         collection="EARRING";
         const tokens=u.replace(/耳环|耳钉|耳饰|\bEARRINGS?\b|\bEARING\b/g," ").replace(/[._/]+/g," ").trim().split(/\s+/).filter(Boolean);
@@ -1837,23 +1837,62 @@ function invParseRow(line,section){
     return {collection:section.collection,shape:section.shape,variant:variant||null,carat:Number(caratM[1]),color:colorM?colorM[1].toUpperCase():null,clarity:clarityM?(clarityM[1].toUpperCase()==="FI"?"IF":clarityM[1].toUpperCase()):null,size:sizeM?Number(sizeM[1]):null,price_w:Number(Number(price).toFixed(4)),in_stock:true,raw_text:line.trim(),active:true};
 }
 
+// 耳钉整对识别：第一颗 + 第二颗 + 整对售价，存为一条库存。
+// 第二颗参数写入 raw_text，兼容当前 graff_inventory 表，无需迁移数据库。
+function invEarringStone(line){
+    const m=String(line||"").trim().match(/^(\d+(?:\.\d+)?)\s*(?:ct|克拉)?\s+([D-H])\s+(IF|FI|VVS1|VVS2|VS1|VS2)\s*$/i);
+    return m?{carat:Number(m[1]),color:m[2].toUpperCase(),clarity:m[3].toUpperCase()==="FI"?"IF":m[3].toUpperCase()}:null;
+}
+function invEarringPair(inv){
+    if(String(inv.collection||"").toUpperCase()!=="EARRING")return null;
+    const m=String(inv.raw_text||"").match(/\[PAIR\]\s*([^|]+)\|\s*([^|]+)\|/i);
+    if(!m)return null;
+    const first=invEarringStone(m[1]),second=invEarringStone(m[2]);
+    return first&&second?[first,second]:null;
+}
+function invEarringPairLabel(inv){
+    const pair=invEarringPair(inv);
+    return pair?pair.map(x=>x.carat.toFixed(2)+"ct "+x.color+" "+x.clarity).join(" + "):"";
+}
+
 async function parseInventoryAdminText(text){
     const lines=String(text||"").replace(/\r/g,"").split("\n");
     let section=null;const rows=[];
-    for(const raw of lines){const line=raw.trim();if(!line)continue;
+    for(let i=0;i<lines.length;i++){
+        const line=lines[i].trim();if(!line)continue;
         const detected=invDetectSection(line);
         const looksData=/\b\d+(?:\.\d+)?\s*(?:ct)?\b/i.test(line) && (/[wW₩]/.test(line)||/[\d,]{7,}\s*$/.test(line)||/\/\s*[\d,.]+\s*$/.test(line));
         if(detected && !looksData){section=detected;continue;}
-        // 单行完整库存，例如：ICON OVAL 1.5ct D VS1 50# 6142W
-        // 这一行既包含系列/形状，也包含具体参数时，直接用本行识别出的 section 解析。
-        // 同时把它保存为当前 section，后续若继续粘贴同系列的数据行也可以继承。
         if(detected && looksData){
             section=detected;
             const row=invParseRow(line,detected);
             if(row){row.source_key=await invSourceKey(row);rows.push(row);}
             continue;
         }
-        const row=invParseRow(line,section);if(row){row.source_key=await invSourceKey(row);rows.push(row);}
+        // 支持「Paragon round 耳钉」+ 两颗钻石 + 整对价格的四行格式。
+        if(section && section.collection==="EARRING"){
+            const first=invEarringStone(line);
+            if(first){
+                let j=i+1;while(j<lines.length&&!lines[j].trim())j++;
+                const second=j<lines.length?invEarringStone(lines[j]):null;
+                let k=j+1;while(k<lines.length&&!lines[k].trim())k++;
+                const priceLine=k<lines.length?lines[k].trim():"";
+                const price=/^(?:₩\s*)?[\d,.]+\s*[wW]\s*$/.test(priceLine)?invParsePrice(priceLine):null;
+                if(second && price!=null){
+                    const row={collection:"EARRING",shape:section.shape,variant:section.variant||null,
+                        carat:first.carat,color:first.color,clarity:first.clarity,size:null,
+                        price_w:Number(Number(price).toFixed(4)),in_stock:true,
+                        raw_text:"[PAIR] "+line+" | "+lines[j].trim()+" | "+priceLine,
+                        active:true};
+                    // 两颗主石都参与唯一键，避免把不同配对误判成同一库存。
+                    row.source_key=await invSha1(["PAIR",row.collection,row.variant,row.shape,
+                        line.toUpperCase(),lines[j].trim().toUpperCase(),row.price_w].join("|"));
+                    rows.push(row);i=k;continue;
+                }
+            }
+        }
+        const row=invParseRow(line,section);
+        if(row){row.source_key=await invSourceKey(row);rows.push(row);}
     }
     const map=new Map();for(const row of rows)if(!map.has(row.source_key))map.set(row.source_key,row);
     return Array.from(map.values());
@@ -1864,7 +1903,7 @@ function invName(row){
     if(c==="NECKLACE" || c==="EARRING") return [c,v,sh].filter(Boolean).join(" · ");
     return [c,sh,v?"."+v:""].join(" ").replace(" .",".").trim();
 }
-function invLine(row){return [invName(row),Number(row.carat).toFixed(2)+"ct",row.color||"",row.clarity||"",row.size!=null?Number(row.size)+"#":"",row.price_w!=null?Number(row.price_w)+"W":""].filter(Boolean).join(" · ");}
+function invLine(row){return [invName(row),invEarringPairLabel(row)||Number(row.carat).toFixed(2)+"ct"+(row.color?" "+row.color:"")+(row.clarity?" "+row.clarity:""),row.size!=null?Number(row.size)+"#":"",row.price_w!=null?Number(row.price_w)+"W":""].filter(Boolean).join(" · ");}
 function renderInventoryAdminPreview(){
     if(!inventoryAdminParsed.length){inventoryAdminPreview.innerHTML='<div class="inventory-admin-warning">没有识别到可上传的具体库存。缺少形状或价格的说明行不会入库。</div>';return;}
     inventoryAdminPreview.innerHTML='<strong>识别到 '+inventoryAdminParsed.length+' 条库存</strong>'+inventoryAdminParsed.map((r,i)=>'<div class="inventory-admin-row"><strong>'+(i+1)+'. '+escapeHtml(invLine(r))+'</strong><div class="inventory-admin-meta">'+escapeHtml(r.raw_text||"")+'</div></div>').join("");
@@ -5214,9 +5253,18 @@ function webInventoryMatch(requirement, inv){
         return null;
     }
 
+    const pair=invEarringPair(inv);
+    if(pair){
+        // 两颗均满足客户要求；单颗允许 0.05ct 的轻微重量差。
+        for(const stone of pair){
+            if(requirement.caratLow!=null && (stone.carat<requirement.caratLow-0.05-1e-9 || stone.carat>requirement.caratHigh+0.05+1e-9))return null;
+            if(requirement.wantedColors.length && !requirement.wantedColors.includes(stone.color))return null;
+            if(requirement.wantedClarities.length && !requirement.wantedClarities.includes(stone.clarity))return null;
+        }
+    }
     const carat=Number(inv.carat);
 
-    if(
+    if(!pair &&
         requirement.caratLow!=null &&
         (
             !Number.isFinite(carat) ||
@@ -5248,7 +5296,7 @@ function webInventoryMatch(requirement, inv){
     }
 
     if(
-        requirement.wantedColors.length &&
+        !pair && requirement.wantedColors.length &&
         inv.color &&
         !requirement.wantedColors.includes(
             normalizeMatchText(inv.color)
@@ -5258,7 +5306,7 @@ function webInventoryMatch(requirement, inv){
     }
 
     if(
-        requirement.wantedClarities.length &&
+        !pair && requirement.wantedClarities.length &&
         inv.clarity &&
         !requirement.wantedClarities.includes(
             normalizeMatchText(inv.clarity)
@@ -5396,7 +5444,7 @@ function quickRequirementFromText(text){const req=parseCustomerRequirementTextFo
 function renderQuickInventoryRows(rows){
  quickInventoryRows=rows||[];if(!quickInventorySearchResult)return;
  if(!quickInventoryRows.length){quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">没有找到符合当前条件的有效库存。</div>';return;}
- quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">找到 '+quickInventoryRows.length+' 条有效库存</div>'+quickInventoryRows.map((row,index)=>{const inv=row.inventory||{};const parts=[inventoryDisplayName(inv),inv.carat!=null?Number(inv.carat).toFixed(2)+'ct':'',inv.color||'',inv.clarity||'',inv.size!=null?Number(inv.size)+'#':'',inv.price_w!=null?Number(inv.price_w)+'W':''].filter(Boolean);return '<div class="quick-inventory-item"><div class="quick-inventory-main">'+escapeHtml(parts.join(' · '))+'</div>'+(row.reason?'<div class="quick-inventory-reason">'+escapeHtml(row.reason)+'</div>':'')+'<div class="quick-inventory-actions"><button type="button" data-quick-copy="'+index+'">复制此条报价</button></div></div>';}).join('')+'<div class="quick-inventory-actions"><button type="button" id="quickInventoryCopyAll">复制全部结果</button></div>';
+ quickInventorySearchResult.innerHTML='<div class="quick-inventory-summary">找到 '+quickInventoryRows.length+' 条有效库存</div>'+quickInventoryRows.map((row,index)=>{const inv=row.inventory||{};const parts=[inventoryDisplayName(inv),invEarringPairLabel(inv)||(inv.carat!=null?Number(inv.carat).toFixed(2)+'ct':''),invEarringPair(inv)?'':(inv.color||''),invEarringPair(inv)?'':(inv.clarity||''),inv.size!=null?Number(inv.size)+'#':'',inv.price_w!=null?Number(inv.price_w)+'W':''].filter(Boolean);return '<div class="quick-inventory-item"><div class="quick-inventory-main">'+escapeHtml(parts.join(' · '))+'</div>'+(row.reason?'<div class="quick-inventory-reason">'+escapeHtml(row.reason)+'</div>':'')+'<div class="quick-inventory-actions"><button type="button" data-quick-copy="'+index+'">复制此条报价</button></div></div>';}).join('')+'<div class="quick-inventory-actions"><button type="button" id="quickInventoryCopyAll">复制全部结果</button></div>';
  quickInventorySearchResult.querySelectorAll('[data-quick-copy]').forEach(btn=>btn.addEventListener('click',()=>{const row=quickInventoryRows[Number(btn.dataset.quickCopy)];if(row&&row.inventory)copyText(inventoryQuoteLine(row.inventory));}));
  const copyAll=document.getElementById('quickInventoryCopyAll');if(copyAll)copyAll.addEventListener('click',()=>copyText(quickInventoryRows.map(row=>inventoryQuoteLine(row.inventory||{})).join('\n')));
 }
