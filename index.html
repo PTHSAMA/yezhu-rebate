@@ -1812,7 +1812,13 @@ function invDetectSection(line){
         const shapes={OVAL:"OVAL",ROUND:"ROUND",PEAR:"PEAR",CUSHION:"CUSHION",EMERALD:"EMERALD",EMRALD:"EMERALD",RADIANT:"RADIANT",MARQUISE:"MARQUISE",PRINCESS:"PRINCESS",HEART:"HEART",ASSCHER:"ASSCHER",RD:"ROUND",枕形:"CUSHION",圆形:"ROUND",椭圆:"OVAL"};
         collection=tokens[0];
         shape=tokens.slice(1).map(x=>shapes[x]).find(Boolean)||null;
-        return {collection,shape,variant:null};
+        // FOUFOU EMERALD 同时有竖版/横版，沿用库存 variant 字段保存方向。
+        // 后续每一条库存行继承标题方向，两个版本不会被去重合并。
+        if(collection==="FOUFOU" && shape==="EMERALD"){
+            variant=/(?:竖版|竖款|竖|VERTICAL)/.test(u)?"竖版":
+                /(?:横版|横款|横|HORIZONTAL)/.test(u)?"横版":null;
+        }
+        return {collection,shape,variant};
     }
     return null;
 }
@@ -1916,6 +1922,8 @@ async function parseInventoryAdminText(text){
 function invName(row){
     const c=String(row.collection||"").toUpperCase(), sh=String(row.shape||"").toUpperCase(), v=String(row.variant||"").toUpperCase();
     if(c==="NECKLACE" || c==="EARRING") return [c,v,sh].filter(Boolean).join(" · ");
+    if(c==="FOUFOU" && sh==="EMERALD" && (v==="竖版" || v==="横版"))
+        return [c,sh,v].join(" · ");
     return [c,sh,v?"."+v:""].join(" ").replace(" .",".").trim();
 }
 function invLine(row){return [invName(row),invEarringPairLabel(row)||Number(row.carat).toFixed(2)+"ct"+(row.color?" "+row.color:"")+(row.clarity?" "+row.clarity:""),row.size!=null?Number(row.size)+"#":"",row.price_w!=null?Number(row.price_w)+"W":""].filter(Boolean).join(" · ");}
@@ -3236,6 +3244,8 @@ function inventoryDisplayName(item) {
         return [collection,variant,shape].filter(Boolean).join(" · ");
     }
 
+    if(collection==="FOUFOU" && shape==="EMERALD" && (variant==="竖版" || variant==="横版"))
+        return [collection,shape,variant].join(" · ");
     const parts=[];
     if(collection) parts.push(collection);
     if(shape){
@@ -4988,6 +4998,10 @@ function parseCustomerRequirementTextForWeb(rawText){
     if(collection!=="NECKLACE" && collection!=="EARRING"){
         const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
         if(variantMatch) variant=variantMatch[1];
+        if(collection==="FOUFOU" && /EMERALD/.test(text)){
+            if(/竖版|竖款|竖|VERTICAL/.test(text))variant="竖版";
+            else if(/横版|横款|横|HORIZONTAL/.test(text))variant="横版";
+        }
     }
 
     let caratLow=null,caratHigh=null,caratTarget=null;
