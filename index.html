@@ -1463,7 +1463,7 @@ PARAGON OVAL
 <button class="graff-add-button secondary" id="smartPasteCustomerButton">⚡ 粘贴识别新增</button>
         <div class="quick-inventory-search" id="quickInventorySearchBox">
             <div class="quick-inventory-search-title">🔍 快速查库存（非微信客户）</div>
-            <div class="quick-inventory-search-hint">直接输入需求，不会创建客户。未填写的条件不限制，例如：ICON OVAL 0.7ct F VS1 / NECKLACE ICON PEAR 0.7ct F VVS2 / 1ct G VVS2。</div>
+            <div class="quick-inventory-search-hint">直接输入需求，不会创建客户。未填写的条件不限制，例如：ICON OVAL 0.7ct F VS1（戒指）/ NECKLACE ICON PEAR（项链）/ EARING PARAGON（耳环）。</div>
             <div class="quick-inventory-search-row">
                 <input id="quickInventorySearchInput" type="text" placeholder="输入系列 / 类型 / 形状 / 克拉 / 颜色 / 净度 / 尺寸 / 预算..." autocomplete="off">
                 <button class="primary" id="quickInventorySearchButton" type="button">查库存</button>
@@ -1604,6 +1604,12 @@ PARAGON OVAL
         <button class="order-filter-button" data-order-filter="已完成">已完成</button>
         <button class="order-filter-button" data-order-filter="all">全部</button>
     </div>
+
+    <div class="order-search-bar" style="margin:12px 0 14px;display:flex;gap:8px;align-items:center;">
+        <input id="orderSearchInput" type="search" placeholder="搜索客户名称 / 收件人姓名 / 金额（万）" autocomplete="off" style="flex:1;min-width:0;padding:12px 14px;border:1px solid #d5d8e0;border-radius:12px;font-size:15px;background:white;">
+        <button type="button" id="orderSearchClear" style="padding:12px;border:0;border-radius:10px;background:#e9ebef;font-weight:600;cursor:pointer;">清空</button>
+    </div>
+    <div id="orderSearchCount" style="display:none;font-size:12px;color:#777;margin:-7px 0 10px;"></div>
 
     <div id="pointsDashboard" class="points-dashboard" style="display:none;">
   <strong>💰 GRAFF 积分统计</strong>
@@ -1751,11 +1757,19 @@ function invDetectSection(line){
     const original=String(line||"").trim();
     const u=original.toUpperCase().replace(/\bOVER\b/g,"OVAL");
     let collection=null,shape=null,variant=null;
-    const isNecklace=/项链|\bNECKLACE\b|\bNECKLESS\b/.test(u);
+    const isNecklace=/^(?:NECKLACE|NECKLESS|项链)(?:\s|[._/]|$)/.test(u);
 
     // 项链使用三层结构：collection=NECKLACE，variant=类型，shape=形状。
     // 例如 ICON PEAR 项链 => NECKLACE / ICON / PEAR。
     // 类型、形状不做固定枚举：显式写“项链/NECKLACE”时，剩余词自动作为类型/形状保存。
+    const isEarring=/^(?:EARING|EARRING|EARRINGS|耳环|耳钉|耳饰)(?:\s|[._/]|$)/.test(u);
+    if(isEarring){
+        collection="EARRING";
+        const tokens=u.replace(/耳环|耳钉|耳饰|\bEARRINGS?\b|\bEARING\b/g," ").replace(/[._/]+/g," ").trim().split(/\s+/).filter(Boolean);
+        variant=tokens[0]||null;
+        shape=tokens.slice(1).join(" ")||null;
+        return {collection,shape,variant};
+    }
     if(isNecklace){
         collection="NECKLACE";
         let cleaned=u
@@ -1771,6 +1785,7 @@ function invDetectSection(line){
     if(/蝴蝶|\bBUTTERFLY\b/.test(u))collection="BUTTERFLY";
     else if(/\bPROMIS(?:E)?\b/.test(u))collection="PROMISE";
     else if(/\bPARAGON\b/.test(u))collection="PARAGON";
+    else if(/\bCONSTELLATION\b|\bCONSTE\b/.test(u))collection="CONSTELLATION";
     else if(/\bICON\b/.test(u))collection="ICON";
 
     if(collection){
@@ -1783,14 +1798,7 @@ function invDetectSection(line){
         return {collection,shape,variant};
     }
 
-    // 柜台项链标题有时不写“项链”，例如 CONSTE EM。
-    // 对“两个及以上纯标题词、且不是具体库存数据”的未知 section，按项链 类型+形状 保存。
-    if(!/\d/.test(u)){
-        const tokens=u.replace(/[._/]+/g," ").replace(/\s+/g," ").trim().split(" ").filter(Boolean);
-        if(tokens.length>=2){
-            return {collection:"NECKLACE",variant:tokens[0],shape:tokens.slice(1).join(" ")};
-        }
-    }
+    // 未带 NECKLACE / EARING 前缀的标题不自动识别为项链。
     return null;
 }
 
@@ -1853,7 +1861,7 @@ async function parseInventoryAdminText(text){
 
 function invName(row){
     const c=String(row.collection||"").toUpperCase(), sh=String(row.shape||"").toUpperCase(), v=String(row.variant||"").toUpperCase();
-    if(c==="NECKLACE") return ["NECKLACE",v,sh].filter(Boolean).join(" · ");
+    if(c==="NECKLACE" || c==="EARRING") return [c,v,sh].filter(Boolean).join(" · ");
     return [c,sh,v?"."+v:""].join(" ").replace(" .",".").trim();
 }
 function invLine(row){return [invName(row),Number(row.carat).toFixed(2)+"ct",row.color||"",row.clarity||"",row.size!=null?Number(row.size)+"#":"",row.price_w!=null?Number(row.price_w)+"W":""].filter(Boolean).join(" · ");}
@@ -3170,8 +3178,8 @@ function inventoryDisplayName(item) {
     const variant=String(item.variant||"").toUpperCase();
 
     // 项链显示：NECKLACE · 类型 · 形状
-    if(collection==="NECKLACE"){
-        return ["NECKLACE",variant,shape].filter(Boolean).join(" · ");
+    if(collection==="NECKLACE" || collection==="EARRING"){
+        return [collection,variant,shape].filter(Boolean).join(" · ");
     }
 
     const parts=[];
@@ -3280,7 +3288,7 @@ function normalizeSmartLine(line){
 
 function looksLikeRequirementStart(token){
     const t=String(token||"").toUpperCase();
-    return /^(GRAFF|ICON|PROMISE|PARAGON|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|NECKLACE|NECKLESS|项链|戒指)/.test(t);
+    return /^(GRAFF|ICON|PROMISE|PARAGON|CONSTELLATION|CONSTE|EARRING|EARRINGS|EARING|耳环|耳钉|ROUND|OVAL|PEAR|EMERALD|EMRALD|RD|NECKLACE|NECKLESS|项链|戒指)/.test(t);
 }
 
 function parseSmartCustomerLine(line){
@@ -4191,6 +4199,9 @@ async function loadOrders(renderPage = false) {
         );
 
         ordersList.innerHTML = "";
+        const orderSearchTerm = (document.getElementById("orderSearchInput")?.value || "").trim().toLowerCase();
+        const searchTokens = orderSearchTerm.split(/\s+/).filter(Boolean);
+        let visibleOrderCount = 0;
 
         orderDatabase.forEach(order => {
             const customer =
@@ -4222,7 +4233,21 @@ async function loadOrders(renderPage = false) {
                 clerkFromOrderNote(order.note) ||
                 parseClerkFromCustomerText(customer);
 
+            // 收件人姓名在现有 GIA 地址文本中，兼容任意格式的姓名和地址。
+            // 金额使用库存的 price_w（万韩元）；也允许搜索 490、490W、490万。
+            const priceText = inventory && inventory.price_w != null
+                ? String(inventory.price_w) : "";
+            const orderSearchText = [
+                customer.customer, customer.owner, customer.details,
+                order.gia_address, order.note, inventoryText,
+                priceText, priceText ? priceText + "w" : "",
+                priceText ? priceText + "万" : ""
+            ].filter(Boolean).join(" ").toLowerCase();
+            const searchMatched = searchTokens.every(token => orderSearchText.includes(token));
+            if (searchMatched) visibleOrderCount++;
+
             const card = document.createElement("div");
+            if (!searchMatched) card.style.display = "none";
             card.className = "order-card";
 
             card.innerHTML =
@@ -4382,6 +4407,17 @@ async function loadOrders(renderPage = false) {
             card.id="points-order-"+String(order.id);
             ordersList.appendChild(card);
         });
+        const searchCount = document.getElementById("orderSearchCount");
+        if (searchCount) {
+            searchCount.style.display = orderSearchTerm ? "block" : "none";
+            searchCount.textContent = "搜索结果：" + visibleOrderCount + " / " + orderDatabase.length + " 笔订单";
+        }
+        if (orderSearchTerm && visibleOrderCount === 0) {
+            const empty = document.createElement("div");
+            empty.className = "card empty";
+            empty.textContent = "没有找到匹配的订单，请尝试客户名称、GIA收件人姓名或金额";
+            ordersList.appendChild(empty);
+        }
     }
     catch (error) {
         console.error("订单读取失败：", error);
@@ -4838,9 +4874,18 @@ function parseCustomerRequirementTextForWeb(rawText){
     let collection="";
     let necklaceType="";
     let necklaceShape="";
-    const explicitNecklace=/项链|\bNECKLACE\b|\bNECKLESS\b/.test(text);
+    const explicitNecklace=/^(?:NECKLACE|NECKLESS|项链)(?:\s|[._/]|$)/.test(text);
 
-    if(explicitNecklace){
+    const explicitEarring=/^(?:EARING|EARRING|EARRINGS|耳环|耳钉|耳饰)(?:\s|[._/]|$)/.test(text);
+    if(explicitEarring){
+        collection="EARRING";
+        const toks=text.replace(/耳环|耳钉|耳饰|\bEARRINGS?\b|\bEARING\b/g," ")
+            .replace(/\b\d+(?:\.\d+)?\s*(?:CT|克拉)?\b/g," ")
+            .replace(/\b(?:FL|IF|FI|VVS1|VVS2|VS1|VS2|SI1|SI2|[DEFGHIJ])\s*\+?\b/g," ")
+            .replace(/[._/]+/g," ").trim().split(/\s+/).filter(Boolean);
+        necklaceType=toks[0]||"";
+        necklaceShape=toks[1]||"";
+    }else if(explicitNecklace){
         collection="NECKLACE";
         let header=text
             .replace(/项链|\bNECKLACE\b|\bNECKLESS\b/g," ")
@@ -4853,6 +4898,7 @@ function parseCustomerRequirementTextForWeb(rawText){
         if(toks.length>=2) necklaceShape=toks[1];
     }else if(/蝴蝶|\bBUTTERFLY\b/.test(text)) collection="BUTTERFLY";
     else if(/\bPARAGON\b/.test(text)) collection="PARAGON";
+    else if(/\bCONSTELLATION\b|\bCONSTE\b/.test(text)) collection="CONSTELLATION";
     else if(/\bICON\b/.test(text)) collection="ICON";
     else if(/\bPROMIS(?:E)?\b/.test(text)) collection="PROMISE";
 
@@ -4869,14 +4915,14 @@ function parseCustomerRequirementTextForWeb(rawText){
         ["ASSCHER", /\bASSCHER\b/]
     ];
     const shapes=[];
-    if(collection==="NECKLACE"){
+    if(collection==="NECKLACE" || collection==="EARRING"){
         if(necklaceShape) shapes.push(necklaceShape);
     }else{
         shapeRules.forEach(([name,pattern])=>{if(pattern.test(text)&&!shapes.includes(name))shapes.push(name);});
     }
 
     let variant=necklaceType;
-    if(collection!=="NECKLACE"){
+    if(collection!=="NECKLACE" && collection!=="EARRING"){
         const variantMatch=text.match(/(?:^|[\s/.])([PT])(?:$|[\s/])/);
         if(variantMatch) variant=variantMatch[1];
     }
@@ -7368,6 +7414,23 @@ openOrdersButton.addEventListener(
     "click",
     showOrdersPage
 );
+
+// 输入时即时筛选现有订单卡片，不需要重新请求数据库。
+const orderSearchInput = document.getElementById("orderSearchInput");
+const orderSearchClear = document.getElementById("orderSearchClear");
+if (orderSearchInput) {
+    orderSearchInput.addEventListener("input", () => {
+        // 重新加载以匹配客户姓名、GIA收件人、库存价格等完整字段。
+        loadOrders(true);
+    });
+}
+if (orderSearchClear) {
+    orderSearchClear.addEventListener("click", () => {
+        orderSearchInput.value = "";
+        loadOrders(true);
+        orderSearchInput.focus();
+    });
+}
 
 document.querySelectorAll(".order-filter-button").forEach(button=>{
     button.addEventListener("click",()=>{
