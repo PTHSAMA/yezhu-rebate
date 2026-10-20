@@ -4125,7 +4125,10 @@ async function loadOrders(renderPage = false) {
 
         if (orderError) throw orderError;
 
-        orderDatabase = Array.isArray(orderRows) ? orderRows : [];
+        // 已打回客户意向的订单不再属于订单管理列表；保留数据库记录供追溯。
+        orderDatabase = Array.isArray(orderRows)
+            ? orderRows.filter(row => row.order_status !== "已打回客户意向")
+            : [];
 
         const { data: pendingRows, error: pendingError } = await supabaseClient
             .from(SUPABASE_ORDER_TABLE)
