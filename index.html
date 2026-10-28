@@ -1242,7 +1242,11 @@ PARAGON OVAL
   <div class="form-group" id="rcFxBox" style="display:none"><label class="form-label" for="rcRate">USD → RMB 汇率（1美元兑换多少人民币）</label>
    <label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="rcCustomRate" style="width:auto"> 使用特殊汇率（手动输入）</label>
    <input id="rcRate" type="number" min="0" step="any" inputmode="decimal" placeholder="等待当天汇率"><div class="form-note" id="rcRateHint">优先使用 settings.json 中的 usd_rmb_rate（兼容 exchange_rate）</div></div>
-  <div id="rcResult" style="border:1px solid #dbeafe;border-radius:12px;background:#f5f9ff;padding:16px;margin-top:16px" aria-live="polite">输入实际付款金额和返点比例即可计算</div>
+     <div style="display:flex;gap:8px;margin:12px 0"><button class="primary-button" id="rcAdd" style="margin:0">＋ 添加当前品牌到清单</button><button class="back-button" id="rcReset" style="margin:0">清空清单</button></div>
+   <div class="form-note">可反复选择不同品牌、店铺、付款币种和返点比例，逐笔添加；下方实时显示每笔公式和合计。</div>
+   <div id="rcItems" style="margin:12px 0"></div>
+   <div id="rcTotal" style="font-size:20px;font-weight:900;margin:12px 0">清单合计：¥ 0.00</div>
+<div id="rcResult" style="border:1px solid #dbeafe;border-radius:12px;background:#f5f9ff;padding:16px;margin-top:16px" aria-live="polite">输入实际付款金额和返点比例即可计算</div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="primary-button" id="rcCopy">复制计算结果</button><button class="back-button" id="rcSave" style="margin:0">保存本机计算记录</button></div>
   <div class="form-note" id="rcMessage"></div>
  </div>
@@ -7506,63 +7510,39 @@ openRebateButton.addEventListener(
     showRebatePage
 );
 
-/* 实付返点计算器：独立于原有报价/折扣计算 */
+/* 实付返点计算器：多品牌清单，独立于其他业务 */
 (function(){
  const el=id=>document.getElementById(id);
- const store=el('rcStore'), brand=el('rcBrand'), amount=el('rcAmount'), currency=el('rcCurrency'), points=el('rcPoints'), rate=el('rcRate'), custom=el('rcCustomRate');
- let lastResult=null, manualPoints=false;
- const storeAliases={
-  '乐天明洞':['乐天明洞','明洞乐天','明洞乐天免税'],
-  '乐天蚕室':['乐天蚕室','蚕室乐天'],
-  '新世界':['新世界','明洞新世界'],
-  '新罗':['新罗'],
-  '现代':['现代','三成现代','现代免税'],
-  '爱宝客':['爱宝客','龙山爱宝客','ipark'],
-  '济州':['济州','jeju'],
-  '釜山':['釜山','busan']
- };
+ const store=el('rcStore'),brand=el('rcBrand'),amount=el('rcAmount'),currency=el('rcCurrency'),points=el('rcPoints'),rate=el('rcRate'),custom=el('rcCustomRate');
+ const aliases={'乐天明洞':['乐天明洞','明洞乐天'],'乐天蚕室':['乐天蚕室','蚕室乐天'],'新世界':['新世界','明洞新世界'],'新罗':['新罗'],'现代':['现代','三成现代'],'爱宝客':['爱宝客','ipark'],'济州':['济州','jeju'],'釜山':['釜山','busan']};
  const norm=s=>String(s||'').toLowerCase().replace(/[\s_\-()（）]/g,'');
- const num=v=>{const n=Number(v);return Number.isFinite(n)?n:NaN};
- const money=n=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
- function currentRate(){const v=settings&&(settings.usd_rmb_rate ?? settings.exchange_rate);const n=num(v);return n>0?n:null;}
- function syncRate(){if(!custom.checked){const n=currentRate();rate.value=n===null?'':String(n);}el('rcRateHint').textContent=custom.checked?'特殊汇率：仅用于本次计算':(currentRate()===null?'尚未读取到当天美元汇率，请先发布 settings.json 或勾选特殊汇率':'使用当前已发布的 USD → RMB 汇率：'+currentRate());}
+ const fmt=n=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+ const number=v=>v===''?NaN:Number(v);
+ let manualPoints=false,preview=null,items=[];
+ function currentRate(){const v=settings&&(settings.usd_rmb_rate??settings.exchange_rate);const n=number(v);return Number.isFinite(n)&&n>0?n:null;}
+ function syncRate(){if(!custom.checked)rate.value=currentRate()??'';el('rcRateHint').textContent=custom.checked?'当前使用手动特殊汇率':'当前已发布 USD→RMB 汇率：'+(currentRate()??'未发布');}
  function findBrand(){const q=norm(brand.value);if(!q)return null;const rows=Array.isArray(database)?database:[];return rows.find(b=>norm(b.english)===q||norm(b.chinese)===q)||rows.find(b=>norm(b.english).includes(q)||norm(b.chinese).includes(q))||null;}
- function rateForBrand(b){if(!b||!b.rebates)return null;const entries=Object.entries(b.rebates);const aliases=storeAliases[store.value]||[store.value];const exact=entries.find(([k])=>aliases.some(a=>norm(k)===norm(a)));
-  const partial=exact||entries.find(([k])=>aliases.some(a=>norm(k).includes(norm(a))||norm(a).includes(norm(k))));
-  if(!partial)return null;const raw=String(partial[1]).trim();const parsed=Number(raw.replace('%',''));const value=raw.includes('%')?parsed:(parsed>=0&&parsed<1?parsed*100:parsed);return Number.isFinite(value)&&raw!==''&&value>=0&&value<100?{value,key:partial[0]}:null;
- }
- function fillBrand(){const b=findBrand();const found=rateForBrand(b);el('rcBrandHint').textContent=b?(found?'已匹配 '+(b.english||b.chinese)+' · '+found.key+' · '+found.value+'%':'已匹配品牌，但该店铺没有可用返点；请手动填写'):'未匹配品牌，可手动填写返点';if(found){points.value=String(found.value);manualPoints=false;}else if(!manualPoints){points.value='';}calc();}
- function calc(){const a=num(amount.value),p=num(points.value),r=currency.value==='USD'?num(rate.value):1;
-  el('rcFxBox').style.display=currency.value==='USD'?'block':'none';
-  if(amount.value.trim()===''||points.value.trim()===''||!Number.isFinite(a)||a<0||!Number.isFinite(p)||p<0||currency.value==='USD'&&(!Number.isFinite(r)||r<=0)){
-   lastResult=null;el('rcResult').textContent='请填写有效的实际付款金额、返点比例'+(currency.value==='USD'?'和 USD → RMB 汇率':'');return;
-  }
-  const base=a*r,rebate=base*p/100;
-  lastResult={time:new Date().toLocaleString('zh-CN'),store:store.value,brand:brand.value.trim(),amount:a,currency:currency.value,points:p,rate:currency.value==='USD'?r:null,base,rebate};
-  const result=el('rcResult');result.replaceChildren();
-  const h=document.createElement('div');h.style.cssText='font-size:13px;color:#52607a';h.textContent='应得返点（人民币）';result.appendChild(h);
-  const big=document.createElement('div');big.style.cssText='font-size:30px;font-weight:800;color:#157347;margin:5px 0';big.textContent='¥ '+money(rebate);result.appendChild(big);
-  const detail=document.createElement('div');detail.style.cssText='font-size:13px;color:#46546a';detail.textContent=currency.value==='USD'?`${a} USD × ${r} RMB/USD × ${p}% = ${money(rebate)} RMB`:`${a} RMB × ${p}% = ${money(rebate)} RMB`;result.appendChild(detail);
- }
- function refreshHistory(){const wrap=el('rcHistory');wrap.replaceChildren();let arr=[];try{arr=JSON.parse(localStorage.getItem('yezhu_rebate_calc_history')||'[]')}catch(e){};if(!Array.isArray(arr))arr=[];if(!arr.length){wrap.textContent='暂无记录';return;}
-  arr.slice(0,30).forEach(v=>{const row=document.createElement('div');row.style.cssText='padding:9px 0;border-bottom:1px solid #eee;font-size:13px';row.textContent=`${v.time} · ${v.store} ${v.brand||''} · ${v.amount} ${v.currency} · ${v.points}% → ¥${money(v.rebate)}`;wrap.appendChild(row)});
- }
- el('openRebateCalculatorButton').addEventListener('click',()=>{
-  showHomePage();el('homePage').style.display='none';el('rebateCalculatorPage').style.display='block';
-  const list=el('rcBrandList');list.replaceChildren();(Array.isArray(database)?database:[]).forEach(b=>{for(const name of [b.english,b.chinese]){if(!name)continue;const opt=document.createElement('option');opt.value=name;list.appendChild(opt)}});
-  syncRate();fillBrand();refreshHistory();window.scrollTo(0,0);
- });
+ function fillBrand(){const b=findBrand();let found=null;if(b&&b.rebates){const entries=Object.entries(b.rebates), names=aliases[store.value]||[store.value];const pair=entries.find(([k])=>names.some(n=>norm(k)===norm(n)))||entries.find(([k])=>names.some(n=>norm(k).includes(norm(n))));if(pair){const raw=String(pair[1]).trim();const v=Number(raw.replace('%',''));const percent=raw.includes('%')?v:v>=0&&v<1?v*100:v;if(raw!==''&&Number.isFinite(percent)&&percent>=0&&percent<100)found=percent;}}
+ el('rcBrandHint').textContent=b?(found!==null?'自动匹配：'+(b.chinese||b.english)+' / '+store.value+' / '+found+'%':'该店铺无可用返点，请手动填写'):'未匹配品牌，可手动填写返点';
+ if(found!==null){points.value=found;manualPoints=false;}else if(!manualPoints)points.value='';calc();}
+ function formula(v){return v.currency==='USD'?`${fmt(v.amount)} USD × ${v.rate} RMB/USD = ¥${fmt(v.base)}；¥${fmt(v.base)} × ${v.points}% = ¥${fmt(v.rebate)}`:`¥${fmt(v.amount)} × ${v.points}% = ¥${fmt(v.rebate)}`;}
+ function calc(){el('rcFxBox').style.display=currency.value==='USD'?'block':'none';const a=number(amount.value),p=number(points.value),r=currency.value==='USD'?number(rate.value):1;
+ if(!Number.isFinite(a)||a<=0||!Number.isFinite(p)||p<0||p>100||!Number.isFinite(r)||r<=0){preview=null;el('rcResult').textContent='填写付款金额、返点比例'+(currency.value==='USD'?'和美元汇率':'')+'后，可查看计算过程并添加到清单';return;}
+ const base=a*r,rebate=base*p/100;preview={time:new Date().toLocaleString('zh-CN'),store:store.value,brand:brand.value.trim()||'未填写品牌',amount:a,currency:currency.value,points:p,rate:currency.value==='USD'?r:null,base,rebate};
+ el('rcResult').textContent='当前预览：'+preview.store+' / '+preview.brand+'\n'+formula(preview)+'\n返点 ¥'+fmt(rebate);el('rcResult').style.whiteSpace='pre-wrap';}
+ function total(){return items.reduce((sum,v)=>sum+v.rebate,0);}
+ function render(){const wrap=el('rcItems');wrap.replaceChildren();items.forEach((v,i)=>{const row=document.createElement('div');row.style.cssText='border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin:8px 0;background:#fff';const title=document.createElement('div');title.style.cssText='font-weight:800;margin-bottom:6px';title.textContent=`${i+1}. ${v.store} · ${v.brand} · 返点 ¥${fmt(v.rebate)}`;const details=document.createElement('div');details.style.cssText='font-size:13px;color:#555;line-height:1.7;white-space:pre-wrap';details.textContent=formula(v);const del=document.createElement('button');del.textContent='删除此笔';del.className='back-button';del.style.margin='8px 0 0';del.addEventListener('click',()=>{items.splice(i,1);render();});row.append(title,details,del);wrap.appendChild(row);});el('rcTotal').textContent=`清单合计（${items.length} 笔）：¥ ${fmt(total())}`;}
+ function exportText(){return items.map((v,i)=>`${i+1}. ${v.store} ${v.brand}\n${formula(v)}`).join('\n\n')+`\n\n总计 ${items.length} 笔，返点 ¥${fmt(total())}`;}
+ function history(){const wrap=el('rcHistory');wrap.replaceChildren();let arr=[];try{arr=JSON.parse(localStorage.getItem('yezhu_rebate_calc_history')||'[]');}catch(e){}if(!Array.isArray(arr)||!arr.length){wrap.textContent='暂无记录';return;}arr.slice(0,30).forEach(v=>{const row=document.createElement('div');row.style.cssText='padding:9px 0;border-bottom:1px solid #eee;font-size:13px';row.textContent=v.items?`${v.time} · ${v.items.length}笔 · 合计 ¥${fmt(v.total)}`:`${v.time} · ${v.store||''} ${v.brand||''} · 返点 ¥${fmt(v.rebate||0)}`;wrap.appendChild(row);});}
+ el('openRebateCalculatorButton').addEventListener('click',()=>{showHomePage();el('homePage').style.display='none';el('rebateCalculatorPage').style.display='block';const list=el('rcBrandList');list.replaceChildren();(Array.isArray(database)?database:[]).forEach(b=>[b.english,b.chinese].filter(Boolean).forEach(name=>{const opt=document.createElement('option');opt.value=name;list.appendChild(opt);}));syncRate();fillBrand();history();render();window.scrollTo(0,0);});
  el('backFromRebateCalculator').addEventListener('click',showHomePage);
- store.addEventListener('change',fillBrand);brand.addEventListener('input',fillBrand);
- amount.addEventListener('input',calc);currency.addEventListener('change',()=>{syncRate();calc()});
- points.addEventListener('input',()=>{manualPoints=true;calc()});
- custom.addEventListener('change',()=>{syncRate();calc()});rate.addEventListener('input',calc);
- el('rcCopy').addEventListener('click',()=>{if(!lastResult){el('rcMessage').textContent='请先输入有效金额';return;}const v=lastResult;const txt=`${v.store} ${v.brand}\n实际付款：${v.amount} ${v.currency}\n返点：${v.points}%\n${v.rate===null?'':`美元汇率：${v.rate}\n`}应得返点：${money(v.rebate)} RMB`;copyText(txt);el('rcMessage').textContent='已复制计算结果';});
- el('rcSave').addEventListener('click',()=>{if(!lastResult){el('rcMessage').textContent='请先完成计算';return;}try{const arr=JSON.parse(localStorage.getItem('yezhu_rebate_calc_history')||'[]');arr.unshift(lastResult);localStorage.setItem('yezhu_rebate_calc_history',JSON.stringify(arr.slice(0,50)));refreshHistory();el('rcMessage').textContent='已保存到当前浏览器';}catch(e){el('rcMessage').textContent='本机存储不可用：'+e.message;}});
- el('rcClearHistory').addEventListener('click',()=>{if(confirm('清空本机返点计算记录？')){localStorage.removeItem('yezhu_rebate_calc_history');refreshHistory();}});
- // 每次打开页面都重新从已发布的 settings 读取汇率
+ store.addEventListener('change',fillBrand);brand.addEventListener('input',fillBrand);amount.addEventListener('input',calc);currency.addEventListener('change',()=>{syncRate();calc();});points.addEventListener('input',()=>{manualPoints=true;calc();});custom.addEventListener('change',()=>{syncRate();calc();});rate.addEventListener('input',calc);
+ el('rcAdd').addEventListener('click',()=>{if(!preview){el('rcMessage').textContent='请先填写有效金额、点数及汇率';return;}items.push({...preview});render();el('rcMessage').textContent='已添加第 '+items.length+' 笔，可继续选择下一个品牌';brand.value='';amount.value='';points.value='';manualPoints=false;calc();brand.focus();});
+ el('rcReset').addEventListener('click',()=>{if(items.length&& !confirm('确认清空当前所有计算项目？'))return;items=[];render();});
+ el('rcCopy').addEventListener('click',()=>{if(!items.length&&!preview){el('rcMessage').textContent='请先计算';return;}copyText(items.length?exportText():formula(preview));el('rcMessage').textContent='已复制完整计算过程和合计';});
+ el('rcSave').addEventListener('click',()=>{const rows=items.length?items:[...(preview?[preview]:[])];if(!rows.length){el('rcMessage').textContent='请先计算';return;}try{const arr=JSON.parse(localStorage.getItem('yezhu_rebate_calc_history')||'[]');arr.unshift({time:new Date().toLocaleString('zh-CN'),items:rows,total:rows.reduce((n,v)=>n+v.rebate,0)});localStorage.setItem('yezhu_rebate_calc_history',JSON.stringify(arr.slice(0,50)));history();el('rcMessage').textContent='已保存当前计算清单';}catch(e){el('rcMessage').textContent='保存失败：'+e.message;}});
+ el('rcClearHistory').addEventListener('click',()=>{if(confirm('清空本机返点计算记录？')){localStorage.removeItem('yezhu_rebate_calc_history');history();}});
 })();
-
 
 addGraffCustomerButton.addEventListener("click",()=>openCustomerModal("add"));
 smartPasteCustomerButton.addEventListener("click",openSmartPasteModal);
