@@ -1117,6 +1117,11 @@ button {
         <div class="menu-card-desc">查询品牌返点、自动折扣和到手价格</div>
     </button>
 
+    <button class="menu-card" id="openRebateCalculatorButton">
+        <div class="menu-card-title">🧮 实付返点计算器</div>
+        <div class="menu-card-desc">人民币/美元实际付款 × 点数；美元按当天 USD→RMB 汇率，可手动覆盖</div>
+    </button>
+
     <button class="menu-card" id="openGraffButton">
         <div class="menu-card-title">💎 GRAFF 客户意向</div>
         <div class="menu-card-desc">查看每天更新的客户需求、参数和跟进备注</div>
@@ -1219,6 +1224,29 @@ PARAGON OVAL
     id="updateNotice"
 >
     数据已自动更新
+</div>
+
+
+<div class="container page-screen" id="rebateCalculatorPage" style="display:none;">
+ <button class="back-button" id="backFromRebateCalculator">← 首页</button>
+ <div class="header"><h1>🧮 实付返点计算器</h1><div class="data-info">按照实际付款金额计算，返点单位为人民币</div></div>
+ <div class="card">
+  <div class="section-title">付款与返点</div>
+  <div class="form-group"><label class="form-label" for="rcStore">免税店 / 地区</label>
+   <select id="rcStore"><option value="乐天明洞">乐天明洞</option><option value="乐天蚕室">乐天蚕室</option><option value="新世界">新世界</option><option value="新罗">新罗</option><option value="现代">现代</option><option value="爱宝客">爱宝客</option><option value="济州">济州</option><option value="釜山">釜山</option></select></div>
+  <div class="form-group"><label class="form-label" for="rcBrand">品牌（选填，自动匹配已发布返点）</label>
+   <input id="rcBrand" list="rcBrandList" placeholder="输入品牌中文或英文"><datalist id="rcBrandList"></datalist><div id="rcBrandHint" class="form-note">可直接手动输入返点比例</div></div>
+  <div class="form-group"><label class="form-label" for="rcAmount">客人实际付款金额</label><input id="rcAmount" type="number" min="0" step="any" inputmode="decimal" placeholder="例如 1000"></div>
+  <div class="form-group"><label class="form-label" for="rcCurrency">付款币种</label><select id="rcCurrency"><option value="RMB">人民币 RMB</option><option value="USD">美元 USD</option></select></div>
+  <div class="form-group"><label class="form-label" for="rcPoints">实际返点比例（%）</label><input id="rcPoints" type="number" min="0" step="any" inputmode="decimal" placeholder="例如 5"><div class="form-note">可自动读取品牌对应店铺返点，也可手动修改。特殊 SKU / 活动请以实际确认点数为准。</div></div>
+  <div class="form-group" id="rcFxBox" style="display:none"><label class="form-label" for="rcRate">USD → RMB 汇率（1美元兑换多少人民币）</label>
+   <label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="rcCustomRate" style="width:auto"> 使用特殊汇率（手动输入）</label>
+   <input id="rcRate" type="number" min="0" step="any" inputmode="decimal" placeholder="等待当天汇率"><div class="form-note" id="rcRateHint">优先使用 settings.json 中的 usd_rmb_rate（兼容 exchange_rate）</div></div>
+  <div id="rcResult" style="border:1px solid #dbeafe;border-radius:12px;background:#f5f9ff;padding:16px;margin-top:16px" aria-live="polite">输入实际付款金额和返点比例即可计算</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="primary-button" id="rcCopy">复制计算结果</button><button class="back-button" id="rcSave" style="margin:0">保存本机计算记录</button></div>
+  <div class="form-note" id="rcMessage"></div>
+ </div>
+ <div class="card"><div class="section-title">最近计算记录（仅保存在当前浏览器）</div><div id="rcHistory"></div><button class="back-button" id="rcClearHistory" style="margin-top:10px">清空本机记录</button></div>
 </div>
 
 <div class="container page-screen" id="rebatePage" style="display:none;">
@@ -2856,6 +2884,7 @@ function showHomePage() {
     rebatePage.style.display = "none";
     graffPage.style.display = "none";
     ordersPage.style.display = "none";
+    document.getElementById("rebateCalculatorPage").style.display="none";
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
@@ -2864,6 +2893,7 @@ function showRebatePage() {
     rebatePage.style.display = "block";
     graffPage.style.display = "none";
     ordersPage.style.display = "none";
+    document.getElementById("rebateCalculatorPage").style.display="none";
     setTimeout(() => searchInput.focus(), 80);
     window.scrollTo({top: 0, behavior: "smooth"});
 }
@@ -2906,10 +2936,12 @@ function restoreGraffListPosition(){
 }
 
 function showGraffPage() {
+    document.getElementById("rebateCalculatorPage").style.display="none";
     homePage.style.display = "none";
     rebatePage.style.display = "none";
     graffPage.style.display = "block";
     ordersPage.style.display = "none";
+    document.getElementById("rebateCalculatorPage").style.display="none";
     graffListScrollPosition = 0;
     graffListReturnAnchorId = null;
     graffListReturnAnchorTop = 0;
@@ -2917,6 +2949,7 @@ function showGraffPage() {
 }
 
 function showOrdersPage() {
+    document.getElementById("rebateCalculatorPage").style.display="none";
     homePage.style.display = "none";
     rebatePage.style.display = "none";
     graffPage.style.display = "none";
@@ -7472,6 +7505,64 @@ openRebateButton.addEventListener(
     "click",
     showRebatePage
 );
+
+/* 实付返点计算器：独立于原有报价/折扣计算 */
+(function(){
+ const el=id=>document.getElementById(id);
+ const store=el('rcStore'), brand=el('rcBrand'), amount=el('rcAmount'), currency=el('rcCurrency'), points=el('rcPoints'), rate=el('rcRate'), custom=el('rcCustomRate');
+ let lastResult=null, manualPoints=false;
+ const storeAliases={
+  '乐天明洞':['乐天明洞','明洞乐天','明洞乐天免税'],
+  '乐天蚕室':['乐天蚕室','蚕室乐天'],
+  '新世界':['新世界','明洞新世界'],
+  '新罗':['新罗'],
+  '现代':['现代','三成现代','现代免税'],
+  '爱宝客':['爱宝客','龙山爱宝客','ipark'],
+  '济州':['济州','jeju'],
+  '釜山':['釜山','busan']
+ };
+ const norm=s=>String(s||'').toLowerCase().replace(/[\s_\-()（）]/g,'');
+ const num=v=>{const n=Number(v);return Number.isFinite(n)?n:NaN};
+ const money=n=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+ function currentRate(){const v=settings&&(settings.usd_rmb_rate ?? settings.exchange_rate);const n=num(v);return n>0?n:null;}
+ function syncRate(){if(!custom.checked){const n=currentRate();rate.value=n===null?'':String(n);}el('rcRateHint').textContent=custom.checked?'特殊汇率：仅用于本次计算':(currentRate()===null?'尚未读取到当天美元汇率，请先发布 settings.json 或勾选特殊汇率':'使用当前已发布的 USD → RMB 汇率：'+currentRate());}
+ function findBrand(){const q=norm(brand.value);if(!q)return null;const rows=Array.isArray(database)?database:[];return rows.find(b=>norm(b.english)===q||norm(b.chinese)===q)||rows.find(b=>norm(b.english).includes(q)||norm(b.chinese).includes(q))||null;}
+ function rateForBrand(b){if(!b||!b.rebates)return null;const entries=Object.entries(b.rebates);const aliases=storeAliases[store.value]||[store.value];const exact=entries.find(([k])=>aliases.some(a=>norm(k)===norm(a)));
+  const partial=exact||entries.find(([k])=>aliases.some(a=>norm(k).includes(norm(a))||norm(a).includes(norm(k))));
+  if(!partial)return null;const raw=String(partial[1]).trim();const parsed=Number(raw.replace('%',''));const value=raw.includes('%')?parsed:(parsed>=0&&parsed<1?parsed*100:parsed);return Number.isFinite(value)&&raw!==''&&value>=0&&value<100?{value,key:partial[0]}:null;
+ }
+ function fillBrand(){const b=findBrand();const found=rateForBrand(b);el('rcBrandHint').textContent=b?(found?'已匹配 '+(b.english||b.chinese)+' · '+found.key+' · '+found.value+'%':'已匹配品牌，但该店铺没有可用返点；请手动填写'):'未匹配品牌，可手动填写返点';if(found){points.value=String(found.value);manualPoints=false;}else if(!manualPoints){points.value='';}calc();}
+ function calc(){const a=num(amount.value),p=num(points.value),r=currency.value==='USD'?num(rate.value):1;
+  el('rcFxBox').style.display=currency.value==='USD'?'block':'none';
+  if(amount.value.trim()===''||points.value.trim()===''||!Number.isFinite(a)||a<0||!Number.isFinite(p)||p<0||currency.value==='USD'&&(!Number.isFinite(r)||r<=0)){
+   lastResult=null;el('rcResult').textContent='请填写有效的实际付款金额、返点比例'+(currency.value==='USD'?'和 USD → RMB 汇率':'');return;
+  }
+  const base=a*r,rebate=base*p/100;
+  lastResult={time:new Date().toLocaleString('zh-CN'),store:store.value,brand:brand.value.trim(),amount:a,currency:currency.value,points:p,rate:currency.value==='USD'?r:null,base,rebate};
+  const result=el('rcResult');result.replaceChildren();
+  const h=document.createElement('div');h.style.cssText='font-size:13px;color:#52607a';h.textContent='应得返点（人民币）';result.appendChild(h);
+  const big=document.createElement('div');big.style.cssText='font-size:30px;font-weight:800;color:#157347;margin:5px 0';big.textContent='¥ '+money(rebate);result.appendChild(big);
+  const detail=document.createElement('div');detail.style.cssText='font-size:13px;color:#46546a';detail.textContent=currency.value==='USD'?`${a} USD × ${r} RMB/USD × ${p}% = ${money(rebate)} RMB`:`${a} RMB × ${p}% = ${money(rebate)} RMB`;result.appendChild(detail);
+ }
+ function refreshHistory(){const wrap=el('rcHistory');wrap.replaceChildren();let arr=[];try{arr=JSON.parse(localStorage.getItem('yezhu_rebate_calc_history')||'[]')}catch(e){};if(!Array.isArray(arr))arr=[];if(!arr.length){wrap.textContent='暂无记录';return;}
+  arr.slice(0,30).forEach(v=>{const row=document.createElement('div');row.style.cssText='padding:9px 0;border-bottom:1px solid #eee;font-size:13px';row.textContent=`${v.time} · ${v.store} ${v.brand||''} · ${v.amount} ${v.currency} · ${v.points}% → ¥${money(v.rebate)}`;wrap.appendChild(row)});
+ }
+ el('openRebateCalculatorButton').addEventListener('click',()=>{
+  showHomePage();el('homePage').style.display='none';el('rebateCalculatorPage').style.display='block';
+  const list=el('rcBrandList');list.replaceChildren();(Array.isArray(database)?database:[]).forEach(b=>{for(const name of [b.english,b.chinese]){if(!name)continue;const opt=document.createElement('option');opt.value=name;list.appendChild(opt)}});
+  syncRate();fillBrand();refreshHistory();window.scrollTo(0,0);
+ });
+ el('backFromRebateCalculator').addEventListener('click',showHomePage);
+ store.addEventListener('change',fillBrand);brand.addEventListener('input',fillBrand);
+ amount.addEventListener('input',calc);currency.addEventListener('change',()=>{syncRate();calc()});
+ points.addEventListener('input',()=>{manualPoints=true;calc()});
+ custom.addEventListener('change',()=>{syncRate();calc()});rate.addEventListener('input',calc);
+ el('rcCopy').addEventListener('click',()=>{if(!lastResult){el('rcMessage').textContent='请先输入有效金额';return;}const v=lastResult;const txt=`${v.store} ${v.brand}\n实际付款：${v.amount} ${v.currency}\n返点：${v.points}%\n${v.rate===null?'':`美元汇率：${v.rate}\n`}应得返点：${money(v.rebate)} RMB`;copyText(txt);el('rcMessage').textContent='已复制计算结果';});
+ el('rcSave').addEventListener('click',()=>{if(!lastResult){el('rcMessage').textContent='请先完成计算';return;}try{const arr=JSON.parse(localStorage.getItem('yezhu_rebate_calc_history')||'[]');arr.unshift(lastResult);localStorage.setItem('yezhu_rebate_calc_history',JSON.stringify(arr.slice(0,50)));refreshHistory();el('rcMessage').textContent='已保存到当前浏览器';}catch(e){el('rcMessage').textContent='本机存储不可用：'+e.message;}});
+ el('rcClearHistory').addEventListener('click',()=>{if(confirm('清空本机返点计算记录？')){localStorage.removeItem('yezhu_rebate_calc_history');refreshHistory();}});
+ // 每次打开页面都重新从已发布的 settings 读取汇率
+})();
+
 
 addGraffCustomerButton.addEventListener("click",()=>openCustomerModal("add"));
 smartPasteCustomerButton.addEventListener("click",openSmartPasteModal);
