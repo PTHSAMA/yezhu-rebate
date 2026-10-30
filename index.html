@@ -1233,7 +1233,7 @@ PARAGON OVAL
  <div class="card">
   <div class="section-title">付款与返点</div>
   <div class="form-group"><label class="form-label" for="rcStore">免税店 / 地区</label>
-   <select id="rcStore"><option value="乐天明洞">乐天明洞</option><option value="乐天蚕室">乐天蚕室</option><option value="新世界">新世界</option><option value="新罗">新罗</option><option value="现代">现代</option><option value="爱宝客">爱宝客</option><option value="济州">济州</option><option value="釜山">釜山</option></select></div>
+   <select id="rcStore"><option value="乐天明洞">乐天明洞</option><option value="乐天蚕室">乐天蚕室</option><option value="新世界">新世界</option><option value="新罗">新罗</option><option value="现代">现代</option><option value="爱宝客">爱宝客</option><option value="济州乐天">济州乐天</option><option value="济州新罗">济州新罗</option><option value="釜山乐天">釜山乐天</option></select></div>
   <div class="form-group"><label class="form-label" for="rcBrand">品牌（选填，自动匹配已发布返点）</label>
    <input id="rcBrand" list="rcBrandList" placeholder="输入品牌中文或英文"><datalist id="rcBrandList"></datalist><div id="rcBrandHint" class="form-note">可直接手动输入返点比例</div></div>
   <div class="form-group"><label class="form-label" for="rcAmount">客人实际付款金额</label><input id="rcAmount" type="number" min="0" step="any" inputmode="decimal" placeholder="例如 1000"></div>
@@ -7514,7 +7514,7 @@ openRebateButton.addEventListener(
 (function(){
  const el=id=>document.getElementById(id);
  const store=el('rcStore'),brand=el('rcBrand'),amount=el('rcAmount'),currency=el('rcCurrency'),points=el('rcPoints'),rate=el('rcRate'),custom=el('rcCustomRate');
- const aliases={'乐天明洞':['乐天明洞','明洞乐天'],'乐天蚕室':['乐天蚕室','蚕室乐天'],'新世界':['新世界','明洞新世界'],'新罗':['新罗'],'现代':['现代','三成现代'],'爱宝客':['爱宝客','ipark'],'济州':['济州','jeju'],'釜山':['釜山','busan']};
+ const aliases={'乐天明洞':['乐天明洞','明洞乐天'],'乐天蚕室':['乐天蚕室','蚕室乐天'],'新世界':['新世界','明洞新世界'],'新罗':['新罗'],'现代':['现代','三成现代'],'爱宝客':['爱宝客','ipark'],'济州乐天':['济州乐天'],'济州新罗':['济州新罗'],'釜山乐天':['釜山乐天']};
  const norm=s=>String(s||'').toLowerCase().replace(/[\s_\-()（）]/g,'');
  const fmt=n=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
  const number=v=>v===''?NaN:Number(v);
