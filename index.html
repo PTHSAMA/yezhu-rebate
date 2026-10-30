@@ -1131,6 +1131,25 @@ button {
 .sales-customer-group:not([open]) .sales-customer-group-arrow::after{content:' ▾'}
 .sales-customer-group-content{padding:0 12px 6px;border-top:1px solid #e8edf3;background:#f8fafc}
 .sales-customer-group-content .sales-order-card{margin:12px 0}
+/* 实付返点计算器：店铺选择更大，适配手机触控 */
+#rebateCalculatorPage #rcStore {
+    display: block;
+    width: 100%;
+    min-height: 56px;
+    padding: 12px 42px 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: #fff;
+    color: #111827;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    cursor: pointer;
+}
+#rebateCalculatorPage label[for="rcStore"] { font-size: 16px; margin-bottom: 9px; }
+#rebateCalculatorPage #rcStore:focus { outline: 2px solid #111827; outline-offset: 2px; }
+@media (max-width: 520px) { #rebateCalculatorPage #rcStore { min-height: 60px; font-size: 18px; } }
+
 </style>
 
 </head>
