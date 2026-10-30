@@ -1099,6 +1099,38 @@ button {
 .points-box .points-entry input{width:135px}
 .points-check{width:18px;height:18px;vertical-align:middle;margin-right:8px}
 @media(max-width:460px){.points-stat strong{font-size:15px}}
+
+/* 免税销售订单：独立订单卡片 */
+.sales-order-card{border:1px solid #e2e7ee;border-radius:15px;background:#fff;margin:12px 0;overflow:hidden;box-shadow:0 3px 12px rgba(17,24,39,.045)}
+.sales-order-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:15px 16px 12px;border-bottom:1px solid #edf0f4}
+.sales-order-customer{font-size:18px;font-weight:900;color:#111827;overflow-wrap:anywhere}
+.sales-order-meta{font-size:12px;color:#7b8492;margin-top:5px}
+.sales-order-badge{background:#eaf8ef;color:#147d3f;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:800;white-space:nowrap}
+.sales-order-lines{padding:0 16px}
+.sales-order-line{padding:12px 0;border-bottom:1px dashed #e4e8ee}
+.sales-order-line:last-child{border-bottom:0}
+.sales-order-line-main{font-size:15px;font-weight:800;color:#252b35}
+.sales-order-line-sub{font-size:12px;color:#707986;line-height:1.65;margin-top:4px}
+.sales-order-line-value{font-size:13px;font-weight:800;color:#374151;margin-top:5px}
+.sales-order-footer{background:#f7f9fc;padding:13px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sales-order-footer span{display:block;font-size:12px;color:#6b7280;margin-bottom:5px}
+.sales-order-footer strong{display:block;font-size:18px;color:#111827;overflow-wrap:anywhere}
+.sales-order-footer>div:last-child strong{color:#15803d}
+@media(max-width:430px){.sales-order-footer strong{font-size:16px}}
+
+/* 按微信名合并的可折叠订单组 */
+.sales-customer-group{margin:12px 0;border:1px solid #dce3ec;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 3px 12px rgba(17,24,39,.045)}
+.sales-customer-group-head{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;cursor:pointer;user-select:none}
+.sales-customer-group-head::-webkit-details-marker{display:none}
+.sales-customer-group-name{font-size:18px;font-weight:900;color:#111827;overflow-wrap:anywhere}
+.sales-customer-group-count{margin-top:5px;color:#64748b;font-size:12px}
+.sales-customer-group-totals{margin-top:8px;color:#0f766e;font-weight:800;font-size:13px;line-height:1.5}
+.sales-customer-group-arrow{flex:0 0 auto;border-radius:8px;padding:7px 10px;background:#eef2f7;color:#334155;font-size:12px;font-weight:800}
+.sales-customer-group[open] .sales-customer-group-arrow{background:#e0f2fe;color:#0369a1}
+.sales-customer-group[open] .sales-customer-group-arrow::after{content:' ▴'}
+.sales-customer-group:not([open]) .sales-customer-group-arrow::after{content:' ▾'}
+.sales-customer-group-content{padding:0 12px 6px;border-top:1px solid #e8edf3;background:#f8fafc}
+.sales-customer-group-content .sales-order-card{margin:12px 0}
 </style>
 
 </head>
@@ -1274,7 +1306,7 @@ PARAGON OVAL
   <div class="form-note">多员工共享的云端销售订单。微信名用于客户归类，订单从计算器页面录入。</div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
    <select id="rcSalePeriod" aria-label="统计周期"><option value="today">今天</option><option value="month" selected>本月</option><option value="all">全部</option></select>
-   <select id="rcSaleStatus" aria-label="订单状态筛选"><option value="all">全部状态</option><option value="成交">已成交</option><option value="取消">已取消</option></select>
+   
   </div>
   <div class="form-group"><label class="form-label" for="rcSaleCustomerFilter">按客户微信名筛选</label><input id="rcSaleCustomerFilter" placeholder="输入微信名筛选订单（留空查看全部）"></div>
   <div id="rcSaleSummary" style="background:#f5f7fa;border-radius:12px;padding:12px;line-height:1.9"></div>
@@ -7612,12 +7644,12 @@ openRebateButton.addEventListener(
  const salesDate=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
  el('rcSaleDate').value=salesDate();
  function salesView(){
-  const all=salesRead(), period=el('rcSalePeriod').value, status=el('rcSaleStatus').value, today=salesDate(), customerQuery=el('rcSaleCustomerFilter').value.trim().toLocaleLowerCase();
-  const selected=all.filter(o=>(period==='all'||(period==='today'?o.date===today:o.date?.slice(0,7)===today.slice(0,7)))&&(status==='all'||o.status===status)&&(!customerQuery||String(o.customer||'').toLocaleLowerCase().includes(customerQuery)));
+  const all=salesRead(), period=el('rcSalePeriod').value, today=salesDate(), customerQuery=el('rcSaleCustomerFilter').value.trim().toLocaleLowerCase();
+  const selected=all.filter(o=>(period==='all'||(period==='today'?o.date===today:o.date?.slice(0,7)===today.slice(0,7)))&&o.status!=='取消'&&(!customerQuery||String(o.customer||'').toLocaleLowerCase().includes(customerQuery)));
   const active=selected.filter(o=>o.status!=='取消');const rows=active.flatMap(o=>o.items||[]);
   const paidRmb=rows.reduce((n,v)=>n+(Number(v.base)||0),0), rebate=rows.reduce((n,v)=>n+(Number(v.rebate)||0),0);
   const summary=el('rcSaleSummary');summary.replaceChildren();
-  summary.textContent=`成交订单：${active.length} 单 ｜ 商品：${rows.length} 笔\n实际付款折合：¥${fmt(paidRmb)}\n累计返点：¥${fmt(rebate)}\n说明：付款额按各订单保存时的汇率折算；取消订单不计入。`;
+  summary.textContent=`成交订单：${active.length} 单 ｜ 商品：${rows.length} 笔\n实际付款折合：¥${fmt(paidRmb)}\n累计返点：¥${fmt(rebate)}\n说明：付款额按各订单保存时的汇率折算。`;
   summary.style.whiteSpace='pre-wrap';
   const customerBreakdown=el('rcSaleCustomerBreakdown');customerBreakdown.replaceChildren();
   const customerMap=new Map();
@@ -7632,12 +7664,55 @@ openRebateButton.addEventListener(
    if(!map.size){const div=document.createElement('div');div.className='form-note';div.textContent='暂无数据';breakdown.appendChild(div);}
   }
   const list=el('rcSaleOrders');list.replaceChildren();
-  selected.slice().reverse().forEach(o=>{const box=document.createElement('div');box.style.cssText='border:1px solid #e5e7eb;border-radius:10px;padding:11px;margin:8px 0';
-   const h=document.createElement('div');h.style.fontWeight='800';h.textContent=`${o.date} · ${o.customer||'未备注'} · ${o.status} · ${(o.items||[]).length}笔`;
-   const detail=document.createElement('div');detail.style.cssText='font-size:12px;color:#555;white-space:pre-wrap;margin-top:5px;line-height:1.6';detail.textContent=(o.items||[]).map(v=>`${v.brand} / ${v.store} · ${fmt(v.amount)} ${v.currency} · ${v.points}% · 返点 ¥${fmt(v.rebate)}`).join('\n');
-   const btn=document.createElement('button');btn.className='back-button';btn.style.cssText='margin:8px 0 0';btn.textContent=o.status==='取消'?'恢复为已成交':'标记取消';btn.addEventListener('click',()=>{if(confirm('确认修改这张订单的状态？'))salesUpdateStatus(o.id,o.status==='取消'?'成交':'取消');});
-   box.append(h,detail,btn);list.appendChild(box);
-  });if(!selected.length)list.textContent='当前筛选暂无订单';
+  const groups=new Map();
+  selected.forEach(o=>{
+   const name=String(o.customer||'未填写微信名').trim()||'未填写微信名';
+   const key=name.toLocaleLowerCase();
+   if(!groups.has(key))groups.set(key,{name,orders:[]});
+   groups.get(key).orders.push(o);
+  });
+  [...groups.values()].sort((a,b)=>b.orders.reduce((n,o)=>n+(o.items||[]).reduce((m,v)=>m+(Number(v.base)||0),0),0)-a.orders.reduce((n,o)=>n+(o.items||[]).reduce((m,v)=>m+(Number(v.base)||0),0),0)).forEach(group=>{
+   const orders=group.orders.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.createdAt||'').localeCompare(String(a.createdAt||'')));
+   const allItems=orders.flatMap(o=>Array.isArray(o.items)?o.items:[]);
+   const totalPay=allItems.reduce((n,v)=>n+(Number(v.base)||0),0);
+   const totalRebate=allItems.reduce((n,v)=>n+(Number(v.rebate)||0),0);
+   const wrapper=document.createElement('details');wrapper.className='sales-customer-group';
+   const summary=document.createElement('summary');summary.className='sales-customer-group-head';
+   const title=document.createElement('div');title.className='sales-customer-group-name';title.textContent=group.name;
+   const count=document.createElement('div');count.className='sales-customer-group-count';count.textContent=`${orders.length} 单 · ${allItems.length} 件商品`;
+   const totals=document.createElement('div');totals.className='sales-customer-group-totals';totals.textContent=`销售 ¥${fmt(totalPay)} ｜ 返点 ¥${fmt(totalRebate)}`;
+   const left=document.createElement('div');left.append(title,count,totals);
+   const arrow=document.createElement('span');arrow.className='sales-customer-group-arrow';arrow.textContent='展开订单';
+   summary.append(left,arrow);wrapper.appendChild(summary);
+   const content=document.createElement('div');content.className='sales-customer-group-content';
+   orders.forEach((o,orderIndex)=>{
+    const products=Array.isArray(o.items)?o.items:[];
+    const sumPay=products.reduce((n,v)=>n+(Number(v.base)||0),0);
+    const sumRebate=products.reduce((n,v)=>n+(Number(v.rebate)||0),0);
+    const box=document.createElement('article');box.className='sales-order-card';
+    const head=document.createElement('div');head.className='sales-order-head';
+    const left=document.createElement('div');
+    const customer=document.createElement('div');customer.className='sales-order-customer';customer.textContent=`订单 ${orders.length-orderIndex}`;
+    const meta=document.createElement('div');meta.className='sales-order-meta';meta.textContent=`销售日期 ${o.date} · ${products.length} 件商品`;
+    left.append(customer,meta);
+    const badge=document.createElement('span');badge.className='sales-order-badge';badge.textContent='已成交';
+    head.append(left,badge);box.appendChild(head);
+    const lines=document.createElement('div');lines.className='sales-order-lines';
+    products.forEach((v,i)=>{
+     const line=document.createElement('div');line.className='sales-order-line';
+     const main=document.createElement('div');main.className='sales-order-line-main';main.textContent=`${i+1}. ${v.brand||'未填写品牌'}`;
+     const sub=document.createElement('div');sub.className='sales-order-line-sub';sub.textContent=`${v.store||'未填写店铺'} · 实付 ${fmt(v.amount||0)} ${v.currency||'RMB'} · 返点 ${v.points??0}%`;
+     const value=document.createElement('div');value.className='sales-order-line-value';value.textContent=`返点 ¥${fmt(v.rebate||0)}`;
+     line.append(main,sub,value);lines.appendChild(line);
+    });box.appendChild(lines);
+    const footer=document.createElement('div');footer.className='sales-order-footer';
+    const pay=document.createElement('div');pay.innerHTML='<span>实际付款折合</span>';const payVal=document.createElement('strong');payVal.textContent='¥'+fmt(sumPay);pay.appendChild(payVal);
+    const reward=document.createElement('div');reward.innerHTML='<span>订单返点合计</span>';const rewardVal=document.createElement('strong');rewardVal.textContent='¥'+fmt(sumRebate);reward.appendChild(rewardVal);
+    footer.append(pay,reward);box.appendChild(footer);content.appendChild(box);
+   });
+   wrapper.appendChild(content);list.appendChild(wrapper);
+  });
+  if(!selected.length)list.textContent='当前筛选暂无成交订单';
  }
  el('rcRecordSale').addEventListener('click',async()=>{
   const rows=items.length?items:(preview?[preview]:[]);
@@ -7657,7 +7732,7 @@ openRebateButton.addEventListener(
   }catch(err){salesMessage('云端保存失败：'+(err.message||err));}
   finally{btn.disabled=false;}
  });
- ['rcSalePeriod','rcSaleStatus'].forEach(id=>el(id).addEventListener('change',salesView));
+ ['rcSalePeriod'].forEach(id=>el(id).addEventListener('change',salesView));
  el('rcSaleCustomerFilter').addEventListener('input',salesView);
  function csvEscape(v){return '"'+String(v??'').replace(/"/g,'""')+'"';}
  el('rcSaleExport').addEventListener('click',()=>{const header=['订单ID','销售日期','客户备注','状态','品牌','店铺','付款币种','实际付款','美元汇率','折合人民币','返点比例','返点人民币','创建时间'];const lines=[header.map(csvEscape).join(',')];salesRead().forEach(o=>(o.items||[]).forEach(v=>{lines.push([o.id,o.date,o.customer,o.status,v.brand,v.store,v.currency,v.amount,v.rate??'',v.base,v.points,v.rebate,o.createdAt].map(csvEscape).join(','));}));const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`免税销售订单_${salesDate()}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
