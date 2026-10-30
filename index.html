@@ -1122,6 +1122,11 @@ button {
         <div class="menu-card-desc">人民币/美元实际付款 × 点数；美元按当天 USD→RMB 汇率，可手动覆盖</div>
     </button>
 
+    <button class="menu-card" id="openSalesStatisticsButton">
+        <div class="menu-card-title">📊 免税销售统计</div>
+        <div class="menu-card-desc">按客户微信名、品牌、店铺和日期查看所有员工共享的销售订单</div>
+    </button>
+
     <button class="menu-card" id="openGraffButton">
         <div class="menu-card-title">💎 GRAFF 客户意向</div>
         <div class="menu-card-desc">查看每天更新的客户需求、参数和跟进备注</div>
@@ -1250,12 +1255,23 @@ PARAGON OVAL
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="primary-button" id="rcCopy">复制计算结果</button><button class="back-button" id="rcSave" style="margin:0">保存本机计算记录</button></div>
   <div class="form-note" id="rcMessage"></div>
  </div>
- <div class="card" id="rcSalesBox">
-  <div class="section-title">📊 免税销售订单统计</div>
-  <div class="form-note">计算清单不会自动计入销售。确认成交后点击「记录为销售订单」。数据仅保存在当前浏览器，换设备不会同步，请定期导出备份。</div>
+ <div class="card" id="rcSalesEntryBox">
+  <div class="section-title">🧾 记录成交订单</div>
+  <div class="form-note">计算清单不会自动计入销售。确认成交后填写微信名，点击下方按钮保存到云端。</div>
   <div class="form-group"><label class="form-label" for="rcSaleCustomer">客户微信名（必填，作为订单分类依据）</label><input id="rcSaleCustomer" required placeholder="输入客户微信名，同名订单自动归为一类"><div class="form-note">相同微信名的不同订单归入同一客户；请保持名称一致。</div></div>
   <div class="form-group"><label class="form-label" for="rcSaleDate">销售日期</label><input id="rcSaleDate" type="date"></div>
   <button class="primary-button" id="rcRecordSale">＋ 将当前计算清单记录为销售订单</button>
+  <button class="back-button" id="rcGoSales" type="button">📊 查看免税销售统计 →</button>
+ </div>
+ <div class="card"><div class="section-title">最近计算记录（仅保存在当前浏览器）</div><div id="rcHistory"></div><button class="back-button" id="rcClearHistory" style="margin-top:10px">清空本机记录</button></div>
+</div>
+
+<div class="container page-screen" id="salesStatisticsPage" style="display:none;">
+ <button class="back-button" id="backFromSalesStatistics">← 首页</button>
+ <div class="header"><h1>📊 免税销售统计</h1><div class="data-info">按微信名、品牌、店铺查看云端订单</div></div>
+ <div class="card" id="rcSalesBox">
+  <div class="section-title">📊 免税销售统计</div>
+  <div class="form-note">多员工共享的云端销售订单。微信名用于客户归类，订单从计算器页面录入。</div>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
    <select id="rcSalePeriod" aria-label="统计周期"><option value="today">今天</option><option value="month" selected>本月</option><option value="all">全部</option></select>
    <select id="rcSaleStatus" aria-label="订单状态筛选"><option value="all">全部状态</option><option value="成交">已成交</option><option value="取消">已取消</option></select>
@@ -1272,7 +1288,6 @@ PARAGON OVAL
   <div class="form-note">云端共享：每30秒自动刷新。无需登录意味着任何能够访问公开接口的人都可能读取、伪造或修改订单；请勿填写敏感客户信息。</div>
   <div class="form-note" id="rcSaleMessage"></div>
  </div>
- <div class="card"><div class="section-title">最近计算记录（仅保存在当前浏览器）</div><div id="rcHistory"></div><button class="back-button" id="rcClearHistory" style="margin-top:10px">清空本机记录</button></div>
 </div>
 
 <div class="container page-screen" id="rebatePage" style="display:none;">
@@ -2911,6 +2926,7 @@ function showHomePage() {
     graffPage.style.display = "none";
     ordersPage.style.display = "none";
     document.getElementById("rebateCalculatorPage").style.display="none";
+    document.getElementById("salesStatisticsPage").style.display="none";
     window.scrollTo({top: 0, behavior: "smooth"});
 }
 
@@ -2920,6 +2936,7 @@ function showRebatePage() {
     graffPage.style.display = "none";
     ordersPage.style.display = "none";
     document.getElementById("rebateCalculatorPage").style.display="none";
+    document.getElementById("salesStatisticsPage").style.display="none";
     setTimeout(() => searchInput.focus(), 80);
     window.scrollTo({top: 0, behavior: "smooth"});
 }
@@ -2963,11 +2980,13 @@ function restoreGraffListPosition(){
 
 function showGraffPage() {
     document.getElementById("rebateCalculatorPage").style.display="none";
+    document.getElementById("salesStatisticsPage").style.display="none";
     homePage.style.display = "none";
     rebatePage.style.display = "none";
     graffPage.style.display = "block";
     ordersPage.style.display = "none";
     document.getElementById("rebateCalculatorPage").style.display="none";
+    document.getElementById("salesStatisticsPage").style.display="none";
     graffListScrollPosition = 0;
     graffListReturnAnchorId = null;
     graffListReturnAnchorTop = 0;
@@ -2976,6 +2995,8 @@ function showGraffPage() {
 
 function showOrdersPage() {
     document.getElementById("rebateCalculatorPage").style.display="none";
+    document.getElementById("salesStatisticsPage").style.display="none";
+    document.getElementById("salesStatisticsPage").style.display="none";
     homePage.style.display = "none";
     rebatePage.style.display = "none";
     graffPage.style.display = "none";
@@ -7681,7 +7702,18 @@ openRebateButton.addEventListener(
   }catch(err){salesMessage(`迁移中断（已导入 ${count} 张）：`+(err.message||err));}
  });
  el('rcCloudRefresh').addEventListener('click',salesLoad);
- setInterval(()=>{if(el('rebateCalculatorPage').style.display!=='none')salesLoad();},30000);
+ setInterval(()=>{if(el('rebateCalculatorPage').style.display!=='none'||el('salesStatisticsPage').style.display!=='none')salesLoad();},30000);
+ function openSalesStatistics(){
+  showHomePage();
+  el('homePage').style.display='none';
+  el('salesStatisticsPage').style.display='block';
+  salesLoad();
+  window.scrollTo(0,0);
+ }
+ el('openSalesStatisticsButton').addEventListener('click',openSalesStatistics);
+ el('rcGoSales').addEventListener('click',openSalesStatistics);
+ el('backFromSalesStatistics').addEventListener('click',showHomePage);
+ setInterval(()=>{if(el('salesStatisticsPage').style.display!=='none')salesLoad();},30000);
  el('openRebateCalculatorButton').addEventListener('click',salesLoad);
 
 })();
