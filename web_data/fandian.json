@@ -1,6 +1,6 @@
 {
-  "version": "20261030140042",
-  "updated_at": "2026-10-30 14:00:42",
+  "version": "20261030140142",
+  "updated_at": "2026-10-30 14:01:42",
   "count": 600,
   "brands": [
     {
@@ -137,7 +137,7 @@
       "id": "11",
       "category": "本土护肤品",
       "english": "BANILACO",
-      "chinese": "苔妮兰",
+      "chinese": "芭妮兰",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -261,7 +261,7 @@
     {
       "id": "21",
       "category": "本土护肤品",
-      "english": "브렁그린",
+      "english": "브링그린",
       "chinese": "BRING GREEN",
       "remark": "",
       "discount": null,
@@ -298,7 +298,7 @@
       "id": "24",
       "category": "本土护肤品",
       "english": "CHASIN RABBITS",
-      "chinese": "追奔兔",
+      "chinese": "追幸兔",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -337,8 +337,8 @@
     {
       "id": "27",
       "category": "本土护肤品",
-      "english": "CELLIQUE",
-      "chinese": "CELLIQUE",
+      "english": "CELUQUE",
+      "chinese": "CELUQUE",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -438,7 +438,7 @@
       "id": "35",
       "category": "本土护肤品",
       "english": "DERMARSSANCE",
-      "chinese": "德玛赛斯",
+      "chinese": "德玛桑斯",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -483,7 +483,7 @@
       "id": "39",
       "category": "本土护肤品",
       "english": "DEWYTREE",
-      "chinese": "自颜源露",
+      "chinese": "自顏源露",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -593,7 +593,7 @@
       "id": "48",
       "category": "本土护肤品",
       "english": "PRIMERA",
-      "chinese": "芙莉美娜",
+      "chinese": "芙丽美娜",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -656,7 +656,7 @@
       "id": "53",
       "category": "本土护肤品",
       "english": "HEALOINE",
-      "chinese": "裕洛因",
+      "chinese": "稀洛因",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -780,7 +780,7 @@
     {
       "id": "63",
       "category": "本土护肤品",
-      "english": "JUVELOOK",
+      "english": "쥬베룩",
       "chinese": "JUVELOOK",
       "remark": "",
       "discount": null,
@@ -874,8 +874,8 @@
     {
       "id": "71",
       "category": "本土护肤品",
-      "english": "LADYKIN",
-      "chinese": "LADYKIN",
+      "english": "레이디킨",
+      "chinese": "Ladykin",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -901,7 +901,7 @@
     {
       "id": "73",
       "category": "本土护肤品",
-      "english": "LAUNDRYOU",
+      "english": "런드리유",
       "chinese": "LAUNDRYOU",
       "remark": "",
       "discount": null,
@@ -1207,7 +1207,7 @@
       "id": "99",
       "category": "本土护肤品",
       "english": "OHUI",
-      "chinese": "欧蕙",
+      "chinese": "欧惠",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -1367,7 +1367,7 @@
       "id": "112",
       "category": "本土护肤品",
       "english": "REVCELL",
-      "chinese": "REVCELL",
+      "chinese": "梨宝璱",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -1440,7 +1440,7 @@
     {
       "id": "118",
       "category": "本土护肤品",
-      "english": "멈버린즈",
+      "english": "탬버린즈",
       "chinese": "TAMBURINS",
       "remark": "",
       "discount": null,
@@ -1520,8 +1520,8 @@
     {
       "id": "125",
       "category": "本土护肤品",
-      "english": "TIRTIR",
-      "chinese": "TIRTIR",
+      "english": "TIR TIR",
+      "chinese": "TIR TIR",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -1653,7 +1653,7 @@
     {
       "id": "136",
       "category": "本土护肤品",
-      "english": "엘라쥬",
+      "english": "웰라쥬",
       "chinese": "WELLAGE",
       "remark": "",
       "discount": null,
@@ -1681,7 +1681,7 @@
     {
       "id": "138",
       "category": "本土护肤品",
-      "english": "WHOO 시즌오프",
+      "english": "WHOO시즌오프",
       "chinese": "后 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -1734,7 +1734,7 @@
       "id": "142",
       "category": "本土护肤品",
       "english": "정샘물",
-      "chinese": "郑瑄茉",
+      "chinese": "郑萱茉",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -1955,7 +1955,7 @@
     {
       "id": "158",
       "category": "进口护肤品",
-      "english": "C.DIOR C&P (MAKE UP) [T]",
+      "english": "C.DIOR C&P (MAKE UP)【T】",
       "chinese": "迪奥化妆品 彩妆 (MAKE UP)",
       "remark": "",
       "discount": null,
@@ -1970,7 +1970,7 @@
     {
       "id": "159",
       "category": "进口护肤品",
-      "english": "C.DIOR C&P (SKIN CARE&PFM) [T]",
+      "english": "C.DIOR C&P (SKIN CARE&PFM)【T】",
       "chinese": "迪奥化妆品 护肤品&香水 (SKIN CARE&PFM)",
       "remark": "",
       "discount": null,
@@ -1985,8 +1985,8 @@
     {
       "id": "160",
       "category": "进口护肤品",
-      "english": "C.DIOR C&P (BODY&HAIR) [T]",
-      "chinese": "迪奥化妆品 其他 (BODY&HAIR)",
+      "english": "C.DIOR C&P (BODY&HAIR)【T】",
+      "chinese": "迪奥化妆品 其他(BODY&HAIR)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -2000,8 +2000,8 @@
     {
       "id": "161",
       "category": "进口护肤品",
-      "english": "CHANEL C&P (MAKE UP) [T]",
-      "chinese": "香奈儿化妆品 彩妆 (MAKE UP)",
+      "english": "CHANEL C&P (MAKE UP)【T】",
+      "chinese": "香奈儿化妆品 彩妆（MAKE UP）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -2015,7 +2015,7 @@
     {
       "id": "162",
       "category": "进口护肤品",
-      "english": "CHANEL C&P (非MAKE UP) [T]",
+      "english": "CHANEL C&P (非MAKE UP)【T】",
       "chinese": "香奈儿化妆品 非彩妆",
       "remark": "",
       "discount": null,
@@ -2071,7 +2071,7 @@
     {
       "id": "166",
       "category": "进口护肤品",
-      "english": "CLARINS 시즌오프",
+      "english": "CLARINS시즌오프",
       "chinese": "娇韵诗 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -2115,7 +2115,7 @@
     {
       "id": "169",
       "category": "进口护肤品",
-      "english": "CLE DE PEAU 시즌오프",
+      "english": "CLE DE PEAU시즌오프",
       "chinese": "肌肤之钥 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -2131,7 +2131,7 @@
       "id": "170",
       "category": "进口护肤品",
       "english": "CHARLOTTE TILBURY",
-      "chinese": "夏洛特·蒂尔伯里",
+      "chinese": "夏洛特·蒂铂丽",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -2183,7 +2183,7 @@
       "id": "174",
       "category": "进口护肤品",
       "english": "CHLOE C&P",
-      "chinese": "蔻依化妆品",
+      "chinese": "寇依化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -2292,7 +2292,7 @@
     {
       "id": "182",
       "category": "进口护肤品",
-      "english": "ESTEE LAUDER 시즌오프",
+      "english": "ESTEE LAUDER시즌오프",
       "chinese": "雅诗兰黛 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -2462,7 +2462,7 @@
     {
       "id": "194",
       "category": "进口护肤品",
-      "english": "GUERLAIN 시즌오프",
+      "english": "GUERLAIN시즌오프",
       "chinese": "娇兰 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -2668,7 +2668,7 @@
     {
       "id": "208",
       "category": "进口护肤品",
-      "english": "LA MER 시즌오프",
+      "english": "LAMER시즌오프",
       "chinese": "海蓝之谜 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -2716,7 +2716,7 @@
     {
       "id": "211",
       "category": "进口护肤品",
-      "english": "LA PRAIRIE 시즌오프",
+      "english": "LA PRAIRIE시즌오프",
       "chinese": "莱珀妮 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -2775,7 +2775,7 @@
     {
       "id": "215",
       "category": "进口护肤品",
-      "english": "L'OCCITANE",
+      "english": "L`OCCITANE",
       "chinese": "欧舒丹",
       "remark": "",
       "discount": null,
@@ -2791,7 +2791,7 @@
     {
       "id": "216",
       "category": "进口护肤品",
-      "english": "LOREAL PARIS",
+      "english": "L'OREAL PARIS",
       "chinese": "欧莱雅",
       "remark": "",
       "discount": null,
@@ -2950,7 +2950,7 @@
       "id": "228",
       "category": "进口护肤品",
       "english": "MCM PFM",
-      "chinese": "MCM 香水",
+      "chinese": "MCM香水",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3025,7 +3025,7 @@
     {
       "id": "234",
       "category": "进口护肤品",
-      "english": "PENHALIGONS 시즌오프",
+      "english": "PENHALIGONS시즌오프",
       "chinese": "潘海利根 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -3119,7 +3119,7 @@
       "id": "241",
       "category": "进口护肤品",
       "english": "RITUALS",
-      "chinese": "仪式",
+      "chinese": "怡式",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3218,7 +3218,7 @@
       "id": "248",
       "category": "进口护肤品",
       "english": "SNIDEL BEAUTY",
-      "chinese": "SNIDEL 化妆品",
+      "chinese": "SNIDEL化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3229,7 +3229,7 @@
       "id": "249",
       "category": "进口护肤品",
       "english": "SENSAI",
-      "chinese": "sensai",
+      "chinese": "SENSAI",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3295,7 +3295,7 @@
     {
       "id": "254",
       "category": "进口护肤品",
-      "english": "SK-II 시즌오프",
+      "english": "SK-II시즌오프",
       "chinese": "SK-II 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -3457,7 +3457,7 @@
     {
       "id": "266",
       "category": "进口护肤品",
-      "english": "Y.S.L BEAUTY 시즌오프",
+      "english": "Y.S.L BEAUTY시즌오프",
       "chinese": "圣罗兰化妆品 现场折扣大于等于19时",
       "remark": "",
       "discount": null,
@@ -3564,7 +3564,7 @@
       "id": "274",
       "category": "珠宝&手表",
       "english": "CARTIER",
-      "chinese": "卡地亚 (钻石除外 )",
+      "chinese": "卡地亚（钻石除外）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3589,8 +3589,8 @@
     {
       "id": "276",
       "category": "珠宝&手表",
-      "english": "CHOW TAI FOOK (2)",
-      "chinese": "周大福",
+      "english": "CHOW TAI FOOK (금)",
+      "chinese": "周大福足金",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3618,7 +3618,7 @@
       "id": "278",
       "category": "珠宝&手表",
       "english": "CHOW TAI FOOK",
-      "chinese": "周大福其他",
+      "chinese": "周大福其它",
       "remark": "部分95折",
       "discount": null,
       "rebates": {
@@ -3643,9 +3643,9 @@
     {
       "id": "280",
       "category": "珠宝&手表",
-      "english": "CHAUMET (44%)",
-      "chinese": "尚美 (钻石 ,2 克拉及以上 )",
-      "remark": "必须发小票确认",
+      "english": "CHAUMET（钻石）",
+      "chinese": "尚美(钻石,2克拉及以上)",
+      "remark": "",
       "discount": null,
       "rebates": {
         "乐天明洞": 0.0,
@@ -3656,7 +3656,7 @@
       "id": "281",
       "category": "珠宝&手表",
       "english": "CHOPARD",
-      "chinese": "萧邦 (小冰块除外 )",
+      "chinese": "萧邦(小冰块除外)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3671,7 +3671,7 @@
       "id": "282",
       "category": "珠宝&手表",
       "english": "CHOPARD(ICE CUBE RING)",
-      "chinese": "萧邦 (小冰块 )",
+      "chinese": "萧邦(小冰块)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3700,7 +3700,7 @@
       "id": "284",
       "category": "珠宝&手表",
       "english": "CHANEL WAT",
-      "chinese": "香奈儿珠宝手表",
+      "chinese": "香奈儿手表",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3810,7 +3810,7 @@
       "id": "293",
       "category": "珠宝&手表",
       "english": "HERMES WATCH",
-      "chinese": "爱马仕手表 (独立柜台 )",
+      "chinese": "爱马仕手表（独立柜台）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -3940,7 +3940,7 @@
     {
       "id": "303",
       "category": "珠宝&手表",
-      "english": "MAMAN €T FILLE",
+      "english": "MAMAN ET FILLE",
       "chinese": "MAMAN ET FILLE",
       "remark": "",
       "discount": null,
@@ -3977,9 +3977,9 @@
     {
       "id": "306",
       "category": "珠宝&手表",
-      "english": "MONTBLANC",
+      "english": "MONTBLANC（有特殊SKU）",
       "chinese": "万宝龙",
-      "remark": "有特殊SKU；会员9折",
+      "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
         "乐天明洞": 0.17,
@@ -4046,7 +4046,7 @@
       "id": "311",
       "category": "珠宝&手表",
       "english": "POMELLATO",
-      "chinese": "宝曼兰",
+      "chinese": "宝曼兰朵",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4177,7 +4177,7 @@
       "id": "321",
       "category": "珠宝&手表",
       "english": "TIFFANY",
-      "chinese": "蒂芙尼（钻石 KNOT 除外）",
+      "chinese": "蒂芙尼(钻石 KNOT除外)",
       "remark": "/",
       "discount": null,
       "rebates": {
@@ -4523,7 +4523,7 @@
       "id": "348",
       "category": "进口服饰&包包",
       "english": "CELINE",
-      "chinese": "赛琳",
+      "chinese": "塞琳",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
@@ -4542,14 +4542,14 @@
       "rebates": {
         "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
-        "现代": 0.19
+        "现代": 0.21
       }
     },
     {
       "id": "350",
       "category": "进口服饰&包包",
       "english": "CK BAG",
-      "chinese": "CK 包",
+      "chinese": "CK包",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4595,8 +4595,8 @@
     {
       "id": "354",
       "category": "进口服饰&包包",
-      "english": "ECCO 4 할인상품",
-      "chinese": "爱步折扣大于等于 29.5% 的产品",
+      "english": "ECCO 29.5%이상 할인상품",
+      "chinese": "爱步 折扣大于等于29.5%的产品",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4613,7 +4613,7 @@
       "rebates": {
         "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "现代": 0.22,
+        "现代": 0.24,
         "爱宝客": 0.0
       }
     },
@@ -4621,7 +4621,7 @@
       "id": "356",
       "category": "进口服饰&包包",
       "english": "FENDI (시즌오프대상)",
-      "chinese": "芬迪 (换季折扣产品 )",
+      "chinese": "芬迪（换季折扣产品）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4705,7 +4705,7 @@
       "id": "363",
       "category": "进口服饰&包包",
       "english": "HERMES LLG",
-      "chinese": "爱马仕 ( 包包 )",
+      "chinese": "爱马仕（包包）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4721,7 +4721,7 @@
       "id": "364",
       "category": "进口服饰&包包",
       "english": "HERMES (기타)",
-      "chinese": "爱马仕其它 ( 包除外 , 仅限专柜 )",
+      "chinese": "爱马仕其它(包除外,仅限专柜)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4843,7 +4843,7 @@
       "id": "374",
       "category": "进口服饰&包包",
       "english": "LOEWE SCARF",
-      "chinese": "罗意威围巾",
+      "chinese": "罗意威 围巾",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4856,8 +4856,8 @@
     {
       "id": "375",
       "category": "进口服饰&包包",
-      "english": "LOEWE SCARF 아",
-      "chinese": "罗意威围巾除外",
+      "english": "LOEWE SCARF 外",
+      "chinese": "罗意威 围巾除外",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -4871,7 +4871,7 @@
       "id": "376",
       "category": "进口服饰&包包",
       "english": "LOEWE MARKDOWN",
-      "chinese": "罗意威 MARKDOWN 产品",
+      "chinese": "罗意威MARKDOWN产品",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -5086,7 +5086,7 @@
       "rebates": {
         "乐天明洞": 0.13,
         "乐天蚕室": 0.13,
-        "现代": 0.16,
+        "现代": 0.15,
         "爱宝客": 0.015
       }
     },
@@ -5128,8 +5128,8 @@
       "category": "进口服饰&包包",
       "english": "ST.DUPONT",
       "chinese": "都彭",
-      "remark": "会员95折",
-      "discount": 0.95,
+      "remark": "会员9折",
+      "discount": 0.9,
       "rebates": {
         "新世界": 0.1,
         "爱宝客": 0.16
@@ -5140,8 +5140,8 @@
       "category": "进口服饰&包包",
       "english": "S.FERRAGAMO",
       "chinese": "菲拉格慕",
-      "remark": "会员9折",
-      "discount": 0.9,
+      "remark": "会员95折",
+      "discount": 0.95,
       "rebates": {
         "乐天明洞": 0.24,
         "乐天蚕室": 0.24,
@@ -5171,7 +5171,7 @@
       "id": "400",
       "category": "进口服饰&包包",
       "english": "STUART WEITZMAN",
-      "chinese": "思缪韦曼",
+      "chinese": "思缇韦曼",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
@@ -5423,7 +5423,7 @@
     {
       "id": "421",
       "category": "本土服饰&包包",
-      "english": "커버난",
+      "english": "커버낫",
       "chinese": "COVERNAT",
       "remark": "",
       "discount": null,
@@ -5437,8 +5437,8 @@
     {
       "id": "422",
       "category": "本土服饰&包包",
-      "english": "COLUMBIA K",
-      "chinese": "COLUMBIA K",
+      "english": "COLUMBIA_K",
+      "chinese": "COLUMBIA_K",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -5515,7 +5515,7 @@
       "id": "428",
       "category": "本土服饰&包包",
       "english": "FILA(P)",
-      "chinese": "斐乐",
+      "chinese": "斐乐（P或2）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -5661,7 +5661,7 @@
       "id": "441",
       "category": "本土服饰&包包",
       "english": "KODAK APPAREL",
-      "chinese": "柯达 (或 2 或 P)",
+      "chinese": "柯达（或2或P）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -5746,7 +5746,7 @@
       "id": "448",
       "category": "本土服饰&包包",
       "english": "MCM(토산)",
-      "chinese": "MCM (本土)",
+      "chinese": "MCM（本土）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -5777,7 +5777,7 @@
       "id": "450",
       "category": "本土服饰&包包",
       "english": "MLB KIDS",
-      "chinese": "MLB 儿童",
+      "chinese": "MLB儿童",
       "remark": "0",
       "discount": null,
       "rebates": {
@@ -5802,7 +5802,7 @@
     {
       "id": "452",
       "category": "本土服饰&包包",
-      "english": "미아앤솔",
+      "english": "미야앤솔",
       "chinese": "MIYANSOL",
       "remark": "",
       "discount": null,
@@ -5874,8 +5874,8 @@
     {
       "id": "458",
       "category": "本土服饰&包包",
-      "english": "NORTH FACE (P或2)",
-      "chinese": "北面（P或2）",
+      "english": "NORTH FACE(P或2）",
+      "chinese": "北面(P或2）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -5887,7 +5887,7 @@
       "id": "459",
       "category": "本土服饰&包包",
       "english": "NORTH FACE KIDS",
-      "chinese": "北面儿童 (或 P 或 2)",
+      "chinese": "北面儿童（或P或2）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -6022,7 +6022,7 @@
       "id": "470",
       "category": "本土服饰&包包",
       "english": "LEE KIDS",
-      "chinese": "LEE 儿童",
+      "chinese": "LEE儿童",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -6060,7 +6060,7 @@
     {
       "id": "473",
       "category": "本土服饰&包包",
-      "english": "무신사_피스",
+      "english": "무신사_핍스",
       "chinese": "PHYPS",
       "remark": "",
       "discount": null,
@@ -6308,7 +6308,7 @@
     {
       "id": "494",
       "category": "眼镜",
-      "english": "FENDIS EYE",
+      "english": "FENDI3 EYE",
       "chinese": "芬迪眼镜",
       "remark": "",
       "discount": null,
@@ -6337,8 +6337,8 @@
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.12,
-        "乐天蚕室": 0.13,
+        "乐天明洞": 0.11,
+        "乐天蚕室": 0.12,
         "新世界": 0.11,
         "新罗": 0.11,
         "现代": 0.0
@@ -6445,7 +6445,7 @@
       "id": "505",
       "category": "眼镜",
       "english": "CELINE3 EYE",
-      "chinese": "赛琳眼镜",
+      "chinese": "塞琳眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -6639,7 +6639,7 @@
     {
       "id": "523",
       "category": "烟",
-      "english": "KT&G 전자담배",
+      "english": "KT&G_전자담배",
       "chinese": "KT&G电子烟",
       "remark": "",
       "discount": null,
@@ -6824,7 +6824,7 @@
     },
     {
       "id": "539",
-      "category": "酒",
+      "category": "食品",
       "english": "CHEONG KWAN JANG",
       "chinese": "正官庄一般",
       "remark": "",
@@ -6840,7 +6840,7 @@
     },
     {
       "id": "540",
-      "category": "酒",
+      "category": "食品",
       "english": "CHEONG KWAN JANG (뿌리삼)",
       "chinese": "正官庄人参根",
       "remark": "",
@@ -6848,7 +6848,7 @@
       "rebates": {
         "乐天明洞": 0.0,
         "乐天蚕室": 0.0,
-        "新世界": 0.0,
+        "新世界": 0.03,
         "新罗": 0.0,
         "现代": 0.0,
         "爱宝客": 0.0
@@ -6869,7 +6869,7 @@
     {
       "id": "542",
       "category": "食品",
-      "english": "베러밀",
+      "english": "배러밀",
       "chinese": "BETTERMEAL",
       "remark": "",
       "discount": null,
@@ -6902,7 +6902,7 @@
     {
       "id": "545",
       "category": "食品",
-      "english": "대호홍삼식품",
+      "english": "대호물산식품",
       "chinese": "Daeho食品",
       "remark": "",
       "discount": null,
@@ -6913,7 +6913,7 @@
     {
       "id": "546",
       "category": "食品",
-      "english": "그레인스쿠키",
+      "english": "그래인스쿠키",
       "chinese": "GRAINS COOKIE",
       "remark": "",
       "discount": null,
@@ -6946,8 +6946,8 @@
     {
       "id": "549",
       "category": "食品",
-      "english": "엘에이치앤비",
-      "chinese": "LH&B",
+      "english": "엘에이치앤디",
+      "chinese": "LH&D",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7028,7 +7028,7 @@
       "id": "556",
       "category": "食品",
       "english": "일동후디스(분유)",
-      "chinese": "ILDONG FOODS（奶粉）",
+      "chinese": "ILDONG FOODIS（奶粉）",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7082,8 +7082,8 @@
     {
       "id": "561",
       "category": "食品",
-      "english": "동원 F&B",
-      "chinese": "동원 F&B",
+      "english": "동원F&B",
+      "chinese": "동원F&B",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7125,9 +7125,9 @@
     },
     {
       "id": "565",
-      "category": "食品",
+      "category": "纪念品",
       "english": "HAESOO.L",
-      "chinese": "海秀儿（14K除外）",
+      "chinese": "海秀儿(14K除外)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7140,7 +7140,7 @@
       "id": "566",
       "category": "纪念品",
       "english": "HAESOO.L JEW (14K)",
-      "chinese": "海秀儿（14K足金）",
+      "chinese": "海秀儿(14K足金)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7175,7 +7175,7 @@
       "id": "569",
       "category": "纪念品",
       "english": "에이치에스에프",
-      "chinese": "HSF（特殊商品除外）",
+      "chinese": "HSF(特殊商品除外)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7185,8 +7185,8 @@
     {
       "id": "570",
       "category": "纪念品",
-      "english": "에이치에스에프（라라스윗、농심、동서、삼양、오뚜기）",
-      "chinese": "HSF特殊商品（Lalasweet、农心、东西、三养、Ottogi）",
+      "english": "에이치에스에프(라라스윗, 농심, 동서, 삼양, 오뚜기)",
+      "chinese": "HSF特殊商品(라라스윗, 농심, 동서, 삼양, 오뚜기)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7207,7 +7207,7 @@
     {
       "id": "572",
       "category": "纪念品",
-      "english": "세컨데",
+      "english": "쎄콩데",
       "chinese": "SECONDAIRE",
       "remark": "",
       "discount": null,
@@ -7289,7 +7289,7 @@
       "id": "579",
       "category": "纪念品",
       "english": "유엠(코스메틱)",
-      "chinese": "UM（化妆品）",
+      "chinese": "UM(化妆品)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7300,7 +7300,7 @@
       "id": "580",
       "category": "纪念品",
       "english": "유엠(유아)",
-      "chinese": "UM（幼儿用品）",
+      "chinese": "UM(幼儿用品)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7311,7 +7311,7 @@
       "id": "581",
       "category": "纪念品",
       "english": "유엠(캐릭터)",
-      "chinese": "UM（玩具）",
+      "chinese": "UM(玩具)",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -7541,8 +7541,8 @@
     {
       "id": "600",
       "category": "电子",
-      "english": "선경 DPS ACC(국산)",
-      "chinese": "선경 DPS ACC（本土）",
+      "english": "선경DFS ACC(국산)",
+      "chinese": "선경DFS ACC(本土)",
       "remark": "",
       "discount": null,
       "rebates": {
