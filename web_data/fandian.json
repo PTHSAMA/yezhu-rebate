@@ -1,7 +1,7 @@
 {
-  "version": "20261030142847",
-  "updated_at": "2026-10-30 14:28:47",
-  "count": 600,
+  "version": "20261101142633",
+  "updated_at": "2026-11-01 14:26:33",
+  "count": 586,
   "brands": [
     {
       "id": "1",
@@ -11,10 +11,13 @@
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
-        "新世界": 0.21,
-        "新罗": 0.2
+        "新世界": 0.19,
+        "新罗": 0.2,
+        "釜山乐天": 0.21,
+        "济州乐天": 0.18,
+        "济州新罗": 0.18
       }
     },
     {
@@ -25,10 +28,11 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0,
-        "新世界": 0.25,
-        "新罗": 0.27
+        "新世界": 0.24,
+        "新罗": 0.27,
+        "济州新罗": 0.14
       }
     },
     {
@@ -39,7 +43,8 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.19
+        "新世界": 0.17,
+        "济州新罗": 0.14
       }
     },
     {
@@ -50,7 +55,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23
+        "新世界": 0.21
       }
     },
     {
@@ -61,9 +66,10 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.24,
-        "新世界": 0.25
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.22,
+        "新世界": 0.24,
+        "济州乐天": 0.14
       }
     },
     {
@@ -74,7 +80,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
         "现代": 0.19
       }
@@ -87,10 +93,11 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
+        "乐天明洞": 0.17,
         "乐天蚕室": 0.0,
-        "新世界": 0.25,
-        "新罗": 0.24
+        "新世界": 0.23,
+        "新罗": 0.24,
+        "济州乐天": 0.14
       }
     },
     {
@@ -101,9 +108,10 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "现代": 0.23
+        "现代": 0.23,
+        "釜山乐天": 0.08
       }
     },
     {
@@ -114,11 +122,12 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.28,
-        "乐天蚕室": 0.28,
-        "新世界": 0.3,
+        "乐天明洞": 0.26,
+        "乐天蚕室": 0.26,
+        "新世界": 0.28,
         "新罗": 0.26,
-        "现代": 0.3
+        "现代": 0.3,
+        "釜山乐天": 0.15
       }
     },
     {
@@ -129,7 +138,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0
       }
     },
@@ -141,7 +150,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0,
         "现代": 0.25
       }
@@ -154,7 +163,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0
       }
     },
@@ -166,9 +175,9 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "新世界": 0.27
+        "新世界": 0.25
       }
     },
     {
@@ -179,7 +188,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.21
+        "新世界": 0.19
       }
     },
     {
@@ -190,12 +199,13 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.26,
-        "乐天蚕室": 0.26,
-        "新世界": 0.24,
+        "乐天明洞": 0.24,
+        "乐天蚕室": 0.24,
+        "新世界": 0.23,
         "新罗": 0.21,
         "现代": 0.27,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.19
       }
     },
     {
@@ -206,7 +216,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.26
+        "新世界": 0.24
       }
     },
     {
@@ -228,7 +238,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0
       }
     },
@@ -240,7 +250,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.13
+        "新世界": 0.11
       }
     },
     {
@@ -251,28 +261,46 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.28,
+        "乐天明洞": 0.26,
         "乐天蚕室": 0.0,
         "新罗": 0.28,
         "现代": 0.29,
-        "爱宝客": 0.28
+        "爱宝客": 0.28,
+        "济州新罗": 0.11
       }
     },
     {
       "id": "21",
+      "category": "本土护肤品",
+      "english": "바이오힐보시즌오프",
+      "chinese": "BIO HEAL BOH 现场折扣大于等于19时",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.0,
+        "新罗": 0.28,
+        "现代": 0.29,
+        "爱宝客": 0.28,
+        "济州新罗": 0.11
+      }
+    },
+    {
+      "id": "22",
       "category": "本土护肤品",
       "english": "브링그린",
       "chinese": "BRING GREEN",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
+        "乐天明洞": 0.17,
         "乐天蚕室": 0.0,
-        "现代": 0.2
+        "现代": 0.2,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "22",
+      "id": "23",
       "category": "本土护肤品",
       "english": "바이리즌",
       "chinese": "BYRYZN",
@@ -283,7 +311,7 @@
       }
     },
     {
-      "id": "23",
+      "id": "24",
       "category": "本土护肤品",
       "english": "케어플러스",
       "chinese": "CAREPLUS",
@@ -291,51 +319,55 @@
       "discount": null,
       "rebates": {
         "现代": 0.19,
-        "爱宝客": 0.2
+        "爱宝客": 0.2,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "24",
+      "id": "25",
       "category": "本土护肤品",
       "english": "CHASIN RABBITS",
       "chinese": "追幸兔",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新世界": 0.26
+        "新世界": 0.24
       }
     },
     {
-      "id": "25",
+      "id": "26",
       "category": "本土护肤品",
       "english": "CELL FUSION C",
       "chinese": "秀肤生",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
+        "乐天明洞": 0.25,
         "乐天蚕室": 0.0,
-        "新世界": 0.28,
+        "新世界": 0.27,
         "新罗": 0.29,
-        "爱宝客": 0.29
+        "爱宝客": 0.29,
+        "釜山乐天": 0.09,
+        "济州乐天": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "26",
+      "id": "27",
       "category": "本土护肤品",
       "english": "CELLCOSMET",
       "chinese": "CELLCOSMET",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
-        "乐天蚕室": 0.19
+        "乐天明洞": 0.17,
+        "乐天蚕室": 0.17
       }
     },
     {
-      "id": "27",
+      "id": "28",
       "category": "本土护肤品",
       "english": "CELUQUE",
       "chinese": "CELUQUE",
@@ -346,85 +378,90 @@
       }
     },
     {
-      "id": "28",
+      "id": "29",
       "category": "本土护肤品",
       "english": "CENTELLIAN 24",
       "chinese": "CENTELLIAN 24",
       "remark": "",
       "discount": null,
       "rebates": {
-        "爱宝客": 0.215
+        "爱宝客": 0.215,
+        "釜山乐天": 0.0
       }
     },
     {
-      "id": "29",
+      "id": "30",
       "category": "本土护肤品",
       "english": "CLIO",
       "chinese": "珂莱欧",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
         "新罗": 0.25
       }
     },
     {
-      "id": "30",
+      "id": "31",
       "category": "本土护肤品",
       "english": "차앤박",
       "chinese": "CNP",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
+        "乐天明洞": 0.25,
         "乐天蚕室": 0.0,
-        "新世界": 0.28,
+        "新世界": 0.27,
         "新罗": 0.27,
         "现代": 0.28,
-        "爱宝客": 0.28
+        "爱宝客": 0.28,
+        "釜山乐天": 0.2,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "31",
+      "id": "32",
       "category": "本土护肤品",
       "english": "COLORGRAM",
       "chinese": "COLORGRAM",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.15,
+        "乐天明洞": 0.13,
         "乐天蚕室": 0.0,
-        "现代": 0.16
+        "现代": 0.16,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "32",
+      "id": "33",
       "category": "本土护肤品",
       "english": "데이지크",
       "chinese": "DASIQUE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.17,
-        "乐天蚕室": 0.17,
+        "乐天明洞": 0.15,
+        "乐天蚕室": 0.15,
         "现代": 0.18
       }
     },
     {
-      "id": "33",
+      "id": "34",
       "category": "本土护肤品",
       "english": "DEARDOT",
       "chinese": "DEARDOT",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.0,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "34",
+      "id": "35",
       "category": "本土护肤品",
       "english": "DERMASSIMO",
       "chinese": "DERMASSIMO",
@@ -435,19 +472,19 @@
       }
     },
     {
-      "id": "35",
+      "id": "36",
       "category": "本土护肤品",
       "english": "DERMARSSANCE",
       "chinese": "德玛桑斯",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12
       }
     },
     {
-      "id": "36",
+      "id": "37",
       "category": "本土护肤品",
       "english": "DERALAUREN",
       "chinese": "DERALAUREN",
@@ -458,7 +495,7 @@
       }
     },
     {
-      "id": "37",
+      "id": "38",
       "category": "本土护肤品",
       "english": "DOS&YOUNIQUE",
       "chinese": "DOS&YOUNIQUE",
@@ -469,7 +506,7 @@
       }
     },
     {
-      "id": "38",
+      "id": "39",
       "category": "本土护肤品",
       "english": "DERCENT",
       "chinese": "DERCENT",
@@ -480,45 +517,45 @@
       }
     },
     {
-      "id": "39",
+      "id": "40",
       "category": "本土护肤品",
       "english": "DEWYTREE",
       "chinese": "自顏源露",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.17,
+        "乐天明洞": 0.15,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "40",
+      "id": "41",
       "category": "本土护肤品",
       "english": "DR.G",
       "chinese": "DR.G",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0,
-        "新世界": 0.27,
+        "新世界": 0.25,
         "新罗": 0.26
       }
     },
     {
-      "id": "41",
+      "id": "42",
       "category": "本土护肤品",
       "english": "DIAPIA",
       "chinese": "达亚比",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "42",
+      "id": "43",
       "category": "本土护肤品",
       "english": "동인비",
       "chinese": "彤人秘",
@@ -529,34 +566,35 @@
       }
     },
     {
-      "id": "43",
+      "id": "44",
       "category": "本土护肤品",
       "english": "파우",
       "chinese": "FAU",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0,
         "现代": 0.25
       }
     },
     {
-      "id": "44",
+      "id": "45",
       "category": "本土护肤品",
       "english": "필리밀리",
       "chinese": "FILLIMILLI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.09,
         "乐天蚕室": 0.0,
         "现代": 0.12,
-        "爱宝客": 0.2
+        "爱宝客": 0.2,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "45",
+      "id": "46",
       "category": "本土护肤品",
       "english": "펠드 아포테케",
       "chinese": "펠드 아포테케",
@@ -567,7 +605,7 @@
       }
     },
     {
-      "id": "46",
+      "id": "47",
       "category": "本土护肤品",
       "english": "FLANER",
       "chinese": "FLANER",
@@ -578,47 +616,51 @@
       }
     },
     {
-      "id": "47",
+      "id": "48",
       "category": "本土护肤品",
       "english": "FWEE",
       "chinese": "FWEE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "48",
+      "id": "49",
       "category": "本土护肤品",
       "english": "PRIMERA",
       "chinese": "芙丽美娜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.19,
-        "新罗": 0.18
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.16,
+        "新世界": 0.18,
+        "新罗": 0.18,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "49",
+      "id": "50",
       "category": "本土护肤品",
       "english": "GOONGBE",
       "chinese": "宫中秘策",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "新世界": 0.28,
-        "新罗": 0.25
+        "新世界": 0.24,
+        "新罗": 0.25,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "50",
+      "id": "51",
       "category": "本土护肤品",
       "english": "GLOWMANSION",
       "chinese": "GLOWMANSION",
@@ -629,156 +671,173 @@
       }
     },
     {
-      "id": "51",
+      "id": "52",
       "category": "本土护肤品",
       "english": "GLOWPOOL",
       "chinese": "GLOWPOOL",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12
       }
     },
     {
-      "id": "52",
+      "id": "53",
       "category": "本土护肤品",
       "english": "HANYUL",
       "chinese": "韩律",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.13,
-        "乐天蚕室": 0.13
+        "乐天明洞": 0.11,
+        "乐天蚕室": 0.11
       }
     },
     {
-      "id": "53",
+      "id": "54",
       "category": "本土护肤品",
       "english": "HEALOINE",
       "chinese": "稀洛因",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.28
+        "新世界": 0.26
       }
     },
     {
-      "id": "54",
+      "id": "55",
       "category": "本土护肤品",
       "english": "HERA",
       "chinese": "赫拉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
-        "乐天蚕室": 0.21,
-        "新世界": 0.19,
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.19,
+        "新世界": 0.18,
         "新罗": 0.18,
         "现代": 0.22,
-        "爱宝客": 0.24
+        "爱宝客": 0.24,
+        "釜山乐天": 0.13,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "55",
+      "id": "56",
       "category": "本土护肤品",
       "english": "아이디얼포맨",
       "chinese": "IDEAL FOR MEN",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.19
+        "现代": 0.19,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "56",
+      "id": "57",
       "category": "本土护肤品",
       "english": "아이프릴리",
       "chinese": "IPRILRY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23
+        "新世界": 0.21
       }
     },
     {
-      "id": "57",
+      "id": "58",
       "category": "本土护肤品",
       "english": "ISOI",
       "chinese": "ISOI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.0
-      }
-    },
-    {
-      "id": "58",
-      "category": "本土护肤品",
-      "english": "ISNTREE",
-      "chinese": "叶臻特黎",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.15,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0
       }
     },
     {
       "id": "59",
       "category": "本土护肤品",
+      "english": "ISNTREE",
+      "chinese": "叶臻特黎",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.0
+      }
+    },
+    {
+      "id": "60",
+      "category": "本土护肤品",
       "english": "IOPE",
       "chinese": "艾诺碧",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0,
         "新罗": 0.19,
         "现代": 0.2
       }
     },
     {
-      "id": "60",
+      "id": "61",
       "category": "本土护肤品",
       "english": "ITS SKIN",
       "chinese": "伊思",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
+        "乐天明洞": 0.23,
         "乐天蚕室": 0.0,
-        "新世界": 0.27
+        "新世界": 0.25,
+        "釜山乐天": 0.12
       }
     },
     {
-      "id": "61",
+      "id": "62",
+      "category": "本土护肤品",
+      "english": "IRECIPE",
+      "chinese": "IRECIPE",
+      "remark": "",
+      "discount": null,
+      "rebates": {}
+    },
+    {
+      "id": "63",
       "category": "本土护肤品",
       "english": "제이엠솔루션",
       "chinese": "JMsolution",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "现代": 0.23
+        "现代": 0.23,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "62",
+      "id": "64",
       "category": "本土护肤品",
       "english": "JMELLA",
       "chinese": "纪梅拉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.0,
+        "釜山乐天": 0.17
       }
     },
     {
-      "id": "63",
+      "id": "65",
       "category": "本土护肤品",
       "english": "쥬베룩",
       "chinese": "JUVELOOK",
@@ -789,7 +848,7 @@
       }
     },
     {
-      "id": "64",
+      "id": "66",
       "category": "本土护肤品",
       "english": "KINFOLK NOTES",
       "chinese": "KINFOLK NOTES",
@@ -800,20 +859,20 @@
       }
     },
     {
-      "id": "65",
+      "id": "67",
       "category": "本土护肤品",
       "english": "KAHI",
       "chinese": "KAHI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.15,
+        "乐天明洞": 0.13,
         "乐天蚕室": 0.0,
         "新罗": 0.24
       }
     },
     {
-      "id": "66",
+      "id": "68",
       "category": "本土护肤品",
       "english": "KEI.H",
       "chinese": "KEI.H",
@@ -825,7 +884,7 @@
       }
     },
     {
-      "id": "67",
+      "id": "69",
       "category": "本土护肤品",
       "english": "KUNDAL",
       "chinese": "昆黛尔",
@@ -837,7 +896,7 @@
       }
     },
     {
-      "id": "68",
+      "id": "70",
       "category": "本土护肤品",
       "english": "케이멀티 에이치제이",
       "chinese": "케이멀티 에이치제이",
@@ -848,84 +907,90 @@
       }
     },
     {
-      "id": "69",
+      "id": "71",
       "category": "本土护肤品",
       "english": "루나",
       "chinese": "露娜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
-        "新世界": 0.24
+        "新世界": 0.22
       }
     },
     {
-      "id": "70",
+      "id": "72",
       "category": "本土护肤品",
       "english": "라뮤즈",
       "chinese": "LA MUSE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23
+        "新世界": 0.21
       }
     },
     {
-      "id": "71",
+      "id": "73",
       "category": "本土护肤品",
       "english": "레이디킨",
       "chinese": "Ladykin",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.27
+        "新世界": 0.25
       }
     },
     {
-      "id": "72",
+      "id": "74",
       "category": "本土护肤品",
       "english": "LANEIGE",
       "chinese": "兰芝",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22,
-        "新世界": 0.19,
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.18,
         "新罗": 0.2,
         "现代": 0.22,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.12,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "73",
+      "id": "75",
       "category": "本土护肤品",
       "english": "런드리유",
       "chinese": "LAUNDRYOU",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.18
+        "新世界": 0.16
       }
     },
     {
-      "id": "74",
+      "id": "76",
       "category": "本土护肤品",
       "english": "REJURAN",
       "chinese": "丽珠兰",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2,
-        "新世界": 0.23,
+        "乐天明洞": 0.18,
+        "乐天蚕室": 0.18,
+        "新世界": 0.21,
         "新罗": 0.21,
-        "现代": 0.23
+        "现代": 0.23,
+        "釜山乐天": 0.17,
+        "济州乐天": 0.13,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "75",
+      "id": "77",
       "category": "本土护肤品",
       "english": "LICORNE",
       "chinese": "LICORNE",
@@ -936,19 +1001,19 @@
       }
     },
     {
-      "id": "76",
+      "id": "78",
       "category": "本土护肤品",
       "english": "LG Pra L",
       "chinese": "LG 璞莱",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11
+        "乐天明洞": 0.09,
+        "乐天蚕室": 0.09
       }
     },
     {
-      "id": "77",
+      "id": "79",
       "category": "本土护肤品",
       "english": "MAMONDE",
       "chinese": "梦妆",
@@ -959,7 +1024,7 @@
       }
     },
     {
-      "id": "78",
+      "id": "80",
       "category": "本土护肤品",
       "english": "매드포코스",
       "chinese": "MADFORCOS",
@@ -970,7 +1035,7 @@
       }
     },
     {
-      "id": "79",
+      "id": "81",
       "category": "本土护肤品",
       "english": "MARIPOSA",
       "chinese": "MARIPOSA",
@@ -981,7 +1046,7 @@
       }
     },
     {
-      "id": "80",
+      "id": "82",
       "category": "本土护肤品",
       "english": "MEDIHEAL",
       "chinese": "美迪惠尔",
@@ -993,34 +1058,37 @@
         "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.0,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "81",
+      "id": "83",
       "category": "本土护肤品",
       "english": "메디필",
       "chinese": "MEDIPEEL",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "82",
+      "id": "84",
       "category": "本土护肤品",
       "english": "메디테라피",
       "chinese": "MEDITHERAPY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23
+        "新世界": 0.21
       }
     },
     {
-      "id": "83",
+      "id": "85",
       "category": "本土护肤品",
       "english": "MEDIPAIR",
       "chinese": "MEDIPAIR",
@@ -1031,7 +1099,7 @@
       }
     },
     {
-      "id": "84",
+      "id": "86",
       "category": "本土护肤品",
       "english": "MEDI JEWELRY",
       "chinese": "MEDI JEWELRY",
@@ -1042,7 +1110,7 @@
       }
     },
     {
-      "id": "85",
+      "id": "87",
       "category": "本土护肤品",
       "english": "MEDICUBE",
       "chinese": "美蒂秋芙",
@@ -1053,7 +1121,7 @@
       }
     },
     {
-      "id": "86",
+      "id": "88",
       "category": "本土护肤品",
       "english": "MIRACLEMUSE",
       "chinese": "MIRACLEMUSE",
@@ -1064,7 +1132,7 @@
       }
     },
     {
-      "id": "87",
+      "id": "89",
       "category": "本土护肤品",
       "english": "MUZIGAE MANSION",
       "chinese": "MUZIGAE MANSION",
@@ -1073,35 +1141,37 @@
       "rebates": {
         "乐天明洞": 0.0,
         "乐天蚕室": 0.0,
-        "新罗": 0.0
+        "新罗": 0.0,
+        "济州乐天": 0.0,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "88",
+      "id": "90",
       "category": "本土护肤品",
       "english": "MOEV",
       "chinese": "MOEV",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.13,
+        "乐天明洞": 0.11,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "89",
+      "id": "91",
       "category": "本土护肤品",
       "english": "MOLVANY",
       "chinese": "MOLVANY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "90",
+      "id": "92",
       "category": "本土护肤品",
       "english": "MOMSOLVE",
       "chinese": "MOMSOLVE",
@@ -1112,7 +1182,7 @@
       }
     },
     {
-      "id": "91",
+      "id": "93",
       "category": "本土护肤品",
       "english": "MORIMANA",
       "chinese": "MORIMANA",
@@ -1123,19 +1193,19 @@
       }
     },
     {
-      "id": "92",
+      "id": "94",
       "category": "本土护肤品",
       "english": "네시픽",
       "chinese": "NACIFIC",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "93",
+      "id": "95",
       "category": "本土护肤品",
       "english": "NBPISIS",
       "chinese": "NBPISIS",
@@ -1146,19 +1216,20 @@
       }
     },
     {
-      "id": "94",
+      "id": "96",
       "category": "本土护肤品",
       "english": "NONFICTION",
       "chinese": "NONFICTION",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.0,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "95",
+      "id": "97",
       "category": "本土护肤品",
       "english": "NONFICTION시즌오프",
       "chinese": "NONFICTION 现场折扣大于等于19时",
@@ -1166,11 +1237,12 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天蚕室": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "96",
+      "id": "98",
       "category": "本土护肤品",
       "english": "네이처컬렉션",
       "chinese": "Nature Collection",
@@ -1181,19 +1253,19 @@
       }
     },
     {
-      "id": "97",
+      "id": "99",
       "category": "本土护肤品",
       "english": "NUSE",
       "chinese": "NUSE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
+        "乐天明洞": 0.19,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "98",
+      "id": "100",
       "category": "本土护肤品",
       "english": "NUTSELINE",
       "chinese": "NUTSELINE",
@@ -1204,48 +1276,53 @@
       }
     },
     {
-      "id": "99",
+      "id": "101",
       "category": "本土护肤品",
       "english": "OHUI",
       "chinese": "欧惠",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.25,
-        "新世界": 0.21,
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.23,
+        "新世界": 0.2,
         "现代": 0.26,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.01,
+        "济州乐天": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "100",
+      "id": "102",
       "category": "本土护肤品",
       "english": "papa recipe",
       "chinese": "春雨",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新世界": 0.25
+        "新世界": 0.23,
+        "釜山乐天": 0.07,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "101",
+      "id": "103",
       "category": "本土护肤品",
       "english": "PINKWONDER",
       "chinese": "PINKWONDER",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
+        "乐天明洞": 0.19,
         "乐天蚕室": 0.0,
-        "新世界": 0.24
+        "新世界": 0.22
       }
     },
     {
-      "id": "102",
+      "id": "104",
       "category": "本土护肤品",
       "english": "REFA HEART BRUSH",
       "chinese": "REFA HEART BRUSH",
@@ -1257,7 +1334,7 @@
       }
     },
     {
-      "id": "103",
+      "id": "105",
       "category": "本土护肤品",
       "english": "세포랩",
       "chinese": "세포랩",
@@ -1268,23 +1345,25 @@
       }
     },
     {
-      "id": "104",
+      "id": "106",
       "category": "本土护肤品",
       "english": "SULWHASOO",
       "chinese": "雪花秀",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22,
-        "新世界": 0.26,
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.24,
         "新罗": 0.22,
         "现代": 0.26,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "105",
+      "id": "107",
       "category": "本土护肤品",
       "english": "SUM37",
       "chinese": "呼吸",
@@ -1292,11 +1371,12 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.0,
-        "乐天蚕室": 0.11
+        "乐天蚕室": 0.09,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "106",
+      "id": "108",
       "category": "本土护肤品",
       "english": "ODEAR",
       "chinese": "ODEAR",
@@ -1307,7 +1387,7 @@
       }
     },
     {
-      "id": "107",
+      "id": "109",
       "category": "本土护肤品",
       "english": "오에라",
       "chinese": "OERA",
@@ -1318,10 +1398,22 @@
       }
     },
     {
-      "id": "108",
+      "id": "110",
       "category": "本土护肤品",
       "english": "PLEUVOIR",
       "chinese": "PLEUVOIR",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.0
+      }
+    },
+    {
+      "id": "111",
+      "category": "本土护肤品",
+      "english": "RADIEUX",
+      "chinese": "RADIEUX",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -1330,19 +1422,7 @@
       }
     },
     {
-      "id": "109",
-      "category": "本土护肤品",
-      "english": "RADIEUX",
-      "chinese": "RADIEUX",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.23,
-        "乐天蚕室": 0.0
-      }
-    },
-    {
-      "id": "110",
+      "id": "112",
       "category": "本土护肤品",
       "english": "POESIA",
       "chinese": "POESIA",
@@ -1353,7 +1433,7 @@
       }
     },
     {
-      "id": "111",
+      "id": "113",
       "category": "本土护肤品",
       "english": "리솔츠",
       "chinese": "RESALTZ",
@@ -1364,105 +1444,107 @@
       }
     },
     {
-      "id": "112",
+      "id": "114",
       "category": "本土护肤品",
       "english": "REVCELL",
       "chinese": "梨宝璱",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12
       }
     },
     {
-      "id": "113",
+      "id": "115",
       "category": "本土护肤品",
       "english": "ROM&ND",
       "chinese": "柔魅得",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2
+        "乐天明洞": 0.18,
+        "乐天蚕室": 0.18
       }
     },
     {
-      "id": "114",
+      "id": "116",
       "category": "本土护肤品",
       "english": "SUDEE",
       "chinese": "SUDEE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0,
         "现代": 0.19
       }
     },
     {
-      "id": "115",
+      "id": "117",
       "category": "本土护肤品",
       "english": "SOOHANBANG",
       "chinese": "SOOHANBANG",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "116",
+      "id": "118",
       "category": "本土护肤品",
       "english": "헤스킨",
       "chinese": "HEXKIN",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.27
+        "新世界": 0.25,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "117",
+      "id": "119",
       "category": "本土护肤品",
       "english": "THEFACESHOP",
       "chinese": "菲诗小铺",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
-        "新世界": 0.2,
+        "新世界": 0.18,
         "现代": 0.2
       }
     },
     {
-      "id": "118",
+      "id": "120",
       "category": "本土护肤品",
       "english": "탬버린즈",
       "chinese": "TAMBURINS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.04,
-        "乐天蚕室": 0.04,
-        "新世界": 0.06
+        "乐天明洞": 0.02,
+        "乐天蚕室": 0.02,
+        "新世界": 0.04,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "119",
+      "id": "121",
       "category": "本土护肤品",
       "english": "톰",
       "chinese": "THOME",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.06
+        "新世界": 0.04
       }
     },
     {
-      "id": "120",
+      "id": "122",
       "category": "本土护肤品",
       "english": "TENDERGARDEN",
       "chinese": "TENDERGARDEN",
@@ -1473,18 +1555,19 @@
       }
     },
     {
-      "id": "121",
+      "id": "123",
       "category": "本土护肤品",
       "english": "DERMAFIX",
       "chinese": "德玛肤",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23
+        "新世界": 0.21,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "122",
+      "id": "124",
       "category": "本土护肤品",
       "english": "더라퓨즈",
       "chinese": "더라퓨즈",
@@ -1495,55 +1578,59 @@
       }
     },
     {
-      "id": "123",
+      "id": "125",
       "category": "本土护肤品",
       "english": "THEORCHID",
       "chinese": "THEORCHID",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.0,
+        "爱宝客": 0.24
       }
     },
     {
-      "id": "124",
+      "id": "126",
       "category": "本土护肤品",
       "english": "THE TOOL LAB",
       "chinese": "THE TOOL LAB",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.2
+        "新世界": 0.18
       }
     },
     {
-      "id": "125",
+      "id": "127",
       "category": "本土护肤品",
       "english": "TIR TIR",
       "chinese": "TIR TIR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.17,
+        "乐天蚕室": 0.0,
+        "釜山乐天": 0.0
       }
     },
     {
-      "id": "126",
+      "id": "128",
       "category": "本土护肤品",
       "english": "TOO COOL FOR SCHOOL",
       "chinese": "TOO COOL FOR SCHOOL",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "新罗": 0.28
+        "新罗": 0.28,
+        "釜山乐天": 0.12,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "127",
+      "id": "129",
       "category": "本土护肤品",
       "english": "UNIQUEMI",
       "chinese": "UNIQUEMI",
@@ -1554,19 +1641,19 @@
       }
     },
     {
-      "id": "128",
+      "id": "130",
       "category": "本土护肤品",
       "english": "VARA",
       "chinese": "VARA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "129",
+      "id": "131",
       "category": "本土护肤品",
       "english": "VEGREEN",
       "chinese": "VEGREEN",
@@ -1577,57 +1664,59 @@
       }
     },
     {
-      "id": "130",
+      "id": "132",
       "category": "本土护肤品",
       "english": "비디비치",
       "chinese": "VIDIVICI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.25
+        "新世界": 0.23
       }
     },
     {
-      "id": "131",
+      "id": "133",
       "category": "本土护肤品",
       "english": "VDL",
       "chinese": "VDL",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
+        "乐天明洞": 0.19,
         "乐天蚕室": 0.0,
-        "新世界": 0.23
+        "新世界": 0.21
       }
     },
     {
-      "id": "132",
+      "id": "134",
       "category": "本土护肤品",
       "english": "브이티",
       "chinese": "VT",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.28,
+        "乐天明洞": 0.26,
         "乐天蚕室": 0.0,
-        "新世界": 0.27,
+        "新世界": 0.26,
         "现代": 0.29,
-        "爱宝客": 0.3
+        "爱宝客": 0.3,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "133",
+      "id": "135",
       "category": "本土护肤品",
       "english": "VONESTIS",
       "chinese": "VONESTIS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "爱宝客": 0.175
+        "爱宝客": 0.175,
+        "釜山乐天": 0.17
       }
     },
     {
-      "id": "134",
+      "id": "136",
       "category": "本土护肤品",
       "english": "WATIFORSKIN",
       "chinese": "WATIFORSKIN",
@@ -1638,48 +1727,53 @@
       }
     },
     {
-      "id": "135",
+      "id": "137",
       "category": "本土护肤品",
       "english": "웨이크메이크",
       "chinese": "WAKE MAKE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
-        "现代": 0.21
+        "现代": 0.21,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "136",
+      "id": "138",
       "category": "本土护肤品",
       "english": "웰라쥬",
       "chinese": "WELLAGE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23,
-        "现代": 0.23
+        "新世界": 0.21,
+        "现代": 0.23,
+        "釜山乐天": 0.17,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "137",
+      "id": "139",
       "category": "本土护肤品",
       "english": "WHOO",
       "chinese": "后",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.25,
-        "新世界": 0.28,
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.23,
+        "新世界": 0.26,
         "新罗": 0.29,
         "现代": 0.29,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.13,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "138",
+      "id": "140",
       "category": "本土护肤品",
       "english": "WHOO시즌오프",
       "chinese": "后 现场折扣大于等于19时",
@@ -1688,14 +1782,16 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.28,
+        "新世界": 0.26,
         "新罗": 0.29,
         "现代": 0.29,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.13,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "139",
+      "id": "141",
       "category": "本土护肤品",
       "english": "WITHDERM SENSE",
       "chinese": "WITHDERM SENSE",
@@ -1708,7 +1804,7 @@
       }
     },
     {
-      "id": "140",
+      "id": "142",
       "category": "本土护肤品",
       "english": "YEONBISOO",
       "chinese": "YEONBISOO",
@@ -1719,101 +1815,107 @@
       }
     },
     {
-      "id": "141",
+      "id": "143",
       "category": "本土护肤品",
       "english": "YUNGO",
       "chinese": "润膏",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.0,
+        "济州乐天": 0.14
       }
     },
     {
-      "id": "142",
+      "id": "144",
       "category": "本土护肤品",
       "english": "정샘물",
       "chinese": "郑萱茉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.28,
+        "乐天明洞": 0.26,
         "乐天蚕室": 0.0,
-        "新世界": 0.3,
+        "新世界": 0.28,
         "新罗": 0.28,
-        "现代": 0.3
+        "现代": 0.3,
+        "釜山乐天": 0.16,
+        "济州乐天": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "143",
+      "id": "145",
       "category": "进口护肤品",
       "english": "AESOP",
       "chinese": "伊索",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2,
-        "新世界": 0.22,
-        "新罗": 0.14
+        "乐天明洞": 0.18,
+        "乐天蚕室": 0.18,
+        "新世界": 0.2,
+        "新罗": 0.14,
+        "济州新罗": 0.12
       }
     },
     {
-      "id": "144",
+      "id": "146",
       "category": "进口护肤品",
       "english": "ATELIER COLOGNE",
       "chinese": "欧珑",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.0,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "145",
+      "id": "147",
       "category": "进口护肤品",
       "english": "ACQUA DI PARMA",
       "chinese": "帕尔玛之水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.27,
-        "新世界": 0.3,
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.26,
+        "新世界": 0.28,
         "新罗": 0.29,
         "现代": 0.29
       }
     },
     {
-      "id": "146",
+      "id": "148",
       "category": "进口护肤品",
       "english": "ADDICTION",
       "chinese": "ADDICTION",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22,
-        "新世界": 0.21
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.2
       }
     },
     {
-      "id": "147",
+      "id": "149",
       "category": "进口护肤品",
       "english": "ALBION",
       "chinese": "奥尔滨",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.1,
+        "乐天明洞": 0.08,
         "乐天蚕室": 0.0,
         "新罗": 0.19
       }
     },
     {
-      "id": "148",
+      "id": "150",
       "category": "进口护肤品",
       "english": "AMOUAGE",
       "chinese": "AMOUAGE",
@@ -1825,180 +1927,188 @@
       }
     },
     {
-      "id": "149",
+      "id": "151",
       "category": "进口护肤品",
       "english": "AMPLEN",
       "chinese": "AMPLEN",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.0,
+        "釜山乐天": 0.17
       }
     },
     {
-      "id": "150",
+      "id": "152",
       "category": "进口护肤品",
       "english": "AUGUSTINUS BADER",
       "chinese": "奥古斯汀·巴德",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.09,
+        "乐天明洞": 0.07,
         "乐天蚕室": 0.0,
-        "新世界": 0.1
+        "新世界": 0.09,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "151",
+      "id": "153",
       "category": "进口护肤品",
       "english": "AVEDA",
       "chinese": "艾凡达",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.15,
-        "乐天蚕室": 0.15,
-        "新罗": 0.12,
-        "现代": 0.16
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新罗": 0.15,
+        "现代": 0.16,
+        "釜山乐天": 0.14,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "152",
+      "id": "154",
       "category": "进口护肤品",
       "english": "BIOTHERM",
       "chinese": "碧欧泉",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
-        "乐天蚕室": 0.21,
-        "新世界": 0.23,
-        "新罗": 0.21,
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.19,
+        "新世界": 0.21,
+        "新罗": 0.24,
         "现代": 0.24
       }
     },
     {
-      "id": "153",
+      "id": "155",
       "category": "进口护肤品",
       "english": "BVLGARI PFM",
       "chinese": "宝格丽化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.25,
-        "新世界": 0.27,
-        "新罗": 0.3,
-        "爱宝客": 0.33
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.23,
+        "新世界": 0.25,
+        "新罗": 0.26,
+        "爱宝客": 0.33,
+        "济州新罗": 0.12
       }
     },
     {
-      "id": "154",
+      "id": "156",
       "category": "进口护肤品",
       "english": "BYREDO PFM",
       "chinese": "百瑞德香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.31,
-        "乐天蚕室": 0.31,
-        "新世界": 0.34,
+        "乐天明洞": 0.29,
+        "乐天蚕室": 0.29,
+        "新世界": 0.32,
         "新罗": 0.33,
         "现代": 0.28,
         "爱宝客": 0.28
       }
     },
     {
-      "id": "155",
+      "id": "157",
       "category": "进口护肤品",
       "english": "BOBBI BROWN",
       "chinese": "芭比布朗",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
-        "乐天蚕室": 0.16,
-        "新世界": 0.24,
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.22,
         "新罗": 0.23,
         "现代": 0.24,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "釜山乐天": 0.14,
+        "济州乐天": 0.16,
+        "济州新罗": 0.12
       }
     },
     {
-      "id": "156",
+      "id": "158",
       "category": "进口护肤品",
       "english": "BENEFIT",
       "chinese": "贝玲妃",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
-        "新世界": 0.2,
+        "新世界": 0.18,
         "新罗": 0.19,
         "现代": 0.2
       }
     },
     {
-      "id": "157",
+      "id": "159",
       "category": "进口护肤品",
       "english": "BULY1803",
       "chinese": "BULY1803",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
+        "乐天明洞": 0.23,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "158",
+      "id": "160",
       "category": "进口护肤品",
       "english": "C.DIOR C&P (MAKE UP)【T】",
       "chinese": "迪奥化妆品 彩妆 (MAKE UP)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
-        "新世界": 0.14,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新世界": 0.13,
         "新罗": 0.1,
-        "爱宝客": 0.14
+        "爱宝客": 0.15
       }
     },
     {
-      "id": "159",
+      "id": "161",
       "category": "进口护肤品",
       "english": "C.DIOR C&P (SKIN CARE&PFM)【T】",
       "chinese": "迪奥化妆品 护肤品&香水 (SKIN CARE&PFM)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
-        "新世界": 0.14,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新世界": 0.13,
         "新罗": 0.1,
-        "爱宝客": 0.16
+        "爱宝客": 0.17
       }
     },
     {
-      "id": "160",
+      "id": "162",
       "category": "进口护肤品",
       "english": "C.DIOR C&P (BODY&HAIR)【T】",
       "chinese": "迪奥化妆品 其他(BODY&HAIR)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
-        "新世界": 0.14,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新世界": 0.13,
         "新罗": 0.1,
-        "爱宝客": 0.14
+        "爱宝客": 0.15
       }
     },
     {
-      "id": "161",
+      "id": "163",
       "category": "进口护肤品",
       "english": "CHANEL C&P (MAKE UP)【T】",
       "chinese": "香奈儿化妆品 彩妆（MAKE UP）",
@@ -2007,13 +2117,13 @@
       "rebates": {
         "乐天明洞": 0.05,
         "乐天蚕室": 0.05,
-        "新世界": 0.06,
+        "新世界": 0.05,
         "新罗": 0.02,
-        "爱宝客": 0.06
+        "爱宝客": 0.07
       }
     },
     {
-      "id": "162",
+      "id": "164",
       "category": "进口护肤品",
       "english": "CHANEL C&P (非MAKE UP)【T】",
       "chinese": "香奈儿化妆品 非彩妆",
@@ -2022,98 +2132,93 @@
       "rebates": {
         "乐天明洞": 0.05,
         "乐天蚕室": 0.05,
-        "新世界": 0.06,
+        "新世界": 0.05,
         "新罗": 0.02,
-        "爱宝客": 0.08
+        "爱宝客": 0.09
       }
     },
     {
-      "id": "163",
+      "id": "165",
       "category": "进口护肤品",
       "english": "CHANTECAILLE",
       "chinese": "香缇卡",
-      "remark": "",
+      "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
+        "乐天明洞": 0.22,
         "乐天蚕室": 0.0,
-        "新世界": 0.45
+        "新世界": 0.43,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "164",
+      "id": "166",
       "category": "进口护肤品",
       "english": "CLARINS",
       "chinese": "娇韵诗",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.26,
-        "乐天蚕室": 0.26,
-        "新世界": 0.25,
+        "乐天明洞": 0.24,
+        "乐天蚕室": 0.24,
+        "新世界": 0.24,
         "新罗": 0.24,
         "现代": 0.27,
-        "爱宝客": 0.26
+        "爱宝客": 0.25,
+        "釜山乐天": 0.12,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "165",
+      "id": "167",
       "category": "进口护肤品",
       "english": "CLARINS(I)",
       "chinese": "娇韵诗(I)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "釜山乐天": 0.12,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "166",
-      "category": "进口护肤品",
-      "english": "CLARINS시즌오프",
-      "chinese": "娇韵诗 现场折扣大于等于19时",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14,
-        "新世界": 0.25,
-        "新罗": 0.24,
-        "现代": 0.27,
-        "爱宝客": 0.26
-      }
-    },
-    {
-      "id": "167",
+      "id": "168",
       "category": "进口护肤品",
       "english": "CLINIQUE",
       "chinese": "倩碧",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22,
-        "现代": 0.23
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "现代": 0.23,
+        "釜山乐天": 0.15,
+        "济州乐天": 0.13,
+        "济州新罗": 0.13
       }
     },
     {
-      "id": "168",
+      "id": "169",
       "category": "进口护肤品",
       "english": "CLE DE PEAU",
       "chinese": "肌肤之钥",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.26,
-        "乐天蚕室": 0.26,
-        "新世界": 0.29,
+        "乐天明洞": 0.24,
+        "乐天蚕室": 0.24,
+        "新世界": 0.27,
         "新罗": 0.28,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.02,
+        "济州乐天": 0.16,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "169",
+      "id": "170",
       "category": "进口护肤品",
       "english": "CLE DE PEAU시즌오프",
       "chinese": "肌肤之钥 现场折扣大于等于19时",
@@ -2122,26 +2227,29 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.29,
+        "新世界": 0.27,
         "新罗": 0.28,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "釜山乐天": 0.02,
+        "济州乐天": 0.16,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "170",
+      "id": "171",
       "category": "进口护肤品",
       "english": "CHARLOTTE TILBURY",
       "chinese": "夏洛特·蒂铂丽",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
         "新罗": 0.19
       }
     },
     {
-      "id": "171",
+      "id": "172",
       "category": "进口护肤品",
       "english": "C.LOUBOUTIN BEAUTY",
       "chinese": "萝卜丁",
@@ -2152,21 +2260,21 @@
       }
     },
     {
-      "id": "172",
+      "id": "173",
       "category": "进口护肤品",
       "english": "CREED",
       "chinese": "克雷德",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.29,
-        "乐天蚕室": 0.29,
-        "新世界": 0.28,
-        "新罗": 0.25
+        "乐天明洞": 0.27,
+        "乐天蚕室": 0.27,
+        "新世界": 0.27,
+        "新罗": 0.27
       }
     },
     {
-      "id": "173",
+      "id": "174",
       "category": "进口护肤品",
       "english": "CREED시즌오프",
       "chinese": "克雷德 现场折扣大于等于19时",
@@ -2175,122 +2283,128 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.28,
-        "新罗": 0.25
+        "新世界": 0.27,
+        "新罗": 0.27
       }
     },
     {
-      "id": "174",
+      "id": "175",
       "category": "进口护肤品",
       "english": "CHLOE C&P",
       "chinese": "寇依化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
-        "新罗": 0.17,
+        "新罗": 0.15,
         "现代": 0.0
       }
     },
     {
-      "id": "175",
+      "id": "176",
       "category": "进口护肤品",
       "english": "CUREL",
       "chinese": "珂润",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.09,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "176",
+      "id": "177",
       "category": "进口护肤品",
       "english": "DIPTYQUE PFM",
       "chinese": "蒂普提克香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
+        "乐天明洞": 0.25,
         "乐天蚕室": 0.0,
-        "新世界": 0.29,
-        "新罗": 0.27,
+        "新世界": 0.27,
+        "新罗": 0.28,
         "现代": 0.29
       }
     },
     {
-      "id": "177",
+      "id": "178",
       "category": "进口护肤品",
       "english": "DECORTE",
       "chinese": "黛珂",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.25,
-        "新世界": 0.28,
-        "新罗": 0.2,
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.23,
+        "新世界": 0.25,
+        "新罗": 0.27,
         "现代": 0.25,
-        "爱宝客": 0.28
+        "爱宝客": 0.28,
+        "釜山乐天": 0.17,
+        "济州乐天": 0.09,
+        "济州新罗": 0.08
       }
     },
     {
-      "id": "178",
+      "id": "179",
       "category": "进口护肤品",
       "english": "DARPHIN",
       "chinese": "朵梵",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.1,
-        "乐天蚕室": 0.0
-      }
-    },
-    {
-      "id": "179",
-      "category": "进口护肤品",
-      "english": "DRUNK ELEPHANT",
-      "chinese": "醉象",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.03,
+        "乐天明洞": 0.08,
         "乐天蚕室": 0.0
       }
     },
     {
       "id": "180",
       "category": "进口护肤品",
+      "english": "DRUNK ELEPHANT",
+      "chinese": "醉象",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.01,
+        "乐天蚕室": 0.0
+      }
+    },
+    {
+      "id": "181",
+      "category": "进口护肤品",
       "english": "E.ARDEN",
       "chinese": "雅顿",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新罗": 0.22
+        "新罗": 0.15
       }
     },
     {
-      "id": "181",
+      "id": "182",
       "category": "进口护肤品",
       "english": "ESTEE LAUDER",
       "chinese": "雅诗兰黛",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2,
-        "新世界": 0.22,
-        "新罗": 0.2,
+        "乐天明洞": 0.18,
+        "乐天蚕室": 0.18,
+        "新世界": 0.2,
+        "新罗": 0.21,
         "现代": 0.22,
-        "爱宝客": 0.24
+        "爱宝客": 0.24,
+        "釜山乐天": 0.19,
+        "济州乐天": 0.13,
+        "济州新罗": 0.13
       }
     },
     {
-      "id": "182",
+      "id": "183",
       "category": "进口护肤品",
       "english": "ESTEE LAUDER시즌오프",
       "chinese": "雅诗兰黛 现场折扣大于等于19时",
@@ -2298,65 +2412,71 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天蚕室": 0.14,
+        "釜山乐天": 0.19,
+        "济州乐天": 0.13,
+        "济州新罗": 0.13
       }
     },
     {
-      "id": "183",
+      "id": "184",
       "category": "进口护肤品",
       "english": "EVIDENS DE BEAUTE",
       "chinese": "伊菲丹",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.17,
+        "乐天明洞": 0.15,
         "乐天蚕室": 0.0,
-        "新世界": 0.18
+        "新世界": 0.17,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "184",
+      "id": "185",
       "category": "进口护肤品",
       "english": "FREDERIC MALLE",
       "chinese": "馥马尔",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
-        "乐天蚕室": 0.23,
-        "新世界": 0.26,
-        "新罗": 0.24,
+        "乐天明洞": 0.21,
+        "乐天蚕室": 0.21,
+        "新世界": 0.24,
+        "新罗": 0.25,
         "现代": 0.26
       }
     },
     {
-      "id": "185",
+      "id": "186",
       "category": "进口护肤品",
       "english": "FRESH",
       "chinese": "馥蕾诗",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
-        "乐天蚕室": 0.19,
-        "新世界": 0.21,
-        "新罗": 0.17,
-        "爱宝客": 0.24
+        "乐天明洞": 0.17,
+        "乐天蚕室": 0.17,
+        "新世界": 0.19,
+        "新罗": 0.2,
+        "爱宝客": 0.24,
+        "釜山乐天": 0.17,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "186",
+      "id": "187",
       "category": "进口护肤品",
       "english": "FUEGUIA 1833",
       "chinese": "FUEGUIA 1833",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.26
+        "新世界": 0.24
       }
     },
     {
-      "id": "187",
+      "id": "188",
       "category": "进口护肤品",
       "english": "GESKE",
       "chinese": "GESKE",
@@ -2368,99 +2488,104 @@
       }
     },
     {
-      "id": "188",
+      "id": "189",
       "category": "进口护肤品",
       "english": "GIVENCHY C&P",
       "chinese": "纪梵希化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.25,
-        "新世界": 0.27,
-        "新罗": 0.27,
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.23,
+        "新世界": 0.25,
+        "新罗": 0.26,
         "现代": 0.24,
-        "爱宝客": 0.28
+        "爱宝客": 0.28,
+        "济州新罗": 0.19
       }
     },
     {
-      "id": "189",
+      "id": "190",
       "category": "进口护肤品",
       "english": "G.ARMANI PFM",
       "chinese": "阿玛尼香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.12,
-        "乐天蚕室": 0.12,
-        "新世界": 0.16,
-        "新罗": 0.18,
-        "现代": 0.18,
-        "爱宝客": 0.245
-      }
-    },
-    {
-      "id": "190",
-      "category": "进口护肤品",
-      "english": "G. ARMANI BEAUTY",
-      "chinese": "阿玛尼化妆品",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.12,
-        "乐天蚕室": 0.12,
-        "新世界": 0.29,
+        "乐天明洞": 0.1,
+        "乐天蚕室": 0.1,
+        "新世界": 0.14,
         "新罗": 0.28,
-        "现代": 0.3,
+        "现代": 0.18,
         "爱宝客": 0.245
       }
     },
     {
       "id": "191",
       "category": "进口护肤品",
+      "english": "G. ARMANI BEAUTY",
+      "chinese": "阿玛尼化妆品",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.1,
+        "乐天蚕室": 0.1,
+        "新世界": 0.27,
+        "新罗": 0.3,
+        "现代": 0.3,
+        "爱宝客": 0.24,
+        "济州新罗": 0.12
+      }
+    },
+    {
+      "id": "192",
+      "category": "进口护肤品",
       "english": "GUCCI C&P",
       "chinese": "古驰香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0,
-        "新罗": 0.21,
+        "新罗": 0.15,
         "现代": 0.21
       }
     },
     {
-      "id": "192",
+      "id": "193",
       "category": "进口护肤品",
       "english": "GUCCI BEAUTY",
       "chinese": "古驰化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.16,
         "新罗": 0.17,
         "现代": 0.0
       }
     },
     {
-      "id": "193",
+      "id": "194",
       "category": "进口护肤品",
       "english": "GUERLAIN",
       "chinese": "娇兰",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.24,
-        "新世界": 0.27,
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.22,
+        "新世界": 0.25,
         "新罗": 0.26,
         "现代": 0.26,
-        "爱宝客": 0.27
+        "爱宝客": 0.27,
+        "釜山乐天": 0.18,
+        "济州乐天": 0.18,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "194",
+      "id": "195",
       "category": "进口护肤品",
       "english": "GUERLAIN시즌오프",
       "chinese": "娇兰 现场折扣大于等于19时",
@@ -2469,14 +2594,17 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.27,
+        "新世界": 0.25,
         "新罗": 0.26,
         "现代": 0.26,
-        "爱宝客": 0.27
+        "爱宝客": 0.27,
+        "釜山乐天": 0.18,
+        "济州乐天": 0.18,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "195",
+      "id": "196",
       "category": "进口护肤品",
       "english": "HELENA RUBINSTEIN",
       "chinese": "赫莲娜",
@@ -2485,21 +2613,23 @@
       "rebates": {
         "乐天明洞": 0.22,
         "乐天蚕室": 0.22,
-        "新世界": 0.26,
-        "新罗": 0.24,
-        "现代": 0.27
+        "新世界": 0.24,
+        "新罗": 0.27,
+        "现代": 0.27,
+        "济州乐天": 0.13,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "196",
+      "id": "197",
       "category": "进口护肤品",
       "english": "HERMES C&P",
       "chinese": "爱马仕香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.31,
-        "乐天蚕室": 0.31,
+        "乐天明洞": 0.29,
+        "乐天蚕室": 0.29,
         "新世界": 0.31,
         "新罗": 0.3,
         "现代": 0.31,
@@ -2507,166 +2637,178 @@
       }
     },
     {
-      "id": "197",
+      "id": "198",
       "category": "进口护肤品",
       "english": "HERMES BEAUTY",
       "chinese": "爱马仕化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.31,
-        "乐天蚕室": 0.31,
+        "乐天明洞": 0.29,
+        "乐天蚕室": 0.29,
         "新世界": 0.31,
         "新罗": 0.3,
-        "现代": 0.31
+        "现代": 0.31,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "198",
+      "id": "199",
       "category": "进口护肤品",
       "english": "HOURGLASS",
       "chinese": "HOURGLASS",
-      "remark": "",
+      "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "新世界": 0.21,
-        "新罗": 0.3,
+        "新世界": 0.24,
+        "新罗": 0.27,
         "现代": 0.26,
         "爱宝客": 0.26
       }
     },
     {
-      "id": "199",
+      "id": "200",
       "category": "进口护肤品",
       "english": "HABA",
       "chinese": "HABA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.19
+        "新世界": 0.17
       }
     },
     {
-      "id": "200",
+      "id": "201",
       "category": "进口护肤品",
       "english": "JO MALONE",
       "chinese": "祖马龙",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.26,
-        "乐天蚕室": 0.26,
-        "新世界": 0.28,
+        "乐天明洞": 0.24,
+        "乐天蚕室": 0.24,
+        "新世界": 0.26,
         "新罗": 0.27,
         "现代": 0.28,
-        "爱宝客": 0.27
+        "爱宝客": 0.27,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.13,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "201",
+      "id": "202",
       "category": "进口护肤品",
       "english": "JILL STUART",
       "chinese": "吉尔斯图尔特",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
-        "新世界": 0.23
+        "新世界": 0.21,
+        "釜山乐天": 0.17
       }
     },
     {
-      "id": "202",
+      "id": "203",
       "category": "进口护肤品",
       "english": "KANEBO",
       "chinese": "嘉娜宝",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.18,
+        "新世界": 0.16,
         "现代": 0.19
       }
     },
     {
-      "id": "203",
+      "id": "204",
       "category": "进口护肤品",
       "english": "KOSE",
       "chinese": "高丝",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0,
-        "新世界": 0.2
+        "新世界": 0.18
       }
     },
     {
-      "id": "204",
+      "id": "205",
       "category": "进口护肤品",
       "english": "KILIAN",
       "chinese": "凯利安",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.27,
-        "新世界": 0.32,
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.25,
+        "新世界": 0.3,
         "新罗": 0.31,
         "现代": 0.32,
-        "爱宝客": 0.34
+        "爱宝客": 0.33,
+        "济州新罗": 0.36
       }
     },
     {
-      "id": "205",
+      "id": "206",
       "category": "进口护肤品",
       "english": "KERASTASE",
       "chinese": "卡诗",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新世界": 0.26,
-        "新罗": 0.16,
-        "现代": 0.26
+        "新世界": 0.23,
+        "新罗": 0.27,
+        "现代": 0.26,
+        "爱宝客": 0.24,
+        "济州新罗": 0.08
       }
     },
     {
-      "id": "206",
+      "id": "207",
       "category": "进口护肤品",
       "english": "KIEHL'S",
       "chinese": "科颜氏",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.24,
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.16,
+        "新世界": 0.22,
         "新罗": 0.25,
         "现代": 0.26,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "207",
+      "id": "208",
       "category": "进口护肤品",
       "english": "LAMER",
       "chinese": "海蓝之谜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
-        "乐天蚕室": 0.23,
-        "新世界": 0.27,
+        "乐天明洞": 0.21,
+        "乐天蚕室": 0.21,
+        "新世界": 0.25,
         "新罗": 0.26,
         "现代": 0.27,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "釜山乐天": 0.15,
+        "济州乐天": 0.12,
+        "济州新罗": 0.09
       }
     },
     {
-      "id": "208",
+      "id": "209",
       "category": "进口护肤品",
       "english": "LAMER시즌오프",
       "chinese": "海蓝之谜 现场折扣大于等于19时",
@@ -2675,46 +2817,71 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.27,
+        "新世界": 0.25,
         "新罗": 0.26,
         "现代": 0.27,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "釜山乐天": 0.15,
+        "济州乐天": 0.12,
+        "济州新罗": 0.09
       }
     },
     {
-      "id": "209",
+      "id": "210",
       "category": "进口护肤品",
       "english": "LANCOME",
       "chinese": "兰蔻",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22,
-        "新世界": 0.25,
-        "新罗": 0.22,
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.22,
+        "新罗": 0.26,
         "现代": 0.26,
-        "爱宝客": 0.25
+        "爱宝客": 0.25,
+        "济州乐天": 0.19,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "210",
+      "id": "211",
+      "category": "进口护肤品",
+      "english": "LANCOME시즌오프",
+      "chinese": "兰蔻 现场折扣大于等于19时",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.14,
+        "新世界": 0.22,
+        "新罗": 0.26,
+        "现代": 0.26,
+        "爱宝客": 0.25,
+        "济州乐天": 0.19,
+        "济州新罗": 0.17
+      }
+    },
+    {
+      "id": "212",
       "category": "进口护肤品",
       "english": "LA PRAIRIE",
       "chinese": "莱珀妮",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.24,
-        "新世界": 0.3,
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.22,
+        "新世界": 0.28,
         "新罗": 0.29,
         "现代": 0.3,
-        "爱宝客": 0.29
+        "爱宝客": 0.29,
+        "釜山乐天": 0.16,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "211",
+      "id": "213",
       "category": "进口护肤品",
       "english": "LA PRAIRIE시즌오프",
       "chinese": "莱珀妮 现场折扣大于等于19时",
@@ -2723,85 +2890,93 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.3,
+        "新世界": 0.28,
         "新罗": 0.29,
         "现代": 0.3,
-        "爱宝客": 0.29
+        "爱宝客": 0.29,
+        "釜山乐天": 0.16,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "212",
+      "id": "214",
       "category": "进口护肤品",
       "english": "LAURA MERCIER",
       "chinese": "LAURA MERCIER",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "新世界": 0.24,
+        "新世界": 0.22,
         "现代": 0.24
       }
     },
     {
-      "id": "213",
+      "id": "215",
       "category": "进口护肤品",
       "english": "LE LABO",
       "chinese": "实验室",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.17,
-        "乐天蚕室": 0.17,
-        "新世界": 0.14,
-        "新罗": 0.11,
+        "乐天明洞": 0.15,
+        "乐天蚕室": 0.15,
+        "新世界": 0.13,
+        "新罗": 0.12,
         "现代": 0.18,
-        "爱宝客": 0.23
+        "爱宝客": 0.23,
+        "济州新罗": 0.09
       }
     },
     {
-      "id": "214",
+      "id": "216",
       "category": "进口护肤品",
       "english": "LIQUIDES PERFUME BAR",
       "chinese": "LIQUIDES PERFUME BAR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
-        "现代": 0.21
+        "现代": 0.21,
+        "釜山乐天": 0.14
       }
     },
     {
-      "id": "215",
+      "id": "217",
       "category": "进口护肤品",
       "english": "L`OCCITANE",
       "chinese": "欧舒丹",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
-        "乐天蚕室": 0.21,
-        "新世界": 0.23,
-        "新罗": 0.16,
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.19,
+        "新世界": 0.21,
+        "新罗": 0.22,
         "现代": 0.23,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "釜山乐天": 0.12,
+        "济州乐天": 0.19,
+        "济州新罗": 0.19
       }
     },
     {
-      "id": "216",
+      "id": "218",
       "category": "进口护肤品",
       "english": "L'OREAL PARIS",
       "chinese": "欧莱雅",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.17,
+        "乐天蚕室": 0.0,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "217",
+      "id": "219",
       "category": "进口护肤品",
       "english": "LUNASOL",
       "chinese": "日月晶采",
@@ -2812,72 +2987,76 @@
       }
     },
     {
-      "id": "218",
+      "id": "220",
       "category": "进口护肤品",
       "english": "LA ROCHE POSAY",
       "chinese": "理肤泉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
+        "乐天明洞": 0.19,
         "乐天蚕室": 0.0,
-        "新世界": 0.23,
-        "新罗": 0.15
+        "新世界": 0.21,
+        "新罗": 0.22
       }
     },
     {
-      "id": "219",
+      "id": "221",
       "category": "进口护肤品",
       "english": "LAB SERIES",
       "chinese": "朗仕",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14,
-        "新罗": 0.17,
-        "现代": 0.18
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "新罗": 0.15,
+        "现代": 0.18,
+        "釜山乐天": 0.13,
+        "济州乐天": 0.09,
+        "济州新罗": 0.12
       }
     },
     {
-      "id": "220",
+      "id": "222",
       "category": "进口护肤品",
       "english": "LINDEN LEAVES",
       "chinese": "琳登丽诗",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.12,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.1,
+        "乐天蚕室": 0.0,
+        "釜山乐天": 0.14
       }
     },
     {
-      "id": "221",
+      "id": "223",
       "category": "进口护肤品",
       "english": "LOEWE C&P",
       "chinese": "罗意威化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.26,
-        "乐天蚕室": 0.26,
-        "新世界": 0.22
+        "乐天明洞": 0.24,
+        "乐天蚕室": 0.24,
+        "新世界": 0.21
       }
     },
     {
-      "id": "222",
+      "id": "224",
       "category": "进口护肤品",
       "english": "MELIXIR",
       "chinese": "MELIXIR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
+        "乐天明洞": 0.23,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "223",
+      "id": "225",
       "category": "进口护肤品",
       "english": "MOROCCANOIL",
       "chinese": "摩洛哥油",
@@ -2888,66 +3067,71 @@
       }
     },
     {
-      "id": "224",
+      "id": "226",
       "category": "进口护肤品",
       "english": "MAISON FRANCIS KURKDJIAN",
       "chinese": "梵诗柯香香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.27,
-        "新世界": 0.3,
-        "新罗": 0.3
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.25,
+        "新世界": 0.28,
+        "新罗": 0.29
       }
     },
     {
-      "id": "225",
+      "id": "227",
       "category": "进口护肤品",
       "english": "MAISON MARGIELA",
       "chinese": "梅森马吉拉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22,
-        "新世界": 0.24,
-        "新罗": 0.24,
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.22,
+        "新罗": 0.25,
         "现代": 0.24,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "济州乐天": 0.18
       }
     },
     {
-      "id": "226",
+      "id": "228",
       "category": "进口护肤品",
       "english": "MAC",
       "chinese": "魅可",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.21,
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.16,
+        "新世界": 0.19,
         "新罗": 0.2,
         "现代": 0.21,
-        "爱宝客": 0.24
+        "爱宝客": 0.24,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.09,
+        "济州新罗": 0.1
       }
     },
     {
-      "id": "227",
+      "id": "229",
       "category": "进口护肤品",
       "english": "MAKE UP FOR EVER",
       "chinese": "玫珂菲",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新世界": 0.25
+        "新世界": 0.23,
+        "济州新罗": 0.19
       }
     },
     {
-      "id": "228",
+      "id": "230",
       "category": "进口护肤品",
       "english": "MCM PFM",
       "chinese": "MCM香水",
@@ -2958,7 +3142,7 @@
       }
     },
     {
-      "id": "229",
+      "id": "231",
       "category": "进口护肤品",
       "english": "MONCLER PFM",
       "chinese": "蒙口香水",
@@ -2969,7 +3153,7 @@
       }
     },
     {
-      "id": "230",
+      "id": "232",
       "category": "进口护肤品",
       "english": "MEMO",
       "chinese": "MEMO",
@@ -2980,50 +3164,53 @@
       }
     },
     {
-      "id": "231",
+      "id": "233",
       "category": "进口护肤品",
       "english": "NARS",
       "chinese": "纳斯",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
-        "乐天蚕室": 0.23,
-        "新世界": 0.26,
-        "新罗": 0.21,
-        "爱宝客": 0.27
+        "乐天明洞": 0.21,
+        "乐天蚕室": 0.21,
+        "新世界": 0.23,
+        "新罗": 0.25,
+        "爱宝客": 0.27,
+        "济州乐天": 0.16,
+        "济州新罗": 0.1
       }
     },
     {
-      "id": "232",
+      "id": "234",
       "category": "进口护肤品",
       "english": "ORIGINS",
       "chinese": "悦木之源",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.16,
         "新罗": 0.22,
-        "现代": 0.0
+        "现代": 0.0,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "233",
+      "id": "235",
       "category": "进口护肤品",
       "english": "PENHALIGONS",
       "chinese": "潘海利根",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.27,
-        "新世界": 0.29,
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.25,
+        "新世界": 0.27,
         "现代": 0.28
       }
     },
     {
-      "id": "234",
+      "id": "236",
       "category": "进口护肤品",
       "english": "PENHALIGONS시즌오프",
       "chinese": "潘海利根 现场折扣大于等于19时",
@@ -3032,119 +3219,123 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.29,
+        "新世界": 0.27,
         "现代": 0.28
       }
     },
     {
-      "id": "235",
+      "id": "237",
       "category": "进口护肤品",
       "english": "POLA",
       "chinese": "POLA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.27,
-        "新世界": 0.29,
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.25,
+        "新世界": 0.27,
         "新罗": 0.28,
         "现代": 0.29,
         "爱宝客": 0.31
       }
     },
     {
-      "id": "236",
+      "id": "238",
       "category": "进口护肤品",
       "english": "PAUL&JOE C&P",
       "chinese": "PAUL&JOE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
-        "新世界": 0.21
+        "新世界": 0.2
       }
     },
     {
-      "id": "237",
+      "id": "239",
       "category": "进口护肤品",
       "english": "PARFUMS DE MARLY",
       "chinese": "玛丽之香",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.31,
+        "新世界": 0.29,
         "新罗": 0.3
       }
     },
     {
-      "id": "238",
+      "id": "240",
       "category": "进口护肤品",
       "english": "PRADA C&P",
       "chinese": "普拉达香水",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.16,
+        "新世界": 0.14,
         "现代": 0.16
       }
     },
     {
-      "id": "239",
+      "id": "241",
       "category": "进口护肤品",
       "english": "PRADA BEAUTY",
       "chinese": "普拉达化妆品",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "新世界": 0.17,
+        "新世界": 0.14,
         "现代": 0.18
       }
     },
     {
-      "id": "240",
+      "id": "242",
       "category": "进口护肤品",
       "english": "RMK",
       "chinese": "RMK",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
+        "乐天明洞": 0.17,
         "乐天蚕室": 0.0,
-        "新世界": 0.24,
+        "新世界": 0.22,
         "新罗": 0.23
       }
     },
     {
-      "id": "241",
+      "id": "243",
       "category": "进口护肤品",
       "english": "RITUALS",
       "chinese": "怡式",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "釜山乐天": 0.17
       }
     },
     {
-      "id": "242",
+      "id": "244",
       "category": "进口护肤品",
       "english": "SHISEIDO",
       "chinese": "资生堂",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.25,
-        "乐天蚕室": 0.25,
+        "乐天明洞": 0.23,
+        "乐天蚕室": 0.23,
         "新世界": 0.25,
-        "新罗": 0.22,
+        "新罗": 0.24,
         "现代": 0.24,
-        "爱宝客": 0.27
+        "爱宝客": 0.27,
+        "釜山乐天": 0.09,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "243",
+      "id": "245",
       "category": "进口护肤品",
       "english": "SHISEIDO시즌오프",
       "chinese": "资生堂 现场折扣大于等于19时",
@@ -3154,68 +3345,72 @@
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
         "新世界": 0.25,
-        "新罗": 0.22,
+        "新罗": 0.24,
         "现代": 0.24,
-        "爱宝客": 0.255
+        "爱宝客": 0.27,
+        "釜山乐天": 0.09,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "244",
+      "id": "246",
       "category": "进口护肤品",
       "english": "SHU UEMURA",
       "chinese": "植村秀",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
-        "乐天蚕室": 0.16,
-        "新世界": 0.24,
-        "新罗": 0.23,
+        "乐天明洞": 0.2,
+        "乐天蚕室": 0.2,
+        "新世界": 0.22,
+        "新罗": 0.25,
         "现代": 0.25
       }
     },
     {
-      "id": "245",
+      "id": "247",
       "category": "进口护肤品",
       "english": "SIMIHAZE BEAUTY",
       "chinese": "SIMIHAZE BEAUTY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
-        "乐天蚕室": 0.21,
-        "新世界": 0.23
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.19,
+        "新世界": 0.21
       }
     },
     {
-      "id": "246",
+      "id": "248",
       "category": "进口护肤品",
       "english": "SISLEY",
       "chinese": "希思黎化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
-        "乐天蚕室": 0.16,
-        "新世界": 0.24,
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.14,
+        "新世界": 0.22,
         "新罗": 0.23,
         "现代": 0.23,
-        "爱宝客": 0.25
+        "爱宝客": 0.24,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "247",
+      "id": "249",
       "category": "进口护肤品",
       "english": "HAIR RITUEL BY SISLEY",
       "chinese": "希思黎睿秀护发",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.21
+        "新世界": 0.19
       }
     },
     {
-      "id": "248",
+      "id": "250",
       "category": "进口护肤品",
       "english": "SNIDEL BEAUTY",
       "chinese": "SNIDEL化妆品",
@@ -3226,74 +3421,77 @@
       }
     },
     {
-      "id": "249",
+      "id": "251",
       "category": "进口护肤品",
       "english": "SENSAI",
       "chinese": "SENSAI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2,
-        "新世界": 0.21
+        "乐天明洞": 0.18,
+        "乐天蚕室": 0.18,
+        "新世界": 0.2
       }
     },
     {
-      "id": "250",
+      "id": "252",
       "category": "进口护肤品",
       "english": "SERGE LUTENS",
       "chinese": "芦丹氏",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.09,
         "乐天蚕室": 0.0,
         "现代": 0.0
       }
     },
     {
-      "id": "251",
+      "id": "253",
       "category": "进口护肤品",
       "english": "SUQQU",
       "chinese": "苏酷",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
-        "新世界": 0.22
+        "新世界": 0.2
       }
     },
     {
-      "id": "252",
+      "id": "254",
       "category": "进口护肤品",
       "english": "S.M.N",
       "chinese": "S.M.N",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.16,
+        "乐天明洞": 0.14,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "253",
+      "id": "255",
       "category": "进口护肤品",
       "english": "SK-II",
       "chinese": "SK-II",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
-        "乐天蚕室": 0.21,
-        "新世界": 0.24,
-        "新罗": 0.22,
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.19,
+        "新世界": 0.22,
+        "新罗": 0.23,
         "现代": 0.19,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "釜山乐天": 0.14,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "254",
+      "id": "256",
       "category": "进口护肤品",
       "english": "SK-II시즌오프",
       "chinese": "SK-II 现场折扣大于等于19时",
@@ -3302,160 +3500,168 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.24,
-        "新罗": 0.22,
+        "新世界": 0.22,
+        "新罗": 0.23,
         "现代": 0.19,
-        "爱宝客": 0.26
+        "爱宝客": 0.26,
+        "釜山乐天": 0.14,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "255",
+      "id": "257",
       "category": "进口护肤品",
       "english": "THREE",
       "chinese": "THREE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.22,
+        "乐天明洞": 0.2,
         "乐天蚕室": 0.0,
         "现代": 0.23
       }
     },
     {
-      "id": "256",
+      "id": "258",
       "category": "进口护肤品",
       "english": "TRUSSARDI",
       "chinese": "杜鲁萨迪",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11
+        "乐天明洞": 0.09,
+        "乐天蚕室": 0.09,
+        "釜山乐天": 0.17,
+        "济州新罗": 0.17
       }
     },
     {
-      "id": "257",
+      "id": "259",
       "category": "进口护肤品",
       "english": "T.FORD PFM",
       "chinese": "汤姆福特香水",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.24,
-        "新世界": 0.26,
-        "新罗": 0.23,
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.22,
+        "新世界": 0.24,
+        "新罗": 0.25,
         "现代": 0.26,
-        "爱宝客": 0.26
+        "爱宝客": 0.25
       }
     },
     {
-      "id": "258",
+      "id": "260",
       "category": "进口护肤品",
       "english": "T.FORD BEAUTY",
       "chinese": "汤姆福特化妆品",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.24,
-        "新世界": 0.26,
-        "新罗": 0.22,
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.22,
+        "新世界": 0.24,
+        "新罗": 0.23,
         "现代": 0.26,
-        "爱宝客": 0.26
+        "爱宝客": 0.25
       }
     },
     {
-      "id": "259",
+      "id": "261",
       "category": "进口护肤品",
       "english": "TRUDON",
       "chinese": "楚敦",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.29,
+        "乐天明洞": 0.27,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "260",
+      "id": "262",
       "category": "进口护肤品",
       "english": "VERSACE SIMS C&P",
       "chinese": "范思哲化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新世界": 0.25
+        "新世界": 0.23
       }
     },
     {
-      "id": "261",
+      "id": "263",
       "category": "进口护肤品",
       "english": "VALENTINO BEAUTY",
       "chinese": "华伦天奴化妆品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.3
+        "新世界": 0.28
       }
     },
     {
-      "id": "262",
+      "id": "264",
       "category": "进口护肤品",
       "english": "VALMONT",
       "chinese": "法尔曼",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.21,
         "乐天蚕室": 0.0,
-        "新世界": 0.26
+        "新世界": 0.24
       }
     },
     {
-      "id": "263",
+      "id": "265",
       "category": "进口护肤品",
       "english": "WINONA",
       "chinese": "薇诺娜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.09,
-        "乐天蚕室": 0.09
+        "乐天明洞": 0.07,
+        "乐天蚕室": 0.07,
+        "济州乐天": 0.19
       }
     },
     {
-      "id": "264",
+      "id": "266",
       "category": "进口护肤品",
       "english": "W.DRESSROOM",
       "chinese": "多丽斯香氛",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
-        "乐天蚕室": 0.23
+        "乐天明洞": 0.21,
+        "乐天蚕室": 0.21
       }
     },
     {
-      "id": "265",
+      "id": "267",
       "category": "进口护肤品",
       "english": "Y.S.L BEAUTY",
       "chinese": "圣罗兰化妆品",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
-        "乐天蚕室": 0.27,
-        "新世界": 0.29,
-        "新罗": 0.26,
+        "乐天明洞": 0.25,
+        "乐天蚕室": 0.25,
+        "新世界": 0.27,
+        "新罗": 0.28,
         "现代": 0.3,
-        "爱宝客": 0.24
+        "爱宝客": 0.24,
+        "济州乐天": 0.18,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "266",
+      "id": "268",
       "category": "进口护肤品",
       "english": "Y.S.L BEAUTY시즌오프",
       "chinese": "圣罗兰化妆品 现场折扣大于等于19时",
@@ -3464,29 +3670,32 @@
       "rebates": {
         "乐天明洞": 0.14,
         "乐天蚕室": 0.14,
-        "新世界": 0.29,
-        "新罗": 0.26,
-        "现代": 0.31,
-        "爱宝客": 0.24
+        "新世界": 0.27,
+        "新罗": 0.28,
+        "现代": 0.3,
+        "爱宝客": 0.24,
+        "济州乐天": 0.18,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "267",
+      "id": "269",
       "category": "珠宝&手表",
       "english": "APM MONACO",
       "chinese": "APM MONACO",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.19,
+        "乐天明洞": 0.17,
         "乐天蚕室": 0.0,
-        "新世界": 0.31,
-        "新罗": 0.32,
-        "爱宝客": 0.32
+        "新世界": 0.3,
+        "新罗": 0.22,
+        "爱宝客": 0.32,
+        "济州新罗": 0.36
       }
     },
     {
-      "id": "268",
+      "id": "270",
       "category": "珠宝&手表",
       "english": "ARTHUS BERTRAND",
       "chinese": "ARTHUS BERTRAND",
@@ -3497,7 +3706,7 @@
       }
     },
     {
-      "id": "269",
+      "id": "271",
       "category": "珠宝&手表",
       "english": "BVLGARI",
       "chinese": "宝格丽",
@@ -3506,12 +3715,14 @@
       "rebates": {
         "乐天明洞": 0.04,
         "乐天蚕室": 0.04,
-        "新世界": 0.02,
-        "新罗": 0.02
+        "新世界": 0.03,
+        "新罗": 0.02,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "270",
+      "id": "272",
       "category": "珠宝&手表",
       "english": "BOUCHERON",
       "chinese": "宝诗龙",
@@ -3519,49 +3730,52 @@
       "discount": 0.95,
       "rebates": {
         "乐天明洞": 0.13,
-        "乐天蚕室": 0.0
+        "乐天蚕室": 0.0,
+        "济州乐天": 0.12
       }
     },
     {
-      "id": "271",
+      "id": "273",
       "category": "珠宝&手表",
       "english": "BLANCPAIN",
       "chinese": "宝珀",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.13,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
         "新世界": 0.11,
-        "现代": 0.14
+        "现代": 0.14,
+        "济州新罗": 0.11
       }
     },
     {
-      "id": "272",
+      "id": "274",
       "category": "珠宝&手表",
       "english": "BREITLING",
       "chinese": "百年灵",
       "remark": "会员85折",
       "discount": 0.85,
       "rebates": {
-        "新罗": 0.17
+        "新罗": 0.17,
+        "济州新罗": 0.1
       }
     },
     {
-      "id": "273",
+      "id": "275",
       "category": "珠宝&手表",
       "english": "BREGUET",
       "chinese": "宝玑",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.13,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.13
+        "新世界": 0.12
       }
     },
     {
-      "id": "274",
+      "id": "276",
       "category": "珠宝&手表",
       "english": "CARTIER",
       "chinese": "卡地亚（钻石除外）",
@@ -3569,25 +3783,25 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.05,
-        "乐天蚕室": 0.0,
-        "新世界": 0.06
+        "乐天蚕室": 0.05,
+        "新世界": 0.05
       }
     },
     {
-      "id": "275",
+      "id": "277",
       "category": "珠宝&手表",
       "english": "CARTIER DIA",
       "chinese": "卡地亚钻石",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.05,
-        "乐天蚕室": 0.0,
-        "新世界": 0.06
+        "乐天明洞": 0.03,
+        "乐天蚕室": 0.03,
+        "新世界": 0.05
       }
     },
     {
-      "id": "276",
+      "id": "278",
       "category": "珠宝&手表",
       "english": "CHOW TAI FOOK (금)",
       "chinese": "周大福足金",
@@ -3597,11 +3811,12 @@
         "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.015
+        "爱宝客": 0.015,
+        "济州乐天": 0.0
       }
     },
     {
-      "id": "277",
+      "id": "279",
       "category": "珠宝&手表",
       "english": "CHOW TAI FOOK (다이아)",
       "chinese": "周大福钻石",
@@ -3611,25 +3826,38 @@
         "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.015
+        "爱宝客": 0.015,
+        "济州乐天": 0.0
       }
     },
     {
-      "id": "278",
+      "id": "280",
       "category": "珠宝&手表",
       "english": "CHOW TAI FOOK",
       "chinese": "周大福其它",
       "remark": "部分95折",
       "discount": null,
       "rebates": {
-        "新世界": 0.03,
-        "新罗": 0.11,
+        "新世界": 0.02,
+        "新罗": 0.09,
         "现代": 0.0,
-        "爱宝客": 0.09
+        "爱宝客": 0.09,
+        "济州乐天": 0.0
       }
     },
     {
-      "id": "279",
+      "id": "281",
+      "category": "珠宝&手表",
+      "english": "CTF (정가금) 행사상품",
+      "chinese": "周大福其它（活动产品）",
+      "remark": "会员76折",
+      "discount": 0.76,
+      "rebates": {
+        "爱宝客": 0.05
+      }
+    },
+    {
+      "id": "282",
       "category": "珠宝&手表",
       "english": "CHAUMET",
       "chinese": "尚美",
@@ -3637,11 +3865,12 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.1,
-        "乐天蚕室": 0.1
+        "乐天蚕室": 0.1,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "280",
+      "id": "283",
       "category": "珠宝&手表",
       "english": "CHAUMET（钻石）",
       "chinese": "尚美(钻石,2克拉及以上)",
@@ -3653,61 +3882,21 @@
       }
     },
     {
-      "id": "281",
-      "category": "珠宝&手表",
-      "english": "CHOPARD",
-      "chinese": "萧邦(小冰块除外)",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.15,
-        "乐天蚕室": 0.15,
-        "新世界": 0.21,
-        "新罗": 0.22,
-        "现代": 0.23
-      }
-    },
-    {
-      "id": "282",
-      "category": "珠宝&手表",
-      "english": "CHOPARD(ICE CUBE RING)",
-      "chinese": "萧邦(小冰块)",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.15,
-        "乐天蚕室": 0.15,
-        "新世界": 0.21,
-        "新罗": 0.17,
-        "现代": 0.23
-      }
-    },
-    {
-      "id": "283",
-      "category": "珠宝&手表",
-      "english": "CHANEL jew",
-      "chinese": "香奈儿首饰珠宝（具体明细咨询）",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
-        "新世界": 0.08,
-        "新罗": 0.05
-      }
-    },
-    {
       "id": "284",
       "category": "珠宝&手表",
-      "english": "CHANEL WAT",
-      "chinese": "香奈儿手表",
-      "remark": "",
-      "discount": null,
+      "english": "CHOPARD",
+      "chinese": "萧邦",
+      "remark": "会员92折",
+      "discount": 0.92,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
-        "新世界": 0.08,
-        "新罗": 0.05
+        "乐天明洞": 0.15,
+        "乐天蚕室": 0.15,
+        "新世界": 0.21,
+        "新罗": 0.21,
+        "现代": 0.23,
+        "釜山乐天": 0.19,
+        "济州乐天": 0.09,
+        "济州新罗": 0.06
       }
     },
     {
@@ -3718,8 +3907,11 @@
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "新世界": 0.15,
-        "现代": 0.16
+        "乐天明洞": 0.11,
+        "乐天蚕室": 0.0,
+        "新世界": 0.13,
+        "现代": 0.16,
+        "济州乐天": 0.09
       }
     },
     {
@@ -3730,9 +3922,10 @@
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.13,
-        "乐天蚕室": 0.13,
-        "新世界": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "新世界": 0.13,
+        "釜山乐天": 0.11
       }
     },
     {
@@ -3755,7 +3948,8 @@
       "discount": null,
       "rebates": {
         "新世界": 0.11,
-        "新罗": 0.11
+        "新罗": 0.11,
+        "釜山乐天": 0.06
       }
     },
     {
@@ -3767,7 +3961,9 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.13,
-        "乐天蚕室": 0.14
+        "乐天蚕室": 0.14,
+        "釜山乐天": 0.14,
+        "济州乐天": 0.09
       }
     },
     {
@@ -3778,21 +3974,20 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.0,
         "现代": 0.09
       }
     },
     {
       "id": "291",
       "category": "珠宝&手表",
-      "english": "GLASHUTTE ORIGINAL",
-      "chinese": "格拉苏蒂",
-      "remark": "会员85折",
-      "discount": 0.85,
+      "english": "G-SHOCK WATCH",
+      "chinese": "G-SHOCK手表",
+      "remark": "",
+      "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.0
+        "爱宝客": 0.14,
+        "釜山乐天": 0.06,
+        "济州新罗": 0.1
       }
     },
     {
@@ -3803,7 +3998,8 @@
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "新罗": 0.22
+        "新罗": 0.22,
+        "济州新罗": 0.1
       }
     },
     {
@@ -3814,10 +4010,11 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14,
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
         "新世界": 0.14,
-        "新罗": 0.1
+        "新罗": 0.15,
+        "釜山乐天": 0.06
       }
     },
     {
@@ -3840,9 +4037,10 @@
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.06,
-        "乐天蚕室": 0.06,
-        "新世界": 0.08
+        "乐天明洞": 0.05,
+        "乐天蚕室": 0.05,
+        "新世界": 0.05,
+        "济州新罗": 0.06
       }
     },
     {
@@ -3855,7 +4053,8 @@
       "rebates": {
         "乐天明洞": 0.12,
         "乐天蚕室": 0.12,
-        "新世界": 0.13
+        "新世界": 0.12,
+        "济州新罗": 0.08
       }
     },
     {
@@ -3868,9 +4067,12 @@
       "rebates": {
         "乐天明洞": 0.15,
         "乐天蚕室": 0.15,
-        "新世界": 0.2,
-        "新罗": 0.13,
-        "现代": 0.19
+        "新世界": 0.16,
+        "新罗": 0.16,
+        "现代": 0.18,
+        "釜山乐天": 0.15,
+        "济州乐天": 0.18,
+        "济州新罗": 0.17
       }
     },
     {
@@ -3881,7 +4083,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.13,
+        "乐天明洞": 0.09,
         "乐天蚕室": 0.0,
         "新罗": 0.07,
         "现代": 0.12,
@@ -3917,40 +4119,17 @@
     {
       "id": "301",
       "category": "珠宝&手表",
-      "english": "MAURICE LACROIX2",
-      "chinese": "艾美2",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.2
-      }
-    },
-    {
-      "id": "302",
-      "category": "珠宝&手表",
-      "english": "MELA BIANCA",
-      "chinese": "MELA BIANCA",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.0
-      }
-    },
-    {
-      "id": "303",
-      "category": "珠宝&手表",
       "english": "MAMAN ET FILLE",
       "chinese": "MAMAN ET FILLE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "304",
+      "id": "302",
       "category": "珠宝&手表",
       "english": "MESSIKA",
       "chinese": "梅西卡",
@@ -3958,92 +4137,100 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.13,
-        "乐天蚕室": 0.13
+        "乐天蚕室": 0.13,
+        "济州乐天": 0.13
       }
     },
     {
-      "id": "305",
+      "id": "303",
       "category": "珠宝&手表",
       "english": "MIDO",
       "chinese": "美度",
       "remark": "会员85折",
       "discount": 0.85,
       "rebates": {
-        "新世界": 0.22,
+        "新世界": 0.2,
         "新罗": 0.23,
-        "现代": 0.16
+        "现代": 0.16,
+        "釜山乐天": 0.16
       }
     },
     {
-      "id": "306",
+      "id": "304",
       "category": "珠宝&手表",
       "english": "MONTBLANC（有特殊SKU）",
       "chinese": "万宝龙",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.17,
-        "乐天蚕室": 0.17,
-        "新世界": 0.16,
-        "新罗": 0.15,
+        "乐天明洞": 0.15,
+        "乐天蚕室": 0.15,
+        "新世界": 0.17,
+        "新罗": 0.16,
         "现代": 0.18
       }
     },
     {
-      "id": "307",
+      "id": "305",
       "category": "珠宝&手表",
       "english": "OMEGA",
       "chinese": "欧米茄",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.14,
-        "新世界": 0.16,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新世界": 0.15,
         "新罗": 0.13,
-        "现代": 0.17
+        "现代": 0.17,
+        "济州乐天": 0.17,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "308",
+      "id": "306",
       "category": "珠宝&手表",
       "english": "PIAGET",
       "chinese": "伯爵",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.1,
-        "乐天蚕室": 0.1,
-        "新世界": 0.13,
-        "现代": 0.14
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "新世界": 0.12,
+        "现代": 0.14,
+        "济州乐天": 0.12,
+        "济州新罗": 0.18
       }
     },
     {
-      "id": "309",
+      "id": "307",
       "category": "珠宝&手表",
       "english": "PANERAI",
       "chinese": "沛纳海",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.07,
-        "乐天蚕室": 0.07,
-        "新世界": 0.13
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "新世界": 0.08,
+        "济州新罗": 0.1
       }
     },
     {
-      "id": "310",
+      "id": "308",
       "category": "珠宝&手表",
       "english": "PANDORA",
       "chinese": "潘多拉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.18
+        "新世界": 0.17,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "311",
+      "id": "309",
       "category": "珠宝&手表",
       "english": "POMELLATO",
       "chinese": "宝曼兰朵",
@@ -4055,21 +4242,24 @@
       }
     },
     {
-      "id": "312",
+      "id": "310",
       "category": "珠宝&手表",
       "english": "QEELIN",
       "chinese": "麒麟",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.17,
-        "乐天蚕室": 0.18,
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.17,
         "新世界": 0.16,
-        "新罗": 0.16
+        "新罗": 0.16,
+        "现代": 0.16,
+        "济州乐天": 0.14,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "313",
+      "id": "311",
       "category": "珠宝&手表",
       "english": "ROLEX",
       "chinese": "劳力士",
@@ -4081,144 +4271,137 @@
       }
     },
     {
-      "id": "314",
+      "id": "312",
       "category": "珠宝&手表",
       "english": "RADO",
       "chinese": "雷达",
       "remark": "会员87折",
       "discount": 0.87,
       "rebates": {
-        "新世界": 0.22,
+        "新世界": 0.21,
         "新罗": 0.23,
-        "现代": 0.24
+        "现代": 0.24,
+        "釜山乐天": 0.16
       }
     },
     {
-      "id": "315",
+      "id": "313",
       "category": "珠宝&手表",
       "english": "STONE HENGE",
       "chinese": "斯通亨奇",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.14
+        "新世界": 0.11
       }
     },
     {
-      "id": "316",
+      "id": "314",
       "category": "珠宝&手表",
       "english": "SWAROVSKI",
       "chinese": "施华洛世奇",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.16,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新世界": 0.15,
         "新罗": 0.14,
-        "现代": 0.13
+        "现代": 0.13,
+        "釜山乐天": 0.06,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "317",
+      "id": "315",
       "category": "珠宝&手表",
       "english": "SWATCH",
       "chinese": "斯沃琪",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
         "现代": 0.14
       }
     },
     {
-      "id": "318",
+      "id": "316",
       "category": "珠宝&手表",
       "english": "TAG HEUER",
       "chinese": "泰格豪雅",
       "remark": "会员85折",
       "discount": 0.85,
       "rebates": {
-        "新世界": 0.07,
         "现代": 0.08
       }
     },
     {
-      "id": "319",
-      "category": "珠宝&手表",
-      "english": "TUDOR",
-      "chinese": "帝舵",
-      "remark": "会员95折",
-      "discount": 0.95,
-      "rebates": {
-        "乐天明洞": 0.0,
-        "乐天蚕室": 0.11
-      }
-    },
-    {
-      "id": "320",
+      "id": "317",
       "category": "珠宝&手表",
       "english": "TISSOT",
       "chinese": "天梭",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.13,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.19,
-        "新罗": 0.17,
-        "现代": 0.2
+        "新世界": 0.15,
+        "新罗": 0.16,
+        "现代": 0.2,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.19,
+        "济州新罗": 0.2
       }
     },
     {
-      "id": "321",
+      "id": "318",
       "category": "珠宝&手表",
       "english": "TIFFANY",
       "chinese": "蒂芙尼(钻石 KNOT除外)",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.04,
-        "乐天蚕室": 0.01,
-        "新世界": 0.06,
+        "乐天明洞": 0.05,
+        "乐天蚕室": 0.05,
+        "新世界": 0.05,
         "新罗": 0.06
       }
     },
     {
-      "id": "322",
+      "id": "319",
       "category": "珠宝&手表",
       "english": "TIFFANY (다이아)",
       "chinese": "蒂芙尼钻石",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.04,
+        "乐天明洞": 0.0,
         "乐天蚕室": 0.0,
-        "新世界": 0.06,
+        "新世界": 0.05,
         "新罗": 0.02,
         "现代": 0.0,
         "爱宝客": 0.0
       }
     },
     {
-      "id": "323",
+      "id": "320",
       "category": "珠宝&手表",
       "english": "TIFFANY\"KNOT\"",
       "chinese": "蒂芙尼KNOT珠宝绳结款",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.04,
-        "乐天蚕室": 0.01,
-        "新世界": 0.06,
+        "乐天明洞": 0.05,
+        "乐天蚕室": 0.05,
+        "新世界": 0.05,
         "新罗": 0.06
       }
     },
     {
-      "id": "324",
+      "id": "321",
       "category": "珠宝&手表",
       "english": "V.CONSTANTIN",
       "chinese": "江诗丹顿",
@@ -4230,21 +4413,23 @@
       }
     },
     {
-      "id": "325",
+      "id": "322",
       "category": "珠宝&手表",
       "english": "VIVIENNE WESTWOOD",
       "chinese": "西太后",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.14,
         "新世界": 0.17,
-        "新罗": 0.17
+        "新罗": 0.17,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "326",
+      "id": "323",
       "category": "珠宝&手表",
       "english": "ZENITH",
       "chinese": "真力时",
@@ -4256,80 +4441,45 @@
       }
     },
     {
-      "id": "327",
+      "id": "324",
       "category": "珠宝&手表",
       "english": "제이에스티나",
       "chinese": "J.ESTINA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.12,
-        "新罗": 0.07
+        "新世界": 0.09,
+        "新罗": 0.07,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "328",
+      "id": "325",
       "category": "进口服饰&包包",
       "english": "ALEXANDER MCQUEEN",
       "chinese": "麦昆",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "爱宝客": 0.065
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "329",
+      "id": "326",
       "category": "进口服饰&包包",
       "english": "ALLSAINTS",
       "chinese": "ALLSAINTS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
         "现代": 0.21,
         "爱宝客": 0.12
       }
     },
     {
-      "id": "330",
-      "category": "进口服饰&包包",
-      "english": "AMI",
-      "chinese": "AMI",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.0,
-        "新世界": 0.05,
-        "爱宝客": 0.115
-      }
-    },
-    {
-      "id": "331",
-      "category": "进口服饰&包包",
-      "english": "ART PELLE",
-      "chinese": "ART PELLE",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.165
-      }
-    },
-    {
-      "id": "332",
-      "category": "进口服饰&包包",
-      "english": "AUTRY",
-      "chinese": "AUTRY",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.065
-      }
-    },
-    {
-      "id": "333",
+      "id": "327",
       "category": "进口服饰&包包",
       "english": "ASH",
       "chinese": "ASH",
@@ -4340,7 +4490,7 @@
       }
     },
     {
-      "id": "334",
+      "id": "328",
       "category": "进口服饰&包包",
       "english": "BARBOUR",
       "chinese": "BARBOUR",
@@ -4351,66 +4501,70 @@
       }
     },
     {
-      "id": "335",
+      "id": "329",
       "category": "进口服饰&包包",
       "english": "BALENCIAGA",
       "chinese": "巴黎世家",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.27,
+        "乐天明洞": 0.24,
         "乐天蚕室": 0.0,
-        "新世界": 0.28,
+        "新世界": 0.26,
         "现代": 0.28,
-        "爱宝客": 0.055
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "336",
+      "id": "330",
       "category": "进口服饰&包包",
       "english": "BURBERRY",
       "chinese": "巴宝莉",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.28,
-        "乐天蚕室": 0.3,
-        "新世界": 0.33,
-        "新罗": 0.28,
-        "现代": 0.33
+        "乐天明洞": 0.26,
+        "乐天蚕室": 0.28,
+        "新世界": 0.29,
+        "新罗": 0.29,
+        "现代": 0.33,
+        "釜山乐天": 0.06,
+        "济州新罗": 0.14
       }
     },
     {
-      "id": "337",
+      "id": "331",
       "category": "进口服饰&包包",
       "english": "BALLY",
       "chinese": "巴利",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.14,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.13,
-        "新罗": 0.14
+        "新世界": 0.14,
+        "新罗": 0.14,
+        "釜山乐天": 0.14,
+        "济州新罗": 0.13
       }
     },
     {
-      "id": "338",
+      "id": "332",
       "category": "进口服饰&包包",
       "english": "B.VENETA",
       "chinese": "BV葆蝶家",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2,
-        "新世界": 0.3,
-        "现代": 0.3,
-        "爱宝客": 0.065
+        "乐天明洞": 0.19,
+        "乐天蚕室": 0.19,
+        "新世界": 0.27,
+        "现代": 0.3
       }
     },
     {
-      "id": "339",
+      "id": "333",
       "category": "进口服饰&包包",
       "english": "BENETTON",
       "chinese": "BENETTON",
@@ -4421,58 +4575,76 @@
       }
     },
     {
-      "id": "340",
+      "id": "334",
       "category": "进口服饰&包包",
       "english": "C.DIOR",
       "chinese": "迪奥（男士除外）",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.07,
+        "乐天明洞": 0.05,
         "乐天蚕室": 0.0,
-        "新世界": 0.07,
-        "新罗": 0.06
+        "新世界": 0.08,
+        "新罗": 0.08
       }
     },
     {
-      "id": "341",
+      "id": "335",
       "category": "进口服饰&包包",
       "english": "DUVETICA",
       "chinese": "杜威迪嘉",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.08,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "342",
+      "id": "336",
       "category": "进口服饰&包包",
       "english": "CHANEL",
       "chinese": "香奈儿",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.07,
-        "乐天蚕室": 0.0,
-        "新世界": 0.08,
-        "新罗": 0.05
+        "乐天明洞": 0.06,
+        "乐天蚕室": 0.06,
+        "新世界": 0.07,
+        "新罗": 0.05,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "343",
+      "id": "337",
+      "category": "进口服饰&包包",
+      "english": "CHANEL(蚕室店26年9月以后入库产品)",
+      "chinese": "香奈儿(蚕室店26年9月以后入库产品)",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "乐天明洞": 0.06,
+        "乐天蚕室": 0.0,
+        "新世界": 0.07,
+        "新罗": 0.05,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
+      }
+    },
+    {
+      "id": "338",
       "category": "进口服饰&包包",
       "english": "CHARRIOL",
       "chinese": "夏利豪",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.17
+        "新世界": 0.16
       }
     },
     {
-      "id": "344",
+      "id": "339",
       "category": "进口服饰&包包",
       "english": "COMME DES GARCONS",
       "chinese": "川久保玲",
@@ -4484,81 +4656,65 @@
       }
     },
     {
-      "id": "345",
+      "id": "340",
       "category": "进口服饰&包包",
-      "english": "COACH",
+      "english": "COACH(有特殊SKU)",
       "chinese": "蔻驰",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.21,
-        "新世界": 0.24,
-        "新罗": 0.2,
-        "现代": 0.25
+        "乐天明洞": 0.19,
+        "新世界": 0.21,
+        "新罗": 0.21,
+        "现代": 0.25,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "346",
-      "category": "进口服饰&包包",
-      "english": "CONTIGO",
-      "chinese": "CONTIGO",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.165
-      }
-    },
-    {
-      "id": "347",
-      "category": "进口服饰&包包",
-      "english": "CHLOE",
-      "chinese": "寇依",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.115
-      }
-    },
-    {
-      "id": "348",
+      "id": "341",
       "category": "进口服饰&包包",
       "english": "CELINE",
       "chinese": "塞琳",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "新世界": 0.16,
+        "新世界": 0.15,
         "新罗": 0.13,
-        "现代": 0.16
+        "现代": 0.16,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.26
       }
     },
     {
-      "id": "349",
+      "id": "342",
       "category": "进口服饰&包包",
       "english": "CANADA GOOSE",
       "chinese": "加拿大鹅",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.16,
         "乐天蚕室": 0.0,
-        "现代": 0.21
+        "现代": 0.21,
+        "济州乐天": 0.16
       }
     },
     {
-      "id": "350",
+      "id": "343",
       "category": "进口服饰&包包",
       "english": "CK BAG",
       "chinese": "CK包",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.19,
-        "新罗": 0.2
+        "新世界": 0.18,
+        "新罗": 0.2,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "351",
+      "id": "344",
       "category": "进口服饰&包包",
       "english": "COUNTY OF MILAN",
       "chinese": "COUNTY OF MILAN",
@@ -4569,19 +4725,19 @@
       }
     },
     {
-      "id": "352",
+      "id": "345",
       "category": "进口服饰&包包",
       "english": "DIOR HOMME",
       "chinese": "迪奥男士",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.07,
+        "乐天明洞": 0.06,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "353",
+      "id": "346",
       "category": "进口服饰&包包",
       "english": "ECCO",
       "chinese": "爱步",
@@ -4593,7 +4749,7 @@
       }
     },
     {
-      "id": "354",
+      "id": "347",
       "category": "进口服饰&包包",
       "english": "ECCO 29.5%이상 할인상품",
       "chinese": "爱步 折扣大于等于29.5%的产品",
@@ -4604,32 +4760,36 @@
       }
     },
     {
-      "id": "355",
+      "id": "348",
       "category": "进口服饰&包包",
       "english": "FENDI",
       "chinese": "芬迪",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.21,
+        "乐天明洞": 0.19,
         "乐天蚕室": 0.0,
         "现代": 0.24,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "356",
+      "id": "349",
       "category": "进口服饰&包包",
       "english": "FENDI (시즌오프대상)",
       "chinese": "芬迪（换季折扣产品）",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.0
+        "乐天明洞": 0.0,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "357",
+      "id": "350",
       "category": "进口服饰&包包",
       "english": "FURLA",
       "chinese": "FURLA",
@@ -4640,69 +4800,58 @@
       }
     },
     {
-      "id": "358",
-      "category": "进口服饰&包包",
-      "english": "GENERAL IDEA",
-      "chinese": "GENERAL IDEA",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.0
-      }
-    },
-    {
-      "id": "359",
+      "id": "351",
       "category": "进口服饰&包包",
       "english": "GUCCI",
       "chinese": "古驰",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.12,
-        "新世界": 0.15,
+        "乐天明洞": 0.11,
+        "新世界": 0.13,
         "现代": 0.13,
-        "爱宝客": 0.015
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "360",
+      "id": "352",
       "category": "进口服饰&包包",
       "english": "지포어",
       "chinese": "G/FORE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.1,
-        "爱宝客": 0.015
+        "新世界": 0.09
       }
     },
     {
-      "id": "361",
+      "id": "353",
       "category": "进口服饰&包包",
       "english": "GOLDEN GOOSE",
       "chinese": "黄金鹅",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "现代": 0.12
+        "现代": 0.12,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "362",
+      "id": "354",
       "category": "进口服饰&包包",
       "english": "GLYCINE",
       "chinese": "冠星",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.17
+        "新世界": 0.16
       }
     },
     {
-      "id": "363",
+      "id": "355",
       "category": "进口服饰&包包",
       "english": "HERMES LLG",
       "chinese": "爱马仕（包包）",
@@ -4718,34 +4867,37 @@
       }
     },
     {
-      "id": "364",
+      "id": "356",
       "category": "进口服饰&包包",
       "english": "HERMES (기타)",
       "chinese": "爱马仕其它(包除外,仅限专柜)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.09,
-        "乐天蚕室": 0.09,
+        "乐天明洞": 0.07,
+        "乐天蚕室": 0.07,
         "新世界": 0.13,
-        "新罗": 0.0,
+        "新罗": 0.13,
         "现代": 0.0,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.09,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "365",
+      "id": "357",
       "category": "进口服饰&包包",
       "english": "HUGO BOSS",
       "chinese": "雨果博斯",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.25
+        "新世界": 0.24
       }
     },
     {
-      "id": "366",
+      "id": "358",
       "category": "进口服饰&包包",
       "english": "HELEN KAMINSKI",
       "chinese": "HELEN KAMINSKI",
@@ -4756,31 +4908,33 @@
       }
     },
     {
-      "id": "367",
+      "id": "359",
       "category": "进口服饰&包包",
       "english": "JIMMY CHOO",
       "chinese": "周仰杰",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.12
+        "新世界": 0.11,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "368",
+      "id": "360",
       "category": "进口服饰&包包",
       "english": "KEEN",
       "chinese": "KEEN",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.22
+        "新世界": 0.21,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "369",
+      "id": "361",
       "category": "进口服饰&包包",
       "english": "KIPLING",
       "chinese": "KIPLING",
@@ -4791,7 +4945,7 @@
       }
     },
     {
-      "id": "370",
+      "id": "362",
       "category": "进口服饰&包包",
       "english": "KITON",
       "chinese": "KITON",
@@ -4802,18 +4956,18 @@
       }
     },
     {
-      "id": "371",
+      "id": "363",
       "category": "进口服饰&包包",
       "english": "LA COUSETTE",
       "chinese": "LA COUSETTE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.07
+        "新世界": 0.06
       }
     },
     {
-      "id": "372",
+      "id": "364",
       "category": "进口服饰&包包",
       "english": "LESPORTSAC",
       "chinese": "LESPORTSAC",
@@ -4824,7 +4978,7 @@
       }
     },
     {
-      "id": "373",
+      "id": "365",
       "category": "进口服饰&包包",
       "english": "LOUIS VUITTON",
       "chinese": "路易威登",
@@ -4840,35 +4994,35 @@
       }
     },
     {
-      "id": "374",
+      "id": "366",
       "category": "进口服饰&包包",
       "english": "LOEWE SCARF",
       "chinese": "罗意威 围巾",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.15,
-        "乐天蚕室": 0.15,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
         "新罗": 0.14,
         "现代": 0.19
       }
     },
     {
-      "id": "375",
+      "id": "367",
       "category": "进口服饰&包包",
       "english": "LOEWE SCARF 外",
       "chinese": "罗意威 围巾除外",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.15,
-        "乐天蚕室": 0.15,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
         "新罗": 0.18,
         "现代": 0.19
       }
     },
     {
-      "id": "376",
+      "id": "368",
       "category": "进口服饰&包包",
       "english": "LOEWE MARKDOWN",
       "chinese": "罗意威MARKDOWN产品",
@@ -4880,33 +5034,37 @@
       }
     },
     {
-      "id": "377",
+      "id": "369",
       "category": "进口服饰&包包",
       "english": "LONGCHAMP",
       "chinese": "珑骧",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.16,
-        "乐天蚕室": 0.16,
-        "新世界": 0.14,
+        "乐天明洞": 0.13,
+        "乐天蚕室": 0.13,
+        "新世界": 0.13,
         "新罗": 0.13,
-        "现代": 0.13
+        "现代": 0.13,
+        "釜山乐天": 0.18,
+        "济州乐天": 0.1,
+        "济州新罗": 0.1
       }
     },
     {
-      "id": "378",
+      "id": "370",
       "category": "进口服饰&包包",
       "english": "MULBERRY",
       "chinese": "玛珀利",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.22
+        "新世界": 0.21,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "379",
+      "id": "371",
       "category": "进口服饰&包包",
       "english": "MANDARINA DUCK S.P.A",
       "chinese": "MANDARINA DUCK S.P.A",
@@ -4917,18 +5075,7 @@
       }
     },
     {
-      "id": "380",
-      "category": "进口服饰&包包",
-      "english": "MAISON KITSUNE",
-      "chinese": "MAISON KITSUNE",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.065
-      }
-    },
-    {
-      "id": "381",
+      "id": "372",
       "category": "进口服饰&包包",
       "english": "META",
       "chinese": "META",
@@ -4939,21 +5086,21 @@
       }
     },
     {
-      "id": "382",
+      "id": "373",
       "category": "进口服饰&包包",
       "english": "MONCLER",
       "chinese": "蒙口",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
-        "乐天蚕室": 0.23,
+        "乐天明洞": 0.21,
+        "乐天蚕室": 0.21,
         "新世界": 0.23,
-        "现代": 0.24
+        "现代": 0.23
       }
     },
     {
-      "id": "383",
+      "id": "374",
       "category": "进口服饰&包包",
       "english": "MAX MARA",
       "chinese": "麦丝玛拉",
@@ -4961,40 +5108,44 @@
       "discount": 0.85,
       "rebates": {
         "乐天明洞": 0.0,
-        "乐天蚕室": 0.16,
-        "新世界": 0.27,
-        "现代": 0.29,
-        "爱宝客": 0.115
+        "乐天蚕室": 0.14,
+        "新世界": 0.22,
+        "现代": 0.28,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "384",
+      "id": "375",
       "category": "进口服饰&包包",
       "english": "MIU MIU",
       "chinese": "缪缪",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.09,
+        "乐天明洞": 0.11,
         "乐天蚕室": 0.0,
-        "爱宝客": 0.065
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "385",
+      "id": "376",
       "category": "进口服饰&包包",
       "english": "MICHAEL KORS",
       "chinese": "迈克高仕",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.0,
-        "乐天蚕室": 0.16,
-        "现代": 0.17
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.14,
+        "现代": 0.17,
+        "济州乐天": 0.11,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "386",
+      "id": "377",
       "category": "进口服饰&包包",
       "english": "MISSONI",
       "chinese": "MISSONI",
@@ -5005,33 +5156,35 @@
       }
     },
     {
-      "id": "387",
+      "id": "378",
       "category": "进口服饰&包包",
       "english": "MIKIHOUSE",
       "chinese": "MIKIHOUSE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.14,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.0,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "388",
+      "id": "379",
       "category": "进口服饰&包包",
       "english": "MOSCHINO",
       "chinese": "MOSCHINO",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
         "现代": 0.16,
-        "爱宝客": 0.12
+        "爱宝客": 0.12,
+        "济州乐天": 0.16
       }
     },
     {
-      "id": "389",
+      "id": "380",
       "category": "进口服饰&包包",
       "english": "LOVE MOSCHINO",
       "chinese": "LOVE MOSCHINO",
@@ -5042,7 +5195,7 @@
       }
     },
     {
-      "id": "390",
+      "id": "381",
       "category": "进口服饰&包包",
       "english": "MYRITZ",
       "chinese": "MYRITZ",
@@ -5053,56 +5206,48 @@
       }
     },
     {
-      "id": "391",
+      "id": "382",
       "category": "进口服饰&包包",
       "english": "NOMAKA",
       "chinese": "NOMAKA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.2
+        "新罗": 0.2,
+        "济州新罗": 0.26
       }
     },
     {
-      "id": "392",
+      "id": "383",
       "category": "进口服饰&包包",
       "english": "PATAGONIA",
       "chinese": "PATAGONIA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "393",
+      "id": "384",
       "category": "进口服饰&包包",
       "english": "PRADA",
       "chinese": "普拉达",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.13,
-        "乐天蚕室": 0.13,
-        "现代": 0.15,
-        "爱宝客": 0.015
+        "乐天明洞": 0.11,
+        "乐天蚕室": 0.11,
+        "现代": 0.14,
+        "釜山乐天": 0.12,
+        "济州乐天": 0.11,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "394",
-      "category": "进口服饰&包包",
-      "english": "STONE ISLAND",
-      "chinese": "石岛",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.065
-      }
-    },
-    {
-      "id": "395",
+      "id": "385",
       "category": "进口服饰&包包",
       "english": "SKECHERS",
       "chinese": "SKECHERS",
@@ -5113,7 +5258,7 @@
       }
     },
     {
-      "id": "396",
+      "id": "386",
       "category": "进口服饰&包包",
       "english": "SAMSONITE",
       "chinese": "SAMSONITE",
@@ -5124,35 +5269,38 @@
       }
     },
     {
-      "id": "397",
+      "id": "387",
       "category": "进口服饰&包包",
       "english": "ST.DUPONT",
       "chinese": "都彭",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "新世界": 0.1,
-        "爱宝客": 0.16
+        "新世界": 0.09,
+        "爱宝客": 0.16,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "398",
+      "id": "388",
       "category": "进口服饰&包包",
-      "english": "S.FERRAGAMO",
+      "english": "S.FERRAGAMO(有特殊SKU)",
       "chinese": "菲拉格慕",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.24,
-        "新世界": 0.29,
-        "新罗": 0.26,
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.22,
+        "新世界": 0.25,
+        "新罗": 0.25,
         "现代": 0.3,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.24,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "399",
+      "id": "389",
       "category": "进口服饰&包包",
       "english": "SAINT LAURENT",
       "chinese": "圣罗兰",
@@ -5160,15 +5308,16 @@
       "discount": 0.95,
       "rebates": {
         "乐天明洞": 0.22,
-        "乐天蚕室": 0.18,
-        "新世界": 0.26,
-        "新罗": 0.22,
-        "现代": 0.28,
-        "爱宝客": 0.0
+        "乐天蚕室": 0.22,
+        "新世界": 0.24,
+        "新罗": 0.23,
+        "现代": 0.27,
+        "爱宝客": 0.0,
+        "济州新罗": 0.2
       }
     },
     {
-      "id": "400",
+      "id": "390",
       "category": "进口服饰&包包",
       "english": "STUART WEITZMAN",
       "chinese": "思缇韦曼",
@@ -5179,27 +5328,7 @@
       }
     },
     {
-      "id": "401",
-      "category": "进口服饰&包包",
-      "english": "SUECOMMABONNIE",
-      "chinese": "SUECOMMABONNIE",
-      "remark": "",
-      "discount": null,
-      "rebates": {}
-    },
-    {
-      "id": "402",
-      "category": "进口服饰&包包",
-      "english": "SISLEY",
-      "chinese": "SISLEY",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.0
-      }
-    },
-    {
-      "id": "403",
+      "id": "391",
       "category": "进口服饰&包包",
       "english": "THE BLANC",
       "chinese": "THE BLANC",
@@ -5210,61 +5339,39 @@
       }
     },
     {
-      "id": "404",
+      "id": "392",
       "category": "进口服饰&包包",
-      "english": "TORY BURCH",
+      "english": "TORY BURCH(有特殊SKU)",
       "chinese": "汤丽柏琦",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.2,
-        "乐天蚕室": 0.2,
-        "新世界": 0.21,
+        "乐天明洞": 0.18,
+        "乐天蚕室": 0.18,
+        "新世界": 0.2,
         "新罗": 0.2,
-        "爱宝客": 0.23
+        "爱宝客": 0.23,
+        "釜山乐天": 0.2,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "405",
-      "category": "进口服饰&包包",
-      "english": "TORY BURCH(SKU 80414002918)",
-      "chinese": "汤丽柏琦(SKU 80414002918)",
-      "remark": "会员8折",
-      "discount": 0.8,
-      "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.21,
-        "新罗": 0.15
-      }
-    },
-    {
-      "id": "406",
-      "category": "进口服饰&包包",
-      "english": "TORY BURCH(SKU 80414002871)",
-      "chinese": "汤丽柏琦(SKU 80414002871)",
-      "remark": "会员8折",
-      "discount": 0.8,
-      "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.21,
-        "新罗": 0.15
-      }
-    },
-    {
-      "id": "407",
+      "id": "393",
       "category": "进口服饰&包包",
       "english": "TORY BURCH 29.5%이상 할인상품",
       "chinese": "汤丽柏琦折扣大于等于29.5%的产品",
       "remark": "",
       "discount": null,
       "rebates": {
-        "爱宝客": 0.08
+        "爱宝客": 0.08,
+        "釜山乐天": 0.2,
+        "济州乐天": 0.16,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "408",
+      "id": "394",
       "category": "进口服饰&包包",
       "english": "THOM BROWNE",
       "chinese": "汤姆·布朗",
@@ -5275,45 +5382,48 @@
       }
     },
     {
-      "id": "409",
+      "id": "395",
       "category": "进口服饰&包包",
       "english": "TOD'S",
       "chinese": "托德斯",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.22,
-        "乐天蚕室": 0.22
+        "乐天明洞": 0.21,
+        "乐天蚕室": 0.21,
+        "釜山乐天": 0.18
       }
     },
     {
-      "id": "410",
+      "id": "396",
       "category": "进口服饰&包包",
       "english": "TUMI",
       "chinese": "TUMI",
-      "remark": "",
+      "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.17,
+        "乐天明洞": 0.15,
         "乐天蚕室": 0.0,
-        "新世界": 0.17
+        "新世界": 0.17,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "411",
+      "id": "397",
       "category": "进口服饰&包包",
       "english": "UGG",
       "chinese": "UGG",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.13,
+        "新世界": 0.12,
         "新罗": 0.13,
-        "现代": 0.0
+        "现代": 0.0,
+        "济州新罗": 0.06
       }
     },
     {
-      "id": "412",
+      "id": "398",
       "category": "进口服饰&包包",
       "english": "VANTILUX BTQ",
       "chinese": "VANTILUX BTQ",
@@ -5324,70 +5434,73 @@
       }
     },
     {
-      "id": "413",
+      "id": "399",
       "category": "进口服饰&包包",
       "english": "VALENTINO",
       "chinese": "华伦天奴",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.18,
+        "乐天明洞": 0.19,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "414",
+      "id": "400",
       "category": "进口服饰&包包",
       "english": "ROGER VIVIER",
       "chinese": "RV",
       "remark": "0",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.24,
-        "乐天蚕室": 0.0
+        "乐天明洞": 0.22,
+        "乐天蚕室": 0.0,
+        "釜山乐天": 0.2
       }
     },
     {
-      "id": "415",
+      "id": "401",
       "category": "本土服饰&包包",
       "english": "ACME DE LA VIE",
       "chinese": "ADLV",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.14,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.18,
-        "新罗": 0.25,
+        "新世界": 0.17,
+        "新罗": 0.18,
         "现代": 0.24,
-        "爱宝客": 0.24
+        "爱宝客": 0.24,
+        "济州乐天": 0.11,
+        "济州新罗": 0.11
       }
     },
     {
-      "id": "416",
+      "id": "402",
       "category": "本土服饰&包包",
       "english": "아카이브앱크",
       "chinese": "archive-epke",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.04
+        "新世界": 0.03
       }
     },
     {
-      "id": "417",
+      "id": "403",
       "category": "本土服饰&包包",
       "english": "ADER ERROR",
       "chinese": "ADER ERROR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "418",
+      "id": "404",
       "category": "本土服饰&包包",
       "english": "APRCH SEOUL",
       "chinese": "APRCH SEOUL",
@@ -5398,7 +5511,7 @@
       }
     },
     {
-      "id": "419",
+      "id": "405",
       "category": "本土服饰&包包",
       "english": "비비씨어스",
       "chinese": "BBC EARTH",
@@ -5410,7 +5523,7 @@
       }
     },
     {
-      "id": "420",
+      "id": "406",
       "category": "本土服饰&包包",
       "english": "BEENTRILL",
       "chinese": "BEENTRILL",
@@ -5421,21 +5534,44 @@
       }
     },
     {
-      "id": "421",
+      "id": "407",
+      "category": "本土服饰&包包",
+      "english": "BROWNBREATH",
+      "chinese": "BROWNBREATH",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "爱宝客": 0.17
+      }
+    },
+    {
+      "id": "408",
+      "category": "本土服饰&包包",
+      "english": "BLACK YAK",
+      "chinese": "BLACK YAK",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "爱宝客": 0.17
+      }
+    },
+    {
+      "id": "409",
       "category": "本土服饰&包包",
       "english": "커버낫",
       "chinese": "COVERNAT",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.11,
-        "新罗": 0.15,
+        "新世界": 0.1,
+        "新罗": 0.11,
         "现代": 0.0,
-        "爱宝客": 0.16
+        "爱宝客": 0.16,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "422",
+      "id": "410",
       "category": "本土服饰&包包",
       "english": "COLUMBIA_K",
       "chinese": "COLUMBIA_K",
@@ -5446,86 +5582,105 @@
       }
     },
     {
-      "id": "423",
+      "id": "411",
+      "category": "本土服饰&包包",
+      "english": "다이닛",
+      "chinese": "DEINET",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.01
+      }
+    },
+    {
+      "id": "412",
       "category": "本土服饰&包包",
       "english": "DISCOVERY",
       "chinese": "DISCOVERY",
       "remark": "会员85折",
       "discount": 0.85,
       "rebates": {
-        "新世界": 0.11,
-        "新罗": 0.17,
+        "新世界": 0.1,
+        "新罗": 0.11,
         "现代": 0.18,
         "爱宝客": 0.175
       }
     },
     {
-      "id": "424",
+      "id": "413",
       "category": "本土服饰&包包",
       "english": "EIDER",
       "chinese": "EIDER",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.17
+        "新罗": 0.07,
+        "济州新罗": 0.15
       }
     },
     {
-      "id": "425",
+      "id": "414",
       "category": "本土服饰&包包",
       "english": "EVISU",
       "chinese": "福神",
       "remark": "会员95折",
       "discount": 0.95,
       "rebates": {
-        "乐天明洞": 0.11,
-        "乐天蚕室": 0.11,
-        "新世界": 0.16,
+        "乐天明洞": 0.12,
+        "乐天蚕室": 0.12,
+        "新世界": 0.12,
         "新罗": 0.16,
         "现代": 0.18,
-        "爱宝客": 0.175
+        "爱宝客": 0.175,
+        "釜山乐天": 0.07,
+        "济州乐天": 0.1,
+        "济州新罗": 0.1
       }
     },
     {
-      "id": "426",
+      "id": "415",
       "category": "本土服饰&包包",
       "english": "FALLETT",
       "chinese": "FALLETT",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.19
+        "新罗": 0.03
       }
     },
     {
-      "id": "427",
+      "id": "416",
       "category": "本土服饰&包包",
       "english": "FILA",
       "chinese": "斐乐",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23,
-        "新罗": 0.26,
+        "新世界": 0.22,
+        "新罗": 0.23,
         "现代": 0.12,
-        "爱宝客": 0.27
+        "爱宝客": 0.27,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "428",
+      "id": "417",
       "category": "本土服饰&包包",
       "english": "FILA(P)",
       "chinese": "斐乐（P或2）",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.06,
+        "新世界": 0.05,
         "现代": 0.12,
-        "爱宝客": 0.205
+        "爱宝客": 0.12,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "429",
+      "id": "418",
       "category": "本土服饰&包包",
       "english": "FILA KIDS",
       "chinese": "斐乐儿童",
@@ -5536,29 +5691,41 @@
       }
     },
     {
-      "id": "430",
+      "id": "419",
+      "category": "本土服饰&包包",
+      "english": "FILA SOCKS",
+      "chinese": "斐乐袜子",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "爱宝客": 0.2
+      }
+    },
+    {
+      "id": "420",
       "category": "本土服饰&包包",
       "english": "FIND KAPOOR",
       "chinese": "FIND KAPOOR",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "新罗": 0.19
+        "新罗": 0.03
       }
     },
     {
-      "id": "431",
+      "id": "421",
       "category": "本土服饰&包包",
       "english": "FILLUMINATE",
       "chinese": "FILLUMINATE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.19
+        "新罗": 0.03,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "432",
+      "id": "422",
       "category": "本土服饰&包包",
       "english": "FRUIT OF THE LOOM",
       "chinese": "FRUIT OF THE LOOM",
@@ -5569,30 +5736,30 @@
       }
     },
     {
-      "id": "433",
+      "id": "423",
       "category": "本土服饰&包包",
       "english": "GUESS",
       "chinese": "GUESS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "爱宝客": 0.12
+        "爱宝客": 0.12,
+        "釜山乐天": 0.06
       }
     },
     {
-      "id": "434",
+      "id": "424",
       "category": "本土服饰&包包",
       "english": "HAGOHAUS",
       "chinese": "HAGOHAUS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.05,
         "爱宝客": 0.07
       }
     },
     {
-      "id": "435",
+      "id": "425",
       "category": "本土服饰&包包",
       "english": "HONDA",
       "chinese": "HONDA",
@@ -5603,29 +5770,19 @@
       }
     },
     {
-      "id": "436",
-      "category": "本土服饰&包包",
-      "english": "J LINDEBERG",
-      "chinese": "金林德伯格",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.065
-      }
-    },
-    {
-      "id": "437",
+      "id": "426",
       "category": "本土服饰&包包",
       "english": "JELEVE",
       "chinese": "JELEVE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.21
+        "新罗": 0.03,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "438",
+      "id": "427",
       "category": "本土服饰&包包",
       "english": "JUNHE",
       "chinese": "JUNHE",
@@ -5636,7 +5793,7 @@
       }
     },
     {
-      "id": "439",
+      "id": "428",
       "category": "本土服饰&包包",
       "english": "김해김",
       "chinese": "KIMHEKIM",
@@ -5647,7 +5804,7 @@
       }
     },
     {
-      "id": "440",
+      "id": "429",
       "category": "本土服饰&包包",
       "english": "KIRSH",
       "chinese": "KIRSH",
@@ -5658,19 +5815,19 @@
       }
     },
     {
-      "id": "441",
+      "id": "430",
       "category": "本土服饰&包包",
       "english": "KODAK APPAREL",
       "chinese": "柯达（或2或P）",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.18,
+        "新罗": 0.03,
         "爱宝客": 0.19
       }
     },
     {
-      "id": "442",
+      "id": "431",
       "category": "本土服饰&包包",
       "english": "KENZO",
       "chinese": "KENZO",
@@ -5678,11 +5835,11 @@
       "discount": null,
       "rebates": {
         "现代": 0.14,
-        "爱宝客": 0.065
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "443",
+      "id": "432",
       "category": "本土服饰&包包",
       "english": "LACOSTE",
       "chinese": "法国鳄鱼",
@@ -5691,25 +5848,27 @@
       "rebates": {
         "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.13,
+        "新世界": 0.12,
         "现代": 0.1,
-        "爱宝客": 0.12
+        "爱宝客": 0.175,
+        "釜山乐天": 0.13,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "444",
+      "id": "433",
       "category": "本土服饰&包包",
       "english": "LEMEME",
       "chinese": "LEMEME",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "445",
+      "id": "434",
       "category": "本土服饰&包包",
       "english": "라이프워크",
       "chinese": "LIFE WORK",
@@ -5721,75 +5880,82 @@
       }
     },
     {
-      "id": "446",
+      "id": "435",
       "category": "本土服饰&包包",
       "english": "락피쉬웨더웨어",
       "chinese": "ROCKFISH WEATHERWEAR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.04
+        "新世界": 0.03
       }
     },
     {
-      "id": "447",
+      "id": "436",
       "category": "本土服饰&包包",
       "english": "마리끌레르",
       "chinese": "Marie claire",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "448",
+      "id": "437",
       "category": "本土服饰&包包",
       "english": "MCM(토산)",
       "chinese": "MCM（本土）",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.18,
-        "乐天蚕室": 0.18,
-        "新世界": 0.21,
-        "新罗": 0.23,
-        "现代": 0.24
+        "乐天明洞": 0.16,
+        "乐天蚕室": 0.16,
+        "新世界": 0.19,
+        "新罗": 0.18,
+        "现代": 0.24,
+        "釜山乐天": 0.19,
+        "济州乐天": 0.18,
+        "济州新罗": 0.16
       }
     },
     {
-      "id": "449",
+      "id": "438",
       "category": "本土服饰&包包",
       "english": "MLB",
       "chinese": "MLB",
       "remark": "会员85折",
       "discount": 0.85,
       "rebates": {
-        "乐天明洞": 0.1,
-        "乐天蚕室": 0.1,
+        "乐天明洞": 0.08,
+        "乐天蚕室": 0.08,
         "新世界": 0.08,
-        "新罗": 0.1,
+        "新罗": 0.08,
         "现代": 0.14,
-        "爱宝客": 0.15
+        "爱宝客": 0.15,
+        "济州乐天": 0.05,
+        "济州新罗": 0.04
       }
     },
     {
-      "id": "450",
+      "id": "439",
       "category": "本土服饰&包包",
       "english": "MLB KIDS",
       "chinese": "MLB儿童",
       "remark": "0",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.03,
-        "乐天蚕室": 0.03,
-        "新世界": 0.1,
-        "新罗": 0.12,
-        "爱宝客": 0.125
+        "乐天明洞": 0.01,
+        "乐天蚕室": 0.01,
+        "新世界": 0.09,
+        "新罗": 0.11,
+        "爱宝客": 0.125,
+        "济州乐天": 0.05,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "451",
+      "id": "440",
       "category": "本土服饰&包包",
       "english": "M PLAYGROUND",
       "chinese": "M PLAYGROUND",
@@ -5800,29 +5966,31 @@
       }
     },
     {
-      "id": "452",
+      "id": "441",
       "category": "本土服饰&包包",
       "english": "미야앤솔",
       "chinese": "MIYANSOL",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.07
+        "新世界": 0.06,
+        "釜山乐天": 0.06,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "453",
+      "id": "442",
       "category": "本土服饰&包包",
       "english": "MUSINSA",
       "chinese": "MUSINSA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.19
+        "新罗": 0.03
       }
     },
     {
-      "id": "454",
+      "id": "443",
       "category": "本土服饰&包包",
       "english": "NERDY",
       "chinese": "NERDY",
@@ -5833,46 +6001,46 @@
       }
     },
     {
-      "id": "455",
+      "id": "444",
       "category": "本土服饰&包包",
       "english": "NEW ERA",
       "chinese": "NEW ERA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.14,
-        "爱宝客": 0.12
+        "新世界": 0.12,
+        "爱宝客": 0.135
       }
     },
     {
-      "id": "456",
+      "id": "445",
       "category": "本土服饰&包包",
       "english": "누크피터",
       "chinese": "NUUKFITTER",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "457",
+      "id": "446",
       "category": "本土服饰&包包",
       "english": "노스페이스",
       "chinese": "北面",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.11,
-        "新罗": 0.15,
+        "新世界": 0.1,
+        "新罗": 0.11,
         "现代": 0.165,
         "爱宝客": 0.16
       }
     },
     {
-      "id": "458",
+      "id": "447",
       "category": "本土服饰&包包",
       "english": "NORTH FACE(P或2）",
       "chinese": "北面(P或2）",
@@ -5884,9 +6052,9 @@
       }
     },
     {
-      "id": "459",
+      "id": "448",
       "category": "本土服饰&包包",
-      "english": "NORTH FACE KIDS",
+      "english": "NORTH FACE KIDS（或P或2）",
       "chinese": "北面儿童（或P或2）",
       "remark": "",
       "discount": null,
@@ -5895,18 +6063,7 @@
       }
     },
     {
-      "id": "460",
-      "category": "本土服饰&包包",
-      "english": "OFFWHITE",
-      "chinese": "OFFWHITE",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "爱宝客": 0.065
-      }
-    },
-    {
-      "id": "461",
+      "id": "449",
       "category": "本土服饰&包包",
       "english": "RONRON",
       "chinese": "RONRON",
@@ -5917,7 +6074,7 @@
       }
     },
     {
-      "id": "462",
+      "id": "450",
       "category": "本土服饰&包包",
       "english": "ROEM",
       "chinese": "ROEM",
@@ -5928,20 +6085,20 @@
       }
     },
     {
-      "id": "463",
+      "id": "451",
       "category": "本土服饰&包包",
       "english": "SATUR",
       "chinese": "SATUR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.11,
-        "新罗": 0.15,
+        "新世界": 0.1,
+        "新罗": 0.11,
         "爱宝客": 0.16
       }
     },
     {
-      "id": "464",
+      "id": "452",
       "category": "本土服饰&包包",
       "english": "스파오",
       "chinese": "SPAO",
@@ -5952,74 +6109,78 @@
       }
     },
     {
-      "id": "465",
+      "id": "453",
       "category": "本土服饰&包包",
       "english": "WRANGLER",
       "chinese": "WRANGLER",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.21
+        "新罗": 0.03
       }
     },
     {
-      "id": "466",
+      "id": "454",
       "category": "本土服饰&包包",
       "english": "WACKY WILLY",
       "chinese": "WACKY WILLY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
         "新世界": 0.08,
         "新罗": 0.07,
-        "爱宝客": 0.12
+        "爱宝客": 0.12,
+        "济州乐天": 0.09,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "467",
+      "id": "455",
       "category": "本土服饰&包包",
       "english": "WHOAU",
       "chinese": "WHOAU",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.18,
-        "新罗": 0.17,
+        "新世界": 0.16,
+        "新罗": 0.08,
         "现代": 0.17,
-        "爱宝客": 0.17
+        "爱宝客": 0.18,
+        "济州新罗": 0.12
       }
     },
     {
-      "id": "468",
+      "id": "456",
       "category": "本土服饰&包包",
       "english": "내셔널지오그래픽",
       "chinese": "国家地理",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.1,
-        "新罗": 0.16,
+        "新世界": 0.09,
+        "新罗": 0.1,
         "现代": 0.18,
         "爱宝客": 0.175
       }
     },
     {
-      "id": "469",
+      "id": "457",
       "category": "本土服饰&包包",
       "english": "리",
       "chinese": "LEE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.11,
-        "新罗": 0.14,
-        "爱宝客": 0.15
+        "新世界": 0.1,
+        "新罗": 0.11,
+        "爱宝客": 0.15,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "470",
+      "id": "458",
       "category": "本土服饰&包包",
       "english": "LEE KIDS",
       "chinese": "LEE儿童",
@@ -6030,7 +6191,7 @@
       }
     },
     {
-      "id": "471",
+      "id": "459",
       "category": "本土服饰&包包",
       "english": "마리떼프랑소와저버",
       "chinese": "MARITHE FRANCOIS GIRBAUD",
@@ -6039,84 +6200,84 @@
       "rebates": {
         "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.15,
-        "新罗": 0.19,
+        "新世界": 0.13,
+        "新罗": 0.15,
         "现代": 0.225,
         "爱宝客": 0.215
       }
     },
     {
-      "id": "472",
+      "id": "460",
       "category": "本土服饰&包包",
       "english": "마뗑킴",
       "chinese": "MATIN KIM",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.05,
         "爱宝客": 0.08
       }
     },
     {
-      "id": "473",
+      "id": "461",
       "category": "本土服饰&包包",
       "english": "무신사_핍스",
       "chinese": "PHYPS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.21,
+        "新罗": 0.03,
         "爱宝客": 0.15
       }
     },
     {
-      "id": "474",
+      "id": "462",
       "category": "本土服饰&包包",
       "english": "무신사_예일",
       "chinese": "YALE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.21,
-        "爱宝客": 0.15
+        "新罗": 0.03,
+        "爱宝客": 0.15,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "475",
+      "id": "463",
       "category": "本土服饰&包包",
       "english": "무신사_엠엠엘지",
       "chinese": "MMLG",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.12
+        "新罗": 0.03
       }
     },
     {
-      "id": "476",
+      "id": "464",
       "category": "本土服饰&包包",
       "english": "무신사_코드그라피",
       "chinese": "CODE GRAPHY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.18
+        "新罗": 0.03
       }
     },
     {
-      "id": "477",
+      "id": "465",
       "category": "本土服饰&包包",
       "english": "마크곤잘레스",
       "chinese": "MARK GONZALES",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.15,
+        "新世界": 0.14,
         "爱宝客": 0.175
       }
     },
     {
-      "id": "478",
+      "id": "466",
       "category": "本土服饰&包包",
       "english": "SERGIO TACCHINI",
       "chinese": "SERGIO TACCHINI",
@@ -6127,33 +6288,36 @@
       }
     },
     {
-      "id": "479",
+      "id": "467",
       "category": "本土服饰&包包",
       "english": "슈퍼드라이",
       "chinese": "SUPERDRY",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.0
+        "现代": 0.0,
+        "爱宝客": 0.2,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "480",
+      "id": "468",
       "category": "本土服饰&包包",
       "english": "스노우피크",
       "chinese": "Snowpeak",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0,
-        "新世界": 0.07,
-        "新罗": 0.09,
-        "爱宝客": 0.11
+        "新世界": 0.05,
+        "新罗": 0.07,
+        "爱宝客": 0.11,
+        "济州乐天": 0.06
       }
     },
     {
-      "id": "481",
+      "id": "469",
       "category": "本土服饰&包包",
       "english": "TALLI",
       "chinese": "TALLI",
@@ -6164,7 +6328,7 @@
       }
     },
     {
-      "id": "482",
+      "id": "470",
       "category": "本土服饰&包包",
       "english": "THE HANDSOME",
       "chinese": "THE HANDSOME",
@@ -6175,7 +6339,7 @@
       }
     },
     {
-      "id": "483",
+      "id": "471",
       "category": "本土服饰&包包",
       "english": "육심원",
       "chinese": "陆心媛",
@@ -6187,18 +6351,18 @@
       }
     },
     {
-      "id": "484",
+      "id": "472",
       "category": "本土服饰&包包",
       "english": "뉴발란스 키즈",
       "chinese": "新百伦儿童",
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "新世界": 0.06
+        "新世界": 0.05
       }
     },
     {
-      "id": "485",
+      "id": "473",
       "category": "本土服饰&包包",
       "english": "VESTIRYA",
       "chinese": "VESTIRYA",
@@ -6209,18 +6373,18 @@
       }
     },
     {
-      "id": "486",
+      "id": "474",
       "category": "本土服饰&包包",
       "english": "웰던",
       "chinese": "WELLDONE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.04
+        "新世界": 0.03
       }
     },
     {
-      "id": "487",
+      "id": "475",
       "category": "本土服饰&包包",
       "english": "잔망루피",
       "chinese": "ZANMANG LOOPY",
@@ -6229,48 +6393,50 @@
       "rebates": {
         "乐天明洞": 0.0,
         "乐天蚕室": 0.0,
-        "新世界": 0.03,
-        "现代": 0.0
+        "新世界": 0.02,
+        "现代": 0.0,
+        "济州乐天": 0.09,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "488",
+      "id": "476",
       "category": "眼镜",
       "english": "B.VENETA2 EYE",
       "chinese": "葆蝶家眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.31,
+        "新世界": 0.29,
         "现代": 0.3
       }
     },
     {
-      "id": "489",
+      "id": "477",
       "category": "眼镜",
       "english": "BALENCIAGA2 EYE",
       "chinese": "巴黎世家眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.3,
+        "新世界": 0.28,
         "现代": 0.3
       }
     },
     {
-      "id": "490",
+      "id": "478",
       "category": "眼镜",
       "english": "BURBERRY EYE",
       "chinese": "巴宝莉眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23,
+        "新世界": 0.22,
         "现代": 0.24
       }
     },
     {
-      "id": "491",
+      "id": "479",
       "category": "眼镜",
       "english": "BYWP EYE",
       "chinese": "BYWP眼镜",
@@ -6281,45 +6447,45 @@
       }
     },
     {
-      "id": "492",
+      "id": "480",
       "category": "眼镜",
       "english": "C.DIOR3 EYE",
       "chinese": "迪奥眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.24,
+        "新世界": 0.22,
         "新罗": 0.23,
         "现代": 0.17
       }
     },
     {
-      "id": "493",
+      "id": "481",
       "category": "眼镜",
       "english": "CARTIER EYE",
       "chinese": "卡地亚眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.07,
+        "新世界": 0.06,
         "现代": 0.08
       }
     },
     {
-      "id": "494",
+      "id": "482",
       "category": "眼镜",
       "english": "FENDI3 EYE",
       "chinese": "芬迪眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.31,
+        "新世界": 0.29,
         "新罗": 0.25,
         "现代": 0.28
       }
     },
     {
-      "id": "495",
+      "id": "483",
       "category": "眼镜",
       "english": "FOUR NINES EYE",
       "chinese": "FOUR NINES眼镜",
@@ -6330,7 +6496,7 @@
       }
     },
     {
-      "id": "496",
+      "id": "484",
       "category": "眼镜",
       "english": "GENTLE MONSTER",
       "chinese": "GM眼镜",
@@ -6338,26 +6504,28 @@
       "discount": null,
       "rebates": {
         "乐天明洞": 0.11,
-        "乐天蚕室": 0.12,
+        "乐天蚕室": 0.11,
         "新世界": 0.11,
         "新罗": 0.11,
-        "现代": 0.0
+        "现代": 0.0,
+        "济州乐天": 0.09,
+        "济州新罗": 0.11
       }
     },
     {
-      "id": "497",
+      "id": "485",
       "category": "眼镜",
       "english": "GUCCI2 EYE",
       "chinese": "古驰眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.3,
+        "新世界": 0.28,
         "现代": 0.31
       }
     },
     {
-      "id": "498",
+      "id": "486",
       "category": "眼镜",
       "english": "LASH EYE",
       "chinese": "LASH眼镜",
@@ -6368,117 +6536,117 @@
       }
     },
     {
-      "id": "499",
+      "id": "487",
       "category": "眼镜",
       "english": "MIUMIU EYE",
       "chinese": "缪缪眼镜",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "新世界": 0.23,
+        "新世界": 0.22,
         "新罗": 0.25,
         "现代": 0.26
       }
     },
     {
-      "id": "500",
+      "id": "488",
       "category": "眼镜",
       "english": "MONTBLANC EYE",
       "chinese": "万宝龙眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.29,
+        "新世界": 0.27,
         "现代": 0.3
       }
     },
     {
-      "id": "501",
+      "id": "489",
       "category": "眼镜",
       "english": "OAKLEY EYE",
       "chinese": "OAKLEY眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.09,
+        "新世界": 0.08,
         "新罗": 0.14,
         "现代": 0.15
       }
     },
     {
-      "id": "502",
+      "id": "490",
       "category": "眼镜",
       "english": "PRADA EYE",
       "chinese": "普拉达眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.23,
+        "新世界": 0.22,
         "现代": 0.24
       }
     },
     {
-      "id": "503",
+      "id": "491",
       "category": "眼镜",
       "english": "RAY BAN EYE",
       "chinese": "RAY BAN眼镜",
       "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
-        "新世界": 0.23,
+        "新世界": 0.22,
         "现代": 0.24
       }
     },
     {
-      "id": "504",
+      "id": "492",
       "category": "眼镜",
       "english": "S.FERRAGAMO EYE",
       "chinese": "菲拉格慕眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.31,
+        "新世界": 0.28,
         "现代": 0.26
       }
     },
     {
-      "id": "505",
+      "id": "493",
       "category": "眼镜",
       "english": "CELINE3 EYE",
       "chinese": "塞琳眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.24,
+        "新世界": 0.21,
         "新罗": 0.23,
         "现代": 0.17
       }
     },
     {
-      "id": "506",
+      "id": "494",
       "category": "眼镜",
       "english": "SAINT LAURENT2 EYE",
       "chinese": "圣罗兰眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.31,
+        "新世界": 0.29,
         "现代": 0.32
       }
     },
     {
-      "id": "507",
+      "id": "495",
       "category": "眼镜",
       "english": "TOM FORD3 EYE",
       "chinese": "TF眼镜",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.27
+        "新世界": 0.25
       }
     },
     {
-      "id": "508",
+      "id": "496",
       "category": "眼镜",
       "english": "META EYE",
       "chinese": "META眼镜",
@@ -6489,91 +6657,82 @@
       }
     },
     {
-      "id": "509",
-      "category": "眼镜",
-      "english": "오클리 메타",
-      "chinese": "奥克利META智能眼镜",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.0
-      }
-    },
-    {
-      "id": "510",
-      "category": "眼镜",
-      "english": "레이밴 메타",
-      "chinese": "雷朋META智能眼镜",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.0
-      }
-    },
-    {
-      "id": "512",
+      "id": "498",
       "category": "烟",
       "english": "IQOS HEET",
       "chinese": "IQOS HEET",
       "remark": "现代仅原价购买",
       "discount": null,
       "rebates": {
-        "新世界": 0.08,
+        "新世界": 0.07,
         "现代": 0.09
       }
     },
     {
-      "id": "513",
+      "id": "499",
       "category": "烟",
       "english": "PMI TOBACCO",
       "chinese": "TEREA烟弹",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08,
+        "新世界": 0.07,
         "新罗": 0.08,
         "现代": 0.09,
         "爱宝客": 0.15
       }
     },
     {
-      "id": "514",
+      "id": "500",
       "category": "烟",
       "english": "C.TOBACCO(GONI)",
       "chinese": "C.TOBACCO(GONI)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.06
+        "新世界": 0.05
       }
     },
     {
-      "id": "515",
+      "id": "501",
       "category": "烟",
       "english": "CHUNGHWA",
       "chinese": "中华",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.0
+        "现代": 0.0,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "516",
+      "id": "502",
       "category": "烟",
       "english": "DAVIDOFF CIGAR",
       "chinese": "DAVIDOFF CIGAR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.14
+        "新世界": 0.13
       }
     },
     {
-      "id": "517",
+      "id": "503",
       "category": "烟",
       "english": "케이베이프",
       "chinese": "K-VAPE",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.0
+      }
+    },
+    {
+      "id": "504",
+      "category": "烟",
+      "english": "룩트",
+      "chinese": "LOOKT / RELX",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -6581,18 +6740,7 @@
       }
     },
     {
-      "id": "518",
-      "category": "烟",
-      "english": "룩트",
-      "chinese": "LOOKT / RELX",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.02
-      }
-    },
-    {
-      "id": "519",
+      "id": "505",
       "category": "烟",
       "english": "HABANOS CIGAR",
       "chinese": "HABANOS CIGAR",
@@ -6603,7 +6751,7 @@
       }
     },
     {
-      "id": "520",
+      "id": "506",
       "category": "烟",
       "english": "JTI",
       "chinese": "JTI",
@@ -6614,18 +6762,18 @@
       }
     },
     {
-      "id": "521",
+      "id": "507",
       "category": "烟",
       "english": "KT&G CIGAR",
       "chinese": "KT&G CIGAR",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.14
+        "新世界": 0.13
       }
     },
     {
-      "id": "522",
+      "id": "508",
       "category": "烟",
       "english": "KT&G",
       "chinese": "KT&G卷烟",
@@ -6633,11 +6781,13 @@
       "discount": null,
       "rebates": {
         "新罗": 0.15,
-        "爱宝客": 0.175
+        "爱宝客": 0.175,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "523",
+      "id": "509",
       "category": "烟",
       "english": "KT&G_전자담배",
       "chinese": "KT&G电子烟",
@@ -6648,40 +6798,44 @@
       }
     },
     {
-      "id": "524",
+      "id": "510",
       "category": "烟",
       "english": "KT&G(일반궐련)",
       "chinese": "KT&G(일반궐련)",
       "remark": "现代仅会员折扣",
       "discount": null,
       "rebates": {
-        "现代": 0.4
+        "现代": 0.4,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "525",
+      "id": "511",
       "category": "烟",
       "english": "KT&G(핏)",
       "chinese": "KT&G(핏)",
       "remark": "现代仅会员折扣",
       "discount": null,
       "rebates": {
-        "现代": 0.315
+        "现代": 0.315,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "526",
+      "id": "512",
       "category": "烟",
       "english": "KT&G 릴 핏",
       "chinese": "KT&G 릴 핏",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.03
+        "新世界": 0.02
       }
     },
     {
-      "id": "527",
+      "id": "513",
       "category": "烟",
       "english": "所有电子烟机器",
       "chinese": "所有电子烟机器",
@@ -6693,57 +6847,66 @@
         "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.0
       }
     },
     {
-      "id": "528",
+      "id": "514",
       "category": "酒",
       "english": "MARTELL",
       "chinese": "马爹利",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.19
+        "新罗": 0.19,
+        "釜山乐天": 0.0,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "529",
+      "id": "515",
       "category": "酒",
       "english": "BALLANTINES",
       "chinese": "百龄坛",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.11
+        "现代": 0.11,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "530",
+      "id": "516",
       "category": "酒",
       "english": "CHIVAS REGAL",
       "chinese": "芝华士",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.11
+        "现代": 0.11,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "531",
+      "id": "517",
       "category": "酒",
       "english": "HENNESSY",
       "chinese": "轩尼诗",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.25,
+        "新世界": 0.24,
         "新罗": 0.27,
-        "现代": 0.28
+        "现代": 0.28,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "532",
+      "id": "518",
       "category": "酒",
       "english": "NIO COCKTAILS",
       "chinese": "NIO COCKTAILS",
@@ -6754,65 +6917,70 @@
       }
     },
     {
-      "id": "533",
+      "id": "519",
       "category": "酒",
       "english": "MOUTAI(DDM)",
       "chinese": "茅台(DDM)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.15,
+        "新世界": 0.14,
         "新罗": 0.27,
-        "现代": 0.28
+        "现代": 0.28,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "534",
+      "id": "520",
       "category": "酒",
       "english": "MOUTAI (THQ)",
       "chinese": "MOUTAI (THQ)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "535",
+      "id": "521",
       "category": "酒",
       "english": "ROYAL SALUTE",
       "chinese": "皇家礼炮",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.11
+        "现代": 0.11,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.08
       }
     },
     {
-      "id": "536",
+      "id": "522",
       "category": "酒",
       "english": "REMY MARTIN",
       "chinese": "人头马",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.05,
-        "现代": 0.06
+        "新世界": 0.04,
+        "现代": 0.06,
+        "釜山乐天": 0.0
       }
     },
     {
-      "id": "537",
+      "id": "523",
       "category": "酒",
       "english": "VEUVE CLICQUOT",
       "chinese": "凯歌香槟",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "538",
+      "id": "524",
       "category": "酒",
       "english": "CAMUS MOUTAI",
       "chinese": "贵州茅台",
@@ -6823,7 +6991,7 @@
       }
     },
     {
-      "id": "539",
+      "id": "525",
       "category": "食品",
       "english": "CHEONG KWAN JANG",
       "chinese": "正官庄一般",
@@ -6839,35 +7007,39 @@
       }
     },
     {
-      "id": "540",
+      "id": "526",
       "category": "食品",
       "english": "CHEONG KWAN JANG (뿌리삼)",
       "chinese": "正官庄人参根",
-      "remark": "",
+      "remark": "有特殊SKU",
       "discount": null,
       "rebates": {
         "乐天明洞": 0.0,
         "乐天蚕室": 0.0,
-        "新世界": 0.03,
+        "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.0,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "541",
+      "id": "527",
       "category": "食品",
       "english": "CENOVIS",
       "chinese": "CENOVIS",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08,
-        "现代": 0.11
+        "新世界": 0.07,
+        "现代": 0.12,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "542",
+      "id": "528",
       "category": "食品",
       "english": "배러밀",
       "chinese": "BETTERMEAL",
@@ -6878,43 +7050,10 @@
       }
     },
     {
-      "id": "543",
+      "id": "529",
       "category": "食品",
       "english": "브릭샌드",
       "chinese": "Brick Sand",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.03
-      }
-    },
-    {
-      "id": "544",
-      "category": "食品",
-      "english": "다나누리",
-      "chinese": "DANANURI",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.08
-      }
-    },
-    {
-      "id": "545",
-      "category": "食品",
-      "english": "대호물산식품",
-      "chinese": "Daeho食品",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.08
-      }
-    },
-    {
-      "id": "546",
-      "category": "食品",
-      "english": "그래인스쿠키",
-      "chinese": "GRAINS COOKIE",
       "remark": "",
       "discount": null,
       "rebates": {
@@ -6922,18 +7061,53 @@
       }
     },
     {
-      "id": "547",
+      "id": "530",
+      "category": "食品",
+      "english": "다나누리",
+      "chinese": "DANANURI",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.07,
+        "釜山乐天": 0.11,
+        "济州乐天": 0.09
+      }
+    },
+    {
+      "id": "531",
+      "category": "食品",
+      "english": "대호물산식품",
+      "chinese": "Daeho食品",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.07
+      }
+    },
+    {
+      "id": "532",
+      "category": "食品",
+      "english": "그래인스쿠키",
+      "chinese": "GRAINS COOKIE",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.01
+      }
+    },
+    {
+      "id": "533",
       "category": "食品",
       "english": "에이티",
       "chinese": "AT",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "548",
+      "id": "534",
       "category": "食品",
       "english": "팔도카라멜",
       "chinese": "PALDO CARAMEL",
@@ -6944,32 +7118,33 @@
       }
     },
     {
-      "id": "549",
+      "id": "535",
       "category": "食品",
       "english": "엘에이치앤디",
       "chinese": "LH&D",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08,
-        "现代": 0.11,
-        "爱宝客": 0.22
+        "新世界": 0.07,
+        "现代": 0.12,
+        "爱宝客": 0.22,
+        "济州乐天": 0.09
       }
     },
     {
-      "id": "550",
+      "id": "536",
       "category": "食品",
       "english": "DELIGHT PROJECT",
       "chinese": "DELIGHT PROJECT",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "551",
+      "id": "537",
       "category": "食品",
       "english": "K-SHOP BY CJ ENM",
       "chinese": "K-SHOP BY CJ ENM",
@@ -6981,7 +7156,7 @@
       }
     },
     {
-      "id": "552",
+      "id": "538",
       "category": "食品",
       "english": "이삭토스트",
       "chinese": "ISAAC TOAST",
@@ -6992,29 +7167,29 @@
       }
     },
     {
-      "id": "553",
+      "id": "539",
       "category": "食品",
       "english": "원스인어문",
       "chinese": "원스인어문",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.07
+        "新世界": 0.06
       }
     },
     {
-      "id": "554",
+      "id": "540",
       "category": "食品",
       "english": "금옥당",
       "chinese": "金玉堂",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.03
+        "新世界": 0.02
       }
     },
     {
-      "id": "555",
+      "id": "541",
       "category": "食品",
       "english": "허니버터아몬드",
       "chinese": "蜂蜜黄油杏仁",
@@ -7025,7 +7200,7 @@
       }
     },
     {
-      "id": "556",
+      "id": "542",
       "category": "食品",
       "english": "일동후디스(분유)",
       "chinese": "ILDONG FOODIS（奶粉）",
@@ -7036,7 +7211,7 @@
       }
     },
     {
-      "id": "557",
+      "id": "543",
       "category": "食品",
       "english": "남양유업(분유)",
       "chinese": "南阳乳业",
@@ -7047,7 +7222,7 @@
       }
     },
     {
-      "id": "558",
+      "id": "544",
       "category": "食品",
       "english": "매일유업(분유)",
       "chinese": "매일유업(분유)",
@@ -7058,18 +7233,18 @@
       }
     },
     {
-      "id": "559",
+      "id": "545",
       "category": "食品",
       "english": "만나당",
       "chinese": "MANNADANG",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.05
+        "新世界": 0.04
       }
     },
     {
-      "id": "560",
+      "id": "546",
       "category": "食品",
       "english": "피닉스진생",
       "chinese": "凤凰人参",
@@ -7080,7 +7255,7 @@
       }
     },
     {
-      "id": "561",
+      "id": "547",
       "category": "食品",
       "english": "동원F&B",
       "chinese": "동원F&B",
@@ -7091,18 +7266,18 @@
       }
     },
     {
-      "id": "562",
+      "id": "548",
       "category": "食品",
       "english": "타이거모닝",
       "chinese": "TIGER MORNING",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.05
+        "新世界": 0.04
       }
     },
     {
-      "id": "563",
+      "id": "549",
       "category": "食品",
       "english": "한국식품",
       "chinese": "韩国食品",
@@ -7113,31 +7288,31 @@
       }
     },
     {
-      "id": "564",
+      "id": "550",
       "category": "食品",
       "english": "CENTRUM",
       "chinese": "善存",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.11
+        "现代": 0.12
       }
     },
     {
-      "id": "565",
+      "id": "551",
       "category": "纪念品",
       "english": "HAESOO.L",
       "chinese": "海秀儿(14K除外)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.23,
+        "乐天明洞": 0.18,
         "乐天蚕室": 0.0,
         "新罗": 0.2
       }
     },
     {
-      "id": "566",
+      "id": "552",
       "category": "纪念品",
       "english": "HAESOO.L JEW (14K)",
       "chinese": "海秀儿(14K足金)",
@@ -7150,40 +7325,44 @@
       }
     },
     {
-      "id": "567",
+      "id": "553",
       "category": "纪念品",
       "english": "KAKAO FRIENDS",
       "chinese": "可可朋友",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07,
+        "釜山乐天": 0.04,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "568",
+      "id": "554",
       "category": "纪念品",
       "english": "PORORO",
       "chinese": "宝露露",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07,
+        "济州乐天": 0.09,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "569",
+      "id": "555",
       "category": "纪念品",
       "english": "에이치에스에프",
       "chinese": "HSF(特殊商品除外)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.01
+        "新世界": 0.0
       }
     },
     {
-      "id": "570",
+      "id": "556",
       "category": "纪念品",
       "english": "에이치에스에프(라라스윗, 농심, 동서, 삼양, 오뚜기)",
       "chinese": "HSF特殊商品(라라스윗, 농심, 동서, 삼양, 오뚜기)",
@@ -7194,87 +7373,90 @@
       }
     },
     {
-      "id": "571",
+      "id": "557",
       "category": "纪念品",
       "english": "오설록",
       "chinese": "OSULLOC",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "572",
+      "id": "558",
       "category": "纪念品",
       "english": "쎄콩데",
       "chinese": "SECONDAIRE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "573",
+      "id": "559",
       "category": "纪念品",
       "english": "슈퍼말차",
       "chinese": "SUPER MATCHA",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "574",
+      "id": "560",
       "category": "纪念品",
       "english": "MONDAY EDITION",
       "chinese": "MONDAY EDITION",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "575",
+      "id": "561",
       "category": "纪念品",
       "english": "TANI BY MINETANI",
       "chinese": "TANI BY MINETANI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "576",
+      "id": "562",
       "category": "纪念品",
       "english": "THE PARKJI",
       "chinese": "THE PARKJI",
       "remark": "",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.11,
+        "乐天明洞": 0.12,
         "乐天蚕室": 0.0
       }
     },
     {
-      "id": "577",
+      "id": "563",
       "category": "纪念品",
       "english": "누리에",
       "chinese": "NURIE",
       "remark": "",
       "discount": null,
       "rebates": {
-        "爱宝客": 0.18
+        "爱宝客": 0.18,
+        "济州乐天": 0.09,
+        "济州新罗": 0.05
       }
     },
     {
-      "id": "578",
+      "id": "564",
       "category": "纪念品",
       "english": "VERGUM MAKING",
       "chinese": "VERGUM MAKING",
@@ -7286,41 +7468,41 @@
       }
     },
     {
-      "id": "579",
+      "id": "565",
       "category": "纪念品",
       "english": "유엠(코스메틱)",
       "chinese": "UM(化妆品)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.05
+        "新世界": 0.04
       }
     },
     {
-      "id": "580",
+      "id": "566",
       "category": "纪念品",
       "english": "유엠(유아)",
       "chinese": "UM(幼儿用品)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08
+        "新世界": 0.07
       }
     },
     {
-      "id": "581",
+      "id": "567",
       "category": "纪念品",
       "english": "유엠(캐릭터)",
       "chinese": "UM(玩具)",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.03,
+        "新世界": 0.02,
         "现代": 0.0
       }
     },
     {
-      "id": "582",
+      "id": "568",
       "category": "电子",
       "english": "DYSON KOREA",
       "chinese": "戴森",
@@ -7335,7 +7517,7 @@
       }
     },
     {
-      "id": "583",
+      "id": "569",
       "category": "电子",
       "english": "AFTER SHOKZ",
       "chinese": "AFTER SHOKZ",
@@ -7346,7 +7528,7 @@
       }
     },
     {
-      "id": "584",
+      "id": "570",
       "category": "电子",
       "english": "BANG&OLUFSEN",
       "chinese": "B&O",
@@ -7354,11 +7536,12 @@
       "discount": null,
       "rebates": {
         "新世界": 0.0,
-        "现代": 0.0
+        "现代": 0.0,
+        "济州乐天": 0.05
       }
     },
     {
-      "id": "585",
+      "id": "571",
       "category": "电子",
       "english": "BOWERS&WILKINS",
       "chinese": "BOWERS&WILKINS",
@@ -7369,18 +7552,20 @@
       }
     },
     {
-      "id": "586",
+      "id": "572",
       "category": "电子",
       "english": "GOPRO",
       "chinese": "GOPRO",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.0
+        "现代": 0.0,
+        "济州乐天": 0.05,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "587",
+      "id": "573",
       "category": "电子",
       "english": "PHILIPS",
       "chinese": "飞利浦",
@@ -7388,22 +7573,26 @@
       "discount": null,
       "rebates": {
         "新世界": 0.0,
-        "现代": 0.0
+        "现代": 0.0,
+        "济州乐天": 0.05,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "588",
+      "id": "574",
       "category": "电子",
       "english": "쿠쿠",
       "chinese": "福库",
       "remark": "",
       "discount": null,
       "rebates": {
-        "现代": 0.07
+        "现代": 0.07,
+        "济州乐天": 0.05,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "589",
+      "id": "575",
       "category": "电子",
       "english": "삼성",
       "chinese": "三星",
@@ -7415,11 +7604,14 @@
         "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.0,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "590",
+      "id": "576",
       "category": "电子",
       "english": "SONY",
       "chinese": "索尼",
@@ -7430,7 +7622,7 @@
       }
     },
     {
-      "id": "591",
+      "id": "577",
       "category": "电子",
       "english": "LG",
       "chinese": "LG",
@@ -7441,7 +7633,7 @@
       }
     },
     {
-      "id": "592",
+      "id": "578",
       "category": "电子",
       "english": "INSTA360",
       "chinese": "INSTA360",
@@ -7452,7 +7644,7 @@
       }
     },
     {
-      "id": "593",
+      "id": "579",
       "category": "电子",
       "english": "골프버디",
       "chinese": "GOLFBUDDY",
@@ -7463,7 +7655,7 @@
       }
     },
     {
-      "id": "594",
+      "id": "580",
       "category": "电子",
       "english": "AFTERSHOKZ",
       "chinese": "AFTERSHOKZ",
@@ -7477,7 +7669,7 @@
       }
     },
     {
-      "id": "595",
+      "id": "581",
       "category": "电子",
       "english": "BOSE",
       "chinese": "BOSE",
@@ -7489,11 +7681,14 @@
         "新世界": 0.0,
         "新罗": 0.0,
         "现代": 0.0,
-        "爱宝客": 0.0
+        "爱宝客": 0.0,
+        "釜山乐天": 0.0,
+        "济州乐天": 0.05,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "596",
+      "id": "582",
       "category": "电子",
       "english": "AUDIO-TECHNICA",
       "chinese": "AUDIO-TECHNICA",
@@ -7504,42 +7699,44 @@
       }
     },
     {
-      "id": "597",
+      "id": "583",
       "category": "电子",
       "english": "FUJI",
       "chinese": "富士",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.08,
-        "现代": 0.0
+        "新世界": 0.07,
+        "现代": 0.0,
+        "济州乐天": 0.05
       }
     },
     {
-      "id": "598",
+      "id": "584",
       "category": "电子",
       "english": "니블스",
       "chinese": "NIBBLES",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.03
+        "新世界": 0.02
       }
     },
     {
-      "id": "599",
+      "id": "585",
       "category": "电子",
       "english": "PANASONIC",
       "chinese": "松下",
       "remark": "",
       "discount": null,
       "rebates": {
-        "新世界": 0.03,
-        "现代": 0.04
+        "新世界": 0.02,
+        "现代": 0.04,
+        "济州新罗": 0.0
       }
     },
     {
-      "id": "600",
+      "id": "586",
       "category": "电子",
       "english": "선경DFS ACC(국산)",
       "chinese": "선경DFS ACC(本土)",
@@ -7550,7 +7747,7 @@
       }
     },
     {
-      "id": "601",
+      "id": "587",
       "category": "电子",
       "english": "풀리오",
       "chinese": "PULIO",
