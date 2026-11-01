@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="theme-color" content="#ff9298">
+<meta name="theme-color" content="#f9e4ef">
 <title>野猪返点｜韩国免税店返点查询</title>
 <style>
 :root{
@@ -254,6 +254,61 @@ button{
   .rebates,.grid{grid-template-columns:1fr}
   .result-price{font-size:25px}
 }
+
+/* 客人端 · 奶油糖果渐变主题（仅调整视觉，不修改查询和计算逻辑） */
+:root{--ink:#30304c;--muted:#7a7890;--line:#e9e2f1;--pink-1:#f8b6cf;--pink-2:#ffe0e8;--pink-3:#fff0f4;--lav-1:#dce7ff;--lav-2:#f0eaff;--cream:#fffdfb;--red:#dc567b}
+html{scroll-behavior:smooth}
+body{font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;background:radial-gradient(ellipse at 8% 2%,#ffe6ee 0,transparent 33%),radial-gradient(ellipse at 94% 10%,#fff2cb 0,transparent 30%),radial-gradient(ellipse at 70% 52%,#e8f4ff 0,transparent 40%),linear-gradient(160deg,#fffafb 0%,#f9f8ff 50%,#f5fbff 100%);min-height:100vh}
+.container{max-width:760px;padding:0 16px 36px}
+.header{position:relative;margin:0 -16px 22px;padding:31px 16px 27px;background:linear-gradient(115deg,#ffe2ed 0%,#fff0d9 43%,#e6e6ff 78%,#dcecff 100%);border-bottom:1px solid rgba(255,255,255,.8);border-radius:0 0 30px 30px;box-shadow:0 12px 30px rgba(129,105,169,.08)}
+.header:before{content:"✦";position:absolute;left:9%;top:18px;color:#f2a3bf;font-size:19px}
+.header:after{content:"✧";position:absolute;right:9%;bottom:14px;color:#aa9ee7;font-size:22px}
+.header h1{font-family:"PingFang SC","Microsoft YaHei",sans-serif;font-size:31px;letter-spacing:4px;color:#3c355d;font-weight:800}
+.sub{font-family:inherit;color:#79708a;font-size:13px;font-weight:500;letter-spacing:1px;margin-top:9px}
+.rate{background:linear-gradient(110deg,#fce6f0 0%,#e5edff 53%,#e5f7f4 100%);border:1px solid #fff;border-radius:22px;padding:17px 20px;margin-bottom:18px;box-shadow:0 8px 26px rgba(132,132,191,.10),inset 0 1px 0 #fff}
+.rate small{color:#656481;font-size:12px;font-weight:600}
+.rate strong{font-family:inherit;font-size:30px;font-weight:800;color:#425b91;letter-spacing:.5px}
+.card{background:rgba(255,255,255,.91);border:1px solid #f2e8f5;border-radius:24px;padding:20px;margin-bottom:17px;box-shadow:0 12px 35px rgba(132,123,176,.075),0 2px 8px rgba(200,174,203,.045)}
+.title{font-family:inherit;font-size:19px;font-weight:800;color:#514078;letter-spacing:0;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+.card:not(.notice-card)>.title:before{content:"✦";color:#c69be6;font-size:17px}
+input{height:54px;border:1.5px solid #e2e3f0;border-radius:15px;padding:0 16px;background:linear-gradient(180deg,#fff,#fdfcff);color:#34334f;font-family:inherit;font-size:16px;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:#bda9ef;box-shadow:0 0 0 4px rgba(188,170,239,.17)}
+input::placeholder{color:#aaa5b8}
+button{height:51px;border-radius:15px;font-family:inherit;font-size:15px;font-weight:750;transition:transform .15s,box-shadow .15s}
+button:active{transform:translateY(1px) scale(.995)}
+.primary,.copyall{color:#494064;background:linear-gradient(105deg,#ffc6d8 0%,#ffe8ce 43%,#dcd8ff 100%);box-shadow:0 7px 19px rgba(186,155,211,.17);border:1px solid rgba(255,255,255,.8)}
+.primary{margin-top:12px}
+.search-results{border:1px solid #ece4f3;border-radius:16px;box-shadow:0 7px 16px rgba(117,104,159,.07)}
+.search-item{padding:14px;background:#fff;border-bottom:1px solid #f3edf6}
+.search-item:hover{background:linear-gradient(100deg,#fff4f7,#f3f2ff)}
+.search-brand{font-family:inherit;color:#4b4168}
+.search-sub,.brand-cn,.meta{color:#807a91}
+.badge{background:linear-gradient(100deg,#ffe3ef,#e8e8ff);color:#665b92;padding:5px 10px}
+.brand-name{font-family:inherit;color:#494170;font-size:25px}
+.rebates{gap:11px}
+.rebate{border:1px solid rgba(255,255,255,.9);background:linear-gradient(125deg,#ffe8ef 0%,#f3e9ff 47%,#e5f3ff 100%);border-radius:17px;padding:15px;box-shadow:0 5px 16px rgba(150,140,187,.08)}
+.store{color:#66617d;font-size:13px}
+.value{font-family:inherit;font-weight:800;font-size:26px;color:#4a5e99}
+.field label{color:#625a77;font-size:13px}
+.note{color:#8a829a}
+.auto{color:#9c73c5}
+.result{background:linear-gradient(115deg,#fff1f5,#f5f2ff 55%,#eaf7ff);border:1px solid #f1e7f7;border-radius:18px;padding:16px;margin-bottom:12px}
+.result-store{color:#4f4578;font-size:16px}
+.result-rebate{color:#82768e}
+.result-price{font-family:inherit;font-size:27px;font-weight:850;color:#31689e}
+.formula{color:#827d91;overflow-wrap:anywhere}
+.copy{background:linear-gradient(105deg,#e6eaff,#e7f5ff);color:#4d5b86}
+.notice-card{background:linear-gradient(145deg,#fff8f9 0%,#fffdf9 56%,#f8f6ff 100%);border:1px solid #f5dce5}
+.notice-title{font-family:inherit;color:#b7547a;font-size:19px}
+.notice-lead{background:linear-gradient(105deg,#ffeaf0,#fff2e5);border:1px solid #f8d9e3;color:#aa5372;border-radius:14px;padding:13px}
+.rule{border-bottom:1px dashed #e8d9e6;color:#645c6f}
+.rule b{font-family:inherit;color:#554b73}
+.red{color:#c65c78}
+.status{color:#aaa4b7}
+.toast{background:rgba(65,59,94,.92)}
+.notice{background:linear-gradient(100deg,#d894b9,#9a96d9)}
+@media(max-width:520px){.container{padding:0 12px 26px}.header{margin:0 -12px 16px;padding:26px 12px 23px;border-radius:0 0 25px 25px}.header h1{font-size:28px}.card{padding:17px;border-radius:21px}.rate{padding:15px 17px;border-radius:20px}.rebates{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.rebate{padding:12px 10px}.store{font-size:12px;overflow-wrap:anywhere}.value{font-size:23px}.grid{grid-template-columns:1fr}.result-price{font-size:25px}}
+@media(max-width:350px){.rebates{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
