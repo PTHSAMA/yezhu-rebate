@@ -1230,7 +1230,7 @@ button {
 
     <button class="menu-card" id="openOrdersButton">
         <div class="menu-card-title">📋 订单管理</div>
-        <div class="menu-card-desc">管理待柜台下单、已付款待取货、已提货待重新结账和已完成订单</div>
+        <div class="menu-card-desc">管理定金待提货、支付宝提货、天天提货、天天未凑积分、已完成（天天已积分）和已取消订单</div>
         <div class="order-count-badge" id="homeOrderSummary">正在读取待下单任务...</div>
     </button>
 
@@ -1774,7 +1774,7 @@ PARAGON OVAL
           <div class="full"><label>关联现有库存（可选）</label><select id="directOrderInventory"><option value="">不关联库存，直接填写商品描述</option></select></div>
           <div><label>客户负责人</label><input id="directOrderOwner" placeholder="负责员工"></div>
           <div><label>加入人</label><input id="directOrderOperator" placeholder="操作员工"></div>
-          <div class="full"><label>订单状态</label><select id="directOrderStatus"><option>待柜台下单</option><option>已付款待取货</option><option>已提货待重新结账</option><option>已完成</option><option>已取消</option></select></div>
+          <div class="full"><label>订单状态</label><select id="directOrderStatus"><option>已付定金 待提货</option><option>已提货 支付宝</option><option>已提货 天天</option><option>已提货 天天 未凑积分</option><option value="已完成">已完成🟰已提货 天天 已积分</option><option>已取消</option></select></div>
           <div class="full"><label>备注（可选）</label><textarea id="directOrderNote" rows="2" placeholder="订单补充信息"></textarea></div>
         </div>
         <button type="button" class="direct-order-submit" id="directOrderSave">保存并创建订单</button>
@@ -1782,10 +1782,11 @@ PARAGON OVAL
       </div>
     </section>
     <div class="order-filter-row">
-        <button class="order-filter-button active" data-order-filter="待柜台下单">待柜台下单</button>
-        <button class="order-filter-button" data-order-filter="已付款待取货">已付款待取货</button>
-        <button class="order-filter-button" data-order-filter="已提货待重新结账">已提货待重新结账</button>
-        <button class="order-filter-button" data-order-filter="已完成">已完成</button>
+        <button class="order-filter-button active" data-order-filter="已付定金 待提货">已付定金 待提货</button>
+        <button class="order-filter-button" data-order-filter="已提货 支付宝">已提货 支付宝</button>
+        <button class="order-filter-button" data-order-filter="已提货 天天">已提货 天天</button>
+        <button class="order-filter-button" data-order-filter="已提货 天天 未凑积分">已提货 天天 未凑积分</button>
+        <button class="order-filter-button" data-order-filter="已完成">已完成🟰已提货 天天 已积分</button>
         <button class="order-filter-button" data-order-filter="已取消">已取消</button>
         <button class="order-filter-button" data-order-filter="all">全部</button>
     </div>
@@ -2805,7 +2806,7 @@ let graffInventoryCountMap = new Map();
 let graffNewInventoryCountMap = new Map();
 let selectedOrderInventoryIds = new Set();
 let orderDatabase = [];
-let currentOrderFilter = "待柜台下单";
+let currentOrderFilter = "已付定金 待提货";
 
 
 
@@ -4059,7 +4060,7 @@ async function addCurrentCustomerDirectOrder(){
                 inventory_id:null,
                 selected_by:operator||null,
                 selected_at:new Date().toISOString(),
-                order_status:"待柜台下单",
+                order_status:"已付定金 待提货",
                 note:buildOrderMetaNote(
                     clerk,
                     item.status || ""
@@ -4162,7 +4163,7 @@ async function selectInventoryForOrder(row, button) {
             inventory_id: inventory.id,
             selected_by: operator,
             selected_at: new Date().toISOString(),
-            order_status: "待柜台下单",
+            order_status: "已付定金 待提货",
             note: buildOrderMetaNote(
                 parseClerkFromCustomerText(item),
                 previousStatus
@@ -4379,6 +4380,13 @@ async function saveOrderPointsUsed(orderId,used,amount,button){
 const pointsCreateGroupButton=document.getElementById("pointsCreateGroup");
 if(pointsCreateGroupButton)pointsCreateGroupButton.addEventListener("click",createPointsGroup);
 
+function normalizeGraffOrderStatus(status) {
+    if (status === "待柜台下单" || status === "已付款待取货") return "已付定金 待提货";
+    if (status === "已提货待重新结账") return "已提货 支付宝";
+    if (status === "无货/失败") return "已取消";
+    return status || "已付定金 待提货";
+}
+
 async function loadOrders(renderPage = false) {
     try {
         let query = supabaseClient
@@ -4386,11 +4394,7 @@ async function loadOrders(renderPage = false) {
             .select("id,customer_id,inventory_id,selected_by,selected_at,order_status,note,active,updated_at,gia_address,gia_delivered,points_used,points_used_amount,points_group_id")
             .order("selected_at", { ascending: false });
 
-        if (currentOrderFilter === "已取消") {
-            query = query.in("order_status", ["已取消", "无货/失败"]);
-        } else if (currentOrderFilter !== "all") {
-            query = query.eq("order_status", currentOrderFilter);
-        }
+        // 在前端统一旧状态与新状态，防止旧订单被数据库筛选遗漏。
 
         const { data: orderRows, error: orderError } = await query;
 
@@ -4398,7 +4402,8 @@ async function loadOrders(renderPage = false) {
 
         // 已打回客户意向的订单不再属于订单管理列表；保留数据库记录供追溯。
         orderDatabase = Array.isArray(orderRows)
-            ? orderRows.filter(row => row.order_status !== "已打回客户意向")
+            ? orderRows.filter(row => row.order_status !== "已打回客户意向" &&
+                (currentOrderFilter === "all" || normalizeGraffOrderStatus(row.order_status) === currentOrderFilter))
             : [];
         // 前端排序：支持加入时间和更新时间，兼容旧订单的空时间。
         const sortMode = document.getElementById("orderTimeSort")?.value || "new";
@@ -4413,13 +4418,13 @@ async function loadOrders(renderPage = false) {
         const { data: pendingRows, error: pendingError } = await supabaseClient
             .from(SUPABASE_ORDER_TABLE)
             .select("id")
-            .eq("order_status", "待柜台下单");
+            .in("order_status", ["已付定金 待提货", "待柜台下单", "已付款待取货"]);
 
         if (!pendingError) {
             homeOrderSummary.textContent =
                 (pendingRows || []).length
-                    ? (pendingRows || []).length + " 单待柜台下单"
-                    : "暂无待柜台下单";
+                    ? (pendingRows || []).length + " 单已付定金 待提货"
+                    : "暂无已付定金 待提货";
         }
 
         if (!renderPage) return;
@@ -4566,10 +4571,11 @@ async function loadOrders(renderPage = false) {
                 '<select class="order-status-select" data-order-id="' +
                     escapeHtml(String(order.id)) +
                 '">' +
-                    '<option value="待柜台下单">待柜台下单</option>' +
-                    '<option value="已付款待取货">已付款待取货</option>' +
-                    '<option value="已提货待重新结账">已提货待重新结账</option>' +
-                    '<option value="已完成">已完成</option>' +
+                    '<option value="已付定金 待提货">已付定金 待提货</option>' +
+                    '<option value="已提货 支付宝">已提货 支付宝</option>' +
+                    '<option value="已提货 天天">已提货 天天</option>' +
+                    '<option value="已提货 天天 未凑积分">已提货 天天 未凑积分</option>' +
+                    '<option value="已完成">已完成🟰已提货 天天 已积分</option>' +
                     '<option value="已取消">已取消</option>' +
                     '<option value="__RETURN__">↩ 打回客户意向</option>' +
                     (
@@ -4581,7 +4587,7 @@ async function loadOrders(renderPage = false) {
 
             const select = card.querySelector(".order-status-select");
             // 历史“无货/失败”记录显示为“已取消”，不擅自修改数据库历史。
-            select.value = order.order_status === "无货/失败" ? "已取消" : (order.order_status || "待柜台下单");
+            select.value = normalizeGraffOrderStatus(order.order_status);
 
             if (order.order_status === "已完成") {
                 const giaBox = document.createElement("div");
@@ -4674,7 +4680,7 @@ async function loadOrders(renderPage = false) {
                 pointsBox.appendChild(entry);card.appendChild(pointsBox);
             }
 
-            select.dataset.savedStatus = order.order_status === "无货/失败" ? "已取消" : (order.order_status || "待柜台下单");
+            select.dataset.savedStatus = normalizeGraffOrderStatus(order.order_status);
             select.addEventListener("change", async () => {
                 const newStatus = select.value;
                 if (newStatus === "__RETURN__") {
@@ -7946,7 +7952,7 @@ document.getElementById("orderTimeSort")?.addEventListener("change",()=>loadOrde
 
 document.querySelectorAll(".order-filter-button").forEach(button=>{
     button.addEventListener("click",()=>{
-        currentOrderFilter=button.dataset.orderFilter||"待柜台下单";
+        currentOrderFilter=button.dataset.orderFilter||"已付定金 待提货";
 
         document.querySelectorAll(".order-filter-button").forEach(item=>{
             item.classList.toggle("active",item===button);
