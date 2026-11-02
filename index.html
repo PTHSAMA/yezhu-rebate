@@ -931,6 +931,26 @@ button {
     line-height: 1.55;
 }
 
+
+/* 订单卡片：原位编辑，不跳转客户意向 */
+.order-edit-toggle{margin-top:10px;width:100%;min-height:38px;border-radius:10px;border:1px solid #ddd3f3;background:linear-gradient(110deg,#fff0f6,#e9e7ff);color:#49346a;font-weight:800;font-size:13px;cursor:pointer}
+.order-inline-editor{margin-top:10px;padding:13px;border:1px solid #ddd3f3;border-radius:13px;background:#fcfaff}
+.order-inline-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.order-inline-field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.order-inline-field.wide{grid-column:1/-1}
+.order-inline-field label{font-size:12px;font-weight:800;color:#56416b}
+.order-inline-field input,.order-inline-field textarea{width:100%;min-height:40px;border:1px solid #d8d4e3;border-radius:9px;padding:9px 10px;background:#fff;font:inherit;font-size:14px;color:#282133}
+.order-inline-field textarea{min-height:72px;resize:vertical}
+.order-inline-actions{display:flex;gap:8px;margin-top:12px}
+.order-inline-actions button{flex:1;min-height:40px;border-radius:10px;font-size:13px;font-weight:800}
+.order-inline-save{background:linear-gradient(100deg,#f6c1d8,#d7d9ff);color:#31243e}
+.order-inline-cancel{background:#eeeaf3;color:#51485d}
+.order-inline-hint{font-size:11px;color:#81758e;margin-top:7px;line-height:1.5}
+@media(max-width:520px){.order-inline-grid{grid-template-columns:1fr}}
+
+/* 订单备注：提货时间等重要信息直接显示在订单卡片 */
+.order-pickup-note {margin:10px 0 12px;padding:10px 12px;border:1px solid #e6d8f6;border-radius:11px;background:linear-gradient(110deg,#fff4f7,#f4f0ff);font-size:13px;line-height:1.65;color:#44354d;white-space:pre-wrap;overflow-wrap:anywhere}
+.order-pickup-note strong {display:block;margin-bottom:3px;color:#704b92;font-size:13px}
 .order-meta {
     margin-top: 6px;
     color: #777;
@@ -1182,6 +1202,18 @@ button {
 .direct-order-submit{width:100%;margin-top:13px;border:0;border-radius:12px;padding:13px;background:linear-gradient(100deg,#f4c3d9,#d8cfff,#cde9ff);font-size:15px;font-weight:800;color:#30294a}
 .direct-order-hint{font-size:12px;color:#756a7d;line-height:1.6;margin-top:8px}
 @media(max-width:520px){.direct-order-grid{grid-template-columns:1fr}.direct-order-grid .full{grid-column:auto}}
+
+/* GRAFF 提货提醒：使用订单备注保存日期，无需数据库改表 */
+.graff-pickup-reminder{margin:14px 0;padding:15px;border:1px solid #e9c3da;border-radius:15px;background:linear-gradient(120deg,#fff0f5,#f0f2ff,#eaf8ff);box-shadow:0 4px 14px rgba(128,92,148,.07);font-size:14px}
+.graff-pickup-reminder h3{margin:0 0 9px;font-size:17px;color:#713b72}
+.graff-pickup-reminder .pickup-item{padding:9px 0;border-top:1px solid rgba(138,107,146,.15);line-height:1.65}
+.graff-pickup-reminder .pickup-item:first-of-type{border-top:0}
+.graff-pickup-reminder .pickup-sub{font-size:12px;color:#6d6175}
+.order-pickup-date-editor{margin-top:10px;padding:10px;border:1px solid #e7e1ee;border-radius:11px;background:#fbf9ff;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.order-pickup-date-editor label{font-size:12px;font-weight:700;color:#60466c}
+.order-pickup-date-editor input{flex:1;min-width:140px;height:38px;border:1px solid #d9d2e5;border-radius:8px;padding:0 8px;background:#fff;font-size:14px}
+.order-pickup-date-editor button{border:0;border-radius:8px;padding:9px 12px;background:linear-gradient(100deg,#f6c9dc,#d5dcff);font-weight:700;cursor:pointer}
+
 </style>
 
 </head>
@@ -1775,12 +1807,14 @@ PARAGON OVAL
           <div><label>客户负责人</label><input id="directOrderOwner" placeholder="负责员工"></div>
           <div><label>加入人</label><input id="directOrderOperator" placeholder="操作员工"></div>
           <div class="full"><label>订单状态</label><select id="directOrderStatus"><option>已付定金 待提货</option><option>已提货 支付宝</option><option>已提货 天天</option><option>已提货 天天 未凑积分</option><option value="已完成">已完成🟰已提货 天天 已积分</option><option>已取消</option></select></div>
+          <div><label>预计提货日期（提前一天提醒）</label><input id="directOrderPickupDate" type="date"></div>
           <div class="full"><label>备注（可选）</label><textarea id="directOrderNote" rows="2" placeholder="订单补充信息"></textarea></div>
         </div>
         <button type="button" class="direct-order-submit" id="directOrderSave">保存并创建订单</button>
         <div class="direct-order-hint" id="directOrderMessage">直接在订单页面创建，无需先去客户意向录入。若不关联库存，订单展示手填的商品描述。</div>
       </div>
     </section>
+    <section id="graffPickupReminder" class="graff-pickup-reminder" style="display:none" aria-live="polite"></section>
     <div class="order-filter-row">
         <button class="order-filter-button active" data-order-filter="已付定金 待提货">已付定金 待提货</button>
         <button class="order-filter-button" data-order-filter="已提货 支付宝">已提货 支付宝</button>
@@ -4387,6 +4421,48 @@ function normalizeGraffOrderStatus(status) {
     return status || "已付定金 待提货";
 }
 
+const GRAFF_PICKUP_MARKER = "预计提货日期：";
+function graffPickupDateFromNote(note){
+ const text=String(note||"");
+ const tagged=text.match(/(?:^|\n)预计提货日期[：:]\s*(\d{4}-\d{2}-\d{2})(?:\n|$)/);
+ if(tagged)return tagged[1];
+ // 兼容旧备注里明确写出的完整年月日；模糊的“明天/周五”不自动推测。
+ const full=text.match(/(?:预计|计划|约定|提货|取货)[^\n]{0,30}?(20\d{2})[年\/.-](\d{1,2})[月\/.-](\d{1,2})日?/);
+ if(full)return full[1]+"-"+full[2].padStart(2,"0")+"-"+full[3].padStart(2,"0");
+ return "";
+}
+function graffNoteWithPickupDate(note,date){
+ const rest=String(note||"").split(/\r?\n/).filter(line=>!/^\s*预计提货日期[：:]/.test(line)).join("\n").trim();
+ return date?(rest?rest+"\n":"")+GRAFF_PICKUP_MARKER+date:rest;
+}
+function graffTomorrowDate(){
+ const now=new Date();const tomorrow=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
+ return tomorrow.getFullYear()+"-"+String(tomorrow.getMonth()+1).padStart(2,"0")+"-"+String(tomorrow.getDate()).padStart(2,"0");
+}
+async function graffRenderPickupReminder(allRows){
+ const panel=document.getElementById("graffPickupReminder");if(!panel)return;
+ const tomorrow=graffTomorrowDate();
+ const matches=(allRows||[]).filter(o=>!["已取消","已完成","已打回客户意向","无货/失败"].includes(normalizeGraffOrderStatus(o.order_status)) && graffPickupDateFromNote(o.note)===tomorrow);
+ if(!matches.length){panel.style.display="none";panel.replaceChildren();return;}
+ const ids=[...new Set(matches.map(o=>o.customer_id).filter(x=>x!=null))];
+ const names=new Map();
+ if(ids.length){const r=await supabaseClient.from(SUPABASE_TABLE).select("id,customer,details").in("id",ids);
+ if(r.error)throw r.error;(r.data||[]).forEach(c=>names.set(String(c.id),c));}
+ panel.replaceChildren();panel.style.display="block";
+ const title=document.createElement("h3");title.textContent="🔔 明天（"+tomorrow+"）有 "+matches.length+" 笔订单预计提货";panel.appendChild(title);
+ matches.forEach(o=>{const c=names.get(String(o.customer_id))||{};const div=document.createElement("div");div.className="pickup-item";
+ const name=document.createElement("strong");name.textContent=c.customer||"未命名客户";div.appendChild(name);
+ const desc=document.createElement("div");desc.className="pickup-sub";desc.textContent=(c.details||"订单 #"+o.id)+" · "+normalizeGraffOrderStatus(o.order_status);div.appendChild(desc);
+ const memo=String(o.note||"").split(/\r?\n/).filter(line=>!/^\s*预计提货日期[：:]/.test(line)).join(" ").trim();
+ if(memo){const m=document.createElement("div");m.className="pickup-sub";m.textContent="备注："+memo;div.appendChild(m);}panel.appendChild(div);});
+}
+async function graffSavePickupDate(orderId,oldNote,newDate,button){
+ button.disabled=true;
+ try{const note=graffNoteWithPickupDate(oldNote,newDate);
+ const r=await supabaseClient.from(SUPABASE_ORDER_TABLE).update({note,updated_at:new Date().toISOString()}).eq("id",orderId);
+ if(r.error)throw r.error;showToast("预计提货日期已保存");await loadOrders(true);
+ }catch(e){alert("保存提货日期失败："+(e.message||String(e)));}finally{button.disabled=false;}
+}
 async function loadOrders(renderPage = false) {
     try {
         let query = supabaseClient
@@ -4400,6 +4476,9 @@ async function loadOrders(renderPage = false) {
 
         if (orderError) throw orderError;
 
+        if(renderPage){
+            try{await graffRenderPickupReminder(orderRows||[])}catch(reminderError){console.warn("提货提醒加载失败",reminderError);}
+        }
         // 已打回客户意向的订单不再属于订单管理列表；保留数据库记录供追溯。
         orderDatabase = Array.isArray(orderRows)
             ? orderRows.filter(row => row.order_status !== "已打回客户意向" &&
@@ -4546,6 +4625,7 @@ async function loadOrders(renderPage = false) {
                 '<div class="order-inventory">' +
                     escapeHtml(inventoryText) +
                 '</div>' +
+                (inventory && customer.details && customer.details !== inventoryText ? '<div class="order-meta">商品描述：'+escapeHtml(customer.details)+'</div>' : '') +
 
                 (
                     clerk
@@ -4568,6 +4648,11 @@ async function loadOrders(renderPage = false) {
                     ) +
                 '</div>' +
 
+                (String(order.note || '').split(/\r?\n/).filter(line => !/^\s*(?:负责柜员|原客户状态)[:：]/.test(line)).join('\n').trim()
+                    ? '<div class="order-pickup-note"><strong>📝 订单备注 / 提货时间</strong>' +
+                      escapeHtml(String(order.note || '').split(/\r?\n/).filter(line => !/^\s*(?:负责柜员|原客户状态)[:：]/.test(line)).join('\n').trim()) + '</div>'
+                    : '') +
+
                 '<select class="order-status-select" data-order-id="' +
                     escapeHtml(String(order.id)) +
                 '">' +
@@ -4585,6 +4670,70 @@ async function loadOrders(renderPage = false) {
                     ) +
                 '</select>';
 
+            // 原位编辑客户与订单信息；只更新该订单关联的客户行及该订单行。
+            {
+                const editButton=document.createElement('button');
+                editButton.type='button';editButton.className='order-edit-toggle';editButton.textContent='✏️ 编辑订单信息 ▾';
+                const editBox=document.createElement('div');editBox.className='order-inline-editor';editBox.style.display='none';
+                const hiddenNoteLines=String(order.note||'').split(/\r?\n/).filter(line=>/^\s*(?:负责柜员|原客户状态)[:：]/.test(line));
+                const noteWithoutDate=String(order.note||'').split(/\r?\n/).filter(line=>!/^\s*(?:负责柜员|原客户状态|预计提货日期)[:：]/.test(line)).join('\n').trim();
+                const fields=[
+                    ['客户姓名 / 微信名','customer',customer.customer||'','text'],
+                    ['商品描述','details',customer.details||inventoryText||'','textarea'],
+                    ['客户负责人','owner',customer.owner||'','text'],
+                    ['加入人','selected_by',order.selected_by||'','text'],
+                    ['订单备注 / 提货时间','note',noteWithoutDate,'textarea'],
+                    ['预计提货日期','pickup',graffPickupDateFromNote(order.note),'date']
+                ];
+                const grid=document.createElement('div');grid.className='order-inline-grid';
+                const inputs={};
+                for(const [labelText,key,value,type] of fields){
+                    const wrapper=document.createElement('div');wrapper.className='order-inline-field'+(type==='textarea'?' wide':'');
+                    const label=document.createElement('label');label.textContent=labelText;
+                    const input=document.createElement(type==='textarea'?'textarea':'input');
+                    if(type!=='textarea')input.type=type;
+                    input.value=value;inputs[key]=input;
+                    wrapper.append(label,input);grid.appendChild(wrapper);
+                }
+                const actions=document.createElement('div');actions.className='order-inline-actions';
+                const save=document.createElement('button');save.type='button';save.className='order-inline-save';save.textContent='保存订单修改';
+                const cancel=document.createElement('button');cancel.type='button';cancel.className='order-inline-cancel';cancel.textContent='取消';
+                const hint=document.createElement('div');hint.className='order-inline-hint';
+                hint.textContent=inventory?'该订单已关联库存；修改商品描述不会改变库存表中的商品参数或价格。':'保存后将同步更新订单及关联客户资料。';
+                actions.append(save,cancel);editBox.append(grid,actions,hint);
+                editButton.onclick=()=>{const open=editBox.style.display==='none';editBox.style.display=open?'block':'none';editButton.textContent=open?'✏️ 收起编辑 ▴':'✏️ 编辑订单信息 ▾';};
+                cancel.onclick=()=>{editBox.style.display='none';editButton.textContent='✏️ 编辑订单信息 ▾';};
+                save.onclick=async()=>{
+                    const name=inputs.customer.value.trim(),details=inputs.details.value.trim();
+                    if(!name||!details){alert('请填写客户姓名和商品描述');return;}
+                    if(!order.customer_id){alert('该订单未关联客户资料，无法保存编辑');return;}
+                    const noteLines=[...hiddenNoteLines,inputs.note.value.trim()].filter(Boolean).join('\n');
+                    const newNote=graffNoteWithPickupDate(noteLines,inputs.pickup.value);
+                    save.disabled=true;save.textContent='正在保存…';
+                    try{
+                        const cr=await supabaseClient.from(SUPABASE_TABLE).update({customer:name,details,owner:inputs.owner.value.trim(),updated_at:new Date().toISOString()}).eq('id',order.customer_id).select('id');
+                        if(cr.error)throw cr.error;
+                        if(!cr.data||cr.data.length!==1)throw new Error('客户信息未确认保存，请检查数据库更新权限');
+                        const or=await supabaseClient.from(SUPABASE_ORDER_TABLE).update({selected_by:inputs.selected_by.value.trim(),note:newNote,updated_at:new Date().toISOString()}).eq('id',order.id).select('id');
+                        if(or.error)throw or.error;
+                        if(!or.data||or.data.length!==1)throw new Error('订单信息未确认保存，请检查数据库更新权限');
+                        showToast('订单信息已保存');await loadOrders(true);
+                    }catch(err){alert('保存失败：'+(err.message||String(err))+'\n如客户信息已保存而订单保存失败，请刷新后核对。');}
+                    finally{save.disabled=false;save.textContent='保存订单修改';}
+                };
+                card.append(editButton,editBox);
+            }
+
+            // 订单卡片内直接维护预计提货日期，写入已有 note 字段，员工共享同步。
+            if(!["已取消","已完成","已打回客户意向"].includes(normalizeGraffOrderStatus(order.order_status))){
+                const editor=document.createElement("div");editor.className="order-pickup-date-editor";
+                const label=document.createElement("label");label.textContent="📅 预计提货日期";
+                const date=document.createElement("input");date.type="date";date.value=graffPickupDateFromNote(order.note);
+                const save=document.createElement("button");save.type="button";save.textContent="保存日期";
+                save.onclick=()=>graffSavePickupDate(order.id,order.note,date.value,save);
+                editor.append(label,date,save);
+                card.appendChild(editor);
+            }
             const select = card.querySelector(".order-status-select");
             // 历史“无货/失败”记录显示为“已取消”，不擅自修改数据库历史。
             select.value = normalizeGraffOrderStatus(order.order_status);
@@ -8468,7 +8617,7 @@ setInterval(
    const name=el('directOrderName').value.trim(),wechat=el('directOrderWechat').value.trim();
    const ring=el('directOrderRing').value.trim(),owner=el('directOrderOwner').value.trim();
    const operator=el('directOrderOperator').value.trim(),status=el('directOrderStatus').value;
-   const inventoryId=el('directOrderInventory').value,remark=el('directOrderNote').value.trim();
+   const inventoryId=el('directOrderInventory').value,remark=graffNoteWithPickupDate(el('directOrderNote').value.trim(),el('directOrderPickupDate').value);
    if(!name||!ring){alert('请填写客户姓名和商品描述');return;}
    if(!operator){alert('请填写加入人');return;}
    if(!confirm('确认直接创建订单？\n客户：'+name+'\n商品：'+ring+'\n状态：'+status))return;
@@ -8485,7 +8634,7 @@ setInterval(
      const or=await supabaseClient.from(SUPABASE_ORDER_TABLE).insert(orderPayload);
      if(or.error)throw or.error;
      localStorage.setItem('yezhu_employee_name',operator);
-     ['directOrderName','directOrderWechat','directOrderRing','directOrderNote'].forEach(id=>el(id).value='');
+     ['directOrderName','directOrderWechat','directOrderRing','directOrderNote','directOrderPickupDate'].forEach(id=>el(id).value='');
      el('directOrderInventory').value='';
      msg.textContent='订单创建成功，已同步数据库。';
      if(typeof currentOrderFilter!=='undefined')currentOrderFilter=status;
