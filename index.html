@@ -1214,6 +1214,17 @@ button {
 .order-pickup-date-editor input{flex:1;min-width:140px;height:38px;border:1px solid #d9d2e5;border-radius:8px;padding:0 8px;background:#fff;font-size:14px}
 .order-pickup-date-editor button{border:0;border-radius:8px;padding:9px 12px;background:linear-gradient(100deg,#f6c9dc,#d5dcff);font-weight:700;cursor:pointer}
 
+
+/* 首页自动提货提醒弹窗 */
+.pickup-modal-overlay{position:fixed;inset:0;z-index:99999;background:rgba(30,27,45,.50);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(5px)}
+.pickup-modal-overlay.is-open{display:flex}
+.pickup-modal-box{width:min(520px,100%);max-height:82dvh;overflow:auto;background:linear-gradient(150deg,#fff7fb,#f5f2ff 60%,#eefaff);border:1px solid #f0d3e6;border-radius:22px;box-shadow:0 24px 70px rgba(51,37,71,.25);padding:22px;color:#342943}
+.pickup-modal-box h2{font-size:21px;margin:0 0 6px}.pickup-modal-desc{font-size:13px;color:#71647c;margin-bottom:16px}
+.pickup-modal-item{background:#fff;border:1px solid #e8dfef;border-radius:13px;padding:12px;margin-bottom:9px;line-height:1.6}
+.pickup-modal-item strong{display:block;font-size:16px}.pickup-modal-item .sub{font-family:inherit;font-weight:400;letter-spacing:0;font-size:13px;color:#62576b;margin-top:3px}
+.pickup-modal-actions{display:flex;gap:10px;margin-top:16px}.pickup-modal-actions button{flex:1;min-height:46px;height:auto;border-radius:12px;padding:10px;font-weight:700}
+.pickup-modal-later{background:#eceaf4;color:#554c60}.pickup-modal-go{background:linear-gradient(100deg,#f5c4db,#d7d1ff,#c9eaff);color:#33294c}
+
 </style>
 
 </head>
@@ -1932,6 +1943,16 @@ Amy icon round 0.5ct F 51# 预算4w
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<div id="graffPickupHomeModal" class="pickup-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="graffPickupHomeTitle">
+  <div class="pickup-modal-box">
+    <h2 id="graffPickupHomeTitle">🔔 明日 GRAFF 提货提醒</h2>
+    <div id="graffPickupHomeDesc" class="pickup-modal-desc"></div>
+    <div id="graffPickupHomeList"></div>
+    <div class="pickup-modal-actions"><button type="button" id="graffPickupHomeDismiss" class="pickup-modal-later">稍后处理</button><button type="button" id="graffPickupHomeOpenOrders" class="pickup-modal-go">查看订单</button></div>
+  </div>
+</div>
+
 <script>
 
 // ============================================================
@@ -2471,6 +2492,46 @@ if(inventoryCleanupText)inventoryCleanupText.addEventListener("input",()=>{
     if(inventoryCleanupMatches.length){inventoryCleanupMatches=[];inventoryCleanupDeleteButton.disabled=true;inventoryCleanupDeleteButton.textContent="🗑️ 一键永久删除匹配库存（0）";inventoryCleanupMessage.innerHTML='<div class="inventory-admin-warning">源数据已修改，请重新点击“查找错误库存”。</div>';inventoryCleanupResult.innerHTML="";}
 });
 // 首页库存数量将在 Supabase Client 初始化完成后读取。
+
+
+// 员工打开网页后立即检查明日提货订单；无需进入订单管理。
+async function graffCheckPickupOnHome(){
+ try{
+  const tomorrow=graffTomorrowDate();
+  const {data:rows,error}=await supabaseClient.from(SUPABASE_ORDER_TABLE)
+   .select('id,customer_id,order_status,note,selected_at').order('selected_at',{ascending:false}).limit(2000);
+  if(error)throw error;
+  const matches=(rows||[]).filter(o=>!['已取消','已完成','已打回客户意向','无货/失败'].includes(normalizeGraffOrderStatus(o.order_status))&&graffPickupDateFromNote(o.note)===tomorrow);
+  if(!matches.length)return;
+  const ids=[...new Set(matches.map(o=>o.customer_id).filter(x=>x!=null))];
+  const names=new Map();
+  if(ids.length){const {data,error:customerError}=await supabaseClient.from(SUPABASE_TABLE).select('id,customer,details').in('id',ids);if(customerError)throw customerError;(data||[]).forEach(c=>names.set(String(c.id),c));}
+  const modal=document.getElementById('graffPickupHomeModal');
+  const list=document.getElementById('graffPickupHomeList');
+  document.getElementById('graffPickupHomeDesc').textContent='明天（'+tomorrow+'）预计有 '+matches.length+' 笔订单需要提货';
+  list.replaceChildren();
+  matches.forEach(o=>{
+   const c=names.get(String(o.customer_id))||{};
+   const card=document.createElement('div');card.className='pickup-modal-item';
+   const name=document.createElement('strong');name.textContent=c.customer||'未命名客户';card.appendChild(name);
+   const desc=document.createElement('div');desc.className='sub';desc.textContent=c.details||'订单 #'+o.id;card.appendChild(desc);
+   const memo=String(o.note||'').split(/\r?\n/).filter(x=>!/^\s*预计提货日期[：:]/.test(x)).join(' ').trim();
+   if(memo){const extra=document.createElement('div');extra.className='sub';extra.textContent='备注：'+memo;card.appendChild(extra);}
+   list.appendChild(card);
+  });
+  modal.classList.add('is-open');
+ }catch(e){console.warn('首页提货提醒检查失败：',e);}
+}
+(function(){
+ const modal=document.getElementById('graffPickupHomeModal');
+ const close=()=>modal.classList.remove('is-open');
+ document.getElementById('graffPickupHomeDismiss').addEventListener('click',close);
+ document.getElementById('graffPickupHomeOpenOrders').addEventListener('click',()=>{close();showOrdersPage();});
+ modal.addEventListener('click',e=>{if(e.target===modal)close();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('is-open'))close();});
+ // DOM 与 Supabase 初始化后启动，独立于订单页面加载。
+ graffCheckPickupOnHome();
+})();
 
 </script>
 
