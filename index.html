@@ -1722,9 +1722,19 @@ PARAGON OVAL
         <button class="order-filter-button" data-order-filter="已付款待取货">已付款待取货</button>
         <button class="order-filter-button" data-order-filter="已提货待重新结账">已提货待重新结账</button>
         <button class="order-filter-button" data-order-filter="已完成">已完成</button>
+        <button class="order-filter-button" data-order-filter="已取消">已取消</button>
         <button class="order-filter-button" data-order-filter="all">全部</button>
     </div>
 
+    <div class="order-sort-row" style="display:flex;align-items:center;gap:10px;margin:12px 0 4px;">
+        <label for="orderTimeSort" style="font-size:14px;font-weight:700;white-space:nowrap;">时间排序</label>
+        <select id="orderTimeSort" style="flex:1;min-width:0;height:44px;border:1px solid #d5d8e0;border-radius:12px;padding:0 12px;background:white;font-size:15px;">
+            <option value="new">加入时间：最新在前</option>
+            <option value="old">加入时间：最早在前</option>
+            <option value="updated_new">更新时间：最新在前</option>
+            <option value="updated_old">更新时间：最早在前</option>
+        </select>
+    </div>
     <div class="order-search-bar" style="margin:12px 0 14px;display:flex;gap:8px;align-items:center;">
         <input id="orderSearchInput" type="search" placeholder="搜索客户名称 / 收件人姓名 / 金额（万）" autocomplete="off" style="flex:1;min-width:0;padding:12px 14px;border:1px solid #d5d8e0;border-radius:12px;font-size:15px;background:white;">
         <button type="button" id="orderSearchClear" style="padding:12px;border:0;border-radius:10px;background:#e9ebef;font-weight:600;cursor:pointer;">清空</button>
@@ -4312,7 +4322,9 @@ async function loadOrders(renderPage = false) {
             .select("id,customer_id,inventory_id,selected_by,selected_at,order_status,note,active,updated_at,gia_address,gia_delivered,points_used,points_used_amount,points_group_id")
             .order("selected_at", { ascending: false });
 
-        if (currentOrderFilter !== "all") {
+        if (currentOrderFilter === "已取消") {
+            query = query.in("order_status", ["已取消", "无货/失败"]);
+        } else if (currentOrderFilter !== "all") {
             query = query.eq("order_status", currentOrderFilter);
         }
 
@@ -4324,6 +4336,15 @@ async function loadOrders(renderPage = false) {
         orderDatabase = Array.isArray(orderRows)
             ? orderRows.filter(row => row.order_status !== "已打回客户意向")
             : [];
+        // 前端排序：支持加入时间和更新时间，兼容旧订单的空时间。
+        const sortMode = document.getElementById("orderTimeSort")?.value || "new";
+        const sortField = sortMode.startsWith("updated") ? "updated_at" : "selected_at";
+        const sortAscending = sortMode.endsWith("old");
+        orderDatabase.sort((a,b) => {
+            const ta = Date.parse(a[sortField] || a.selected_at || a.updated_at || "") || 0;
+            const tb = Date.parse(b[sortField] || b.selected_at || b.updated_at || "") || 0;
+            return sortAscending ? ta-tb : tb-ta;
+        });
 
         const { data: pendingRows, error: pendingError } = await supabaseClient
             .from(SUPABASE_ORDER_TABLE)
@@ -4485,7 +4506,6 @@ async function loadOrders(renderPage = false) {
                     '<option value="已付款待取货">已付款待取货</option>' +
                     '<option value="已提货待重新结账">已提货待重新结账</option>' +
                     '<option value="已完成">已完成</option>' +
-                    '<option value="无货/失败">无货/失败</option>' +
                     '<option value="已取消">已取消</option>' +
                     '<option value="__RETURN__">↩ 打回客户意向</option>' +
                     (
@@ -4496,7 +4516,8 @@ async function loadOrders(renderPage = false) {
                 '</select>';
 
             const select = card.querySelector(".order-status-select");
-            select.value = order.order_status || "待柜台下单";
+            // 历史“无货/失败”记录显示为“已取消”，不擅自修改数据库历史。
+            select.value = order.order_status === "无货/失败" ? "已取消" : (order.order_status || "待柜台下单");
 
             if (order.order_status === "已完成") {
                 const giaBox = document.createElement("div");
@@ -4589,7 +4610,7 @@ async function loadOrders(renderPage = false) {
                 pointsBox.appendChild(entry);card.appendChild(pointsBox);
             }
 
-            select.dataset.savedStatus = order.order_status || "待柜台下单";
+            select.dataset.savedStatus = order.order_status === "无货/失败" ? "已取消" : (order.order_status || "待柜台下单");
             select.addEventListener("change", async () => {
                 const newStatus = select.value;
                 if (newStatus === "__RETURN__") {
@@ -7856,6 +7877,8 @@ if (orderSearchClear) {
         orderSearchInput.focus();
     });
 }
+
+document.getElementById("orderTimeSort")?.addEventListener("change",()=>loadOrders(true));
 
 document.querySelectorAll(".order-filter-button").forEach(button=>{
     button.addEventListener("click",()=>{
