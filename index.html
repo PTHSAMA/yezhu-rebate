@@ -1150,6 +1150,26 @@ button {
 #rebateCalculatorPage #rcStore:focus { outline: 2px solid #111827; outline-offset: 2px; }
 @media (max-width: 520px) { #rebateCalculatorPage #rcStore { min-height: 60px; font-size: 18px; } }
 
+
+/* GRAFF 调货跟踪 */
+.transfer-panel{margin:14px 0 18px;padding:16px;border:1px solid #ddd6f6;border-radius:18px;background:linear-gradient(145deg,#fff5fa,#f4f1ff 58%,#eef8ff);box-shadow:0 5px 18px #7973ac12}
+.transfer-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.transfer-head strong{font-size:19px;color:#3c315c}
+.transfer-toggle{border:0;border-radius:11px;padding:10px 14px;background:#e4dbfa;color:#493575;font-weight:700;cursor:pointer}
+.transfer-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.transfer-fields label{font-size:13px;font-weight:700;color:#514869;display:block;margin-bottom:5px}
+.transfer-fields input{width:100%;min-width:0;height:44px;border:1px solid #d8d3e7;border-radius:11px;background:#fff;padding:9px;font-size:15px}
+.transfer-fields .wide{grid-column:1/-1}
+.transfer-actions{display:flex;gap:8px;margin:12px 0}
+.transfer-actions button,.transfer-card button{border:0;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer;background:#e7e0f8;color:#49376a}
+.transfer-actions .transfer-save{background:linear-gradient(110deg,#f6c5d9,#d8d4ff);color:#392e55;flex:1}
+.transfer-list{display:grid;gap:10px;margin-top:12px}
+.transfer-card{background:#fff;border:1px solid #e8e4f2;border-radius:13px;padding:13px;display:grid;gap:7px}
+.transfer-card .transfer-name{font-size:17px;font-weight:800}
+.transfer-card .transfer-date{color:#766a89;font-size:13px}
+.transfer-card .transfer-buttons{display:flex;gap:8px}
+.transfer-error{font-size:13px;color:#a82f50;line-height:1.5}
+@media(max-width:480px){.transfer-fields{grid-template-columns:1fr}}
 </style>
 
 </head>
@@ -1717,6 +1737,20 @@ PARAGON OVAL
         <div class="data-info" id="ordersDataStatus">正在读取订单...</div>
     </div>
 
+
+    <section class="transfer-panel" id="graffTransferPanel">
+      <div class="transfer-head"><strong>🚚 正在调货</strong><button type="button" class="transfer-toggle" id="transferToggle">展开调货记录 ▾</button></div>
+      <div id="transferBody" style="display:none">
+        <div class="transfer-fields">
+          <div><label for="transferName">姓名</label><input id="transferName" placeholder="客户姓名或微信名"></div>
+          <div><label for="transferDate">预计到店日期</label><input id="transferDate" type="date"></div>
+          <div class="wide"><label for="transferRing">调货戒指</label><input id="transferRing" placeholder="品牌 / 款式 / 戒圈 / 货号"></div>
+        </div>
+        <div class="transfer-actions"><button type="button" class="transfer-save" id="transferSave">＋ 新增调货</button><button type="button" id="transferReset">清空</button><button type="button" id="transferRefresh">刷新</button></div>
+        <div id="transferMessage" class="transfer-error"></div>
+        <div id="transferList" class="transfer-list"></div>
+      </div>
+    </section>
     <div class="order-filter-row">
         <button class="order-filter-button active" data-order-filter="待柜台下单">待柜台下单</button>
         <button class="order-filter-button" data-order-filter="已付款待取货">已付款待取货</button>
@@ -8321,6 +8355,43 @@ if(graffBackToTop){
         window.scrollTo({top:0, behavior:"smooth"});
     });
 }
+
+
+// GRAFF 调货模块：独立表，不更改原有订单和客户意向数据。
+(function(){
+ const T='graff_transfers';
+ const $t=id=>document.getElementById(id);
+ const body=$t('transferBody'),list=$t('transferList'),msg=$t('transferMessage');
+ let editingId=null,loaded=false;
+ const escT=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const showError=e=>{msg.textContent='读取或保存失败：'+(e?.message||String(e))+'。请先执行随附的 graff_transfers.sql 建表。'};
+ async function refresh(){
+   msg.textContent='正在同步调货记录…';
+   try{
+     const {data,error}=await supabaseClient.from(T).select('id,customer_name,ring_description,expected_arrival,created_at').order('expected_arrival',{ascending:true});
+     if(error)throw error;
+     loaded=true;msg.textContent='共 '+data.length+' 条调货记录 · 按预计到店日期从早到晚';list.replaceChildren();
+     if(!data.length){list.innerHTML='<div style="color:#786f8b;padding:12px 0">暂无正在调货的戒指</div>';return;}
+     for(const r of data){
+       const card=document.createElement('div');card.className='transfer-card';
+       card.innerHTML='<div class="transfer-name">'+escT(r.customer_name)+'</div><div>'+escT(r.ring_description)+'</div><div class="transfer-date">📅 预计到店：'+escT(r.expected_arrival||'未填写')+'</div><div class="transfer-buttons"><button type="button" class="transfer-edit">编辑</button><button type="button" class="transfer-delete">删除</button></div>';
+       card.querySelector('.transfer-edit').onclick=()=>{editingId=r.id;$t('transferName').value=r.customer_name||'';$t('transferRing').value=r.ring_description||'';$t('transferDate').value=r.expected_arrival||'';$t('transferSave').textContent='保存修改';body.scrollIntoView({behavior:'smooth',block:'start'});};
+       card.querySelector('.transfer-delete').onclick=async()=>{if(!confirm('确认删除这条调货记录？'))return;try{const {error}=await supabaseClient.from(T).delete().eq('id',r.id);if(error)throw error;if(editingId===r.id)reset();await refresh();}catch(e){showError(e)}};
+       list.appendChild(card);
+     }
+   }catch(e){showError(e)}
+ }
+ function reset(){editingId=null;$t('transferName').value='';$t('transferRing').value='';$t('transferDate').value='';$t('transferSave').textContent='＋ 新增调货';}
+ $t('transferToggle').onclick=()=>{const open=body.style.display==='none';body.style.display=open?'block':'none';$t('transferToggle').textContent=open?'收起调货记录 ▴':'展开调货记录 ▾';if(open&&!loaded)refresh();};
+ $t('transferReset').onclick=reset;
+ $t('transferRefresh').onclick=refresh;
+ $t('transferSave').onclick=async()=>{
+   const customer_name=$t('transferName').value.trim(),ring_description=$t('transferRing').value.trim(),expected_arrival=$t('transferDate').value;
+   if(!customer_name||!ring_description||!expected_arrival){alert('请填写姓名、调货戒指和预计到店日期');return;}
+   const btn=$t('transferSave');btn.disabled=true;
+   try{const payload={customer_name,ring_description,expected_arrival};const result=editingId?await supabaseClient.from(T).update(payload).eq('id',editingId):await supabaseClient.from(T).insert(payload);if(result.error)throw result.error;reset();await refresh();}catch(e){showError(e)}finally{btn.disabled=false;}
+ };
+})();
 
 initialLoad();
 
