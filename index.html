@@ -1170,6 +1170,18 @@ button {
 .transfer-card .transfer-buttons{display:flex;gap:8px}
 .transfer-error{font-size:13px;color:#a82f50;line-height:1.5}
 @media(max-width:480px){.transfer-fields{grid-template-columns:1fr}}
+
+/* 订单页面直接创建订单 */
+.direct-order-panel{margin:14px 0;padding:16px;border:1px solid #e2d8f4;border-radius:18px;background:linear-gradient(135deg,#fff6f9,#f2f0ff 65%,#edf8ff)}
+.direct-order-head{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:800;font-size:17px}
+.direct-order-head button{background:#e5dcfc;color:#47316e;border:0;border-radius:12px;padding:10px 13px;font-weight:700}
+.direct-order-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:15px}
+.direct-order-grid label{font-size:13px;font-weight:700;display:block;margin-bottom:5px}
+.direct-order-grid input,.direct-order-grid select,.direct-order-grid textarea{width:100%;min-width:0;padding:11px 12px;font-size:15px;background:white;border:1px solid #d9d4e6;border-radius:11px;box-sizing:border-box}
+.direct-order-grid .full{grid-column:1/-1}
+.direct-order-submit{width:100%;margin-top:13px;border:0;border-radius:12px;padding:13px;background:linear-gradient(100deg,#f4c3d9,#d8cfff,#cde9ff);font-size:15px;font-weight:800;color:#30294a}
+.direct-order-hint{font-size:12px;color:#756a7d;line-height:1.6;margin-top:8px}
+@media(max-width:520px){.direct-order-grid{grid-template-columns:1fr}.direct-order-grid .full{grid-column:auto}}
 </style>
 
 </head>
@@ -1749,6 +1761,24 @@ PARAGON OVAL
         <div class="transfer-actions"><button type="button" class="transfer-save" id="transferSave">＋ 新增调货</button><button type="button" id="transferReset">清空</button><button type="button" id="transferRefresh">刷新</button></div>
         <div id="transferMessage" class="transfer-error"></div>
         <div id="transferList" class="transfer-list"></div>
+      </div>
+    </section>
+
+    <section class="direct-order-panel" id="directOrderPanel">
+      <div class="direct-order-head"><span>➕ 直接新增 GRAFF 订单</span><button type="button" id="directOrderToggle">展开填写 ▾</button></div>
+      <div id="directOrderBody" style="display:none">
+        <div class="direct-order-grid">
+          <div><label>客户姓名 *</label><input id="directOrderName" placeholder="姓名或微信名"></div>
+          <div><label>微信名（可选）</label><input id="directOrderWechat" placeholder="用于查找客户"></div>
+          <div class="full"><label>戒指 / 商品描述 *</label><input id="directOrderRing" placeholder="例如 GRAFF Icon oval 0.7ct 50# 1482W"></div>
+          <div class="full"><label>关联现有库存（可选）</label><select id="directOrderInventory"><option value="">不关联库存，直接填写商品描述</option></select></div>
+          <div><label>客户负责人</label><input id="directOrderOwner" placeholder="负责员工"></div>
+          <div><label>加入人</label><input id="directOrderOperator" placeholder="操作员工"></div>
+          <div class="full"><label>订单状态</label><select id="directOrderStatus"><option>待柜台下单</option><option>已付款待取货</option><option>已提货待重新结账</option><option>已完成</option><option>已取消</option></select></div>
+          <div class="full"><label>备注（可选）</label><textarea id="directOrderNote" rows="2" placeholder="订单补充信息"></textarea></div>
+        </div>
+        <button type="button" class="direct-order-submit" id="directOrderSave">保存并创建订单</button>
+        <div class="direct-order-hint" id="directOrderMessage">直接在订单页面创建，无需先去客户意向录入。若不关联库存，订单展示手填的商品描述。</div>
       </div>
     </section>
     <div class="order-filter-row">
@@ -8401,6 +8431,66 @@ setInterval(
     CHECK_INTERVAL
 );
 
+
+// GRAFF 订单页面直接录入：复用原客户表和订单表，避免创建第二套不兼容订单。
+(function(){
+ const el=id=>document.getElementById(id);
+ const toggle=el('directOrderToggle'),body=el('directOrderBody'),save=el('directOrderSave');
+ if(!toggle||!body||!save)return;
+ toggle.addEventListener('click',async()=>{
+   const opening=body.style.display==='none';body.style.display=opening?'block':'none';
+   toggle.textContent=opening?'收起填写 ▴':'展开填写 ▾';
+   if(!opening)return;
+   const operator=localStorage.getItem('yezhu_employee_name')||'';
+   if(!el('directOrderOperator').value)el('directOrderOperator').value=operator;
+   if(!el('directOrderOwner').value)el('directOrderOwner').value=operator;
+   const select=el('directOrderInventory');
+   try{
+     const {data,error}=await supabaseClient.from(SUPABASE_INVENTORY_TABLE)
+       .select('id,collection,shape,variant,carat,color,clarity,size,price_w,raw_text')
+       .eq('active',true).order('id',{ascending:false}).limit(500);
+     if(error)throw error;
+     select.innerHTML='<option value="">不关联库存，直接填写商品描述</option>';
+     (data||[]).forEach(inv=>{
+       const option=document.createElement('option');option.value=String(inv.id);
+       option.textContent=[inv.raw_text||[inv.collection,inv.shape,inv.variant,inv.carat!=null?inv.carat+'ct':'',inv.size!=null?inv.size+'#':''].filter(Boolean).join(' '),inv.price_w!=null?inv.price_w+'W':''].filter(Boolean).join(' · ');
+       select.appendChild(option);
+     });
+   }catch(e){el('directOrderMessage').textContent='库存读取失败，可先尝试手填商品：'+(e.message||String(e));}
+ });
+ save.addEventListener('click',async()=>{
+   const name=el('directOrderName').value.trim(),wechat=el('directOrderWechat').value.trim();
+   const ring=el('directOrderRing').value.trim(),owner=el('directOrderOwner').value.trim();
+   const operator=el('directOrderOperator').value.trim(),status=el('directOrderStatus').value;
+   const inventoryId=el('directOrderInventory').value,remark=el('directOrderNote').value.trim();
+   if(!name||!ring){alert('请填写客户姓名和商品描述');return;}
+   if(!operator){alert('请填写加入人');return;}
+   if(!confirm('确认直接创建订单？\n客户：'+name+'\n商品：'+ring+'\n状态：'+status))return;
+   save.disabled=true;save.textContent='正在创建...';
+   const msg=el('directOrderMessage');let customerId=null;
+   try{
+     // 直接创建客户记录并立刻生成订单，不需要经过客户意向页面。
+     const customerPayload={customer:name,wechat,details:ring,owner,status:'已加入订单',note:remark,active:true,updated_at:new Date().toISOString()};
+     const cr=await supabaseClient.from(SUPABASE_TABLE).insert(customerPayload).select('id').single();
+     if(cr.error)throw cr.error;
+     customerId=cr.data.id;
+     const now=new Date().toISOString();
+     const orderPayload={customer_id:customerId,inventory_id:inventoryId||null,selected_by:operator,selected_at:now,order_status:status,note:remark,active:true,updated_at:now};
+     const or=await supabaseClient.from(SUPABASE_ORDER_TABLE).insert(orderPayload);
+     if(or.error)throw or.error;
+     localStorage.setItem('yezhu_employee_name',operator);
+     ['directOrderName','directOrderWechat','directOrderRing','directOrderNote'].forEach(id=>el(id).value='');
+     el('directOrderInventory').value='';
+     msg.textContent='订单创建成功，已同步数据库。';
+     if(typeof currentOrderFilter!=='undefined')currentOrderFilter=status;
+     document.querySelectorAll('.order-filter-button').forEach(b=>b.classList.toggle('active',b.dataset.orderFilter===status));
+     await loadOrders(true);
+     if(typeof showToast==='function')showToast('订单已创建');
+   }catch(e){
+     msg.textContent='创建失败：'+(e.message||String(e))+(customerId?'。客户资料已创建但订单未保存，请检查权限后处理，避免重复新增。':'');
+   }finally{save.disabled=false;save.textContent='保存并创建订单';}
+ });
+})();
 </script>
 
 </body>
