@@ -1,7 +1,7 @@
 {
-  "version": "20261104105625",
-  "updated_at": "2026-11-04 10:56:25",
-  "count": 589,
+  "version": "20261105120442",
+  "updated_at": "2026-11-05 12:04:42",
+  "count": 588,
   "brands": [
     {
       "id": "1",
@@ -4296,6 +4296,7 @@
         "乐天蚕室": 0.17,
         "新世界": 0.16,
         "新罗": 0.16,
+        "现代": 0.2,
         "济州乐天": 0.14,
         "济州新罗": 0.14
       }
@@ -4498,17 +4499,6 @@
     {
       "id": "326",
       "category": "进口服饰&包包",
-      "english": "ALEXANDER MCQUEEN",
-      "chinese": "麦昆",
-      "remark": "会员95折",
-      "discount": 0.95,
-      "rebates": {
-        "釜山乐天": 0.06
-      }
-    },
-    {
-      "id": "327",
-      "category": "进口服饰&包包",
       "english": "ALLSAINTS",
       "chinese": "ALLSAINTS",
       "remark": "",
@@ -4521,7 +4511,7 @@
       }
     },
     {
-      "id": "328",
+      "id": "327",
       "category": "进口服饰&包包",
       "english": "ASH",
       "chinese": "ASH",
@@ -4532,7 +4522,7 @@
       }
     },
     {
-      "id": "329",
+      "id": "328",
       "category": "进口服饰&包包",
       "english": "BARBOUR",
       "chinese": "BARBOUR",
@@ -4543,7 +4533,7 @@
       }
     },
     {
-      "id": "330",
+      "id": "329",
       "category": "进口服饰&包包",
       "english": "BALENCIAGA",
       "chinese": "巴黎世家",
@@ -4560,7 +4550,7 @@
       }
     },
     {
-      "id": "331",
+      "id": "330",
       "category": "进口服饰&包包",
       "english": "BURBERRY",
       "chinese": "巴宝莉",
@@ -4571,13 +4561,13 @@
         "乐天蚕室": 0.28,
         "新世界": 0.29,
         "新罗": 0.29,
-        "现代": 0.31,
+        "现代": 0.3,
         "釜山乐天": 0.06,
         "济州新罗": 0.14
       }
     },
     {
-      "id": "332",
+      "id": "331",
       "category": "进口服饰&包包",
       "english": "BALLY",
       "chinese": "巴利",
@@ -4593,7 +4583,7 @@
       }
     },
     {
-      "id": "333",
+      "id": "332",
       "category": "进口服饰&包包",
       "english": "B.VENETA",
       "chinese": "BV葆蝶家",
@@ -4609,7 +4599,7 @@
       }
     },
     {
-      "id": "334",
+      "id": "333",
       "category": "进口服饰&包包",
       "english": "BENETTON",
       "chinese": "BENETTON",
@@ -4620,14 +4610,14 @@
       }
     },
     {
-      "id": "335",
+      "id": "334",
       "category": "进口服饰&包包",
       "english": "C.DIOR",
       "chinese": "迪奥（男士除外）",
       "remark": "/",
       "discount": null,
       "rebates": {
-        "乐天明洞": 0.05,
+        "乐天明洞": 0.06,
         "乐天蚕室": 0.0,
         "新世界": 0.08,
         "新罗": 0.08,
@@ -4636,7 +4626,7 @@
       }
     },
     {
-      "id": "336",
+      "id": "335",
       "category": "进口服饰&包包",
       "english": "DUVETICA",
       "chinese": "杜威迪嘉",
@@ -4648,7 +4638,7 @@
       }
     },
     {
-      "id": "337",
+      "id": "336",
       "category": "进口服饰&包包",
       "english": "CHANEL",
       "chinese": "香奈儿",
@@ -4664,7 +4654,7 @@
       }
     },
     {
-      "id": "338",
+      "id": "337",
       "category": "进口服饰&包包",
       "english": "CHARRIOL",
       "chinese": "夏利豪",
@@ -4675,7 +4665,7 @@
       }
     },
     {
-      "id": "339",
+      "id": "338",
       "category": "进口服饰&包包",
       "english": "COMME DES GARCONS",
       "chinese": "川久保玲",
@@ -4688,7 +4678,7 @@
       }
     },
     {
-      "id": "340",
+      "id": "339",
       "category": "进口服饰&包包",
       "english": "COACH(有特殊SKU)",
       "chinese": "蔻驰",
@@ -4704,7 +4694,7 @@
       }
     },
     {
-      "id": "341",
+      "id": "340",
       "category": "进口服饰&包包",
       "english": "CELINE",
       "chinese": "塞琳",
@@ -4719,7 +4709,7 @@
       }
     },
     {
-      "id": "342",
+      "id": "341",
       "category": "进口服饰&包包",
       "english": "CANADA GOOSE",
       "chinese": "加拿大鹅",
@@ -4733,7 +4723,7 @@
       }
     },
     {
-      "id": "343",
+      "id": "342",
       "category": "进口服饰&包包",
       "english": "CK BAG",
       "chinese": "CK包",
@@ -4746,7 +4736,7 @@
       }
     },
     {
-      "id": "344",
+      "id": "343",
       "category": "进口服饰&包包",
       "english": "COUNTY OF MILAN",
       "chinese": "COUNTY OF MILAN",
@@ -4757,7 +4747,7 @@
       }
     },
     {
-      "id": "345",
+      "id": "344",
       "category": "进口服饰&包包",
       "english": "DIOR HOMME",
       "chinese": "迪奥男士",
@@ -4769,7 +4759,7 @@
       }
     },
     {
-      "id": "346",
+      "id": "345",
       "category": "进口服饰&包包",
       "english": "ECCO",
       "chinese": "爱步",
@@ -4781,7 +4771,7 @@
       }
     },
     {
-      "id": "347",
+      "id": "346",
       "category": "进口服饰&包包",
       "english": "ECCO 29.5%이상 할인상품",
       "chinese": "爱步 折扣大于等于29.5%的产品",
@@ -4792,7 +4782,7 @@
       }
     },
     {
-      "id": "348",
+      "id": "347",
       "category": "进口服饰&包包",
       "english": "FENDI",
       "chinese": "芬迪",
@@ -4808,7 +4798,7 @@
       }
     },
     {
-      "id": "349",
+      "id": "348",
       "category": "进口服饰&包包",
       "english": "FENDI (시즌오프대상)",
       "chinese": "芬迪（换季折扣产品）",
@@ -4821,7 +4811,7 @@
       }
     },
     {
-      "id": "350",
+      "id": "349",
       "category": "进口服饰&包包",
       "english": "FURLA",
       "chinese": "FURLA",
@@ -4832,7 +4822,7 @@
       }
     },
     {
-      "id": "351",
+      "id": "350",
       "category": "进口服饰&包包",
       "english": "GUCCI",
       "chinese": "古驰",
@@ -4847,7 +4837,7 @@
       }
     },
     {
-      "id": "352",
+      "id": "351",
       "category": "进口服饰&包包",
       "english": "지포어",
       "chinese": "G/FORE",
@@ -4858,7 +4848,7 @@
       }
     },
     {
-      "id": "353",
+      "id": "352",
       "category": "进口服饰&包包",
       "english": "GOLDEN GOOSE",
       "chinese": "黄金鹅",
@@ -4872,7 +4862,7 @@
       }
     },
     {
-      "id": "354",
+      "id": "353",
       "category": "进口服饰&包包",
       "english": "GLYCINE",
       "chinese": "冠星",
@@ -4883,7 +4873,7 @@
       }
     },
     {
-      "id": "355",
+      "id": "354",
       "category": "进口服饰&包包",
       "english": "HERMES LLG",
       "chinese": "爱马仕（包包）",
@@ -4900,7 +4890,7 @@
       }
     },
     {
-      "id": "356",
+      "id": "355",
       "category": "进口服饰&包包",
       "english": "HERMES (기타)",
       "chinese": "爱马仕其它(包除外,仅限专柜)",
@@ -4918,7 +4908,7 @@
       }
     },
     {
-      "id": "357",
+      "id": "356",
       "category": "进口服饰&包包",
       "english": "HUGO BOSS",
       "chinese": "雨果博斯",
@@ -4929,7 +4919,7 @@
       }
     },
     {
-      "id": "358",
+      "id": "357",
       "category": "进口服饰&包包",
       "english": "HELEN KAMINSKI",
       "chinese": "HELEN KAMINSKI",
@@ -4940,7 +4930,7 @@
       }
     },
     {
-      "id": "359",
+      "id": "358",
       "category": "进口服饰&包包",
       "english": "JIMMY CHOO",
       "chinese": "周仰杰",
@@ -4954,7 +4944,7 @@
       }
     },
     {
-      "id": "360",
+      "id": "359",
       "category": "进口服饰&包包",
       "english": "KEEN",
       "chinese": "KEEN",
@@ -4966,7 +4956,7 @@
       }
     },
     {
-      "id": "361",
+      "id": "360",
       "category": "进口服饰&包包",
       "english": "KIPLING",
       "chinese": "KIPLING",
@@ -4977,7 +4967,7 @@
       }
     },
     {
-      "id": "362",
+      "id": "361",
       "category": "进口服饰&包包",
       "english": "KITON",
       "chinese": "KITON",
@@ -4988,7 +4978,7 @@
       }
     },
     {
-      "id": "363",
+      "id": "362",
       "category": "进口服饰&包包",
       "english": "LA COUSETTE",
       "chinese": "LA COUSETTE",
@@ -4999,7 +4989,7 @@
       }
     },
     {
-      "id": "364",
+      "id": "363",
       "category": "进口服饰&包包",
       "english": "LESPORTSAC",
       "chinese": "LESPORTSAC",
@@ -5010,7 +5000,7 @@
       }
     },
     {
-      "id": "365",
+      "id": "364",
       "category": "进口服饰&包包",
       "english": "LOUIS VUITTON",
       "chinese": "路易威登",
@@ -5026,7 +5016,7 @@
       }
     },
     {
-      "id": "366",
+      "id": "365",
       "category": "进口服饰&包包",
       "english": "LOEWE SCARF",
       "chinese": "罗意威 围巾",
@@ -5041,7 +5031,7 @@
       }
     },
     {
-      "id": "367",
+      "id": "366",
       "category": "进口服饰&包包",
       "english": "LOEWE SCARF 外",
       "chinese": "罗意威 围巾除外",
@@ -5056,7 +5046,7 @@
       }
     },
     {
-      "id": "368",
+      "id": "367",
       "category": "进口服饰&包包",
       "english": "LOEWE MARKDOWN",
       "chinese": "罗意威MARKDOWN产品",
@@ -5069,7 +5059,7 @@
       }
     },
     {
-      "id": "369",
+      "id": "368",
       "category": "进口服饰&包包",
       "english": "LONGCHAMP",
       "chinese": "珑骧",
@@ -5087,7 +5077,7 @@
       }
     },
     {
-      "id": "370",
+      "id": "369",
       "category": "进口服饰&包包",
       "english": "MULBERRY",
       "chinese": "玛珀利",
@@ -5099,7 +5089,7 @@
       }
     },
     {
-      "id": "371",
+      "id": "370",
       "category": "进口服饰&包包",
       "english": "MANDARINA DUCK S.P.A",
       "chinese": "MANDARINA DUCK S.P.A",
@@ -5110,7 +5100,7 @@
       }
     },
     {
-      "id": "372",
+      "id": "371",
       "category": "进口服饰&包包",
       "english": "META",
       "chinese": "META",
@@ -5121,7 +5111,7 @@
       }
     },
     {
-      "id": "373",
+      "id": "372",
       "category": "进口服饰&包包",
       "english": "MONCLER",
       "chinese": "蒙口",
@@ -5131,12 +5121,12 @@
         "乐天明洞": 0.21,
         "乐天蚕室": 0.21,
         "新世界": 0.23,
-        "现代": 0.24,
+        "现代": 0.26,
         "济州新罗": 0.16
       }
     },
     {
-      "id": "374",
+      "id": "373",
       "category": "进口服饰&包包",
       "english": "MAX MARA",
       "chinese": "麦丝玛拉",
@@ -5146,12 +5136,12 @@
         "乐天明洞": 0.0,
         "乐天蚕室": 0.14,
         "新世界": 0.22,
-        "现代": 0.23,
+        "现代": 0.25,
         "釜山乐天": 0.06
       }
     },
     {
-      "id": "375",
+      "id": "374",
       "category": "进口服饰&包包",
       "english": "MIU MIU",
       "chinese": "缪缪",
@@ -5166,7 +5156,7 @@
       }
     },
     {
-      "id": "376",
+      "id": "375",
       "category": "进口服饰&包包",
       "english": "MICHAEL KORS",
       "chinese": "迈克高仕",
@@ -5181,7 +5171,7 @@
       }
     },
     {
-      "id": "377",
+      "id": "376",
       "category": "进口服饰&包包",
       "english": "MISSONI",
       "chinese": "MISSONI",
@@ -5192,7 +5182,7 @@
       }
     },
     {
-      "id": "378",
+      "id": "377",
       "category": "进口服饰&包包",
       "english": "MIKIHOUSE",
       "chinese": "MIKIHOUSE",
@@ -5205,7 +5195,7 @@
       }
     },
     {
-      "id": "379",
+      "id": "378",
       "category": "进口服饰&包包",
       "english": "MOSCHINO",
       "chinese": "MOSCHINO",
@@ -5220,7 +5210,7 @@
       }
     },
     {
-      "id": "380",
+      "id": "379",
       "category": "进口服饰&包包",
       "english": "LOVE MOSCHINO",
       "chinese": "LOVE MOSCHINO",
@@ -5231,7 +5221,7 @@
       }
     },
     {
-      "id": "381",
+      "id": "380",
       "category": "进口服饰&包包",
       "english": "MYRITZ",
       "chinese": "MYRITZ",
@@ -5242,7 +5232,7 @@
       }
     },
     {
-      "id": "382",
+      "id": "381",
       "category": "进口服饰&包包",
       "english": "NOMAKA",
       "chinese": "NOMAKA",
@@ -5254,7 +5244,7 @@
       }
     },
     {
-      "id": "383",
+      "id": "382",
       "category": "进口服饰&包包",
       "english": "PATAGONIA",
       "chinese": "PATAGONIA",
@@ -5268,7 +5258,7 @@
       }
     },
     {
-      "id": "384",
+      "id": "383",
       "category": "进口服饰&包包",
       "english": "PRADA",
       "chinese": "普拉达",
@@ -5277,14 +5267,14 @@
       "rebates": {
         "乐天明洞": 0.11,
         "乐天蚕室": 0.11,
-        "现代": 0.12,
+        "现代": 0.14,
         "釜山乐天": 0.12,
         "济州乐天": 0.11,
         "济州新罗": 0.06
       }
     },
     {
-      "id": "385",
+      "id": "384",
       "category": "进口服饰&包包",
       "english": "SKECHERS",
       "chinese": "SKECHERS",
@@ -5295,7 +5285,7 @@
       }
     },
     {
-      "id": "386",
+      "id": "385",
       "category": "进口服饰&包包",
       "english": "SAMSONITE",
       "chinese": "SAMSONITE",
@@ -5306,7 +5296,7 @@
       }
     },
     {
-      "id": "387",
+      "id": "386",
       "category": "进口服饰&包包",
       "english": "ST.DUPONT",
       "chinese": "都彭",
@@ -5319,7 +5309,7 @@
       }
     },
     {
-      "id": "388",
+      "id": "387",
       "category": "进口服饰&包包",
       "english": "S.FERRAGAMO(有特殊SKU)",
       "chinese": "菲拉格慕",
@@ -5338,7 +5328,7 @@
       }
     },
     {
-      "id": "389",
+      "id": "388",
       "category": "进口服饰&包包",
       "english": "SAINT LAURENT",
       "chinese": "圣罗兰",
@@ -5349,13 +5339,13 @@
         "乐天蚕室": 0.22,
         "新世界": 0.24,
         "新罗": 0.23,
-        "现代": 0.25,
+        "现代": 0.27,
         "爱宝客": 0.0,
         "济州新罗": 0.2
       }
     },
     {
-      "id": "390",
+      "id": "389",
       "category": "进口服饰&包包",
       "english": "STUART WEITZMAN",
       "chinese": "思缇韦曼",
@@ -5366,7 +5356,7 @@
       }
     },
     {
-      "id": "391",
+      "id": "390",
       "category": "进口服饰&包包",
       "english": "THE BLANC",
       "chinese": "THE BLANC",
@@ -5377,7 +5367,7 @@
       }
     },
     {
-      "id": "392",
+      "id": "391",
       "category": "进口服饰&包包",
       "english": "TORY BURCH(有特殊SKU)",
       "chinese": "汤丽柏琦",
@@ -5395,7 +5385,7 @@
       }
     },
     {
-      "id": "393",
+      "id": "392",
       "category": "进口服饰&包包",
       "english": "TORY BURCH 29.5%이상 할인상품",
       "chinese": "汤丽柏琦折扣大于等于29.5%的产品",
@@ -5409,7 +5399,7 @@
       }
     },
     {
-      "id": "394",
+      "id": "393",
       "category": "进口服饰&包包",
       "english": "THOM BROWNE",
       "chinese": "汤姆·布朗",
@@ -5420,7 +5410,7 @@
       }
     },
     {
-      "id": "395",
+      "id": "394",
       "category": "进口服饰&包包",
       "english": "TOD'S",
       "chinese": "托德斯",
@@ -5433,7 +5423,7 @@
       }
     },
     {
-      "id": "396",
+      "id": "395",
       "category": "进口服饰&包包",
       "english": "TUMI",
       "chinese": "TUMI",
@@ -5447,7 +5437,7 @@
       }
     },
     {
-      "id": "397",
+      "id": "396",
       "category": "进口服饰&包包",
       "english": "UGG",
       "chinese": "UGG",
@@ -5461,7 +5451,7 @@
       }
     },
     {
-      "id": "398",
+      "id": "397",
       "category": "进口服饰&包包",
       "english": "VANTILUX BTQ",
       "chinese": "VANTILUX BTQ",
@@ -5472,7 +5462,7 @@
       }
     },
     {
-      "id": "399",
+      "id": "398",
       "category": "进口服饰&包包",
       "english": "VALENTINO",
       "chinese": "华伦天奴",
@@ -5484,7 +5474,7 @@
       }
     },
     {
-      "id": "400",
+      "id": "399",
       "category": "进口服饰&包包",
       "english": "ROGER VIVIER",
       "chinese": "RV",
@@ -5497,7 +5487,7 @@
       }
     },
     {
-      "id": "401",
+      "id": "400",
       "category": "本土服饰&包包",
       "english": "ACME DE LA VIE",
       "chinese": "ADLV",
@@ -5515,7 +5505,7 @@
       }
     },
     {
-      "id": "402",
+      "id": "401",
       "category": "本土服饰&包包",
       "english": "아카이브앱크",
       "chinese": "archive-epke",
@@ -5526,7 +5516,7 @@
       }
     },
     {
-      "id": "403",
+      "id": "402",
       "category": "本土服饰&包包",
       "english": "ADER ERROR",
       "chinese": "ADER ERROR",
@@ -5538,7 +5528,7 @@
       }
     },
     {
-      "id": "404",
+      "id": "403",
       "category": "本土服饰&包包",
       "english": "APRCH SEOUL",
       "chinese": "APRCH SEOUL",
@@ -5549,7 +5539,7 @@
       }
     },
     {
-      "id": "405",
+      "id": "404",
       "category": "本土服饰&包包",
       "english": "비비씨어스",
       "chinese": "BBC EARTH",
@@ -5561,7 +5551,7 @@
       }
     },
     {
-      "id": "406",
+      "id": "405",
       "category": "本土服饰&包包",
       "english": "BEENTRILL",
       "chinese": "BEENTRILL",
@@ -5572,7 +5562,7 @@
       }
     },
     {
-      "id": "407",
+      "id": "406",
       "category": "本土服饰&包包",
       "english": "BROWNBREATH",
       "chinese": "BROWNBREATH",
@@ -5583,7 +5573,7 @@
       }
     },
     {
-      "id": "408",
+      "id": "407",
       "category": "本土服饰&包包",
       "english": "BLACK YAK",
       "chinese": "BLACK YAK",
@@ -5594,7 +5584,7 @@
       }
     },
     {
-      "id": "409",
+      "id": "408",
       "category": "本土服饰&包包",
       "english": "커버낫",
       "chinese": "COVERNAT",
@@ -5609,7 +5599,7 @@
       }
     },
     {
-      "id": "410",
+      "id": "409",
       "category": "本土服饰&包包",
       "english": "COLUMBIA_K",
       "chinese": "COLUMBIA_K",
@@ -5620,7 +5610,7 @@
       }
     },
     {
-      "id": "411",
+      "id": "410",
       "category": "本土服饰&包包",
       "english": "다이닛",
       "chinese": "DEINET",
@@ -5631,7 +5621,7 @@
       }
     },
     {
-      "id": "412",
+      "id": "411",
       "category": "本土服饰&包包",
       "english": "DISCOVERY",
       "chinese": "DISCOVERY",
@@ -5645,7 +5635,7 @@
       }
     },
     {
-      "id": "413",
+      "id": "412",
       "category": "本土服饰&包包",
       "english": "EIDER",
       "chinese": "EIDER",
@@ -5657,7 +5647,7 @@
       }
     },
     {
-      "id": "414",
+      "id": "413",
       "category": "本土服饰&包包",
       "english": "EVISU",
       "chinese": "福神",
@@ -5676,7 +5666,7 @@
       }
     },
     {
-      "id": "415",
+      "id": "414",
       "category": "本土服饰&包包",
       "english": "FALLETT",
       "chinese": "FALLETT",
@@ -5687,7 +5677,7 @@
       }
     },
     {
-      "id": "416",
+      "id": "415",
       "category": "本土服饰&包包",
       "english": "FILA",
       "chinese": "斐乐",
@@ -5703,7 +5693,7 @@
       }
     },
     {
-      "id": "417",
+      "id": "416",
       "category": "本土服饰&包包",
       "english": "FILA(P)",
       "chinese": "斐乐（P或2）",
@@ -5718,7 +5708,7 @@
       }
     },
     {
-      "id": "418",
+      "id": "417",
       "category": "本土服饰&包包",
       "english": "FILA KIDS",
       "chinese": "斐乐儿童",
@@ -5729,7 +5719,7 @@
       }
     },
     {
-      "id": "419",
+      "id": "418",
       "category": "本土服饰&包包",
       "english": "FILA SOCKS",
       "chinese": "斐乐袜子",
@@ -5740,7 +5730,7 @@
       }
     },
     {
-      "id": "420",
+      "id": "419",
       "category": "本土服饰&包包",
       "english": "FIND KAPOOR",
       "chinese": "FIND KAPOOR",
@@ -5751,7 +5741,7 @@
       }
     },
     {
-      "id": "421",
+      "id": "420",
       "category": "本土服饰&包包",
       "english": "FILLUMINATE",
       "chinese": "FILLUMINATE",
@@ -5763,7 +5753,7 @@
       }
     },
     {
-      "id": "422",
+      "id": "421",
       "category": "本土服饰&包包",
       "english": "FRUIT OF THE LOOM",
       "chinese": "FRUIT OF THE LOOM",
@@ -5774,7 +5764,7 @@
       }
     },
     {
-      "id": "423",
+      "id": "422",
       "category": "本土服饰&包包",
       "english": "GUESS",
       "chinese": "GUESS",
@@ -5786,7 +5776,7 @@
       }
     },
     {
-      "id": "424",
+      "id": "423",
       "category": "本土服饰&包包",
       "english": "HAGOHAUS",
       "chinese": "HAGOHAUS",
@@ -5797,7 +5787,7 @@
       }
     },
     {
-      "id": "425",
+      "id": "424",
       "category": "本土服饰&包包",
       "english": "HONDA",
       "chinese": "HONDA",
@@ -5808,7 +5798,7 @@
       }
     },
     {
-      "id": "426",
+      "id": "425",
       "category": "本土服饰&包包",
       "english": "JELEVE",
       "chinese": "JELEVE",
@@ -5820,7 +5810,7 @@
       }
     },
     {
-      "id": "427",
+      "id": "426",
       "category": "本土服饰&包包",
       "english": "JUNHE",
       "chinese": "JUNHE",
@@ -5831,7 +5821,7 @@
       }
     },
     {
-      "id": "428",
+      "id": "427",
       "category": "本土服饰&包包",
       "english": "김해김",
       "chinese": "KIMHEKIM",
@@ -5842,7 +5832,7 @@
       }
     },
     {
-      "id": "429",
+      "id": "428",
       "category": "本土服饰&包包",
       "english": "KIRSH",
       "chinese": "KIRSH",
@@ -5853,7 +5843,7 @@
       }
     },
     {
-      "id": "430",
+      "id": "429",
       "category": "本土服饰&包包",
       "english": "KODAK APPAREL",
       "chinese": "柯达（或2或P）",
@@ -5865,7 +5855,7 @@
       }
     },
     {
-      "id": "431",
+      "id": "430",
       "category": "本土服饰&包包",
       "english": "KENZO",
       "chinese": "KENZO",
@@ -5877,7 +5867,7 @@
       }
     },
     {
-      "id": "432",
+      "id": "431",
       "category": "本土服饰&包包",
       "english": "LACOSTE",
       "chinese": "法国鳄鱼",
@@ -5894,7 +5884,7 @@
       }
     },
     {
-      "id": "433",
+      "id": "432",
       "category": "本土服饰&包包",
       "english": "LEMEME",
       "chinese": "LEMEME",
@@ -5906,7 +5896,7 @@
       }
     },
     {
-      "id": "434",
+      "id": "433",
       "category": "本土服饰&包包",
       "english": "라이프워크",
       "chinese": "LIFE WORK",
@@ -5918,7 +5908,7 @@
       }
     },
     {
-      "id": "435",
+      "id": "434",
       "category": "本土服饰&包包",
       "english": "락피쉬웨더웨어",
       "chinese": "ROCKFISH WEATHERWEAR",
@@ -5929,7 +5919,7 @@
       }
     },
     {
-      "id": "436",
+      "id": "435",
       "category": "本土服饰&包包",
       "english": "마리끌레르",
       "chinese": "Marie claire",
@@ -5940,7 +5930,7 @@
       }
     },
     {
-      "id": "437",
+      "id": "436",
       "category": "本土服饰&包包",
       "english": "MCM(토산)",
       "chinese": "MCM（本土）",
@@ -5958,7 +5948,7 @@
       }
     },
     {
-      "id": "438",
+      "id": "437",
       "category": "本土服饰&包包",
       "english": "MLB",
       "chinese": "MLB",
@@ -5976,7 +5966,7 @@
       }
     },
     {
-      "id": "439",
+      "id": "438",
       "category": "本土服饰&包包",
       "english": "MLB KIDS",
       "chinese": "MLB儿童",
@@ -5993,7 +5983,7 @@
       }
     },
     {
-      "id": "440",
+      "id": "439",
       "category": "本土服饰&包包",
       "english": "M PLAYGROUND",
       "chinese": "M PLAYGROUND",
@@ -6004,7 +5994,7 @@
       }
     },
     {
-      "id": "441",
+      "id": "440",
       "category": "本土服饰&包包",
       "english": "미야앤솔",
       "chinese": "MIYANSOL",
@@ -6017,7 +6007,7 @@
       }
     },
     {
-      "id": "442",
+      "id": "441",
       "category": "本土服饰&包包",
       "english": "MUSINSA",
       "chinese": "MUSINSA",
@@ -6028,7 +6018,7 @@
       }
     },
     {
-      "id": "443",
+      "id": "442",
       "category": "本土服饰&包包",
       "english": "NERDY",
       "chinese": "NERDY",
@@ -6039,7 +6029,7 @@
       }
     },
     {
-      "id": "444",
+      "id": "443",
       "category": "本土服饰&包包",
       "english": "NEW ERA",
       "chinese": "NEW ERA",
@@ -6053,7 +6043,7 @@
       }
     },
     {
-      "id": "445",
+      "id": "444",
       "category": "本土服饰&包包",
       "english": "누크피터",
       "chinese": "NUUKFITTER",
@@ -6064,7 +6054,7 @@
       }
     },
     {
-      "id": "446",
+      "id": "445",
       "category": "本土服饰&包包",
       "english": "노스페이스",
       "chinese": "北面",
@@ -6078,7 +6068,7 @@
       }
     },
     {
-      "id": "447",
+      "id": "446",
       "category": "本土服饰&包包",
       "english": "NORTH FACE(P或2）",
       "chinese": "北面(P或2）",
@@ -6090,7 +6080,7 @@
       }
     },
     {
-      "id": "448",
+      "id": "447",
       "category": "本土服饰&包包",
       "english": "NORTH FACE KIDS（或P或2）",
       "chinese": "北面儿童（或P或2）",
@@ -6101,7 +6091,7 @@
       }
     },
     {
-      "id": "449",
+      "id": "448",
       "category": "本土服饰&包包",
       "english": "RONRON",
       "chinese": "RONRON",
@@ -6112,7 +6102,7 @@
       }
     },
     {
-      "id": "450",
+      "id": "449",
       "category": "本土服饰&包包",
       "english": "ROEM",
       "chinese": "ROEM",
@@ -6123,7 +6113,7 @@
       }
     },
     {
-      "id": "451",
+      "id": "450",
       "category": "本土服饰&包包",
       "english": "SATUR",
       "chinese": "SATUR",
@@ -6136,7 +6126,7 @@
       }
     },
     {
-      "id": "452",
+      "id": "451",
       "category": "本土服饰&包包",
       "english": "스파오",
       "chinese": "SPAO",
@@ -6147,7 +6137,7 @@
       }
     },
     {
-      "id": "453",
+      "id": "452",
       "category": "本土服饰&包包",
       "english": "WRANGLER",
       "chinese": "WRANGLER",
@@ -6158,7 +6148,7 @@
       }
     },
     {
-      "id": "454",
+      "id": "453",
       "category": "本土服饰&包包",
       "english": "WACKY WILLY",
       "chinese": "WACKY WILLY",
@@ -6175,7 +6165,7 @@
       }
     },
     {
-      "id": "455",
+      "id": "454",
       "category": "本土服饰&包包",
       "english": "WHOAU",
       "chinese": "WHOAU",
@@ -6190,7 +6180,7 @@
       }
     },
     {
-      "id": "456",
+      "id": "455",
       "category": "本土服饰&包包",
       "english": "내셔널지오그래픽",
       "chinese": "国家地理",
@@ -6204,7 +6194,7 @@
       }
     },
     {
-      "id": "457",
+      "id": "456",
       "category": "本土服饰&包包",
       "english": "리",
       "chinese": "LEE",
@@ -6218,7 +6208,7 @@
       }
     },
     {
-      "id": "458",
+      "id": "457",
       "category": "本土服饰&包包",
       "english": "LEE KIDS",
       "chinese": "LEE儿童",
@@ -6229,7 +6219,7 @@
       }
     },
     {
-      "id": "459",
+      "id": "458",
       "category": "本土服饰&包包",
       "english": "마리떼프랑소와저버",
       "chinese": "MARITHE FRANCOIS GIRBAUD",
@@ -6245,7 +6235,7 @@
       }
     },
     {
-      "id": "460",
+      "id": "459",
       "category": "本土服饰&包包",
       "english": "마뗑킴",
       "chinese": "MATIN KIM",
@@ -6256,7 +6246,7 @@
       }
     },
     {
-      "id": "461",
+      "id": "460",
       "category": "本土服饰&包包",
       "english": "무신사_핍스",
       "chinese": "PHYPS",
@@ -6268,7 +6258,7 @@
       }
     },
     {
-      "id": "462",
+      "id": "461",
       "category": "本土服饰&包包",
       "english": "무신사_예일",
       "chinese": "YALE",
@@ -6281,7 +6271,7 @@
       }
     },
     {
-      "id": "463",
+      "id": "462",
       "category": "本土服饰&包包",
       "english": "무신사_엠엠엘지",
       "chinese": "MMLG",
@@ -6292,7 +6282,7 @@
       }
     },
     {
-      "id": "464",
+      "id": "463",
       "category": "本土服饰&包包",
       "english": "무신사_코드그라피",
       "chinese": "CODE GRAPHY",
@@ -6303,7 +6293,7 @@
       }
     },
     {
-      "id": "465",
+      "id": "464",
       "category": "本土服饰&包包",
       "english": "마크곤잘레스",
       "chinese": "MARK GONZALES",
@@ -6315,7 +6305,7 @@
       }
     },
     {
-      "id": "466",
+      "id": "465",
       "category": "本土服饰&包包",
       "english": "SERGIO TACCHINI",
       "chinese": "SERGIO TACCHINI",
@@ -6326,7 +6316,7 @@
       }
     },
     {
-      "id": "467",
+      "id": "466",
       "category": "本土服饰&包包",
       "english": "슈퍼드라이",
       "chinese": "SUPERDRY",
@@ -6339,7 +6329,7 @@
       }
     },
     {
-      "id": "468",
+      "id": "467",
       "category": "本土服饰&包包",
       "english": "스노우피크",
       "chinese": "Snowpeak",
@@ -6355,7 +6345,7 @@
       }
     },
     {
-      "id": "469",
+      "id": "468",
       "category": "本土服饰&包包",
       "english": "TALLI",
       "chinese": "TALLI",
@@ -6366,7 +6356,7 @@
       }
     },
     {
-      "id": "470",
+      "id": "469",
       "category": "本土服饰&包包",
       "english": "THE HANDSOME",
       "chinese": "THE HANDSOME",
@@ -6377,7 +6367,7 @@
       }
     },
     {
-      "id": "471",
+      "id": "470",
       "category": "本土服饰&包包",
       "english": "육심원",
       "chinese": "陆心媛",
@@ -6389,7 +6379,7 @@
       }
     },
     {
-      "id": "472",
+      "id": "471",
       "category": "本土服饰&包包",
       "english": "뉴발란스 키즈",
       "chinese": "新百伦儿童",
@@ -6400,7 +6390,7 @@
       }
     },
     {
-      "id": "473",
+      "id": "472",
       "category": "本土服饰&包包",
       "english": "VESTIRYA",
       "chinese": "VESTIRYA",
@@ -6411,7 +6401,7 @@
       }
     },
     {
-      "id": "474",
+      "id": "473",
       "category": "本土服饰&包包",
       "english": "웰던",
       "chinese": "WELLDONE",
@@ -6422,7 +6412,7 @@
       }
     },
     {
-      "id": "475",
+      "id": "474",
       "category": "本土服饰&包包",
       "english": "잔망루피",
       "chinese": "ZANMANG LOOPY",
@@ -6438,7 +6428,7 @@
       }
     },
     {
-      "id": "476",
+      "id": "475",
       "category": "眼镜",
       "english": "B.VENETA2 EYE",
       "chinese": "葆蝶家眼镜",
@@ -6450,7 +6440,7 @@
       }
     },
     {
-      "id": "477",
+      "id": "476",
       "category": "眼镜",
       "english": "BALENCIAGA2 EYE",
       "chinese": "巴黎世家眼镜",
@@ -6462,7 +6452,7 @@
       }
     },
     {
-      "id": "478",
+      "id": "477",
       "category": "眼镜",
       "english": "BURBERRY EYE",
       "chinese": "巴宝莉眼镜",
@@ -6474,7 +6464,7 @@
       }
     },
     {
-      "id": "479",
+      "id": "478",
       "category": "眼镜",
       "english": "BYWP EYE",
       "chinese": "BYWP眼镜",
@@ -6485,7 +6475,7 @@
       }
     },
     {
-      "id": "480",
+      "id": "479",
       "category": "眼镜",
       "english": "C.DIOR3 EYE",
       "chinese": "迪奥眼镜",
@@ -6498,7 +6488,7 @@
       }
     },
     {
-      "id": "481",
+      "id": "480",
       "category": "眼镜",
       "english": "CARTIER EYE",
       "chinese": "卡地亚眼镜",
@@ -6510,7 +6500,7 @@
       }
     },
     {
-      "id": "482",
+      "id": "481",
       "category": "眼镜",
       "english": "FENDI3 EYE",
       "chinese": "芬迪眼镜",
@@ -6523,7 +6513,7 @@
       }
     },
     {
-      "id": "483",
+      "id": "482",
       "category": "眼镜",
       "english": "FOUR NINES EYE",
       "chinese": "FOUR NINES眼镜",
@@ -6534,7 +6524,7 @@
       }
     },
     {
-      "id": "484",
+      "id": "483",
       "category": "眼镜",
       "english": "GENTLE MONSTER",
       "chinese": "GM眼镜",
@@ -6551,7 +6541,7 @@
       }
     },
     {
-      "id": "485",
+      "id": "484",
       "category": "眼镜",
       "english": "GUCCI2 EYE",
       "chinese": "古驰眼镜",
@@ -6563,7 +6553,7 @@
       }
     },
     {
-      "id": "486",
+      "id": "485",
       "category": "眼镜",
       "english": "LASH EYE",
       "chinese": "LASH眼镜",
@@ -6574,7 +6564,7 @@
       }
     },
     {
-      "id": "487",
+      "id": "486",
       "category": "眼镜",
       "english": "MIUMIU EYE",
       "chinese": "缪缪眼镜",
@@ -6587,7 +6577,7 @@
       }
     },
     {
-      "id": "488",
+      "id": "487",
       "category": "眼镜",
       "english": "MONTBLANC EYE",
       "chinese": "万宝龙眼镜",
@@ -6599,7 +6589,7 @@
       }
     },
     {
-      "id": "489",
+      "id": "488",
       "category": "眼镜",
       "english": "OAKLEY EYE",
       "chinese": "OAKLEY眼镜",
@@ -6612,7 +6602,7 @@
       }
     },
     {
-      "id": "490",
+      "id": "489",
       "category": "眼镜",
       "english": "PRADA EYE",
       "chinese": "普拉达眼镜",
@@ -6624,7 +6614,7 @@
       }
     },
     {
-      "id": "491",
+      "id": "490",
       "category": "眼镜",
       "english": "RAY BAN EYE",
       "chinese": "RAY BAN眼镜",
@@ -6636,7 +6626,7 @@
       }
     },
     {
-      "id": "492",
+      "id": "491",
       "category": "眼镜",
       "english": "S.FERRAGAMO EYE",
       "chinese": "菲拉格慕眼镜",
@@ -6648,7 +6638,7 @@
       }
     },
     {
-      "id": "493",
+      "id": "492",
       "category": "眼镜",
       "english": "CELINE3 EYE",
       "chinese": "塞琳眼镜",
@@ -6661,7 +6651,7 @@
       }
     },
     {
-      "id": "494",
+      "id": "493",
       "category": "眼镜",
       "english": "SAINT LAURENT2 EYE",
       "chinese": "圣罗兰眼镜",
@@ -6673,7 +6663,7 @@
       }
     },
     {
-      "id": "495",
+      "id": "494",
       "category": "眼镜",
       "english": "TOM FORD3 EYE",
       "chinese": "TF眼镜",
@@ -6684,7 +6674,7 @@
       }
     },
     {
-      "id": "496",
+      "id": "495",
       "category": "眼镜",
       "english": "META EYE",
       "chinese": "META眼镜",
@@ -6695,7 +6685,7 @@
       }
     },
     {
-      "id": "498",
+      "id": "497",
       "category": "烟",
       "english": "IQOS HEET",
       "chinese": "IQOS HEET",
@@ -6707,7 +6697,7 @@
       }
     },
     {
-      "id": "499",
+      "id": "498",
       "category": "烟",
       "english": "PMI TOBACCO",
       "chinese": "TEREA烟弹",
@@ -6721,7 +6711,7 @@
       }
     },
     {
-      "id": "500",
+      "id": "499",
       "category": "烟",
       "english": "C.TOBACCO(GONI)",
       "chinese": "C.TOBACCO(GONI)",
@@ -6732,7 +6722,7 @@
       }
     },
     {
-      "id": "501",
+      "id": "500",
       "category": "烟",
       "english": "CHUNGHWA",
       "chinese": "中华",
@@ -6745,7 +6735,7 @@
       }
     },
     {
-      "id": "502",
+      "id": "501",
       "category": "烟",
       "english": "DAVIDOFF CIGAR",
       "chinese": "DAVIDOFF CIGAR",
@@ -6756,7 +6746,7 @@
       }
     },
     {
-      "id": "503",
+      "id": "502",
       "category": "烟",
       "english": "DW TOBACCO",
       "chinese": "DW TOBACCO",
@@ -6767,7 +6757,7 @@
       }
     },
     {
-      "id": "504",
+      "id": "503",
       "category": "烟",
       "english": "케이베이프",
       "chinese": "K-VAPE",
@@ -6778,7 +6768,7 @@
       }
     },
     {
-      "id": "505",
+      "id": "504",
       "category": "烟",
       "english": "룩트",
       "chinese": "LOOKT / RELX",
@@ -6789,7 +6779,7 @@
       }
     },
     {
-      "id": "506",
+      "id": "505",
       "category": "烟",
       "english": "HABANOS CIGAR",
       "chinese": "HABANOS CIGAR",
@@ -6800,7 +6790,7 @@
       }
     },
     {
-      "id": "507",
+      "id": "506",
       "category": "烟",
       "english": "JTI",
       "chinese": "JTI",
@@ -6813,7 +6803,7 @@
       }
     },
     {
-      "id": "508",
+      "id": "507",
       "category": "烟",
       "english": "KT&G CIGAR",
       "chinese": "KT&G CIGAR",
@@ -6824,7 +6814,7 @@
       }
     },
     {
-      "id": "509",
+      "id": "508",
       "category": "烟",
       "english": "KT&G",
       "chinese": "KT&G卷烟",
@@ -6838,7 +6828,7 @@
       }
     },
     {
-      "id": "510",
+      "id": "509",
       "category": "烟",
       "english": "KT&G_전자담배",
       "chinese": "KT&G电子烟",
@@ -6851,7 +6841,7 @@
       }
     },
     {
-      "id": "511",
+      "id": "510",
       "category": "烟",
       "english": "KT&G(일반궐련)",
       "chinese": "KT&G(일반궐련)",
@@ -6864,7 +6854,7 @@
       }
     },
     {
-      "id": "512",
+      "id": "511",
       "category": "烟",
       "english": "KT&G(핏)",
       "chinese": "KT&G(핏)",
@@ -6877,7 +6867,7 @@
       }
     },
     {
-      "id": "513",
+      "id": "512",
       "category": "烟",
       "english": "KT&G 릴 핏",
       "chinese": "KT&G 릴 핏",
@@ -6888,7 +6878,7 @@
       }
     },
     {
-      "id": "514",
+      "id": "513",
       "category": "烟",
       "english": "所有电子烟机器",
       "chinese": "所有电子烟机器",
@@ -6905,7 +6895,7 @@
       }
     },
     {
-      "id": "515",
+      "id": "514",
       "category": "酒",
       "english": "MARTELL",
       "chinese": "马爹利",
@@ -6918,7 +6908,7 @@
       }
     },
     {
-      "id": "516",
+      "id": "515",
       "category": "酒",
       "english": "BALLANTINES",
       "chinese": "百龄坛",
@@ -6931,7 +6921,7 @@
       }
     },
     {
-      "id": "517",
+      "id": "516",
       "category": "酒",
       "english": "CHIVAS REGAL",
       "chinese": "芝华士",
@@ -6944,7 +6934,7 @@
       }
     },
     {
-      "id": "518",
+      "id": "517",
       "category": "酒",
       "english": "GLENFARCLAS",
       "chinese": "GLENFARCLAS",
@@ -6955,7 +6945,7 @@
       }
     },
     {
-      "id": "519",
+      "id": "518",
       "category": "酒",
       "english": "HENNESSY",
       "chinese": "轩尼诗",
@@ -6970,7 +6960,7 @@
       }
     },
     {
-      "id": "520",
+      "id": "519",
       "category": "酒",
       "english": "NIO COCKTAILS",
       "chinese": "NIO COCKTAILS",
@@ -6981,7 +6971,7 @@
       }
     },
     {
-      "id": "521",
+      "id": "520",
       "category": "酒",
       "english": "MOUTAI(DDM)",
       "chinese": "茅台(DDM)",
@@ -6995,7 +6985,7 @@
       }
     },
     {
-      "id": "522",
+      "id": "521",
       "category": "酒",
       "english": "MOUTAI (THQ)",
       "chinese": "MOUTAI (THQ)",
@@ -7007,7 +6997,7 @@
       }
     },
     {
-      "id": "523",
+      "id": "522",
       "category": "酒",
       "english": "ROYAL SALUTE",
       "chinese": "皇家礼炮",
@@ -7020,7 +7010,7 @@
       }
     },
     {
-      "id": "524",
+      "id": "523",
       "category": "酒",
       "english": "REMY MARTIN",
       "chinese": "人头马",
@@ -7033,7 +7023,7 @@
       }
     },
     {
-      "id": "525",
+      "id": "524",
       "category": "酒",
       "english": "SAZERAC",
       "chinese": "SAZERAC",
@@ -7044,7 +7034,7 @@
       }
     },
     {
-      "id": "526",
+      "id": "525",
       "category": "酒",
       "english": "VEUVE CLICQUOT",
       "chinese": "凯歌香槟",
@@ -7055,7 +7045,7 @@
       }
     },
     {
-      "id": "527",
+      "id": "526",
       "category": "酒",
       "english": "CAMUS MOUTAI",
       "chinese": "贵州茅台",
@@ -7066,7 +7056,7 @@
       }
     },
     {
-      "id": "528",
+      "id": "527",
       "category": "食品",
       "english": "CHEONG KWAN JANG",
       "chinese": "正官庄一般",
@@ -7085,7 +7075,7 @@
       }
     },
     {
-      "id": "529",
+      "id": "528",
       "category": "食品",
       "english": "CHEONG KWAN JANG (뿌리삼)",
       "chinese": "正官庄人参根",
@@ -7104,7 +7094,7 @@
       }
     },
     {
-      "id": "530",
+      "id": "529",
       "category": "食品",
       "english": "CENOVIS",
       "chinese": "CENOVIS",
@@ -7117,7 +7107,7 @@
       }
     },
     {
-      "id": "531",
+      "id": "530",
       "category": "食品",
       "english": "배러밀",
       "chinese": "BETTERMEAL",
@@ -7128,7 +7118,7 @@
       }
     },
     {
-      "id": "532",
+      "id": "531",
       "category": "食品",
       "english": "브릭샌드",
       "chinese": "Brick Sand",
@@ -7139,7 +7129,7 @@
       }
     },
     {
-      "id": "533",
+      "id": "532",
       "category": "食品",
       "english": "다나누리",
       "chinese": "DANANURI",
@@ -7153,7 +7143,7 @@
       }
     },
     {
-      "id": "534",
+      "id": "533",
       "category": "食品",
       "english": "대호물산식품",
       "chinese": "Daeho食品",
@@ -7164,7 +7154,7 @@
       }
     },
     {
-      "id": "535",
+      "id": "534",
       "category": "食品",
       "english": "그래인스쿠키",
       "chinese": "GRAINS COOKIE",
@@ -7175,7 +7165,7 @@
       }
     },
     {
-      "id": "536",
+      "id": "535",
       "category": "食品",
       "english": "에이티",
       "chinese": "AT",
@@ -7186,7 +7176,7 @@
       }
     },
     {
-      "id": "537",
+      "id": "536",
       "category": "食品",
       "english": "팔도카라멜",
       "chinese": "PALDO CARAMEL",
@@ -7197,7 +7187,7 @@
       }
     },
     {
-      "id": "538",
+      "id": "537",
       "category": "食品",
       "english": "엘에이치앤디",
       "chinese": "LH&D",
@@ -7211,7 +7201,7 @@
       }
     },
     {
-      "id": "539",
+      "id": "538",
       "category": "食品",
       "english": "DELIGHT PROJECT",
       "chinese": "DELIGHT PROJECT",
@@ -7223,7 +7213,7 @@
       }
     },
     {
-      "id": "540",
+      "id": "539",
       "category": "食品",
       "english": "K-SHOP BY CJ ENM",
       "chinese": "K-SHOP BY CJ ENM",
@@ -7235,7 +7225,7 @@
       }
     },
     {
-      "id": "541",
+      "id": "540",
       "category": "食品",
       "english": "이삭토스트",
       "chinese": "ISAAC TOAST",
@@ -7246,7 +7236,7 @@
       }
     },
     {
-      "id": "542",
+      "id": "541",
       "category": "食品",
       "english": "원스인어문",
       "chinese": "원스인어문",
@@ -7257,7 +7247,7 @@
       }
     },
     {
-      "id": "543",
+      "id": "542",
       "category": "食品",
       "english": "금옥당",
       "chinese": "金玉堂",
@@ -7268,7 +7258,7 @@
       }
     },
     {
-      "id": "544",
+      "id": "543",
       "category": "食品",
       "english": "허니버터아몬드",
       "chinese": "蜂蜜黄油杏仁",
@@ -7279,7 +7269,7 @@
       }
     },
     {
-      "id": "545",
+      "id": "544",
       "category": "食品",
       "english": "일동후디스(분유)",
       "chinese": "ILDONG FOODIS（奶粉）",
@@ -7290,7 +7280,7 @@
       }
     },
     {
-      "id": "546",
+      "id": "545",
       "category": "食品",
       "english": "남양유업(분유)",
       "chinese": "南阳乳业",
@@ -7301,7 +7291,7 @@
       }
     },
     {
-      "id": "547",
+      "id": "546",
       "category": "食品",
       "english": "매일유업(분유)",
       "chinese": "매일유업(분유)",
@@ -7312,7 +7302,7 @@
       }
     },
     {
-      "id": "548",
+      "id": "547",
       "category": "食品",
       "english": "만나당",
       "chinese": "MANNADANG",
@@ -7323,7 +7313,7 @@
       }
     },
     {
-      "id": "549",
+      "id": "548",
       "category": "食品",
       "english": "피닉스진생",
       "chinese": "凤凰人参",
@@ -7334,7 +7324,7 @@
       }
     },
     {
-      "id": "550",
+      "id": "549",
       "category": "食品",
       "english": "동원F&B",
       "chinese": "동원F&B",
@@ -7345,7 +7335,7 @@
       }
     },
     {
-      "id": "551",
+      "id": "550",
       "category": "食品",
       "english": "타이거모닝",
       "chinese": "TIGER MORNING",
@@ -7356,7 +7346,7 @@
       }
     },
     {
-      "id": "552",
+      "id": "551",
       "category": "食品",
       "english": "한국식품",
       "chinese": "韩国食品",
@@ -7367,7 +7357,7 @@
       }
     },
     {
-      "id": "553",
+      "id": "552",
       "category": "食品",
       "english": "CENTRUM",
       "chinese": "善存",
@@ -7378,7 +7368,7 @@
       }
     },
     {
-      "id": "554",
+      "id": "553",
       "category": "纪念品",
       "english": "HAESOO.L",
       "chinese": "海秀儿(14K除外)",
@@ -7392,7 +7382,7 @@
       }
     },
     {
-      "id": "555",
+      "id": "554",
       "category": "纪念品",
       "english": "HAESOO.L JEW (14K)",
       "chinese": "海秀儿(14K足金)",
@@ -7406,7 +7396,7 @@
       }
     },
     {
-      "id": "556",
+      "id": "555",
       "category": "纪念品",
       "english": "KAKAO FRIENDS",
       "chinese": "可可朋友",
@@ -7419,7 +7409,7 @@
       }
     },
     {
-      "id": "557",
+      "id": "556",
       "category": "纪念品",
       "english": "PORORO",
       "chinese": "宝露露",
@@ -7432,29 +7422,29 @@
       }
     },
     {
-      "id": "558",
+      "id": "557",
       "category": "纪念品",
       "english": "에이치에스에프",
-      "chinese": "HSF(特殊商品除外)",
+      "chinese": "HSF",
       "remark": "",
       "discount": null,
       "rebates": {
         "新世界": 0.0
+      }
+    },
+    {
+      "id": "558",
+      "category": "纪念品",
+      "english": "주영엔에스",
+      "chinese": "JUYEONG NS",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.04
       }
     },
     {
       "id": "559",
-      "category": "纪念品",
-      "english": "에이치에스에프(라라스윗, 농심, 동서, 삼양, 오뚜기)",
-      "chinese": "HSF特殊商品(라라스윗, 농심, 동서, 삼양, 오뚜기)",
-      "remark": "",
-      "discount": null,
-      "rebates": {
-        "新世界": 0.0
-      }
-    },
-    {
-      "id": "560",
       "category": "纪念品",
       "english": "오설록",
       "chinese": "OSULLOC",
@@ -7466,7 +7456,7 @@
       }
     },
     {
-      "id": "561",
+      "id": "560",
       "category": "纪念品",
       "english": "쎄콩데",
       "chinese": "SECONDAIRE",
@@ -7477,7 +7467,7 @@
       }
     },
     {
-      "id": "562",
+      "id": "561",
       "category": "纪念品",
       "english": "슈퍼말차",
       "chinese": "SUPER MATCHA",
@@ -7488,7 +7478,7 @@
       }
     },
     {
-      "id": "563",
+      "id": "562",
       "category": "纪念品",
       "english": "MONDAY EDITION",
       "chinese": "MONDAY EDITION",
@@ -7500,7 +7490,7 @@
       }
     },
     {
-      "id": "564",
+      "id": "563",
       "category": "纪念品",
       "english": "TANI BY MINETANI",
       "chinese": "TANI BY MINETANI",
@@ -7512,7 +7502,7 @@
       }
     },
     {
-      "id": "565",
+      "id": "564",
       "category": "纪念品",
       "english": "THE PARKJI",
       "chinese": "THE PARKJI",
@@ -7524,7 +7514,7 @@
       }
     },
     {
-      "id": "566",
+      "id": "565",
       "category": "纪念品",
       "english": "누리에",
       "chinese": "NURIE",
@@ -7537,7 +7527,7 @@
       }
     },
     {
-      "id": "567",
+      "id": "566",
       "category": "纪念品",
       "english": "VERGUM MAKING",
       "chinese": "VERGUM MAKING",
@@ -7549,7 +7539,7 @@
       }
     },
     {
-      "id": "568",
+      "id": "567",
       "category": "纪念品",
       "english": "유엠(코스메틱)",
       "chinese": "UM(化妆品)",
@@ -7560,7 +7550,7 @@
       }
     },
     {
-      "id": "569",
+      "id": "568",
       "category": "纪念品",
       "english": "유엠(유아)",
       "chinese": "UM(幼儿用品)",
@@ -7571,7 +7561,7 @@
       }
     },
     {
-      "id": "570",
+      "id": "569",
       "category": "纪念品",
       "english": "유엠(캐릭터)",
       "chinese": "UM(玩具)",
@@ -7583,7 +7573,7 @@
       }
     },
     {
-      "id": "571",
+      "id": "570",
       "category": "电子",
       "english": "DYSON KOREA",
       "chinese": "戴森",
@@ -7599,7 +7589,7 @@
       }
     },
     {
-      "id": "572",
+      "id": "571",
       "category": "电子",
       "english": "AFTER SHOKZ",
       "chinese": "AFTER SHOKZ",
@@ -7610,7 +7600,7 @@
       }
     },
     {
-      "id": "573",
+      "id": "572",
       "category": "电子",
       "english": "BANG&OLUFSEN",
       "chinese": "B&O",
@@ -7623,7 +7613,7 @@
       }
     },
     {
-      "id": "574",
+      "id": "573",
       "category": "电子",
       "english": "BOWERS&WILKINS",
       "chinese": "BOWERS&WILKINS",
@@ -7634,7 +7624,7 @@
       }
     },
     {
-      "id": "575",
+      "id": "574",
       "category": "电子",
       "english": "GOPRO",
       "chinese": "GOPRO",
@@ -7647,7 +7637,7 @@
       }
     },
     {
-      "id": "576",
+      "id": "575",
       "category": "电子",
       "english": "PHILIPS",
       "chinese": "飞利浦",
@@ -7661,7 +7651,7 @@
       }
     },
     {
-      "id": "577",
+      "id": "576",
       "category": "电子",
       "english": "쿠쿠",
       "chinese": "福库",
@@ -7674,7 +7664,7 @@
       }
     },
     {
-      "id": "578",
+      "id": "577",
       "category": "电子",
       "english": "삼성",
       "chinese": "三星",
@@ -7693,7 +7683,7 @@
       }
     },
     {
-      "id": "579",
+      "id": "578",
       "category": "电子",
       "english": "SONY",
       "chinese": "索尼",
@@ -7704,7 +7694,7 @@
       }
     },
     {
-      "id": "580",
+      "id": "579",
       "category": "电子",
       "english": "LG",
       "chinese": "LG",
@@ -7715,7 +7705,7 @@
       }
     },
     {
-      "id": "581",
+      "id": "580",
       "category": "电子",
       "english": "INSTA360",
       "chinese": "INSTA360",
@@ -7726,7 +7716,7 @@
       }
     },
     {
-      "id": "582",
+      "id": "581",
       "category": "电子",
       "english": "골프버디",
       "chinese": "GOLFBUDDY",
@@ -7737,7 +7727,7 @@
       }
     },
     {
-      "id": "583",
+      "id": "582",
       "category": "电子",
       "english": "AFTERSHOKZ",
       "chinese": "AFTERSHOKZ",
@@ -7751,7 +7741,7 @@
       }
     },
     {
-      "id": "584",
+      "id": "583",
       "category": "电子",
       "english": "BOSE",
       "chinese": "BOSE",
@@ -7770,7 +7760,7 @@
       }
     },
     {
-      "id": "585",
+      "id": "584",
       "category": "电子",
       "english": "AUDIO-TECHNICA",
       "chinese": "AUDIO-TECHNICA",
@@ -7782,7 +7772,7 @@
       }
     },
     {
-      "id": "586",
+      "id": "585",
       "category": "电子",
       "english": "FUJI",
       "chinese": "富士",
@@ -7795,7 +7785,7 @@
       }
     },
     {
-      "id": "587",
+      "id": "586",
       "category": "电子",
       "english": "니블스",
       "chinese": "NIBBLES",
@@ -7806,7 +7796,7 @@
       }
     },
     {
-      "id": "588",
+      "id": "587",
       "category": "电子",
       "english": "PANASONIC",
       "chinese": "松下",
@@ -7819,7 +7809,7 @@
       }
     },
     {
-      "id": "589",
+      "id": "588",
       "category": "电子",
       "english": "선경DFS ACC(국산)",
       "chinese": "선경DFS ACC(本土)",
@@ -7830,7 +7820,7 @@
       }
     },
     {
-      "id": "590",
+      "id": "589",
       "category": "电子",
       "english": "풀리오",
       "chinese": "PULIO",
