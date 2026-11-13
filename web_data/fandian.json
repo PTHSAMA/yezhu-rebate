@@ -1,7 +1,7 @@
 {
-  "version": "20261112112616",
-  "updated_at": "2026-11-12 11:26:16",
-  "count": 588,
+  "version": "20261113144633",
+  "updated_at": "2026-11-13 14:46:33",
+  "count": 592,
   "brands": [
     {
       "id": "1",
@@ -4559,9 +4559,9 @@
       "rebates": {
         "乐天明洞": 0.28,
         "乐天蚕室": 0.29,
-        "新世界": 0.33,
+        "新世界": 0.3,
         "新罗": 0.29,
-        "现代": 0.31,
+        "现代": 0.34,
         "釜山乐天": 0.06,
         "济州新罗": 0.14
       }
@@ -5631,7 +5631,7 @@
         "新世界": 0.1,
         "新罗": 0.11,
         "现代": 0.19,
-        "爱宝客": 0.175
+        "爱宝客": 0.185
       }
     },
     {
@@ -5850,7 +5850,7 @@
       "remark": "",
       "discount": null,
       "rebates": {
-        "新罗": 0.08,
+        "新罗": 0.12,
         "爱宝客": 0.19
       }
     },
@@ -5940,7 +5940,7 @@
         "乐天明洞": 0.16,
         "乐天蚕室": 0.16,
         "新世界": 0.19,
-        "新罗": 0.18,
+        "新罗": 0.2,
         "现代": 0.2,
         "釜山乐天": 0.19,
         "济州乐天": 0.18,
@@ -6707,7 +6707,7 @@
         "新世界": 0.07,
         "新罗": 0.08,
         "现代": 0.09,
-        "爱宝客": 0.145
+        "爱宝客": 0.14
       }
     },
     {
@@ -7189,6 +7189,50 @@
     {
       "id": "537",
       "category": "食品",
+      "english": "파삭",
+      "chinese": "PASAAC",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.0
+      }
+    },
+    {
+      "id": "538",
+      "category": "食品",
+      "english": "태극당",
+      "chinese": "TAEGEUKDANG",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.01
+      }
+    },
+    {
+      "id": "539",
+      "category": "食品",
+      "english": "생과방",
+      "chinese": "SAENGGWABANG",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.0
+      }
+    },
+    {
+      "id": "540",
+      "category": "食品",
+      "english": "J&J FOOD",
+      "chinese": "J&J FOOD",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.01
+      }
+    },
+    {
+      "id": "541",
+      "category": "食品",
       "english": "엘에이치앤디",
       "chinese": "LH&D",
       "remark": "",
@@ -7201,7 +7245,7 @@
       }
     },
     {
-      "id": "538",
+      "id": "542",
       "category": "食品",
       "english": "DELIGHT PROJECT",
       "chinese": "DELIGHT PROJECT",
@@ -7213,7 +7257,7 @@
       }
     },
     {
-      "id": "539",
+      "id": "543",
       "category": "食品",
       "english": "K-SHOP BY CJ ENM",
       "chinese": "K-SHOP BY CJ ENM",
@@ -7225,7 +7269,7 @@
       }
     },
     {
-      "id": "540",
+      "id": "544",
       "category": "食品",
       "english": "이삭토스트",
       "chinese": "ISAAC TOAST",
@@ -7236,7 +7280,7 @@
       }
     },
     {
-      "id": "541",
+      "id": "545",
       "category": "食品",
       "english": "원스인어문",
       "chinese": "원스인어문",
@@ -7247,7 +7291,7 @@
       }
     },
     {
-      "id": "542",
+      "id": "546",
       "category": "食品",
       "english": "금옥당",
       "chinese": "金玉堂",
@@ -7258,7 +7302,7 @@
       }
     },
     {
-      "id": "543",
+      "id": "547",
       "category": "食品",
       "english": "허니버터아몬드",
       "chinese": "蜂蜜黄油杏仁",
@@ -7269,7 +7313,7 @@
       }
     },
     {
-      "id": "544",
+      "id": "548",
       "category": "食品",
       "english": "일동후디스(분유)",
       "chinese": "ILDONG FOODIS（奶粉）",
@@ -7280,7 +7324,7 @@
       }
     },
     {
-      "id": "545",
+      "id": "549",
       "category": "食品",
       "english": "남양유업(분유)",
       "chinese": "南阳乳业",
@@ -7291,7 +7335,7 @@
       }
     },
     {
-      "id": "546",
+      "id": "550",
       "category": "食品",
       "english": "매일유업(분유)",
       "chinese": "매일유업(분유)",
@@ -7302,7 +7346,7 @@
       }
     },
     {
-      "id": "547",
+      "id": "551",
       "category": "食品",
       "english": "만나당",
       "chinese": "MANNADANG",
@@ -7313,7 +7357,7 @@
       }
     },
     {
-      "id": "548",
+      "id": "552",
       "category": "食品",
       "english": "피닉스진생",
       "chinese": "凤凰人参",
@@ -7324,7 +7368,7 @@
       }
     },
     {
-      "id": "549",
+      "id": "553",
       "category": "食品",
       "english": "동원F&B",
       "chinese": "동원F&B",
@@ -7335,7 +7379,7 @@
       }
     },
     {
-      "id": "550",
+      "id": "554",
       "category": "食品",
       "english": "타이거모닝",
       "chinese": "TIGER MORNING",
@@ -7346,7 +7390,7 @@
       }
     },
     {
-      "id": "551",
+      "id": "555",
       "category": "食品",
       "english": "한국식품",
       "chinese": "韩国食品",
@@ -7357,7 +7401,7 @@
       }
     },
     {
-      "id": "552",
+      "id": "556",
       "category": "食品",
       "english": "CENTRUM",
       "chinese": "善存",
@@ -7368,7 +7412,7 @@
       }
     },
     {
-      "id": "553",
+      "id": "557",
       "category": "纪念品",
       "english": "HAESOO.L",
       "chinese": "海秀儿(14K除外)",
@@ -7382,7 +7426,7 @@
       }
     },
     {
-      "id": "554",
+      "id": "558",
       "category": "纪念品",
       "english": "HAESOO.L JEW (14K)",
       "chinese": "海秀儿(14K足金)",
@@ -7396,7 +7440,7 @@
       }
     },
     {
-      "id": "555",
+      "id": "559",
       "category": "纪念品",
       "english": "KAKAO FRIENDS",
       "chinese": "可可朋友",
@@ -7409,7 +7453,7 @@
       }
     },
     {
-      "id": "556",
+      "id": "560",
       "category": "纪念品",
       "english": "PORORO",
       "chinese": "宝露露",
@@ -7422,7 +7466,7 @@
       }
     },
     {
-      "id": "557",
+      "id": "561",
       "category": "纪念品",
       "english": "에이치에스에프",
       "chinese": "HSF",
@@ -7433,7 +7477,7 @@
       }
     },
     {
-      "id": "558",
+      "id": "562",
       "category": "纪念品",
       "english": "주영엔에스",
       "chinese": "JUYEONG NS",
@@ -7444,7 +7488,7 @@
       }
     },
     {
-      "id": "559",
+      "id": "563",
       "category": "纪念品",
       "english": "오설록",
       "chinese": "OSULLOC",
@@ -7456,7 +7500,7 @@
       }
     },
     {
-      "id": "560",
+      "id": "564",
       "category": "纪念品",
       "english": "쎄콩데",
       "chinese": "SECONDAIRE",
@@ -7467,7 +7511,7 @@
       }
     },
     {
-      "id": "561",
+      "id": "565",
       "category": "纪念品",
       "english": "슈퍼말차",
       "chinese": "SUPER MATCHA",
@@ -7478,7 +7522,7 @@
       }
     },
     {
-      "id": "562",
+      "id": "566",
       "category": "纪念品",
       "english": "MONDAY EDITION",
       "chinese": "MONDAY EDITION",
@@ -7490,7 +7534,7 @@
       }
     },
     {
-      "id": "563",
+      "id": "567",
       "category": "纪念品",
       "english": "TANI BY MINETANI",
       "chinese": "TANI BY MINETANI",
@@ -7502,7 +7546,7 @@
       }
     },
     {
-      "id": "564",
+      "id": "568",
       "category": "纪念品",
       "english": "THE PARKJI",
       "chinese": "THE PARKJI",
@@ -7514,7 +7558,7 @@
       }
     },
     {
-      "id": "565",
+      "id": "569",
       "category": "纪念品",
       "english": "누리에",
       "chinese": "NURIE",
@@ -7527,7 +7571,7 @@
       }
     },
     {
-      "id": "566",
+      "id": "570",
       "category": "纪念品",
       "english": "VERGUM MAKING",
       "chinese": "VERGUM MAKING",
@@ -7539,7 +7583,7 @@
       }
     },
     {
-      "id": "567",
+      "id": "571",
       "category": "纪念品",
       "english": "유엠(코스메틱)",
       "chinese": "UM(化妆品)",
@@ -7550,7 +7594,7 @@
       }
     },
     {
-      "id": "568",
+      "id": "572",
       "category": "纪念品",
       "english": "유엠(유아)",
       "chinese": "UM(幼儿用品)",
@@ -7561,7 +7605,7 @@
       }
     },
     {
-      "id": "569",
+      "id": "573",
       "category": "纪念品",
       "english": "유엠(캐릭터)",
       "chinese": "UM(玩具)",
@@ -7573,7 +7617,7 @@
       }
     },
     {
-      "id": "570",
+      "id": "574",
       "category": "电子",
       "english": "DYSON KOREA",
       "chinese": "戴森",
@@ -7589,7 +7633,7 @@
       }
     },
     {
-      "id": "571",
+      "id": "575",
       "category": "电子",
       "english": "AFTER SHOKZ",
       "chinese": "AFTER SHOKZ",
@@ -7600,7 +7644,7 @@
       }
     },
     {
-      "id": "572",
+      "id": "576",
       "category": "电子",
       "english": "BANG&OLUFSEN",
       "chinese": "B&O",
@@ -7613,7 +7657,7 @@
       }
     },
     {
-      "id": "573",
+      "id": "577",
       "category": "电子",
       "english": "BOWERS&WILKINS",
       "chinese": "BOWERS&WILKINS",
@@ -7624,7 +7668,7 @@
       }
     },
     {
-      "id": "574",
+      "id": "578",
       "category": "电子",
       "english": "GOPRO",
       "chinese": "GOPRO",
@@ -7637,7 +7681,7 @@
       }
     },
     {
-      "id": "575",
+      "id": "579",
       "category": "电子",
       "english": "PHILIPS",
       "chinese": "飞利浦",
@@ -7651,7 +7695,7 @@
       }
     },
     {
-      "id": "576",
+      "id": "580",
       "category": "电子",
       "english": "쿠쿠",
       "chinese": "福库",
@@ -7664,7 +7708,7 @@
       }
     },
     {
-      "id": "577",
+      "id": "581",
       "category": "电子",
       "english": "삼성",
       "chinese": "三星",
@@ -7683,7 +7727,7 @@
       }
     },
     {
-      "id": "578",
+      "id": "582",
       "category": "电子",
       "english": "SONY",
       "chinese": "索尼",
@@ -7694,7 +7738,7 @@
       }
     },
     {
-      "id": "579",
+      "id": "583",
       "category": "电子",
       "english": "LG",
       "chinese": "LG",
@@ -7705,7 +7749,7 @@
       }
     },
     {
-      "id": "580",
+      "id": "584",
       "category": "电子",
       "english": "INSTA360",
       "chinese": "INSTA360",
@@ -7716,7 +7760,7 @@
       }
     },
     {
-      "id": "581",
+      "id": "585",
       "category": "电子",
       "english": "골프버디",
       "chinese": "GOLFBUDDY",
@@ -7727,7 +7771,7 @@
       }
     },
     {
-      "id": "582",
+      "id": "586",
       "category": "电子",
       "english": "AFTERSHOKZ",
       "chinese": "AFTERSHOKZ",
@@ -7741,7 +7785,7 @@
       }
     },
     {
-      "id": "583",
+      "id": "587",
       "category": "电子",
       "english": "BOSE",
       "chinese": "BOSE",
@@ -7760,7 +7804,7 @@
       }
     },
     {
-      "id": "584",
+      "id": "588",
       "category": "电子",
       "english": "AUDIO-TECHNICA",
       "chinese": "AUDIO-TECHNICA",
@@ -7772,7 +7816,7 @@
       }
     },
     {
-      "id": "585",
+      "id": "589",
       "category": "电子",
       "english": "FUJI",
       "chinese": "富士",
@@ -7785,7 +7829,7 @@
       }
     },
     {
-      "id": "586",
+      "id": "590",
       "category": "电子",
       "english": "니블스",
       "chinese": "NIBBLES",
@@ -7796,7 +7840,7 @@
       }
     },
     {
-      "id": "587",
+      "id": "591",
       "category": "电子",
       "english": "PANASONIC",
       "chinese": "松下",
@@ -7809,7 +7853,7 @@
       }
     },
     {
-      "id": "588",
+      "id": "592",
       "category": "电子",
       "english": "선경DFS ACC(국산)",
       "chinese": "선경DFS ACC(本土)",
@@ -7820,7 +7864,7 @@
       }
     },
     {
-      "id": "589",
+      "id": "593",
       "category": "电子",
       "english": "풀리오",
       "chinese": "PULIO",
