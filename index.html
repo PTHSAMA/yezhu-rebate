@@ -1310,6 +1310,20 @@ button {
 @media(max-width:850px){#diorBookingPage .db-layout{grid-template-columns:1fr}#diorBookingPage .db-order-list{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){#diorBookingPage{padding:12px 10px 45px}#diorBookingPage .db-top{padding:15px}#diorBookingPage h1{font-size:22px}#diorBookingPage .db-summary{grid-template-columns:repeat(2,minmax(0,1fr))}#diorBookingPage .db-panel{padding:14px}#diorBookingPage .db-slots{grid-template-columns:repeat(3,minmax(0,1fr))}#diorBookingPage .db-order-list{grid-template-columns:1fr}#diorBookingPage .db-form-grid{gap:10px}}
 
+/* 迪奥黑五：柜哥整日休班，沿用 dior_bf_schedule 的日期停约 */
+#diorBookingPage .db-off-panel{border-color:#ded3f2;background:linear-gradient(145deg,#fff,#fcf9ff 65%,#f7fbff)}
+#diorBookingPage .db-off-help{font-size:12px;color:#776985;line-height:1.7;margin:-5px 0 13px}
+#diorBookingPage .db-off-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+#diorBookingPage .db-off-tools .db-primary{flex:1;min-width:180px}
+#diorBookingPage .db-off-message{display:none;font-size:12px;border-radius:9px;padding:9px 10px;margin-top:10px;color:#266749;background:#eaf9f0;border:1px solid #c4ead4;line-height:1.5}
+#diorBookingPage .db-off-message.bad{color:#a13c52;background:#fff1f3;border-color:#f4ccd5}
+#diorBookingPage .db-off-list{display:grid;gap:8px;max-height:300px;overflow:auto;margin-top:10px}
+#diorBookingPage .db-off-item{padding:10px 11px;border:1px solid #e8ddf3;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#diorBookingPage .db-off-item strong{font-size:13px;color:#513d70}
+#diorBookingPage .db-off-item button{border:1px solid #f1d4df;background:#fff5f8;color:#a04663;border-radius:9px;min-height:36px;padding:7px 11px;font-weight:700;cursor:pointer;flex-shrink:0}
+#diorBookingPage .db-off-item button:disabled{opacity:.5;cursor:wait}
+#diorBookingPage .db-off-empty{padding:13px;border-radius:11px;background:#f7f4fa;color:#85778b;font-size:13px}
+
 </style>
 
 </head>
@@ -1421,6 +1435,17 @@ button {
         <div id="dbSlots" class="db-slots"></div>
         <div class="db-legend"><span><span class="db-dot"></span>可预约</span><span><span class="db-dot pink"></span>已被预约</span><span><span class="db-dot grey"></span>职员休息 / 不可接待</span></div>
         <div class="db-schedule-list"><strong style="font-size:13px">当天预约</strong><div id="dbDayBookings"></div></div>
+      </section>
+      <section class="db-panel db-off-panel" aria-label="柜哥休班日期管理">
+        <div class="db-panel-head"><h2>💤 柜哥休班日期</h2><span class="db-chip">全天停止预约 · 员工同步</span></div>
+        <p class="db-off-help">直接选择柜哥不上班的日期；可设置单日或连续多日。休班当天的半小时名额将全部关闭。已有客人预约的日期不能直接设为休班，需先调整预约。</p>
+        <div class="db-form-grid">
+          <div class="db-field"><label class="db-label" for="dbStaffOffStart">休班开始日期 <span style="color:#ca6685">*</span></label><input id="dbStaffOffStart" class="db-input" type="date"></div>
+          <div class="db-field"><label class="db-label" for="dbStaffOffEnd">休班结束日期（可不填）</label><input id="dbStaffOffEnd" class="db-input" type="date"></div>
+        </div>
+        <div class="db-off-tools"><button type="button" class="db-primary" id="dbSaveStaffOff">＋ 保存休班日期</button><button type="button" class="db-secondary" id="dbOffUseSelected">使用当前选中日期</button></div>
+        <div id="dbStaffOffMessage" class="db-off-message" role="status" aria-live="polite"></div>
+        <div class="db-schedule-list"><strong style="font-size:13px">已设置的休班 / 停约日期（<span id="dbStaffOffCount">0</span> 天）</strong><div id="dbStaffOffList" class="db-off-list"><div class="db-off-empty">正在读取日期…</div></div></div>
       </section>
       <section class="db-panel" aria-label="营业时间与员工休息时间设置">
         <div class="db-panel-head"><h2>⏰ 营业 / 员工休息排班</h2><button type="button" class="db-section-toggle" id="dbScheduleToggle">展开设置 ▾</button></div>
@@ -8976,7 +9001,7 @@ function renderDay(){
  if(!$('dbDay').value)$('dbDay').value=state.day;
  const schedule=scheduleFor(state.day),slots=slotArray(state.day),desc=$('dbScheduleDesc'),wrapper=$('dbSlots');
  if(!schedule){desc.textContent='⚠️ 尚未设置营业时间。请展开下方「营业 / 员工休息排班」，先保存通用每日排班或当天排班。';}
- else if(schedule.is_closed){desc.textContent='今天设置为停止接待。';}
+ else if(schedule.is_closed){desc.textContent='💤 '+state.day+' 柜哥休班 / 全天停止接待，无法安排自提。可在下方「柜哥休班日期」恢复接待。';}
  else{desc.textContent=`${tm(schedule.open_time)}–${tm(schedule.close_time)} · ${state.schedules.has(state.day)?'当天专属排班':'通用排班'} · 可预约 ${slots.filter(s=>!s.rest&&!s.booked).length} / ${slots.length} 个时段`}
  wrapper.replaceChildren();
  slots.forEach(slot=>{
@@ -9035,7 +9060,79 @@ function renderOrders(){
   box.appendChild(article);
  });
 }
-function renderEverything(){renderStats();renderFormTimes();renderDay();renderOrders();}
+function renderStaffOffDays(){
+ const rows=[...state.schedules.values()].filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x.day_key)&&x.is_closed).sort((a,b)=>a.day_key.localeCompare(b.day_key));
+ $('dbStaffOffCount').textContent=String(rows.length);
+ const list=$('dbStaffOffList');list.replaceChildren();
+ if(!rows.length){list.innerHTML='<div class="db-off-empty">暂无休班日期。选择日期并点击「保存休班日期」。</div>';return;}
+ rows.forEach(row=>{
+  const el=document.createElement('div');el.className='db-off-item';
+  const label=document.createElement('strong');label.textContent='📅 '+row.day_key+' · 不接待';
+  const remove=document.createElement('button');remove.type='button';remove.textContent='恢复接待';
+  remove.addEventListener('click',()=>restoreStaffOffDay(row.day_key,remove));
+  el.append(label,remove);list.appendChild(el);
+ });
+}
+function offMessage(text,bad=false){const el=$('dbStaffOffMessage');el.textContent=text;el.classList.toggle('bad',bad);el.style.display='block';}
+function offDates(start,end){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(start)||!/^\d{4}-\d{2}-\d{2}$/.test(end))throw Error('请选择正确的休班日期。');
+ if(end<start)throw Error('结束日期不能早于开始日期。');
+ const list=[];for(let d=start;d<=end;d=shiftDate(d,1)){
+  if(list.length>=90)throw Error('一次最多设置连续90天休班，请分批添加。');
+  list.push(d);
+ }
+ return list;
+}
+async function saveStaffOffDays(){
+ if(!state.ready){offMessage('请先成功同步预约数据后再设置休班。',true);return;}
+ const start=$('dbStaffOffStart').value,end=$('dbStaffOffEnd').value||start;
+ let days;try{days=offDates(start,end);}catch(e){offMessage(e.message,true);return;}
+ if(days.length>=7&&!confirm('将 '+days.length+' 天设置为柜哥整日休班？这些日期均无法安排客户自提。'))return;
+ const button=$('dbSaveStaffOff');button.disabled=true;button.textContent='正在保存休班…';
+ try{
+  // 使用数据库最新预约校验，避免在已有预约日期误设休班。
+  const {data:bookings,error:bookError}=await supabaseClient.from(TABLE)
+   .select('wechat_name,pickup_date,pickup_time,status').gte('pickup_date',start).lte('pickup_date',end).in('status',ACTIVE);
+  if(bookError)throw bookError;
+  const conflict=(bookings||[]).find(x=>days.includes(x.pickup_date));
+  if(conflict)throw Error(conflict.pickup_date+' '+tm(conflict.pickup_time)+' 已有「'+conflict.wechat_name+'」预约；请先调整该客人的预约时间。');
+  const {data:live,error:scheErr}=await supabaseClient.from(SCHEDULE_TABLE).select('*').in('day_key',days);
+  if(scheErr)throw scheErr;
+  const liveMap=new Map((live||[]).map(r=>[r.day_key,r]));
+  const payloads=days.map(day=>{
+   const before=liveMap.get(day);
+   return {day_key:day,open_time:before?.open_time||null,close_time:before?.close_time||null,
+    breaks:Array.isArray(before?.breaks)?before.breaks:[],is_closed:true,updated_at:new Date().toISOString()};
+  });
+  const {error}=await supabaseClient.from(SCHEDULE_TABLE).upsert(payloads,{onConflict:'day_key'});
+  if(error)throw error;
+  $('dbStaffOffEnd').value='';
+  await loadAll(true);
+  if($('dbScheduleEditor').style.display!=='none')loadScheduleEditor();
+  offMessage('已保存 '+days.length+' 天休班，相关日期已停止预约，其他员工可同步查看。');
+ }catch(e){offMessage('休班日期保存失败：'+(e.message||String(e)),true);}
+ finally{button.disabled=false;button.textContent='＋ 保存休班日期';}
+}
+async function restoreStaffOffDay(date,button){
+ if(!confirm('恢复 '+date+' 的客户预约接待？'))return;
+ button.disabled=true;
+ try{
+  const {data,error}=await supabaseClient.from(SCHEDULE_TABLE).select('*').eq('day_key',date).maybeSingle();
+  if(error)throw error;
+  if(!data||!data.is_closed){await loadAll(true);offMessage('该日期已被其他员工调整，请以最新排班为准。');return;}
+  // 没有单日营业参数时，删除休班覆盖，自动恢复通用每日排班。
+  const hasOwnHours=Boolean(data.open_time&&data.close_time);
+  const result=hasOwnHours
+   ?await supabaseClient.from(SCHEDULE_TABLE).update({is_closed:false,updated_at:new Date().toISOString()}).eq('day_key',date)
+   :await supabaseClient.from(SCHEDULE_TABLE).delete().eq('day_key',date);
+  if(result.error)throw result.error;
+  await loadAll(true);
+  if($('dbScheduleEditor').style.display!=='none')loadScheduleEditor();
+  offMessage(date+' 已取消休班'+(hasOwnHours?'，恢复当天专属排班。':'，恢复通用每日排班。'));
+ }catch(e){offMessage('恢复接待失败：'+(e.message||String(e)),true)}
+ finally{button.disabled=false;}
+}
+function renderEverything(){renderStats();renderFormTimes();renderDay();renderOrders();renderStaffOffDays();}
 async function loadAll(silent=false){
  if(state.loading)return;
  if(typeof supabaseClient==='undefined'){dbMsg('未找到 Supabase 客户端，请确认员工端已完整加载。',true);return;}
@@ -9209,7 +9306,10 @@ $('dbScheduleScope').addEventListener('change',loadScheduleEditor);
 $('dbAddBreak').addEventListener('click',()=>addBreakRow());
 $('dbSaveSchedule').addEventListener('click',saveSchedule);
 $('dbRemoveDaySchedule').addEventListener('click',removeDaySchedule);
-state.day=todayKST();$('dbDay').value=state.day;$('dbPickupDate').value=state.day;resetForm();
+$('dbSaveStaffOff').addEventListener('click',saveStaffOffDays);
+$('dbOffUseSelected').addEventListener('click',()=>{$('dbStaffOffStart').value=state.day;$('dbStaffOffEnd').value='';offMessage('已选取 '+state.day+'，点击「保存休班日期」即可设置整天休班。');});
+
+state.day=todayKST();$('dbDay').value=state.day;$('dbPickupDate').value=state.day;$('dbStaffOffStart').value=state.day;resetForm();
 // 网页打开时，以及其他员工可能修改后，展示期间定时同步。
 setInterval(()=>{if($('diorBookingPage').style.display!=='none'&&state.ready&&!state.editId&&document.visibilityState==='visible')loadAll(true);},45000);
 })();
