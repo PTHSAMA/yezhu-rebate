@@ -1225,6 +1225,91 @@ button {
 .pickup-modal-actions{display:flex;gap:10px;margin-top:16px}.pickup-modal-actions button{flex:1;min-height:46px;height:auto;border-radius:12px;padding:10px;font-weight:700}
 .pickup-modal-later{background:#eceaf4;color:#554c60}.pickup-modal-go{background:linear-gradient(100deg,#f5c4db,#d7d1ff,#c9eaff);color:#33294c}
 
+
+/* ============ 迪奥黑五 · 独立预约管理屏幕 ============ */
+#diorBookingPage{max-width:1160px;width:100%;margin:0 auto;padding:18px 16px 65px;color:#302a3d;font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+#diorBookingPage *{box-sizing:border-box}
+#diorBookingPage .db-top{background:linear-gradient(118deg,#ffdeea,#ffeed4 36%,#e6e7ff 71%,#ddecff);border:1px solid #e8dbeb;border-radius:22px;padding:19px 22px;box-shadow:0 8px 25px #7c659916;margin-bottom:18px}
+#diorBookingPage .db-topline{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+#diorBookingPage h1{font-size:25px;line-height:1.3;margin:10px 0 5px;font-weight:900;color:#3f2c55}
+#diorBookingPage h2{font-size:18px;margin:0;color:#463356}
+#diorBookingPage p.db-sub{font-size:13px;color:#806c82;margin:0;line-height:1.6}
+#diorBookingPage .db-back,#diorBookingPage .db-refresh{border:1px solid #dfd3ea;background:#fffcff;border-radius:11px;padding:10px 13px;color:#4f3f62;font-weight:750;cursor:pointer;min-height:40px}
+#diorBookingPage .db-top-actions{display:flex;gap:7px;align-items:center}
+#diorBookingPage .db-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-bottom:17px}
+#diorBookingPage .db-metric{background:#fff;border:1px solid #eee3ef;border-radius:16px;padding:14px 15px;box-shadow:0 3px 15px #5b4a780b}
+#diorBookingPage .db-metric:nth-child(1){background:linear-gradient(145deg,#fff5f9,#fff)}
+#diorBookingPage .db-metric:nth-child(2){background:linear-gradient(145deg,#f4f0ff,#fff)}
+#diorBookingPage .db-metric:nth-child(3){background:linear-gradient(145deg,#eef9ff,#fff)}
+#diorBookingPage .db-metric:nth-child(4){background:linear-gradient(145deg,#f1faf2,#fff)}
+#diorBookingPage .db-metric small{font-size:12px;color:#706679;font-weight:650}
+#diorBookingPage .db-metric b{display:block;font-size:28px;margin-top:5px;line-height:1.2;color:#3a2f51;font-variant-numeric:tabular-nums}
+#diorBookingPage .db-layout{display:grid;grid-template-columns:minmax(320px,.87fr) minmax(360px,1.13fr);align-items:start;gap:15px}
+#diorBookingPage .db-panel{background:rgba(255,255,255,.97);border:1px solid #eae1ef;border-radius:20px;padding:18px;box-shadow:0 5px 18px #594c7810;margin-bottom:16px}
+#diorBookingPage .db-panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+#diorBookingPage .db-help{font-size:12px;color:#777081;line-height:1.6;margin-top:5px}
+#diorBookingPage .db-label{display:block;font-size:13px;font-weight:750;color:#564b64;margin-bottom:6px}
+#diorBookingPage .db-input,#diorBookingPage .db-select,#diorBookingPage .db-textarea{width:100%;min-width:0;border-radius:11px;border:1px solid #dbd7e5;background:white;color:#292538;padding:10px 12px;font-family:inherit;font-size:15px;outline:none}
+#diorBookingPage .db-input,#diorBookingPage .db-select{min-height:44px}
+#diorBookingPage .db-textarea{min-height:80px;resize:vertical}
+#diorBookingPage .db-input:focus,#diorBookingPage .db-select:focus,#diorBookingPage .db-textarea:focus{border-color:#bd9cd5;box-shadow:0 0 0 3px #d8c4ea55}
+#diorBookingPage .db-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#diorBookingPage .db-span-all{grid-column:1/-1}
+#diorBookingPage .db-field{min-width:0}
+#diorBookingPage .db-kind{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+#diorBookingPage .db-kind button{min-height:48px;padding:8px;border-radius:12px;background:#f5f3fa;border:1px solid #e7dfee;color:#71627e;cursor:pointer;font-weight:800;font-size:13px}
+#diorBookingPage .db-kind button.is-selected{background:linear-gradient(105deg,#f9cddd,#e2d6ff);color:#433254;border-color:#ddc2eb;box-shadow:0 3px 12px #b9a1ce27}
+#diorBookingPage .db-actions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}
+#diorBookingPage .db-primary{border:0;background:linear-gradient(105deg,#f3c5dd,#d9d6ff 60%,#cceafd);color:#322a46;font-weight:850;border-radius:12px;padding:12px 15px;min-height:46px;cursor:pointer;flex:1}
+#diorBookingPage .db-secondary{border:1px solid #e3dfea;background:#f5f2f9;color:#685975;border-radius:12px;padding:10px 14px;font-weight:700;min-height:44px;cursor:pointer}
+#diorBookingPage button:disabled{opacity:.55;cursor:not-allowed}
+#diorBookingPage .db-tip{color:#6c5b7c;background:#f8f5fe;border:1px solid #ece3f5;padding:9px 11px;font-size:12px;border-radius:11px;line-height:1.6;margin-top:11px}
+#diorBookingPage .db-alert{padding:11px 14px;border-radius:12px;margin-bottom:15px;border:1px solid #c9e4da;background:#f3fcf7;color:#275748;font-size:13px;display:none;line-height:1.6}
+#diorBookingPage .db-alert.bad{background:#fff4f5;border-color:#f2c3cd;color:#ad334e}
+#diorBookingPage .db-day-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+#diorBookingPage .db-day-nav .db-input{width:auto;min-width:170px;flex:1}
+#diorBookingPage .db-small-btn{border:1px solid #e3dcea;border-radius:10px;padding:8px 10px;min-height:40px;background:#f6f3fa;color:#544864;cursor:pointer;font-weight:700}
+#diorBookingPage .db-slots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:13px 0}
+#diorBookingPage .db-slot{border:1px solid #d9e9dd;background:linear-gradient(160deg,#f3fdf7,#fff);color:#296b4b;border-radius:13px;min-height:57px;padding:8px 5px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;font-variant-numeric:tabular-nums;font-weight:800;font-size:15px}
+#diorBookingPage .db-slot small{font-size:11px;font-weight:600}
+#diorBookingPage .db-slot.is-active{border:2px solid #9a75ca;background:#f2ecff;color:#58387f}
+#diorBookingPage .db-slot.is-taken{border-color:#f1d2dc;background:#fff4f7;color:#ab5169;cursor:not-allowed}
+#diorBookingPage .db-slot.is-break{border-color:#e7e2ed;background:#f1eff6;color:#978a9f;cursor:not-allowed}
+#diorBookingPage .db-slot.is-own{border-color:#c3b8e9;background:#f0eeff;color:#655095}
+#diorBookingPage .db-legend{font-size:12px;color:#85788b;display:flex;gap:13px;flex-wrap:wrap}
+#diorBookingPage .db-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle;background:#8edeb0}
+#diorBookingPage .db-dot.pink{background:#efabbf}
+#diorBookingPage .db-dot.grey{background:#d8d3de}
+#diorBookingPage .db-schedule-list{margin-top:13px;border-top:1px dashed #e9e1eb;padding-top:12px}
+#diorBookingPage .db-day-booking{padding:9px 2px;font-size:13px;border-bottom:1px solid #f1eef3;display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}
+#diorBookingPage .db-chip{display:inline-block;border-radius:999px;font-size:11px;padding:4px 9px;background:#eee9fb;color:#6a527f;font-weight:700}
+#diorBookingPage .db-chip.deposit{background:#fff0f6;color:#a04f73}
+#diorBookingPage .db-chip.pickup{background:#eaf9f1;color:#31795a}
+#diorBookingPage .db-chip.cancel{background:#f2f1f4;color:#8f8898}
+#diorBookingPage .db-chip.done{background:#eaf2fc;color:#50769a}
+#diorBookingPage .db-section-toggle{border:0;background:transparent;color:#60517a;font-weight:800;cursor:pointer;font-size:13px}
+#diorBookingPage .db-break-row{display:flex;gap:7px;align-items:center;margin-bottom:9px}
+#diorBookingPage .db-break-row input{min-width:0;flex:1}
+#diorBookingPage .db-break-row button{padding:8px 11px;min-height:40px;background:#fff1f4;color:#b55a74;border-radius:10px;border:0;cursor:pointer}
+#diorBookingPage .db-checkline{display:flex;gap:8px;align-items:center;font-size:13px;margin:10px 0}
+#diorBookingPage .db-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+#diorBookingPage .db-filter-btn{border:1px solid #e7dfe9;background:#f7f5fb;color:#776b82;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;padding:9px 11px}
+#diorBookingPage .db-filter-btn.active{background:#4c405a;color:#fff;border-color:#4c405a}
+#diorBookingPage .db-order-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#diorBookingPage .db-order{border:1px solid #e7e2eb;border-radius:15px;padding:13px;background:#fff;display:grid;gap:8px;min-width:0}
+#diorBookingPage .db-order-head{display:flex;justify-content:space-between;gap:9px;align-items:start}
+#diorBookingPage .db-order-title{font-size:17px;font-weight:850;color:#352b41;word-break:break-word}
+#diorBookingPage .db-order-sub{font-size:12px;color:#766c7d;line-height:1.6;overflow-wrap:anywhere}
+#diorBookingPage .db-order-actions{display:flex;gap:6px;flex-wrap:wrap}
+#diorBookingPage .db-order-actions button{border:1px solid #e8dfef;background:#f9f7fc;border-radius:9px;color:#5a4a6b;padding:8px 10px;cursor:pointer;font-size:12px;font-weight:700}
+#diorBookingPage .db-order-actions button.go{background:#ecf9f2;color:#307657;border-color:#c9e8d8}
+#diorBookingPage .db-order-actions button.cancel{background:#fff4f5;color:#b04462;border-color:#f0d5de}
+#diorBookingPage .db-muted{font-size:13px;color:#857a8c;line-height:1.7}
+#diorBookingPage .db-list-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+#diorBookingPage .db-list-tools input{flex:1;min-width:210px}
+@media(max-width:850px){#diorBookingPage .db-layout{grid-template-columns:1fr}#diorBookingPage .db-order-list{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){#diorBookingPage{padding:12px 10px 45px}#diorBookingPage .db-top{padding:15px}#diorBookingPage h1{font-size:22px}#diorBookingPage .db-summary{grid-template-columns:repeat(2,minmax(0,1fr))}#diorBookingPage .db-panel{padding:14px}#diorBookingPage .db-slots{grid-template-columns:repeat(3,minmax(0,1fr))}#diorBookingPage .db-order-list{grid-template-columns:1fr}#diorBookingPage .db-form-grid{gap:10px}}
+
 </style>
 
 </head>
@@ -1254,6 +1339,11 @@ button {
         <div class="menu-card-desc">按客户微信名、品牌、店铺和日期查看所有员工共享的销售订单</div>
     </button>
 
+    <button class="menu-card" id="openDiorBookingButton">
+        <div class="menu-card-title">🎀 迪奥黑五预约管理</div>
+        <div class="menu-card-desc">定金留名额 / 确认自提 · 每半小时一个名额 · 排除员工休息时段</div>
+    </button>
+
     <button class="menu-card" id="openGraffButton">
         <div class="menu-card-title">💎 GRAFF 客户意向</div>
         <div class="menu-card-desc">查看每天更新的客户需求、参数和跟进备注</div>
@@ -1278,6 +1368,90 @@ button {
         <div class="order-count-badge" id="homeOrderSummary">正在读取待下单任务...</div>
     </button>
 
+</div>
+
+<!-- 迪奥黑五：独立预约管理页面；复用员工端 Supabase 客户端 -->
+<div id="diorBookingPage" class="page-screen" style="display:none">
+  <div class="db-top">
+    <div class="db-topline">
+      <button type="button" class="db-back" id="dbBack">← 返回员工首页</button>
+      <div class="db-top-actions"><button type="button" class="db-refresh" id="dbRefresh">↻ 同步预约</button></div>
+    </div>
+    <h1>🛍️ 迪奥黑五预约名单</h1>
+    <p class="db-sub">定金客户留名额 · 确认自提排时段 · 每30分钟最多接待1位客人 · 排除员工休息时间</p>
+  </div>
+  <div id="dbAlert" class="db-alert" role="status" aria-live="polite"></div>
+  <div class="db-summary">
+    <div class="db-metric"><small>💗 定金留名额（待约）</small><b id="dbStatDeposits">—</b></div>
+    <div class="db-metric"><small>💜 已确认自提</small><b id="dbStatConfirmed">—</b></div>
+    <div class="db-metric"><small>📅 选定日期已约</small><b id="dbStatDay">—</b></div>
+    <div class="db-metric"><small>✅ 已提货</small><b id="dbStatDone">—</b></div>
+  </div>
+  <div class="db-layout">
+    <div>
+      <section class="db-panel" aria-label="新增或编辑预约">
+        <div class="db-panel-head"><h2 id="dbFormTitle">＋ 新增预约客户</h2><button type="button" class="db-small-btn" id="dbResetForm">清空</button></div>
+        <div class="db-kind">
+          <button type="button" id="dbKindDeposit" class="is-selected" aria-pressed="true">💗 定金留名额</button>
+          <button type="button" id="dbKindPickup" aria-pressed="false">📅 确认时间自提</button>
+        </div>
+        <form id="dbBookingForm" autocomplete="off">
+          <div class="db-form-grid">
+            <div class="db-field"><label class="db-label" for="dbWechat">微信昵称 <span style="color:#ce6682">*</span></label><input class="db-input" id="dbWechat" placeholder="以微信名识别客人" required maxlength="120"></div>
+            <div class="db-field"><label class="db-label" for="dbCustomerName">客人姓名</label><input class="db-input" id="dbCustomerName" placeholder="可选" maxlength="120"></div>
+            <div class="db-field db-span-all"><label class="db-label" for="dbProduct">预约商品 / 型号</label><input class="db-input" id="dbProduct" placeholder="例如：迷你戴妃粉色 × 1" maxlength="500"></div>
+            <div class="db-field"><label class="db-label" for="dbDeposit">已收定金</label><input class="db-input" id="dbDeposit" type="number" min="0" step="0.01" placeholder="0"></div>
+            <div class="db-field"><label class="db-label" for="dbDepositCurrency">定金币种</label><select class="db-select" id="dbDepositCurrency"><option value="CNY">人民币 ¥</option><option value="KRW">韩币 ₩</option></select></div>
+            <div class="db-field"><label class="db-label" for="dbStaff">跟进职员</label><input class="db-input" id="dbStaff" placeholder="负责接待的员工" maxlength="120"></div>
+            <div class="db-field" id="dbStatusField"><label class="db-label" for="dbStatus">预约状态</label><select class="db-select" id="dbStatus"><option value="定金留名额">定金留名额</option><option value="已取消">已取消</option></select></div>
+            <div class="db-field" id="dbPickupDateField" style="display:none"><label class="db-label" for="dbPickupDate">自提日期 <span style="color:#ce6682">*</span></label><input class="db-input" id="dbPickupDate" type="date"></div>
+            <div class="db-field" id="dbPickupTimeField" style="display:none"><label class="db-label" for="dbPickupTime">入场时间 <span style="color:#ce6682">*</span></label><select class="db-select" id="dbPickupTime"><option value="">请先选择日期</option></select></div>
+            <div class="db-field db-span-all"><label class="db-label" for="dbRemarks">订单备注</label><textarea class="db-textarea" id="dbRemarks" placeholder="包款颜色、付款情况、客人特殊要求……" maxlength="2000"></textarea></div>
+          </div>
+          <div class="db-tip" id="dbFormTip">先收定金、暂不确定自提时间的客户不会占用30分钟预约名额。确认日期后可在名单里点「安排自提」。</div>
+          <div class="db-actions"><button type="submit" class="db-primary" id="dbSave">保存预约</button><button type="button" class="db-secondary" id="dbCancelEdit" style="display:none">取消编辑</button></div>
+        </form>
+      </section>
+    </div>
+    <div>
+      <section class="db-panel" aria-label="每日时段预约表">
+        <div class="db-panel-head"><h2>🗓️ 预约时段表</h2><span class="db-chip">1人 / 30分钟</span></div>
+        <div class="db-day-nav"><button type="button" class="db-small-btn" id="dbPrevDay">‹ 前一天</button><input class="db-input" type="date" id="dbDay"><button type="button" class="db-small-btn" id="dbNextDay">后一天 ›</button><button type="button" class="db-small-btn" id="dbToday">今天</button></div>
+        <div id="dbScheduleDesc" class="db-help">正在读取排班设置...</div>
+        <div id="dbSlots" class="db-slots"></div>
+        <div class="db-legend"><span><span class="db-dot"></span>可预约</span><span><span class="db-dot pink"></span>已被预约</span><span><span class="db-dot grey"></span>职员休息 / 不可接待</span></div>
+        <div class="db-schedule-list"><strong style="font-size:13px">当天预约</strong><div id="dbDayBookings"></div></div>
+      </section>
+      <section class="db-panel" aria-label="营业时间与员工休息时间设置">
+        <div class="db-panel-head"><h2>⏰ 营业 / 员工休息排班</h2><button type="button" class="db-section-toggle" id="dbScheduleToggle">展开设置 ▾</button></div>
+        <div class="db-help">可设置所有日期通用的营业与休息时间，也可单独调整某一天。尚未设置营业时间的日期无法确认自提预约。</div>
+        <div id="dbScheduleEditor" style="display:none;margin-top:14px">
+          <div class="db-field" style="margin-bottom:11px"><label class="db-label" for="dbScheduleScope">设置范围</label><select class="db-select" id="dbScheduleScope"><option value="default">通用每日排班</option><option value="day">覆盖当前选中日期</option></select></div>
+          <div class="db-form-grid">
+            <div class="db-field"><label class="db-label" for="dbOpenTime">开始接待</label><input class="db-input" type="time" step="1800" id="dbOpenTime"></div>
+            <div class="db-field"><label class="db-label" for="dbCloseTime">结束接待</label><input class="db-input" type="time" step="1800" id="dbCloseTime"></div>
+          </div>
+          <label class="db-checkline"><input type="checkbox" id="dbClosed" style="width:18px;height:18px"> 该日停止接待（仅适用于指定日期）</label>
+          <div class="db-field"><label class="db-label">职员休息 / 禁止预约时段</label><div id="dbBreakRows"></div><button type="button" id="dbAddBreak" class="db-small-btn">＋ 增加休息时间</button></div>
+          <div class="db-tip">例如：12:00–13:00、16:00–16:30。任何与休息时间重叠的半小时都无法预约。已预约的时段不能直接改成休息时间。</div>
+          <div class="db-actions"><button type="button" class="db-primary" id="dbSaveSchedule">保存排班（员工共享）</button><button type="button" class="db-secondary" id="dbRemoveDaySchedule" style="display:none">恢复通用排班</button></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <section class="db-panel" aria-label="迪奥黑五预约名单">
+    <div class="db-panel-head"><h2>📒 客人预约名单</h2><span id="dbCountCaption" class="db-muted"></span></div>
+    <div class="db-filters">
+      <button type="button" class="db-filter-btn active" data-db-filter="deposit">💗 定金留名额</button>
+      <button type="button" class="db-filter-btn" data-db-filter="pickup">📅 已确认时间自提</button>
+      <button type="button" class="db-filter-btn" data-db-filter="done">✅ 已提货</button>
+      <button type="button" class="db-filter-btn" data-db-filter="cancel">已取消</button>
+      <button type="button" class="db-filter-btn" data-db-filter="all">全部订单</button>
+    </div>
+    <div class="db-list-tools"><input class="db-input" id="dbSearch" placeholder="搜索微信昵称、客人姓名、商品或职员"><button type="button" class="db-small-btn" id="dbListRefresh">刷新</button></div>
+    <div id="dbOrders" class="db-order-list"><div class="db-muted">正在加载...</div></div>
+    <div class="db-help" style="margin-top:12px">定金留名额不占预约时段；确认自提后占用一个半小时内的唯一入场名额。取消订单会释放名额。</div>
+  </section>
 </div>
 
 <div id="adminLoginMask" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:9999;align-items:center;justify-content:center;padding:18px;">
@@ -8716,6 +8890,331 @@ setInterval(
 setTimeout(()=>{graffCheckPickupOnHome();},0);
 </script>
 
+<script>
+/* 迪奥黑五预约管理：独立于 GRAFF / 返点数据，使用已有 Supabase 客户端。 */
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const TABLE='dior_bf_bookings', SCHEDULE_TABLE='dior_bf_schedule';
+const state={orders:[],schedules:new Map(),day:'',kind:'deposit',editId:null,filter:'deposit',ready:false,loading:false};
+const ACTIVE=['确认时间自提','已提货'];
+const SAFE_TYPE={deposit:['定金留名额','已取消'],pickup:['确认时间自提','已提货','已取消']};
+const txt=v=>String(v??'');
+const esc=v=>txt(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function todayKST(){return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
+function shiftDate(date,d){let x=new Date(date+'T12:00:00Z');x.setUTCDate(x.getUTCDate()+d);return x.toISOString().slice(0,10);}
+function minutes(v){const m=/^(\d{2}):(\d{2})/.exec(txt(v));if(!m)return NaN;const a=+m[1],b=+m[2];return a<24&&b<60?a*60+b:NaN;}
+function clock(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');}
+function tm(v){return txt(v).slice(0,5);}
+function isActive(o){return ACTIVE.includes(o.status)&&o.pickup_date&&o.pickup_time;}
+function dbMsg(message,bad=false){const el=$('dbAlert');el.textContent=message;el.style.display='block';el.classList.toggle('bad',bad);}
+function removeMsg(){$('dbAlert').style.display='none';}
+function statusChip(o){if(o.status==='已取消')return 'cancel';if(o.status==='已提货')return 'done';return o.kind==='deposit'?'deposit':'pickup';}
+async function fetchAll(table,columns='*'){
+ const result=[];for(let start=0;start<10000;start+=1000){
+  const {data,error}=await supabaseClient.from(table).select(columns).range(start,start+999);
+  if(error)throw error;result.push(...(data||[]));if(!data||data.length<1000)break;
+ }return result;
+}
+function scheduleFor(date){return state.schedules.get(date)||state.schedules.get('default')||null;}
+function slotArray(date,settings=scheduleFor(date)){
+ if(!settings||settings.is_closed)return [];
+ const open=minutes(settings.open_time),close=minutes(settings.close_time);
+ if(!Number.isFinite(open)||!Number.isFinite(close)||open>=close||open%30||close%30)return [];
+ const breaks=Array.isArray(settings.breaks)?settings.breaks:[];
+ const taken=new Map();state.orders.filter(o=>o.pickup_date===date&&isActive(o)).forEach(o=>taken.set(tm(o.pickup_time),o));
+ const slots=[];
+ for(let t=open;t+30<=close;t+=30){
+  const inBreak=breaks.some(b=>t<minutes(b.end)&&t+30>minutes(b.start));
+  const time=clock(t);slots.push({time,rest:inBreak,booked:taken.get(time)||null});
+ }return slots;
+}
+function validSlot(date,time,excludeId){
+ const slots=slotArray(date);return slots.some(x=>x.time===time&&!x.rest&&(!x.booked||x.booked.id===excludeId));
+}
+function dayOrders(date){return state.orders.filter(o=>o.pickup_date===date&&isActive(o)).sort((a,b)=>tm(a.pickup_time).localeCompare(tm(b.pickup_time)));}
+function renderStats(){
+ $('dbStatDeposits').textContent=state.orders.filter(o=>o.status==='定金留名额').length;
+ $('dbStatConfirmed').textContent=state.orders.filter(o=>o.status==='确认时间自提').length;
+ $('dbStatDay').textContent=dayOrders(state.day).length;
+ $('dbStatDone').textContent=state.orders.filter(o=>o.status==='已提货').length;
+}
+function setKind(kind,changeStatus=true){
+ state.kind=kind;
+ $('dbKindDeposit').classList.toggle('is-selected',kind==='deposit');
+ $('dbKindPickup').classList.toggle('is-selected',kind==='pickup');
+ $('dbKindDeposit').setAttribute('aria-pressed',String(kind==='deposit'));
+ $('dbKindPickup').setAttribute('aria-pressed',String(kind==='pickup'));
+ $('dbPickupDateField').style.display=kind==='pickup'?'block':'none';
+ $('dbPickupTimeField').style.display=kind==='pickup'?'block':'none';
+ const before=changeStatus?'':$('dbStatus').value;
+ const list=SAFE_TYPE[kind];$('dbStatus').replaceChildren();
+ list.forEach(status=>{const el=document.createElement('option');el.value=status;el.textContent=status;$('dbStatus').appendChild(el);});
+ if(list.includes(before))$('dbStatus').value=before;
+ $('dbFormTip').textContent=kind==='deposit'?'定金留名额不会占用时间。确认自提后可从名单中的「安排自提」选择30分钟名额。':'确认时间自提会占用当天唯一入场名额。灰色为员工休息，粉色表示该时段已经预约。';
+ renderFormTimes();
+}
+function renderFormTimes(){
+ const sel=$('dbPickupTime'),old=tm(sel.value),date=$('dbPickupDate').value;
+ sel.replaceChildren();
+ const add=(value,label)=>{const el=document.createElement('option');el.value=value;el.textContent=label;sel.appendChild(el);};
+ add('','请选择时段');
+ if(!date){add('','先选择自提日期');return;}
+ const slots=slotArray(date);
+ if(!slots.length){add('','该日未排班/休息，暂无可用时间');return;}
+ let count=0;
+ slots.forEach(slot=>{
+  const mine=slot.booked&&slot.booked.id===state.editId;
+  if(!slot.rest&&(!slot.booked||mine)){add(slot.time,slot.time+(mine?'（当前订单）':''));count++;}
+ });
+ // 被取消的预约可保留原历史时间，但重新激活时仍校验该时间是否空闲。
+ if(old&&!Array.from(sel.options).some(o=>o.value===old)&&state.editId&&state.orders.find(o=>o.id===state.editId)?.status==='已取消')add(old,old+'（历史时间，重新预约需检查）');
+ sel.value=old&&Array.from(sel.options).some(o=>o.value===old)?old:'';
+ if(!count)sel.options[0].textContent='当天已满或全部休息';
+}
+function renderDay(){
+ if(!$('dbDay').value)$('dbDay').value=state.day;
+ const schedule=scheduleFor(state.day),slots=slotArray(state.day),desc=$('dbScheduleDesc'),wrapper=$('dbSlots');
+ if(!schedule){desc.textContent='⚠️ 尚未设置营业时间。请展开下方「营业 / 员工休息排班」，先保存通用每日排班或当天排班。';}
+ else if(schedule.is_closed){desc.textContent='今天设置为停止接待。';}
+ else{desc.textContent=`${tm(schedule.open_time)}–${tm(schedule.close_time)} · ${state.schedules.has(state.day)?'当天专属排班':'通用排班'} · 可预约 ${slots.filter(s=>!s.rest&&!s.booked).length} / ${slots.length} 个时段`}
+ wrapper.replaceChildren();
+ slots.forEach(slot=>{
+  const btn=document.createElement('button');btn.type='button';btn.className='db-slot';
+  const own=slot.booked&&slot.booked.id===state.editId;
+  if(slot.rest){btn.classList.add('is-break');btn.disabled=true;}
+  else if(slot.booked){btn.classList.add(own?'is-own':'is-taken');btn.disabled=!own;}
+  const chosen=state.kind==='pickup'&&$('dbPickupDate').value===state.day&&$('dbPickupTime').value===slot.time;
+  if(chosen)btn.classList.add('is-active');
+  const sub=slot.rest?'休息':slot.booked?(own?'当前预约':'已预约'):'可预约';
+  btn.innerHTML='<span>'+slot.time+'</span><small>'+sub+'</small>';
+  btn.title=slot.rest?'员工休息 / 停止预约':slot.booked?('此时段已有客户：'+slot.booked.wechat_name):'点击安排到此时段';
+  btn.addEventListener('click',()=>{
+    setKind('pickup');$('dbPickupDate').value=state.day;renderFormTimes();$('dbPickupTime').value=slot.time;
+    if(!state.editId){$('dbFormTitle').textContent='＋ 新增确认时间自提';}
+    renderDay();$('dbBookingForm').scrollIntoView({behavior:'smooth',block:'start'});
+  });wrapper.appendChild(btn);
+ });
+ if(!slots.length){const empty=document.createElement('div');empty.className='db-muted';empty.textContent='暂无可预约时段';empty.style.gridColumn='1/-1';wrapper.appendChild(empty);}
+ const dayList=$('dbDayBookings');dayList.replaceChildren();const rows=dayOrders(state.day);
+ if(!rows.length){dayList.innerHTML='<div class="db-muted" style="margin-top:8px">当天尚无已确认预约</div>'}
+ rows.forEach(o=>{
+  const el=document.createElement('div');el.className='db-day-booking';
+  el.innerHTML=`<span><strong>${esc(tm(o.pickup_time))}</strong>　${esc(o.wechat_name)} ${o.customer_name?'· '+esc(o.customer_name):''}</span><span>${esc(o.status)}</span>`;
+  el.style.cursor='pointer';el.title='点击编辑预约';el.addEventListener('click',()=>editOrder(o.id,false));dayList.appendChild(el);
+ });
+ renderStats();
+}
+function renderOrders(){
+ const kw=$('dbSearch').value.trim().toLocaleLowerCase(),flt=state.filter;
+ let rows=state.orders.filter(o=>{
+  if(flt==='deposit'&&o.status!=='定金留名额')return false;
+  if(flt==='pickup'&&o.status!=='确认时间自提')return false;
+  if(flt==='done'&&o.status!=='已提货')return false;
+  if(flt==='cancel'&&o.status!=='已取消')return false;
+  return !kw||[o.wechat_name,o.customer_name,o.item_desc,o.staff_name,o.remark,tm(o.pickup_time),o.pickup_date].join(' ').toLocaleLowerCase().includes(kw);
+ });
+ if(flt==='pickup')rows.sort((a,b)=>(a.pickup_date+' '+tm(a.pickup_time)).localeCompare(b.pickup_date+' '+tm(b.pickup_time)));
+ else rows.sort((a,b)=>txt(b.created_at).localeCompare(txt(a.created_at)));
+ $('dbCountCaption').textContent='当前 '+rows.length+' 笔 · 全部 '+state.orders.length+' 笔';
+ const box=$('dbOrders');box.replaceChildren();
+ if(!rows.length){box.innerHTML='<div class="db-muted">暂无符合条件的预约，可以先在上方新增客户。</div>';return;}
+ rows.forEach(o=>{
+  const article=document.createElement('article');article.className='db-order';
+  const amount=Number(o.deposit_amount||0);const label=o.deposit_currency==='KRW'?'₩':'¥';
+  article.innerHTML=`<div class="db-order-head"><div><div class="db-order-title">${esc(o.wechat_name)}</div><div class="db-order-sub">${o.customer_name?'客户姓名：'+esc(o.customer_name):''}</div></div><span class="db-chip ${statusChip(o)}">${esc(o.status)}</span></div>
+  <div style="font-size:14px;font-weight:750;overflow-wrap:anywhere">${esc(o.item_desc||'未填写商品')}</div>
+  <div class="db-order-sub">${o.pickup_date?'🕒 自提时间：'+esc(o.pickup_date)+' '+esc(tm(o.pickup_time))+'<br>':''}${amount?'💰 定金：'+label+amount.toLocaleString('zh-CN')+'<br>':''}${o.staff_name?'👤 职员：'+esc(o.staff_name)+'<br>':''}${o.remark?'📝 备注：'+esc(o.remark).replace(/\n/g,'<br>'):''}</div>
+  <div class="db-order-actions"></div>`;
+  const actions=article.querySelector('.db-order-actions');
+  function action(label,handler,cls){const b=document.createElement('button');b.type='button';b.textContent=label;if(cls)b.classList.add(cls);b.addEventListener('click',handler);actions.appendChild(b);}
+  action('✎ 编辑订单',()=>editOrder(o.id,false));
+  if(o.status==='定金留名额')action('📅 安排自提',()=>editOrder(o.id,true),'go');
+  if(o.status==='确认时间自提')action('✓ 标记已提货',()=>finishOrder(o.id),'go');
+  if(o.status!=='已取消'&&o.status!=='已提货')action('取消预约',()=>cancelOrder(o.id),'cancel');
+  box.appendChild(article);
+ });
+}
+function renderEverything(){renderStats();renderFormTimes();renderDay();renderOrders();}
+async function loadAll(silent=false){
+ if(state.loading)return;
+ if(typeof supabaseClient==='undefined'){dbMsg('未找到 Supabase 客户端，请确认员工端已完整加载。',true);return;}
+ state.loading=true;$('dbRefresh').disabled=true;
+ try{
+  const [orders,schedu]=await Promise.all([fetchAll(TABLE),fetchAll(SCHEDULE_TABLE)]);
+  state.orders=orders;state.schedules=new Map(schedu.map(x=>[x.day_key,x]));state.ready=true;
+  renderEverything();if(!silent)dbMsg('预约与排班已同步 · '+orders.length+' 笔订单。');
+ }catch(e){dbMsg('读取预约失败：'+(e.message||String(e))+'。如果是首次使用，请先在 Supabase SQL Editor 执行「迪奥黑五预约管理_数据库初始化.sql」。',true);console.error('Dior booking load failed',e);}
+ finally{state.loading=false;$('dbRefresh').disabled=false;}
+}
+function resetForm(){
+ $('dbBookingForm').reset();state.editId=null;state.kind='deposit';setKind('deposit');
+ $('dbFormTitle').textContent='＋ 新增预约客户';$('dbSave').textContent='保存预约';$('dbCancelEdit').style.display='none';
+ $('dbDepositCurrency').value='CNY';let staff='';try{staff=localStorage.getItem('yezhu_employee_name')||''}catch(_e){}$('dbStaff').value=staff;
+ $('dbPickupDate').value=state.day;renderFormTimes();renderDay();
+}
+function editOrder(id,toPickup){
+ const o=state.orders.find(x=>x.id===id);if(!o)return;
+ state.editId=o.id;setKind(toPickup?'pickup':o.kind);
+ $('dbWechat').value=o.wechat_name;$('dbCustomerName').value=o.customer_name||'';
+ $('dbProduct').value=o.item_desc||'';$('dbDeposit').value=o.deposit_amount||'';
+ $('dbDepositCurrency').value=o.deposit_currency||'CNY';$('dbStaff').value=o.staff_name||'';$('dbRemarks').value=o.remark||'';
+ $('dbPickupDate').value=o.pickup_date||state.day;
+ if(toPickup)$('dbStatus').value='确认时间自提';else $('dbStatus').value=o.status;
+ renderFormTimes();$('dbPickupTime').value=toPickup?'':tm(o.pickup_time);
+ $('dbFormTitle').textContent=toPickup?'📅 给定金客户安排自提时间':'✎ 编辑预约客户';
+ $('dbSave').textContent=toPickup?'确认自提并保存':'保存修改';$('dbCancelEdit').style.display='block';
+ renderDay();$('dbBookingForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+async function saveBooking(e){
+ e.preventDefault();if(!state.ready){dbMsg('数据尚未读取成功，禁止保存以避免预约冲突。',true);return;}
+ const wechat=$('dbWechat').value.trim(),kind=state.kind,status=$('dbStatus').value;
+ if(!wechat){dbMsg('请填写客人微信昵称。',true);$('dbWechat').focus();return;}
+ let date=null,time=null;
+ if(kind==='pickup'){date=$('dbPickupDate').value||null;time=$('dbPickupTime').value||null;}
+ if(ACTIVE.includes(status)){
+  if(!date||!time){dbMsg('确认自提必须选择日期和具体入场时间。',true);return;}
+  // 保存前重新读取：防止两位员工同时选中同一个时间。数据库唯一索引作最终保护。
+  try{
+   const {data:rows,error:e1}=await supabaseClient.from(TABLE).select('id,pickup_date,pickup_time,status').eq('pickup_date',date).in('status',ACTIVE);
+   if(e1)throw e1;
+   const {data:schedules,error:e2}=await supabaseClient.from(SCHEDULE_TABLE).select('*').in('day_key',['default',date]);
+   if(e2)throw e2;
+   state.schedules=new Map([...state.schedules.entries()].filter(([key])=>key!=='default'&&key!==date));
+   (schedules||[]).forEach(x=>state.schedules.set(x.day_key,x));
+   const occupied=(rows||[]).some(x=>tm(x.pickup_time)===time&&x.id!==state.editId);
+   if(occupied||!slotArray(date).some(x=>x.time===time&&!x.rest)){dbMsg('该时段已被预约、处于休息时间或尚未设置排班。请重新选择。',true);await loadAll(true);return;}
+  }catch(err){dbMsg('预约时间校验失败：'+(err.message||String(err)),true);return;}
+ }
+ if(!SAFE_TYPE[kind].includes(status)){dbMsg('订单类型与状态不匹配，请重新选择。',true);return;}
+ const amount=Number($('dbDeposit').value||0);
+ if(!Number.isFinite(amount)||amount<0){dbMsg('定金金额不能为负数。',true);return;}
+ const payload={wechat_name:wechat,customer_name:$('dbCustomerName').value.trim(),item_desc:$('dbProduct').value.trim(),deposit_amount:amount,deposit_currency:$('dbDepositCurrency').value,kind,status,pickup_date:date,pickup_time:time,staff_name:$('dbStaff').value.trim(),remark:$('dbRemarks').value.trim(),updated_at:new Date().toISOString()};
+ // 从确认自提转换为定金客户后，必须释放之前占用的时段。
+ if(kind==='deposit'){payload.pickup_date=null;payload.pickup_time=null;}
+ const b=$('dbSave');b.disabled=true;b.textContent='正在保存...';
+ try{
+  const {error}=state.editId
+    ?await supabaseClient.from(TABLE).update(payload).eq('id',state.editId)
+    :await supabaseClient.from(TABLE).insert(payload);
+  if(error)throw error;
+  const selectedDate=date;
+  resetForm();if(selectedDate){state.day=selectedDate;$('dbDay').value=selectedDate;}
+  await loadAll(true);dbMsg('预约已保存并同步给其他员工。');
+ }catch(err){let msg=err.message||String(err);if(err.code==='23505'||/duplicate key|dior_bf_one_customer_per_slot/i.test(msg))msg='该时间刚被其他员工预约，请刷新后另选时间。';dbMsg('保存失败：'+msg,true);}
+ finally{b.disabled=false;b.textContent=state.editId?'保存修改':'保存预约';}
+}
+async function updateOrderStatus(id,status){
+ const o=state.orders.find(x=>x.id===id);if(!o)return;
+ const what=status==='已取消'?'确认取消该客人预约？取消后原时段会释放。':'确认标记为已提货？';
+ if(!confirm(what))return;
+ try{
+  const {error}=await supabaseClient.from(TABLE).update({status,updated_at:new Date().toISOString()}).eq('id',id);
+  if(error)throw error;await loadAll(true);dbMsg(status==='已取消'?'已取消预约，时段已释放。':'已标记为已提货。');
+ }catch(e){dbMsg('修改失败：'+(e.message||String(e)),true);}
+}
+const cancelOrder=id=>updateOrderStatus(id,'已取消');
+const finishOrder=id=>updateOrderStatus(id,'已提货');
+function addBreakRow(start='',end=''){
+ const row=document.createElement('div');row.className='db-break-row';
+ const a=document.createElement('input');a.className='db-input';a.type='time';a.step='60';a.value=start;a.setAttribute('aria-label','休息开始时间');
+ const b=document.createElement('input');b.className='db-input';b.type='time';b.step='60';b.value=end;b.setAttribute('aria-label','休息结束时间');
+ const del=document.createElement('button');del.type='button';del.textContent='删除';del.addEventListener('click',()=>row.remove());
+ row.append(a,b,del);$('dbBreakRows').append(row);
+}
+function loadScheduleEditor(){
+ const key=$('dbScheduleScope').value==='day'?state.day:'default';
+ const schedule=state.schedules.get(key)||($('dbScheduleScope').value==='day'?state.schedules.get('default'):null);
+ $('dbOpenTime').value=tm(schedule?.open_time);$('dbCloseTime').value=tm(schedule?.close_time);
+ $('dbClosed').checked=key!=='default'&&Boolean(schedule?.is_closed);
+ $('dbClosed').disabled=key==='default';
+ $('dbBreakRows').replaceChildren();
+ (Array.isArray(schedule?.breaks)?schedule.breaks:[]).forEach(b=>addBreakRow(b.start,b.end));
+ $('dbRemoveDaySchedule').style.display=key!=='default'&&state.schedules.has(key)?'inline-block':'none';
+}
+function readEditorSchedule(){
+ const closed=$('dbScheduleScope').value==='day'&&$('dbClosed').checked;
+ const open=$('dbOpenTime').value,close=$('dbCloseTime').value;
+ if(!closed){
+  if(!open||!close)throw Error('请填写开始和结束接待时间。');
+  if(!(minutes(open)<minutes(close))||minutes(open)%30||minutes(close)%30)throw Error('营业开始/结束时间需为整点或半点，且结束晚于开始。');
+ }
+ const breaks=[];
+ for(const row of $('dbBreakRows').children){
+  const inputs=row.querySelectorAll('input');const start=tm(inputs[0].value),end=tm(inputs[1].value);
+  if(!start||!end)throw Error('休息时段的开始和结束时间都必须填写。');
+  if(!(minutes(start)<minutes(end)))throw Error('休息结束时间必须晚于开始时间。');
+  if(!closed&&(minutes(start)<minutes(open)||minutes(end)>minutes(close)))throw Error('休息时间必须在当天营业时间范围内。');
+  breaks.push({start,end});
+ }
+ breaks.sort((a,b)=>minutes(a.start)-minutes(b.start));
+ for(let i=1;i<breaks.length;i++)if(minutes(breaks[i].start)<minutes(breaks[i-1].end))throw Error('休息时段不可互相重叠。');
+ return {day_key:$('dbScheduleScope').value==='day'?state.day:'default',open_time:open||null,close_time:close||null,breaks,is_closed:closed,updated_at:new Date().toISOString()};
+}
+async function saveSchedule(){
+ if(!state.ready){dbMsg('请先成功读取数据库。',true);return;}
+ let payload;try{payload=readEditorSchedule();}catch(e){dbMsg(e.message,true);return;}
+ // 排班修改前检查所有已有占位；不能将已确认的客人强行变成休息/非营业时段。
+ const impacted=state.orders.filter(o=>isActive(o)&&(payload.day_key===o.pickup_date||(payload.day_key==='default'&&!state.schedules.has(o.pickup_date))));
+ const invalid=impacted.find(o=>{
+  const s=payload;
+  const start=minutes(s.open_time),end=minutes(s.close_time),t=minutes(o.pickup_time);
+  return s.is_closed||!Number.isFinite(start)||!Number.isFinite(end)||t<start||t+30>end||(s.breaks||[]).some(b=>t<minutes(b.end)&&t+30>minutes(b.start));
+ });
+ if(invalid){dbMsg('无法保存：'+invalid.pickup_date+' '+tm(invalid.pickup_time)+' 已有客人「'+invalid.wechat_name+'」预约。请先调整该订单时间，再更改排班。',true);return;}
+ const b=$('dbSaveSchedule');b.disabled=true;
+ try{
+  const {error}=await supabaseClient.from(SCHEDULE_TABLE).upsert(payload,{onConflict:'day_key'});
+  if(error)throw error;await loadAll(true);loadScheduleEditor();dbMsg(payload.day_key==='default'?'通用营业/休息排班已保存，员工共享。':'指定日期排班已保存，员工共享。');
+ }catch(e){dbMsg('排班保存失败：'+(e.message||String(e)),true);}
+ finally{b.disabled=false;}
+}
+async function removeDaySchedule(){
+ const key=state.day;
+ if(!state.schedules.has(key))return;
+ // 删除覆盖后若通用排班不能容纳当天已预约订单，则拒绝。
+ const general=state.schedules.get('default');
+ for(const o of dayOrders(key)){
+  const t=minutes(o.pickup_time),st=minutes(general?.open_time),en=minutes(general?.close_time);
+  if(!general||general.is_closed||!Number.isFinite(st)||t<st||t+30>en||(general.breaks||[]).some(b=>t<minutes(b.end)&&t+30>minutes(b.start))){dbMsg('已有预约与通用排班冲突，不能恢复。请先调整订单时间。',true);return;}
+ }
+ if(!confirm('将 '+key+' 恢复为通用排班？'))return;
+ const {error}=await supabaseClient.from(SCHEDULE_TABLE).delete().eq('day_key',key);
+ if(error){dbMsg('恢复失败：'+error.message,true);return;}
+ await loadAll(true);loadScheduleEditor();dbMsg('已恢复通用排班。');
+}
+const dayChange=()=>{state.day=$('dbDay').value||todayKST();renderEverything();if($('dbScheduleEditor').style.display!=='none')loadScheduleEditor();};
+$('openDiorBookingButton').addEventListener('click',()=>{
+ document.querySelectorAll('.page-screen').forEach(page=>page.style.display='none');
+ $('diorBookingPage').style.display='block';window.scrollTo(0,0);removeMsg();loadAll(true);
+});
+$('dbBack').addEventListener('click',()=>{$('diorBookingPage').style.display='none';showHomePage();});
+$('dbRefresh').addEventListener('click',()=>loadAll());
+$('dbListRefresh').addEventListener('click',()=>loadAll());
+$('dbKindDeposit').addEventListener('click',()=>{setKind('deposit');renderDay();});
+$('dbKindPickup').addEventListener('click',()=>{setKind('pickup');$('dbPickupDate').value=$('dbPickupDate').value||state.day;renderFormTimes();renderDay();});
+$('dbPickupDate').addEventListener('change',()=>{renderFormTimes();renderDay();});
+$('dbPickupTime').addEventListener('change',renderDay);
+$('dbBookingForm').addEventListener('submit',saveBooking);
+$('dbResetForm').addEventListener('click',resetForm);
+$('dbCancelEdit').addEventListener('click',resetForm);
+$('dbDay').addEventListener('change',dayChange);
+$('dbPrevDay').addEventListener('click',()=>{$('dbDay').value=shiftDate(state.day,-1);dayChange();});
+$('dbNextDay').addEventListener('click',()=>{$('dbDay').value=shiftDate(state.day,1);dayChange();});
+$('dbToday').addEventListener('click',()=>{$('dbDay').value=todayKST();dayChange();});
+$('dbSearch').addEventListener('input',renderOrders);
+document.querySelectorAll('[data-db-filter]').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.dbFilter;document.querySelectorAll('[data-db-filter]').forEach(btn=>btn.classList.toggle('active',btn===b));renderOrders();}));
+$('dbScheduleToggle').addEventListener('click',()=>{const editor=$('dbScheduleEditor'),open=editor.style.display==='none';editor.style.display=open?'block':'none';$('dbScheduleToggle').textContent=open?'收起设置 ▴':'展开设置 ▾';if(open)loadScheduleEditor();});
+$('dbScheduleScope').addEventListener('change',loadScheduleEditor);
+$('dbAddBreak').addEventListener('click',()=>addBreakRow());
+$('dbSaveSchedule').addEventListener('click',saveSchedule);
+$('dbRemoveDaySchedule').addEventListener('click',removeDaySchedule);
+state.day=todayKST();$('dbDay').value=state.day;$('dbPickupDate').value=state.day;resetForm();
+// 网页打开时，以及其他员工可能修改后，展示期间定时同步。
+setInterval(()=>{if($('diorBookingPage').style.display!=='none'&&state.ready&&!state.editId&&document.visibilityState==='visible')loadAll(true);},45000);
+})();
+
+</script>
 </body>
 
 </html>
