@@ -1275,6 +1275,12 @@ button {
 #diorBookingPage .db-tip{color:#6c5b7c;background:#f8f5fe;border:1px solid #ece3f5;padding:9px 11px;font-size:12px;border-radius:11px;line-height:1.6;margin-top:11px}
 #diorBookingPage .db-alert{padding:11px 14px;border-radius:12px;margin-bottom:15px;border:1px solid #c9e4da;background:#f3fcf7;color:#275748;font-size:13px;display:none;line-height:1.6}
 #diorBookingPage .db-alert.bad{background:#fff4f5;border-color:#f2c3cd;color:#ad334e}
+#diorBookingPage .db-schedule-guide{background:#f7f7ff;border:1px solid #e4e0fa;padding:9px 11px;border-radius:10px;margin:10px 0 12px}
+#diorBookingPage .db-time-select{background-color:#fff;min-height:50px;font-size:16px;font-weight:650;cursor:pointer}
+#diorBookingPage .db-schedule-message{display:none;margin-top:10px;border:1px solid #bfe5ce;background:#f0fbf5;color:#236949;border-radius:11px;padding:12px;line-height:1.55;font-size:13px;overflow-wrap:anywhere}
+#diorBookingPage .db-schedule-message.bad{background:#fff4f6;border-color:#f1bfc9;color:#a6294e}
+#diorBookingPage .db-time-select[aria-invalid="true"]{border-color:#e57a94;box-shadow:0 0 0 3px #efc9d466}
+
 #diorBookingPage .db-day-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 #diorBookingPage .db-day-nav .db-input{width:auto;min-width:170px;flex:1}
 #diorBookingPage .db-small-btn{border:1px solid #e3dcea;border-radius:10px;padding:8px 10px;min-height:40px;background:#f6f3fa;color:#544864;cursor:pointer;font-weight:700}
@@ -1464,13 +1470,15 @@ button {
         <div id="dbScheduleEditor" style="display:none;margin-top:14px">
           <div class="db-field" style="margin-bottom:11px"><label class="db-label" for="dbScheduleScope">设置范围</label><select class="db-select" id="dbScheduleScope"><option value="default">通用每日排班</option><option value="day">覆盖当前选中日期</option></select></div>
           <div class="db-form-grid">
-            <div class="db-field"><label class="db-label" for="dbOpenTime">开始接待</label><input class="db-input" type="time" step="1800" id="dbOpenTime"></div>
-            <div class="db-field"><label class="db-label" for="dbCloseTime">结束接待</label><input class="db-input" type="time" step="1800" id="dbCloseTime"></div>
+            <div class="db-field"><label class="db-label" for="dbOpenTime">开始接待 <span style="color:#ca6685">*</span></label><select class="db-select db-time-select" id="dbOpenTime" aria-label="开始接待时间"></select></div>
+            <div class="db-field"><label class="db-label" for="dbCloseTime">结束接待 <span style="color:#ca6685">*</span></label><select class="db-select db-time-select" id="dbCloseTime" aria-label="结束接待时间"></select></div>
           </div>
+          <div class="db-help db-schedule-guide">先选择每天实际接待的开始和结束时间（按30分钟档位），再点击下方「保存排班」。通用每日排班会应用于没有单独设置的日期，柜哥休班日期除外。</div>
           <label class="db-checkline"><input type="checkbox" id="dbClosed" style="width:18px;height:18px"> 该日停止接待（仅适用于指定日期）</label>
           <div class="db-field"><label class="db-label">职员休息 / 禁止预约时段</label><div id="dbBreakRows"></div><button type="button" id="dbAddBreak" class="db-small-btn">＋ 增加休息时间</button></div>
           <div class="db-tip">例如：12:00–13:00、16:00–16:30。任何与休息时间重叠的半小时都无法预约。已预约的时段不能直接改成休息时间。</div>
           <div class="db-actions"><button type="button" class="db-primary" id="dbSaveSchedule">保存排班（员工共享）</button><button type="button" class="db-secondary" id="dbRemoveDaySchedule" style="display:none">恢复通用排班</button></div>
+          <div id="dbScheduleMessage" class="db-schedule-message" role="status" aria-live="polite"></div>
         </div>
       </section>
     </div>
@@ -9301,6 +9309,20 @@ async function updateOrderStatus(id,status){
 }
 const cancelOrder=id=>updateOrderStatus(id,'已取消');
 const finishOrder=id=>updateOrderStatus(id,'已提货');
+function scheduleMessage(message,bad=false){
+ const el=$('dbScheduleMessage');el.textContent=message;el.style.display=message?'block':'none';el.classList.toggle('bad',bad);
+}
+function populateScheduleTimeSelects(){
+ for(const id of ['dbOpenTime','dbCloseTime']){
+  const sel=$(id);sel.replaceChildren();
+  const empty=document.createElement('option');empty.value='';empty.textContent=id==='dbOpenTime'?'请选择开始时间':'请选择结束时间';sel.appendChild(empty);
+  for(let m=0;m<24*60;m+=30){
+   if(id==='dbCloseTime'&&m===0)continue;
+   const item=document.createElement('option');item.value=clock(m);item.textContent=clock(m);sel.appendChild(item);
+  }
+  sel.addEventListener('change',()=>{sel.removeAttribute('aria-invalid');scheduleMessage('');});
+ }
+}
 function addBreakRow(start='',end=''){
  const row=document.createElement('div');row.className='db-break-row';
  const a=document.createElement('input');a.className='db-input';a.type='time';a.step='60';a.value=start;a.setAttribute('aria-label','休息开始时间');
@@ -9309,6 +9331,7 @@ function addBreakRow(start='',end=''){
  row.append(a,b,del);$('dbBreakRows').append(row);
 }
 function loadScheduleEditor(){
+ scheduleMessage('');
  const key=$('dbScheduleScope').value==='day'?state.day:'default';
  const schedule=state.schedules.get(key)||($('dbScheduleScope').value==='day'?state.schedules.get('default'):null);
  $('dbOpenTime').value=tm(schedule?.open_time);$('dbCloseTime').value=tm(schedule?.close_time);
@@ -9338,22 +9361,40 @@ function readEditorSchedule(){
  return {day_key:$('dbScheduleScope').value==='day'?state.day:'default',open_time:open||null,close_time:close||null,breaks,is_closed:closed,updated_at:new Date().toISOString()};
 }
 async function saveSchedule(){
- if(!state.ready){dbMsg('请先成功读取数据库。',true);return;}
- let payload;try{payload=readEditorSchedule();}catch(e){dbMsg(e.message,true);return;}
- // 排班修改前检查所有已有占位；不能将已确认的客人强行变成休息/非营业时段。
+ scheduleMessage('');
+ if(!state.ready){scheduleMessage('请先成功读取预约数据库，再保存排班。',true);return;}
+ let payload;
+ try{payload=readEditorSchedule();}
+ catch(e){
+  scheduleMessage('无法保存：'+(e.message||String(e)),true);
+  if(!$('dbClosed').checked){
+   const missing=['dbOpenTime','dbCloseTime'].find(id=>!$(id).value);
+   if(missing){$(missing).setAttribute('aria-invalid','true');$(missing).focus();}
+  }
+  return;
+ }
+ // 不允许新的营业或休息配置覆盖已经确认给客户的入场时段。
  const impacted=state.orders.filter(o=>isActive(o)&&(payload.day_key===o.pickup_date||(payload.day_key==='default'&&!state.schedules.has(o.pickup_date))));
  const invalid=impacted.find(o=>{
   const s=payload;
   const start=minutes(s.open_time),end=minutes(s.close_time),t=minutes(o.pickup_time);
   return s.is_closed||!Number.isFinite(start)||!Number.isFinite(end)||t<start||t+30>end||(s.breaks||[]).some(b=>t<minutes(b.end)&&t+30>minutes(b.start));
  });
- if(invalid){dbMsg('无法保存：'+invalid.pickup_date+' '+tm(invalid.pickup_time)+' 已有客人「'+invalid.wechat_name+'」预约。请先调整该订单时间，再更改排班。',true);return;}
- const b=$('dbSaveSchedule');b.disabled=true;
+ if(invalid){scheduleMessage('无法保存：'+invalid.pickup_date+' '+tm(invalid.pickup_time)+' 已有客人「'+invalid.wechat_name+'」预约。请先调整该订单时间，再更改排班。',true);return;}
+ const b=$('dbSaveSchedule');b.disabled=true;const caption=b.textContent;b.textContent='正在保存排班…';
  try{
   const {error}=await supabaseClient.from(SCHEDULE_TABLE).upsert(payload,{onConflict:'day_key'});
-  if(error)throw error;await loadAll(true);loadScheduleEditor();dbMsg(payload.day_key==='default'?'通用营业/休息排班已保存，员工共享。':'指定日期排班已保存，员工共享。');
- }catch(e){dbMsg('排班保存失败：'+(e.message||String(e)),true);}
- finally{b.disabled=false;}
+  if(error)throw error;
+  // 不依赖网络刷新成功与否，先把已确认保存的数据应用于当前页面。
+  state.schedules.set(payload.day_key,payload);
+  renderEverything();
+  await loadAll(true);
+  loadScheduleEditor();
+  scheduleMessage((payload.day_key==='default'?'通用每日排班':'指定日期排班')+'保存成功，已同步数据库。现在可以回到预约表选择半小时入场时间。');
+ }catch(e){
+  scheduleMessage('排班保存失败：'+(e.message||String(e))+'。请检查数据库排班表权限，并重试。',true);
+  console.error('Dior schedule save failed',e);
+ }finally{b.disabled=false;b.textContent=caption;}
 }
 async function removeDaySchedule(){
  const key=state.day;
@@ -9407,6 +9448,7 @@ $('dbRemoveDaySchedule').addEventListener('click',removeDaySchedule);
 $('dbSaveStaffOff').addEventListener('click',saveStaffOffDays);
 $('dbOffUseSelected').addEventListener('click',()=>{$('dbStaffOffStart').value=state.day;$('dbStaffOffEnd').value='';offMessage('已选取 '+state.day+'，点击「保存休班日期」即可设置整天休班。');});
 
+populateScheduleTimeSelects();
 state.day=todayKST();$('dbDay').value=state.day;$('dbPickupDate').value='';$('dbStaffOffStart').value=state.day;resetForm();
 // 网页打开时，以及其他员工可能修改后，展示期间定时同步。
 setInterval(()=>{if($('diorBookingPage').style.display!=='none'&&state.ready&&!state.editId&&document.visibilityState==='visible')loadAll(true);},45000);
