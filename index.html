@@ -1435,9 +1435,9 @@ button {
         <form id="dbBookingForm" autocomplete="off">
           <div class="db-form-grid">
             <div class="db-field"><label class="db-label" for="dbWechat">微信昵称 <span style="color:#ce6682">*</span></label><input class="db-input" id="dbWechat" placeholder="以微信名识别客人" required maxlength="120"></div>
-            <div class="db-field"><label class="db-label" for="dbCustomerName">购买人姓名 <span style="color:#ce6682">*</span></label><input class="db-input" id="dbCustomerName" placeholder="购买人真实姓名" maxlength="120" required></div>
-            <div class="db-field"><label class="db-label" for="dbPhone">购买人电话 <span style="color:#ce6682">*</span></label><input class="db-input" id="dbPhone" type="tel" inputmode="tel" placeholder="含国际区号，如 +86 138..." maxlength="60" required></div>
-            <div class="db-field"><label class="db-label" for="dbEmail">购买人邮箱 <span style="color:#ce6682">*</span></label><input class="db-input" id="dbEmail" type="email" inputmode="email" placeholder="用于预约登记的邮箱" maxlength="254" required></div>
+            <div class="db-field"><label class="db-label" for="dbCustomerName">购买人姓名 <span id="dbNameRequired" style="color:#877997">（可选）</span></label><input class="db-input" id="dbCustomerName" placeholder="定金客户可后补" maxlength="120"></div>
+            <div class="db-field"><label class="db-label" for="dbPhone">购买人电话 <span id="dbPhoneRequired" style="color:#877997">（可选）</span></label><input class="db-input" id="dbPhone" type="tel" inputmode="tel" placeholder="定金客户可后补" maxlength="60"></div>
+            <div class="db-field"><label class="db-label" for="dbEmail">购买人邮箱 <span id="dbEmailRequired" style="color:#877997">（可选）</span></label><input class="db-input" id="dbEmail" type="email" inputmode="email" placeholder="定金客户可后补" maxlength="254"></div>
             <div class="db-field db-span-all"><label class="db-label" for="dbProduct">预约商品 / 型号</label><input class="db-input" id="dbProduct" placeholder="例如：迷你戴妃粉色 × 1" maxlength="500"></div>
             <div class="db-field"><label class="db-label" for="dbDeposit">已收定金</label><input class="db-input" id="dbDeposit" type="number" min="0" step="0.01" placeholder="0"></div>
             <div class="db-field"><label class="db-label" for="dbDepositCurrency">定金币种</label><select class="db-select" id="dbDepositCurrency"><option value="CNY">人民币 ¥</option><option value="KRW">韩币 ₩</option></select></div>
@@ -1447,7 +1447,7 @@ button {
             <div class="db-field" id="dbPickupTimeField" style="display:none"><label class="db-label" for="dbPickupTime">入场时段（可后补）</label><select class="db-select" id="dbPickupTime"><option value="">稍后安排具体入场时段</option></select><div id="dbTimeFieldHint" class="db-help" style="margin-top:6px">未安排具体时间时，不占用30分钟名额。</div><button type="button" id="dbOpenScheduleFromTime" class="db-small-btn" style="display:none;margin-top:8px">⚙ 设置当日营业 / 休息时间</button></div>
             <div class="db-field db-span-all"><label class="db-label" for="dbRemarks">订单备注</label><textarea class="db-textarea" id="dbRemarks" placeholder="包款颜色、付款情况、客人特殊要求……" maxlength="2000"></textarea></div>
           </div>
-          <div class="db-tip" id="dbFormTip">先收定金、暂不确定自提时间的客户不会占用30分钟预约名额。选择自提客户后，可先保存、之后再补日期和时段；如果有日期，前一天和当天会弹窗提醒。</div>
+          <div class="db-tip" id="dbFormTip">定金留名额只需填写微信昵称，购买人姓名、电话、邮箱均可后补；转为自提客人后须补全信息。</div>
           <div class="db-actions"><button type="submit" class="db-primary" id="dbSave">保存预约</button><button type="button" class="db-secondary" id="dbCancelEdit" style="display:none">取消编辑</button></div>
         </form>
       </section>
@@ -9067,7 +9067,16 @@ function setKind(kind,changeStatus=true){
  const list=SAFE_TYPE[kind];$('dbStatus').replaceChildren();
  list.forEach(status=>{const el=document.createElement('option');el.value=status;el.textContent=status;$('dbStatus').appendChild(el);});
  if(list.includes(before))$('dbStatus').value=before;
- $('dbFormTip').textContent=kind==='deposit'?'定金留名额不会占用时间。之后可以在订单里「安排自提」。':'自提日期、入场时间都可后补；有日期的待安排订单，前一天及当天也会弹窗提醒。选好半小时入场时段后，将自动改为「确认时间自提」并占用唯一名额。';
+ // 定金客户只需微信昵称；确认自提时再要求补齐购买人资料。
+ const contactRequired=kind==='pickup';
+ [['dbCustomerName','dbNameRequired','购买人真实姓名'],['dbPhone','dbPhoneRequired','含国际区号，如 +86 138...'],['dbEmail','dbEmailRequired','用于预约登记的邮箱']].forEach(([inputId,markId,placeholder])=>{
+  const input=$(inputId),mark=$(markId);
+  input.required=contactRequired;
+  input.placeholder=contactRequired?placeholder:'定金客户可后补';
+  mark.textContent=contactRequired?'*':'（可选）';
+  mark.style.color=contactRequired?'#ce6682':'#877997';
+ });
+ $('dbFormTip').textContent=kind==='deposit'?'定金留名额仅需填写微信昵称，购买人姓名、电话、邮箱均可留空，之后转为自提客人时再补齐；定金客户不会占用时间。':'确认自提客人须填写购买人姓名、电话、邮箱；自提日期和入场时间可后补。填写日期后，会在前一天及当天弹窗提醒；选好半小时入场时段后将占用唯一名额。';
  renderFormTimes();
 }
 function renderFormTimes(){
@@ -9321,9 +9330,14 @@ async function saveBooking(e){
  const wechat=$('dbWechat').value.trim(),kind=state.kind;let status=$('dbStatus').value;
  if(!wechat){dbMsg('请填写客人微信昵称。',true);$('dbWechat').focus();return;}
  const customerName=$('dbCustomerName').value.trim(),customerPhone=$('dbPhone').value.trim(),customerEmail=$('dbEmail').value.trim();
- if(!customerName){dbMsg('请填写购买人姓名。',true);$('dbCustomerName').focus();return;}
- if(!customerPhone){dbMsg('请填写购买人电话。',true);$('dbPhone').focus();return;}
- if(!customerEmail||!$('dbEmail').checkValidity()){dbMsg('请填写正确的购买人邮箱。',true);$('dbEmail').focus();return;}
+ // 仅确认自提客人需要完整实名联系方式；定金留名额允许空白。
+ if(kind==='pickup'){
+  if(!customerName){dbMsg('请填写购买人姓名。',true);$('dbCustomerName').focus();return;}
+  if(!customerPhone){dbMsg('请填写购买人电话。',true);$('dbPhone').focus();return;}
+  if(!customerEmail||!$('dbEmail').checkValidity()){dbMsg('请填写正确的购买人邮箱。',true);$('dbEmail').focus();return;}
+ }else if(customerEmail&&!$('dbEmail').checkValidity()){
+  dbMsg('已填写的购买人邮箱格式不正确，请修改或清空。',true);$('dbEmail').focus();return;
+ }
  let date=null,time=null;
  if(kind==='pickup'){date=$('dbPickupDate').value||null;time=$('dbPickupTime').value||null;
    if(status!=='已取消'&&status!=='已提货'){status=date&&time?'确认时间自提':'待安排时间';}
