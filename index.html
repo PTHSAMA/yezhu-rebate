@@ -1324,6 +1324,10 @@ button {
 #diorBookingPage .db-muted{font-size:13px;color:#857a8c;line-height:1.7}
 #diorBookingPage .db-list-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:13px}
 #diorBookingPage .db-list-tools input{flex:1;min-width:210px}
+#diorBookingPage .db-sort-row{display:flex;align-items:center;gap:10px;margin:-3px 0 14px;flex-wrap:wrap}
+#diorBookingPage .db-sort-row label{font-size:13px;font-weight:800;color:#665672;white-space:nowrap}
+#diorBookingPage .db-sort-row select{width:auto;flex:1;min-width:min(100%,260px);max-width:440px;cursor:pointer;background:#fcfaff}
+@media(max-width:600px){#diorBookingPage .db-sort-row{align-items:stretch}#diorBookingPage .db-sort-row select{width:100%;max-width:none}}
 #diorBookingPage .db-copy-panel{margin:4px 0 15px;padding:12px;border:1px solid #e8dfee;border-radius:13px;background:linear-gradient(120deg,#fff6fb,#f3f5ff)}
 #diorBookingPage .db-copy-btn{border:0;background:linear-gradient(100deg,#f7c8df,#d7dcff,#d3eafa);color:#4a355c;font-weight:850;border-radius:11px;padding:12px 15px;cursor:pointer;width:100%;font-size:14px}
 #diorBookingPage .db-copy-btn:disabled{opacity:.6;cursor:wait}
@@ -1505,6 +1509,7 @@ button {
       <button type="button" class="db-filter-btn" data-db-filter="all">全部订单</button>
     </div>
     <div class="db-list-tools"><input class="db-input" id="dbSearch" placeholder="搜索微信昵称、客人姓名、商品或职员"><button type="button" class="db-small-btn" id="dbListRefresh">刷新</button></div>
+    <div class="db-sort-row"><label for="dbOrderSort">🕒 时间排序</label><select class="db-select" id="dbOrderSort" aria-label="预约订单时间排序"><option value="pickup_asc">自提日期 / 入场时间：从早到晚</option><option value="pickup_desc">自提日期 / 入场时间：从晚到早</option><option value="created_desc">登记时间：最新在前</option><option value="created_asc">登记时间：最早在前</option></select></div>
     <div id="dbOrders" class="db-order-list"><div class="db-muted">正在加载...</div></div>
     <div class="db-help" style="margin-top:12px">录入预约时填写微信名、购买人姓名、电话、邮箱；编辑历史预约可补齐。顶部「一键复制当天预约名单」按选中日期直接复制文本。只有「确认时间自提」占用一个30分钟名额。已取消订单自动释放名额。有自提日期的待安排与已确认订单会在前一天及当天从首页弹窗提醒。</div>
   </section>
@@ -9150,6 +9155,23 @@ function renderDay(){
  });
  renderStats();
 }
+// 按预约日期/时间排序：有确定时段的排前面，只有日期、未排日期的订单依次靠后。
+// 不论选择正序或倒序，待安排时间始终在已确认时段之后；无时间时用登记时间兜底。
+function compareDiorBookings(a,b,mode){
+ const aCreated=txt(a.created_at),bCreated=txt(b.created_at);
+ if(mode==='created_asc')return aCreated.localeCompare(bCreated)||txt(a.id).localeCompare(txt(b.id));
+ if(mode==='created_desc')return bCreated.localeCompare(aCreated)||txt(b.id).localeCompare(txt(a.id));
+ const group=o=>o.pickup_date?(tm(o.pickup_time)?0:1):2;
+ const g=group(a)-group(b);
+ if(g)return g;
+ if(group(a)!==2){
+  const aDate=txt(a.pickup_date)+' '+tm(a.pickup_time);
+  const bDate=txt(b.pickup_date)+' '+tm(b.pickup_time);
+  const cmp=aDate.localeCompare(bDate);
+  if(cmp)return mode==='pickup_desc'?-cmp:cmp;
+ }
+ return bCreated.localeCompare(aCreated)||txt(a.id).localeCompare(txt(b.id));
+}
 function renderOrders(){
  const kw=$('dbSearch').value.trim().toLocaleLowerCase(),flt=state.filter;
  let rows=state.orders.filter(o=>{
@@ -9160,8 +9182,8 @@ function renderOrders(){
   if(flt==='cancel'&&o.status!=='已取消')return false;
   return !kw||[o.wechat_name,o.customer_name,o.customer_phone,o.customer_email,o.item_desc,o.staff_name,o.remark,tm(o.pickup_time),o.pickup_date].join(' ').toLocaleLowerCase().includes(kw);
  });
- if(flt==='pickup')rows.sort((a,b)=>(a.pickup_date+' '+tm(a.pickup_time)).localeCompare(b.pickup_date+' '+tm(b.pickup_time)));
- else rows.sort((a,b)=>txt(b.created_at).localeCompare(txt(a.created_at)));
+ const orderMode=$('dbOrderSort').value;
+ rows.sort((a,b)=>compareDiorBookings(a,b,orderMode));
  $('dbCountCaption').textContent='当前 '+rows.length+' 笔 · 全部 '+state.orders.length+' 笔';
  const box=$('dbOrders');box.replaceChildren();
  if(!rows.length){box.innerHTML='<div class="db-muted">暂无符合条件的预约，可以先在上方新增客户。</div>';return;}
@@ -9556,6 +9578,7 @@ $('dbNextDay').addEventListener('click',()=>{$('dbDay').value=shiftDate(state.da
 $('dbToday').addEventListener('click',()=>{$('dbDay').value=todayKST();dayChange();});
 $('dbCopyDay').addEventListener('click',copyDailyBookings);
 $('dbSearch').addEventListener('input',renderOrders);
+$('dbOrderSort').addEventListener('change',renderOrders);
 document.querySelectorAll('[data-db-filter]').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.dbFilter;document.querySelectorAll('[data-db-filter]').forEach(btn=>btn.classList.toggle('active',btn===b));renderOrders();}));
 $('dbScheduleToggle').addEventListener('click',()=>{const editor=$('dbScheduleEditor'),open=editor.style.display==='none';editor.style.display=open?'block':'none';$('dbScheduleToggle').textContent=open?'收起设置 ▴':'展开设置 ▾';if(open)loadScheduleEditor();});
 $('dbScheduleScope').addEventListener('change',loadScheduleEditor);
