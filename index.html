@@ -1319,6 +1319,8 @@ button {
 #diorBookingPage .db-order-actions button{border:1px solid #e8dfef;background:#f9f7fc;border-radius:9px;color:#5a4a6b;padding:8px 10px;cursor:pointer;font-size:12px;font-weight:700}
 #diorBookingPage .db-order-actions button.go{background:#ecf9f2;color:#307657;border-color:#c9e8d8}
 #diorBookingPage .db-order-actions button.cancel{background:#fff4f5;color:#b04462;border-color:#f0d5de}
+#diorBookingPage .db-order-actions button.complete{background:linear-gradient(110deg,#ddf9e9,#e4ebff);color:#236c50;border-color:#bce7cd;font-weight:850}
+#diorBookingPage .db-order-actions button:disabled{opacity:.55;cursor:wait}
 #diorBookingPage .db-muted{font-size:13px;color:#857a8c;line-height:1.7}
 #diorBookingPage .db-list-tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:13px}
 #diorBookingPage .db-list-tools input{flex:1;min-width:210px}
@@ -1422,7 +1424,7 @@ button {
     <div class="db-metric"><small>🕒 待安排时间</small><b id="dbStatPending">—</b></div>
     <div class="db-metric"><small>💜 已确认自提</small><b id="dbStatConfirmed">—</b></div>
     <div class="db-metric"><small>📅 选定日期已约</small><b id="dbStatDay">—</b></div>
-    <div class="db-metric"><small>✅ 已提货</small><b id="dbStatDone">—</b></div>
+    <div class="db-metric"><small>✅ 已完成</small><b id="dbStatDone">—</b></div>
   </div>
   <div class="db-layout">
     <div>
@@ -1456,7 +1458,7 @@ button {
       <section class="db-panel" aria-label="每日时段预约表">
         <div class="db-panel-head"><h2>🗓️ 预约时段表</h2><span class="db-chip">1人 / 30分钟</span></div>
         <div class="db-day-nav"><button type="button" class="db-small-btn" id="dbPrevDay">‹ 前一天</button><input class="db-input" type="date" id="dbDay"><button type="button" class="db-small-btn" id="dbNextDay">后一天 ›</button><button type="button" class="db-small-btn" id="dbToday">今天</button></div>
-        <div class="db-copy-panel"><button type="button" class="db-copy-btn" id="dbCopyDay">📋 一键复制当天预约名单</button><div class="db-copy-note">复制上方选中日期（默认今天）的自提预约，按时间排序；包含待安排时段和已提货记录，不含取消订单。其他员工刚有修改时，请先点「同步预约」。</div><div id="dbCopyMessage" class="db-copy-message" role="status" aria-live="polite"></div></div>
+        <div class="db-copy-panel"><button type="button" class="db-copy-btn" id="dbCopyDay">📋 一键复制当天预约名单</button><div class="db-copy-note">复制上方选中日期（默认今天）的自提预约，按时间排序；包含待安排、已提货及已完成记录，不含取消订单。其他员工刚有修改时，请先点「同步预约」。</div><div id="dbCopyMessage" class="db-copy-message" role="status" aria-live="polite"></div></div>
         <div id="dbScheduleDesc" class="db-help">正在读取排班设置...</div>
         <div id="dbSlots" class="db-slots"></div>
         <div class="db-legend"><span><span class="db-dot"></span>可预约</span><span><span class="db-dot pink"></span>已被预约</span><span><span class="db-dot grey"></span>职员休息 / 不可接待</span></div>
@@ -1498,7 +1500,7 @@ button {
       <button type="button" class="db-filter-btn active" data-db-filter="deposit">💗 定金留名额</button>
       <button type="button" class="db-filter-btn" data-db-filter="pending">🕒 待安排时间</button>
       <button type="button" class="db-filter-btn" data-db-filter="pickup">📅 已确认时间自提</button>
-      <button type="button" class="db-filter-btn" data-db-filter="done">✅ 已提货</button>
+      <button type="button" class="db-filter-btn" data-db-filter="done">✅ 已完成</button>
       <button type="button" class="db-filter-btn" data-db-filter="cancel">已取消</button>
       <button type="button" class="db-filter-btn" data-db-filter="all">全部订单</button>
     </div>
@@ -8960,8 +8962,9 @@ setTimeout(()=>{graffCheckPickupOnHome();},0);
 const $=id=>document.getElementById(id);
 const TABLE='dior_bf_bookings', SCHEDULE_TABLE='dior_bf_schedule';
 const state={orders:[],schedules:new Map(),day:'',kind:'deposit',editId:null,filter:'deposit',ready:false,loading:false};
-const ACTIVE=['确认时间自提','已提货'];
-const SAFE_TYPE={deposit:['定金留名额','已取消'],pickup:['待安排时间','确认时间自提','已提货','已取消']};
+// 已完成且有预约时间的订单仍占用原30分钟名额，避免重复预约。
+const ACTIVE=['确认时间自提','已提货','已完成'];
+const SAFE_TYPE={deposit:['定金留名额','已完成','已取消'],pickup:['待安排时间','确认时间自提','已提货','已完成','已取消']};
 const txt=v=>String(v??'');
 const esc=v=>txt(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function todayKST(){return new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}
@@ -8972,7 +8975,7 @@ function tm(v){return txt(v).slice(0,5);}
 function isActive(o){return ACTIVE.includes(o.status)&&o.pickup_date&&o.pickup_time;}
 function dbMsg(message,bad=false){const el=$('dbAlert');el.textContent=message;el.style.display='block';el.classList.toggle('bad',bad);}
 function removeMsg(){$('dbAlert').style.display='none';}
-function statusChip(o){if(o.status==='已取消')return 'cancel';if(o.status==='已提货')return 'done';return o.kind==='deposit'?'deposit':'pickup';}
+function statusChip(o){if(o.status==='已取消')return 'cancel';if(o.status==='已提货'||o.status==='已完成')return 'done';return o.kind==='deposit'?'deposit':'pickup';}
 async function fetchAll(table,columns='*'){
  const result=[];for(let start=0;start<10000;start+=1000){
   const {data,error}=await supabaseClient.from(table).select(columns).range(start,start+999);
@@ -9053,7 +9056,7 @@ function renderStats(){
  $('dbStatPending').textContent=state.orders.filter(o=>o.status==='待安排时间').length;
  $('dbStatConfirmed').textContent=state.orders.filter(o=>o.status==='确认时间自提').length;
  $('dbStatDay').textContent=dayOrders(state.day).length;
- $('dbStatDone').textContent=state.orders.filter(o=>o.status==='已提货').length;
+ $('dbStatDone').textContent=state.orders.filter(o=>['已提货','已完成'].includes(o.status)).length;
 }
 function setKind(kind,changeStatus=true){
  state.kind=kind;
@@ -9067,17 +9070,21 @@ function setKind(kind,changeStatus=true){
  const list=SAFE_TYPE[kind];$('dbStatus').replaceChildren();
  list.forEach(status=>{const el=document.createElement('option');el.value=status;el.textContent=status;$('dbStatus').appendChild(el);});
  if(list.includes(before))$('dbStatus').value=before;
- // 定金客户只需微信昵称；确认自提时再要求补齐购买人资料。
- const contactRequired=kind==='pickup';
+ updateBookingRequiredFields();
+ renderFormTimes();
+}
+// 「已完成」是快捷结单状态：已留存的资料不删除，但不强制补填姓名、电话、邮箱和时段。
+function updateBookingRequiredFields(){
+ const completed=$('dbStatus').value==='已完成';
+ const contactRequired=state.kind==='pickup'&&!completed;
  [['dbCustomerName','dbNameRequired','购买人真实姓名'],['dbPhone','dbPhoneRequired','含国际区号，如 +86 138...'],['dbEmail','dbEmailRequired','用于预约登记的邮箱']].forEach(([inputId,markId,placeholder])=>{
   const input=$(inputId),mark=$(markId);
   input.required=contactRequired;
-  input.placeholder=contactRequired?placeholder:'定金客户可后补';
+  input.placeholder=contactRequired?placeholder:'可选，资料可后补';
   mark.textContent=contactRequired?'*':'（可选）';
   mark.style.color=contactRequired?'#ce6682':'#877997';
  });
- $('dbFormTip').textContent=kind==='deposit'?'定金留名额仅需填写微信昵称，购买人姓名、电话、邮箱均可留空，之后转为自提客人时再补齐；定金客户不会占用时间。':'确认自提客人须填写购买人姓名、电话、邮箱；自提日期和入场时间可后补。填写日期后，会在前一天及当天弹窗提醒；选好半小时入场时段后将占用唯一名额。';
- renderFormTimes();
+ $('dbFormTip').textContent=completed?'已完成订单无需补齐购买人姓名、电话、邮箱或预约时段；也可直接在订单卡片点击「✅ 一键已完成」。':state.kind==='deposit'?'定金留名额仅需填写微信昵称，购买人姓名、电话、邮箱均可留空，之后转为自提客人时再补齐；定金客户不会占用时间。':'确认自提客人须填写购买人姓名、电话、邮箱；自提日期和入场时间可后补。填写日期后，会在前一天及当天弹窗提醒；选好半小时入场时段后将占用唯一名额。';
 }
 function renderFormTimes(){
  const sel=$('dbPickupTime'),old=tm(sel.value),date=$('dbPickupDate').value,setup=$('dbOpenScheduleFromTime'),hint=$('dbTimeFieldHint');
@@ -9086,6 +9093,12 @@ function renderFormTimes(){
  add('','稍后安排具体入场时段（不占名额）');
  if(!date){hint.textContent='可以不选日期直接保存；填写了日期才会在前一天和当天弹窗提醒。';return;}
  const schedule=scheduleFor(date),slots=slotArray(date);
+ // 编辑已完成订单时，即使过去的排班已经删除，也保留原预约时间供查看。
+ const oldOrder=state.editId?state.orders.find(o=>o.id===state.editId):null;
+ if(oldOrder&&oldOrder.status==='已完成'&&oldOrder.pickup_date===date&&oldOrder.pickup_time){
+  const original=tm(oldOrder.pickup_time);
+  if(!Array.from(sel.options).some(option=>option.value===original))add(original,original+'（已完成 · 原预约时间）');
+ }
  if(!schedule){
   add('','⚠️ 未设置营业时间，暂时不能选择时段');
   hint.textContent='该日没有营业排班。可以先保存待安排订单，或者先设置通用营业时间，再回来选择时段。';
@@ -9143,7 +9156,7 @@ function renderOrders(){
   if(flt==='deposit'&&o.status!=='定金留名额')return false;
   if(flt==='pending'&&o.status!=='待安排时间')return false;
   if(flt==='pickup'&&o.status!=='确认时间自提')return false;
-  if(flt==='done'&&o.status!=='已提货')return false;
+  if(flt==='done'&&!['已提货','已完成'].includes(o.status))return false;
   if(flt==='cancel'&&o.status!=='已取消')return false;
   return !kw||[o.wechat_name,o.customer_name,o.customer_phone,o.customer_email,o.item_desc,o.staff_name,o.remark,tm(o.pickup_time),o.pickup_date].join(' ').toLocaleLowerCase().includes(kw);
  });
@@ -9163,14 +9176,15 @@ function renderOrders(){
   function action(label,handler,cls){const b=document.createElement('button');b.type='button';b.textContent=label;if(cls)b.classList.add(cls);b.addEventListener('click',handler);actions.appendChild(b);}
   action('✎ 编辑订单',()=>editOrder(o.id,false));
   if(o.status==='定金留名额'||o.status==='待安排时间')action('📅 '+(o.status==='待安排时间'?'补充入场时间':'安排自提'),()=>editOrder(o.id,true),'go');
-  if(o.status==='确认时间自提')action('✓ 标记已提货',()=>finishOrder(o.id),'go');
-  if(o.status!=='已取消'&&o.status!=='已提货')action('取消预约',()=>cancelOrder(o.id),'cancel');
+  // 卡片直接完成，不调用新增/编辑表单，因此不校验未填写的姓名、电话、邮箱或时段。
+  if(!['已取消','已完成','已提货'].includes(o.status))action('✅ 一键已完成',()=>completeOrder(o.id),'complete');
+  if(!['已取消','已完成','已提货'].includes(o.status))action('取消预约',()=>cancelOrder(o.id),'cancel');
   box.appendChild(article);
  });
 }
 // 复制所选日期的预约，保留每一笔订单；定金未选自提日期不在名单内。
 function dailyCopyRows(date){
- return state.orders.filter(o=>o.kind==='pickup'&&o.pickup_date===date&&['待安排时间','确认时间自提','已提货'].includes(o.status))
+ return state.orders.filter(o=>o.kind==='pickup'&&o.pickup_date===date&&['待安排时间','确认时间自提','已提货','已完成'].includes(o.status))
   .slice().sort((a,b)=>{
    const at=tm(a.pickup_time),bt=tm(b.pickup_time);
    return (at?0:1)-(bt?0:1)||at.localeCompare(bt)||txt(a.created_at).localeCompare(txt(b.created_at));
@@ -9320,7 +9334,7 @@ function editOrder(id,toPickup){
  $('dbDepositCurrency').value=o.deposit_currency||'CNY';$('dbStaff').value=o.staff_name||'';$('dbRemarks').value=o.remark||'';
  $('dbPickupDate').value=o.pickup_date||'';
  if(toPickup)$('dbStatus').value='待安排时间';else $('dbStatus').value=o.status;
- renderFormTimes();$('dbPickupTime').value=toPickup&&o.status==='定金留名额'?'':tm(o.pickup_time);
+ updateBookingRequiredFields();renderFormTimes();$('dbPickupTime').value=toPickup&&o.status==='定金留名额'?'':tm(o.pickup_time);
  $('dbFormTitle').textContent=toPickup?'📅 补充自提日期 / 时间':'✎ 编辑预约客户';
  $('dbSave').textContent=toPickup?'保存自提安排':'保存修改';$('dbCancelEdit').style.display='block';
  renderDay();$('dbBookingForm').scrollIntoView({behavior:'smooth',block:'start'});
@@ -9331,7 +9345,7 @@ async function saveBooking(e){
  if(!wechat){dbMsg('请填写客人微信昵称。',true);$('dbWechat').focus();return;}
  const customerName=$('dbCustomerName').value.trim(),customerPhone=$('dbPhone').value.trim(),customerEmail=$('dbEmail').value.trim();
  // 仅确认自提客人需要完整实名联系方式；定金留名额允许空白。
- if(kind==='pickup'){
+ if(kind==='pickup'&&status!=='已完成'){
   if(!customerName){dbMsg('请填写购买人姓名。',true);$('dbCustomerName').focus();return;}
   if(!customerPhone){dbMsg('请填写购买人电话。',true);$('dbPhone').focus();return;}
   if(!customerEmail||!$('dbEmail').checkValidity()){dbMsg('请填写正确的购买人邮箱。',true);$('dbEmail').focus();return;}
@@ -9340,10 +9354,14 @@ async function saveBooking(e){
  }
  let date=null,time=null;
  if(kind==='pickup'){date=$('dbPickupDate').value||null;time=$('dbPickupTime').value||null;
-   if(status!=='已取消'&&status!=='已提货'){status=date&&time?'确认时间自提':'待安排时间';}
+   if(!['已取消','已提货','已完成'].includes(status)){status=date&&time?'确认时间自提':'待安排时间';}
+   // 仅编辑已完成订单时，避免没有排班选项导致原自提时段被意外清空。
+   const original=state.orders.find(o=>o.id===state.editId);
+   if(status==='已完成'&&!time&&original?.status==='已完成'&&date===original.pickup_date&&original.pickup_time)time=tm(original.pickup_time);
   }
- if(ACTIVE.includes(status)){
-  if(!date||!time){dbMsg('标记「已提货」必须已经安排具体自提日期和入场时间。',true);return;}
+ // 正在接待/已提货仍需完整日期和时段；完成状态无需补齐任何预约资料。
+ if(['确认时间自提','已提货'].includes(status)){
+  if(!date||!time){dbMsg('确认自提或已提货订单必须有完整自提日期和入场时间。',true);return;}
   // 保存前重新读取：防止两位员工同时选中同一个时间。数据库唯一索引作最终保护。
   try{
    const {data:rows,error:e1}=await supabaseClient.from(TABLE).select('id,pickup_date,pickup_time,status').eq('pickup_date',date).in('status',ACTIVE);
@@ -9372,20 +9390,41 @@ async function saveBooking(e){
   const selectedDate=date;
   resetForm();if(selectedDate){state.day=selectedDate;$('dbDay').value=selectedDate;}
   await loadAll(true);dbMsg('预约已保存并同步给其他员工。');checkDiorHomeReminder();
- }catch(err){let msg=err.message||String(err);if(err.code==='23505'||/duplicate key|dior_bf_one_customer_per_slot/i.test(msg))msg='该时间刚被其他员工预约，请刷新后另选时间。';if(err.code==='23514'&&/dior_bf_status_valid/i.test(msg))msg='数据库还未支持「待安排时间」状态。请先执行本次附带的 Supabase 升级 SQL。';if(/customer_phone|customer_email|schema cache|PGRST204/i.test(msg))msg+='。请先在 Supabase SQL Editor 执行本次新增购买人电话、邮箱字段的升级 SQL。';dbMsg('保存失败：'+msg,true);}
+ }catch(err){let msg=err.message||String(err);if(err.code==='23505'||/duplicate key|dior_bf_one_customer_per_slot/i.test(msg))msg='该时间刚被其他员工预约，请刷新后另选时间。';if(err.code==='23514'&&/dior_bf_status_valid/i.test(msg))msg='数据库还未支持当前订单状态，请执行最新版 Supabase 状态升级 SQL。';if(/customer_phone|customer_email|schema cache|PGRST204/i.test(msg))msg+='。请先在 Supabase SQL Editor 执行本次新增购买人电话、邮箱字段的升级 SQL。';dbMsg('保存失败：'+msg,true);}
  finally{b.disabled=false;b.textContent=state.editId?'保存修改':'保存预约';}
 }
 async function updateOrderStatus(id,status){
  const o=state.orders.find(x=>x.id===id);if(!o)return;
- const what=status==='已取消'?'确认取消该客人预约？取消后原时段会释放。':'确认标记为已提货？';
- if(!confirm(what))return;
+ if(!confirm('确认取消「'+o.wechat_name+'」的预约？取消后原时段将释放。'))return;
  try{
   const {error}=await supabaseClient.from(TABLE).update({status,updated_at:new Date().toISOString()}).eq('id',id);
-  if(error)throw error;await loadAll(true);dbMsg(status==='已取消'?'已取消预约，时段已释放。':'已标记为已提货。');
+  if(error)throw error;await loadAll(true);dbMsg('已取消预约，时段已释放。');
  }catch(e){dbMsg('修改失败：'+(e.message||String(e)),true);}
 }
 const cancelOrder=id=>updateOrderStatus(id,'已取消');
-const finishOrder=id=>updateOrderStatus(id,'已提货');
+// 订单列表一键完成：只写入状态和更新时间，不调用表单校验；保留已有资料与预约日期。
+const completingOrders=new Set();
+async function completeOrder(id){
+ const order=state.orders.find(o=>o.id===id);
+ if(!order||completingOrders.has(id)||['已取消','已提货','已完成'].includes(order.status))return;
+ if(!confirm('将「'+order.wechat_name+'」直接标记为已完成？\n无需补填购买人姓名、电话、邮箱或预约时段；原资料保留。'))return;
+ completingOrders.add(id);
+ try{
+  const {data,error}=await supabaseClient.from(TABLE)
+   .update({status:'已完成',updated_at:new Date().toISOString()})
+   .eq('id',id).in('status',['定金留名额','待安排时间','确认时间自提'])
+   .select('id,status');
+  if(error)throw error;
+  if(!data||!data.length){await loadAll(true);dbMsg('订单状态刚被其他员工修改，请核对最新状态。',true);return;}
+  await loadAll(true);
+  dbMsg('✅「'+order.wechat_name+'」已完成。未填写的客户信息及时间无需补齐。');
+  checkDiorHomeReminder();
+ }catch(e){
+  let msg=e.message||String(e);
+  if(e.code==='23514'||/dior_bf_status_valid/i.test(msg))msg+='。请先在 Supabase 执行本次「已完成」状态升级 SQL。';
+  dbMsg('一键完成失败：'+msg,true);
+ }finally{completingOrders.delete(id);}
+}
 function scheduleMessage(message,bad=false){
  const el=$('dbScheduleMessage');el.textContent=message;el.style.display=message?'block':'none';el.classList.toggle('bad',bad);
 }
@@ -9505,9 +9544,9 @@ $('dbListRefresh').addEventListener('click',()=>loadAll());
 $('dbKindDeposit').addEventListener('click',()=>{setKind('deposit');renderDay();});
 $('dbKindPickup').addEventListener('click',()=>{setKind('pickup');renderFormTimes();renderDay();});
 $('dbPickupDate').addEventListener('change',()=>{if($('dbPickupDate').value){state.day=$('dbPickupDate').value;$('dbDay').value=state.day;}$('dbPickupTime').value='';renderFormTimes();renderDay();});
-$('dbPickupTime').addEventListener('change',()=>{if(state.kind==='pickup'&&['待安排时间','确认时间自提'].includes($('dbStatus').value))$('dbStatus').value=$('dbPickupTime').value?'确认时间自提':'待安排时间';renderDay();});
+$('dbPickupTime').addEventListener('change',()=>{if(state.kind==='pickup'&&['待安排时间','确认时间自提'].includes($('dbStatus').value))$('dbStatus').value=$('dbPickupTime').value?'确认时间自提':'待安排时间';updateBookingRequiredFields();renderDay();});
 $('dbOpenScheduleFromTime').addEventListener('click',()=>openScheduleSetup($('dbPickupDate').value));
-$('dbStatus').addEventListener('change',()=>{if(state.kind==='pickup'&&$('dbStatus').value==='确认时间自提'&&!$('dbPickupTime').value){dbMsg('可以先保存为「待安排时间」，以后再补入场时段；填写时段后会自动成为确认自提。');}});
+$('dbStatus').addEventListener('change',()=>{updateBookingRequiredFields();if(state.kind==='pickup'&&$('dbStatus').value==='确认时间自提'&&!$('dbPickupTime').value){dbMsg('可以先保存为「待安排时间」，以后再补入场时段；填写时段后会自动成为确认自提。');}});
 $('dbBookingForm').addEventListener('submit',saveBooking);
 $('dbResetForm').addEventListener('click',resetForm);
 $('dbCancelEdit').addEventListener('click',resetForm);
