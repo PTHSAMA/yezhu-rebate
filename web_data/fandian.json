@@ -1,7 +1,7 @@
 {
-  "version": "20261126105541",
-  "updated_at": "2026-11-26 10:55:41",
-  "count": 591,
+  "version": "20261127120427",
+  "updated_at": "2026-11-27 12:04:27",
+  "count": 593,
   "brands": [
     {
       "id": "1",
@@ -4112,8 +4112,8 @@
         "乐天明洞": 0.08,
         "乐天蚕室": 0.0,
         "新罗": 0.07,
-        "现代": 0.12,
-        "爱宝客": 0.125,
+        "现代": 0.1,
+        "爱宝客": 0.11,
         "济州新罗": 0.06
       }
     },
@@ -4128,7 +4128,7 @@
         "乐天明洞": 0.0,
         "乐天蚕室": 0.0,
         "新罗": 0.0,
-        "现代": 0.12,
+        "现代": 0.1,
         "爱宝客": 0.015,
         "济州新罗": 0.0
       }
@@ -5054,8 +5054,8 @@
       "remark": "会员9折",
       "discount": 0.9,
       "rebates": {
-        "乐天明洞": 0.13,
-        "乐天蚕室": 0.13,
+        "乐天明洞": 0.14,
+        "乐天蚕室": 0.14,
         "新世界": 0.13,
         "新罗": 0.13,
         "现代": 0.13,
@@ -7686,6 +7686,28 @@
     {
       "id": "579",
       "category": "电子",
+      "english": "EVEN REALITIES",
+      "chinese": "EVEN REALITIES",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.0
+      }
+    },
+    {
+      "id": "580",
+      "category": "电子",
+      "english": "PLAUD",
+      "chinese": "PLAUD",
+      "remark": "",
+      "discount": null,
+      "rebates": {
+        "新世界": 0.0
+      }
+    },
+    {
+      "id": "581",
+      "category": "电子",
       "english": "쿠쿠",
       "chinese": "福库",
       "remark": "",
@@ -7697,7 +7719,7 @@
       }
     },
     {
-      "id": "580",
+      "id": "582",
       "category": "电子",
       "english": "삼성",
       "chinese": "三星",
@@ -7716,7 +7738,7 @@
       }
     },
     {
-      "id": "581",
+      "id": "583",
       "category": "电子",
       "english": "SONY",
       "chinese": "索尼",
@@ -7727,7 +7749,7 @@
       }
     },
     {
-      "id": "582",
+      "id": "584",
       "category": "电子",
       "english": "LG",
       "chinese": "LG",
@@ -7738,7 +7760,7 @@
       }
     },
     {
-      "id": "583",
+      "id": "585",
       "category": "电子",
       "english": "INSTA360",
       "chinese": "INSTA360",
@@ -7749,7 +7771,7 @@
       }
     },
     {
-      "id": "584",
+      "id": "586",
       "category": "电子",
       "english": "골프버디",
       "chinese": "GOLFBUDDY",
@@ -7760,7 +7782,7 @@
       }
     },
     {
-      "id": "585",
+      "id": "587",
       "category": "电子",
       "english": "AFTERSHOKZ",
       "chinese": "AFTERSHOKZ",
@@ -7774,7 +7796,7 @@
       }
     },
     {
-      "id": "586",
+      "id": "588",
       "category": "电子",
       "english": "BOSE",
       "chinese": "BOSE",
@@ -7793,7 +7815,7 @@
       }
     },
     {
-      "id": "587",
+      "id": "589",
       "category": "电子",
       "english": "AUDIO-TECHNICA",
       "chinese": "AUDIO-TECHNICA",
@@ -7805,7 +7827,7 @@
       }
     },
     {
-      "id": "588",
+      "id": "590",
       "category": "电子",
       "english": "FUJI",
       "chinese": "富士",
@@ -7818,7 +7840,7 @@
       }
     },
     {
-      "id": "589",
+      "id": "591",
       "category": "电子",
       "english": "니블스",
       "chinese": "NIBBLES",
@@ -7829,7 +7851,7 @@
       }
     },
     {
-      "id": "590",
+      "id": "592",
       "category": "电子",
       "english": "PANASONIC",
       "chinese": "松下",
@@ -7842,7 +7864,7 @@
       }
     },
     {
-      "id": "591",
+      "id": "593",
       "category": "电子",
       "english": "선경DFS ACC(국산)",
       "chinese": "선경DFS ACC(本土)",
@@ -7853,7 +7875,7 @@
       }
     },
     {
-      "id": "592",
+      "id": "594",
       "category": "电子",
       "english": "풀리오",
       "chinese": "PULIO",
